@@ -6,13 +6,15 @@ namespace Content.Server.Spawners.EntitySystems;
 
 public sealed class SpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TimedSpawnerComponent, ComponentShutdown>(OnTimedSpawnerShutdown);
+
+        SubscribeLocalEvent<TimedSpawnerComponent, MapInitEvent>(OnMapInit);
+        // TODO: Handle edge case of `TimedSpawnerComponent` being added post-init, like `AddComp`.
     }
 
     public override void Update(float frameTime)
@@ -25,9 +27,16 @@ public sealed class SpawnerSystem : EntitySystem
         {
             if (timedSpawner.NextFire > curTime)
                 continue;
+
             OnTimerFired(uid, timedSpawner);
+
             timedSpawner.NextFire += timedSpawner.IntervalSeconds;
         }
+    }
+
+    private void OnMapInit(Entity<TimedSpawnerComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextFire = _timing.CurTime + ent.Comp.IntervalSeconds;
     }
 
     private void OnTimerFired(EntityUid uid, TimedSpawnerComponent component)
@@ -43,10 +52,5 @@ public sealed class SpawnerSystem : EntitySystem
             var entity = _random.Pick(component.Prototypes);
             SpawnAtPosition(entity, coordinates);
         }
-    }
-
-    private void OnTimedSpawnerShutdown(EntityUid uid, TimedSpawnerComponent component, ComponentShutdown args)
-    {
-        component.TokenSource?.Cancel();
     }
 }

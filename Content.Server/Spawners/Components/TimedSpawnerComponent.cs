@@ -50,8 +50,6 @@ public sealed partial class TimedSpawnerComponent : Component, ISerializationHoo
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextFire = TimeSpan.Zero;
 
-    public CancellationTokenSource? TokenSource;
-
     void ISerializationHooks.AfterDeserialization()
     {
         if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
