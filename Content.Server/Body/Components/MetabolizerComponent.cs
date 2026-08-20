@@ -1,5 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Floofstation.Traits;
+using Content.Server._HL.Traits;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -45,7 +46,7 @@ namespace Content.Server.Body.Components
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
         [DataField]
-        [Access(typeof(MetabolizerSystem), typeof(VampirismSystem), Other = AccessPermissions.ReadExecute)] // Floof: VamprismSystem
+        [Access(typeof(MetabolizerSystem), typeof(VampirismSystem), typeof(SuccubusSystem), Other = AccessPermissions.ReadExecute)] // Floof: VamprismSystem | Hardlight: SuccubuSystem
         public HashSet<ProtoId<MetabolizerTypePrototype>>? MetabolizerTypes = null;
 
         /// <summary>
