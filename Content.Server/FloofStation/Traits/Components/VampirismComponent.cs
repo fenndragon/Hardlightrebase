@@ -15,6 +15,10 @@ public sealed partial class VampirismComponent : Component
     [DataField]
     public HashSet<ProtoId<MetabolizerTypePrototype>> MetabolizerPrototypes = new() { "Vampiric", "Animal" };
 
+    //Hardlight : Overriding the method of replacement to avoid trait conflicts
+    [DataField]
+    public HashSet<ProtoId<MetabolizerTypePrototype>> MetabolizerRemover = new() { "Human" };
+
     [DataField]
     public List<MetabolismGroupEntry> AddedMetabolismGroups = new(), RemovedMetabolismGroups = new();
 
