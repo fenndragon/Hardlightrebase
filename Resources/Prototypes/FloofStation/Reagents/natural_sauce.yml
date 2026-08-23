@@ -14,8 +14,33 @@
       - !type:Inseminate
       - !type:SatiateThirst
         factor: 0.2
+        # Hardlight
       - !type:SatiateHunger
-        factor: 1
+        factor: 0.96 # 25u (normal cum trait) is 20 minutes of normal hunger
+        conditions:
+          - !type:OrganType
+            type: Succubus
+          - !type:TaintedCondition
+            taints:
+            - Succubus
+            blacklist: true
+      - !type:AdjustReagent
+        amount: -1.5 # 13 ticks from 25 to 50 so 5 min of hunger
+        reagent: Cum
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+          - !type:OrganType
+            type: Succubus
+      - !type:AdjustReagent
+        amount: -14 # 13 ticks from 50 to 250 so 5 min of hunger
+        reagent: Cum
+        conditions:
+          - !type:ReagentThreshold
+            min: 50
+          - !type:OrganType
+            type: Succubus
+      # end Hardlight
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
