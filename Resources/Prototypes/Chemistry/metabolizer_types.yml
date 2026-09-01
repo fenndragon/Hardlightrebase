@@ -64,3 +64,7 @@
 - type: metabolizerType # HardLight
   id: Dreadtalon
   name: metabolizer-type-dreadtalon
+
+- type: metabolizerType # HardLight
+  id: Succubus
+  name: metabolizer-type-succubus

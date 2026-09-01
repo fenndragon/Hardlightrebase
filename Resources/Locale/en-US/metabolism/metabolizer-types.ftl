@@ -17,3 +17,4 @@ metabolizer-type-resomi = Resomi
 # HardLight
 metabolizer-type-synth = Synth
 metabolizer-type-dreadtalon = Dreadtalon
+metabolizer-type-succubus = Succubus
