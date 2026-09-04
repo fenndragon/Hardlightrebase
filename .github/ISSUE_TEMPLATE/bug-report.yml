@@ -54,6 +54,27 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: server
+    attributes:
+      label: Server
+      description: On which server is this bug encountered?
+      options:
+        - Live Server
+        - Test Server
+        - Both
+    validations:
+      required: true
+
+  - type: input
+    id: context
+    attributes:
+      label: Server / Round ID / Timestamp
+      description: If applicable - helps us match server logs.
+      placeholder: "e.g., Live Server, Round 4821, 2026-05-06 ~14:30 UTC"
+    validations:
+      required: false
+
   - type: checkboxes
     id: checklist
     attributes:
@@ -63,4 +84,4 @@ body:
         - label: I have searched for existing issues and this is not a duplicate
           required: true
         - label: I can reproduce this bug consistently with the steps above
-          required: true
+          required: false
