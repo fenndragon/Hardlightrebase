@@ -21,6 +21,7 @@ public sealed class SuccubusSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SuccubusComponent, MapInitEvent>(OnInitSuccubus);
+        SubscribeLocalEvent<CumProducerComponent, CumCompPostInitEvent>(OnInitCum);
     }
 
     private void OnInitSuccubus(Entity<SuccubusComponent> ent, ref MapInitEvent args)
@@ -40,15 +41,21 @@ public sealed class SuccubusSystem : EntitySystem
             else metabolizer.MetabolizerTypes.UnionWith(ent.Comp.MetabolizerPrototypes);
         }
 
-        if (TryComp<CumProducerComponent>(ent, out var cumcomp)
-        && _solutionContainerSystem.ResolveSolution(ent.Owner, cumcomp.SolutionName, ref cumcomp.Solution, out var cumsol))
-            EnsureCumTag(ent, cumsol);
+        if (TryComp<CumProducerComponent>(ent, out var cumcomp))
+            RaiseLocalEvent(ent, new CumCompPostInitEvent());
 
     }
 
-    private void EnsureCumTag(Entity<SuccubusComponent> ent, Solution cumsol)
+    private void OnInitCum(Entity<CumProducerComponent> ent, ref CumCompPostInitEvent args)
     {
-        var taint = ent.Comp.Taint;
+        if (TryComp<SuccubusComponent>(ent, out var succomp)
+        && _solutionContainerSystem.ResolveSolution(ent.Owner, ent.Comp.SolutionName, ref ent.Comp.Solution, out var cumsol))
+            EnsureCumTag(succomp, cumsol);
+    }
+
+    private void EnsureCumTag(SuccubusComponent comp, Solution cumsol)
+    {
+        var taint = comp.Taint;
 
         foreach (var reagent in cumsol)
         {
