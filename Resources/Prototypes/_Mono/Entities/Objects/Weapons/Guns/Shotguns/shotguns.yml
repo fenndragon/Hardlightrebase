@@ -71,6 +71,7 @@
   parent:
   - BaseWeaponShotgun
   - BaseGunWieldable
+  - BaseC2ExpeditionContraband
   id: WeaponShotgunBigBuddy
   description: A massive 4 gauge (23x75mm) shotgun made to kill what any caliber below an autocannon cant.
   components:
