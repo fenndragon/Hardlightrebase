@@ -1,0 +1,43 @@
+# Author Info
+# Codeforge: penguin_codest
+# Discord: Penguin_coder
+
+# Maintainer Info
+# Codeforge: penguin_codest
+# Discord: Penguin_coder
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Vauxhaul
+  parent: BaseVessel
+  name: PNC Vauxhaul
+  description: A Light crusier, decommissioned from the colonial navy, and given to Colsec. Communicate with Colonal Command for additional Torpedos.
+  price: 165000 # HL: Rebalancing ship prices to 5% more than sell price (or using the MinPriceMarkup field)
+  category: Large
+  group: Security
+  access: Security
+  shuttlePath: /Maps/_HL/Shuttles/ColSec/vauxhaul.yml
+  guidebookPage: Null
+  class:
+  - Pursuit
+  engine:
+  - Uranium
+
+
+- type: gameMap
+  id: Vauxhaul
+  mapName: 'PNC Vauxhaul'
+  mapPath: /Maps/_HL/Shuttles/ColSec/vauxhaul.yml
+  minPlayers: 0
+  stations:
+    Vauxhaul:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'PNC Vauxhaul {1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs: {}
