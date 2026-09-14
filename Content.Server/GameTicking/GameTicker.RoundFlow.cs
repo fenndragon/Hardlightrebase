@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server._HL.CD;
 using Content.Server._NF.PublicTransit.Components;
 using Content.Server._NF.RoundNotifications.Events; // Frontier
 using Content.Server.Announcements;
@@ -44,6 +45,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly ITaskManager _taskManager = default!;
         [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!; // Hardlight
+        [Dependency] private readonly WindDownSystem _windDownSystem = default!; // HardLight: CD Shutdown
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -831,6 +833,8 @@ namespace Content.Server.GameTicking
             {
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
+                else if (_windDownSystem.ShutdownScheduled)
+                    _windDownSystem.BeginShutDown(); // HardLight: CD Shutdown
                 else
                     _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
