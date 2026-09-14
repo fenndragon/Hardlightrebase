@@ -11,5 +11,6 @@ namespace Content.Shared.Preferences
         None = 0,
         Arrivals = 1,
         Cryosleep = 2,
+        ColComm = 3,
     }
 }

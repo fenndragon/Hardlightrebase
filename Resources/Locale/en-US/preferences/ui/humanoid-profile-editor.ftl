@@ -45,6 +45,7 @@ humanoid-profile-editor-guidebook-button-tooltip = Click for more info
 humanoid-profile-editor-preference-spawn-priority-none = None
 humanoid-profile-editor-preference-spawn-priority-arrivals = Arrivals
 humanoid-profile-editor-preference-spawn-priority-cryosleep = Cryosleep
+humanoid-profile-editor-preference-spawn-priority-colcomm = Colonial Command
 
 humanoid-profile-editor-jobs-amount-in-department-tooltip = Jobs in the {$departmentName} department
 humanoid-profile-editor-department-jobs-label = {$departmentName}
