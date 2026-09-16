@@ -128,3 +128,29 @@ marking-LizardChestFin = Lizard Fin
 marking-LizardSnoutSplotch = Lizard Snout (Splotch)
 marking-LizardSnoutSplotch-snout_splotch_primary = Muzzle
 marking-LizardSnoutSplotch-snout_splotch_secondary = Snoot
+
+marking-Nardo_tail = Nardo Tail (static)
+marking-Nardo_tail-Nardo_tail_primary = Primary
+marking-Nardo_tail-Nardo_tail_secondary = Secondary
+
+marking-Nardo_ears = Nardo Ears
+marking-Nardo_ears-Nardo_ears = Nardo Ears
+
+marking-Nardo_ears_large = Nardo Ears Large
+marking-Nardo_ears_large-Nardo_ears_large = Nardo Ears Large
+
+marking-Nardo_backfluff = Nardo Backfluff
+marking-Nardo_backfluff-Nardo_backfluff = Nardo Backfluff
+
+marking-Nardo_backfluff_large = Nardo Backfluff Large
+marking-Nardo_backfluff_large-Nardo_backfluff_large = Nardo Backfluff Large
+
+marking-Nardo_snoot = Nardo Snoot 
+marking-Nardo_snoot-Nardo_snoot = Nardo Snoot
+
+marking-Nardo_snoot_alt = Nardo Snoot Alternate
+marking-Nardo_snoot_alt-Nardo_snoot_alt = Nardo Snoot Alternate
+
+marking-Nardo_tail_wagging = Nardo Tail (wagging)
+marking-Nardo_tail_wagging-Nardo_tail_wagging_primary = Primary
+marking-Nardo_tail_wagging-Nardo_tail_wagging_secondary = Secondary
