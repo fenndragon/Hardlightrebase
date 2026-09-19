@@ -18,10 +18,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 31
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 25
         - ReagentId: Flavorol
           Quantity: 5
 
@@ -42,10 +42,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 9
+        maxVol: 11
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 5
         - ReagentId: Flavorol
           Quantity: 1
 # Custom Bread Example
@@ -88,6 +88,15 @@
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: FlavorProfile
     flavors:
       - banana
@@ -110,6 +119,15 @@
   id: FoodBreadBananaSlice
   description: A slice of delicious banana bread.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 13
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Flavorol
+          Quantity: 2
   - type: FlavorProfile
     flavors:
       - banana
@@ -148,12 +166,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
         - ReagentId: Fiber
-          Quantity: 10
+          Quantity: 20
+        - ReagentId: Flavorol
+          Quantity: 5
   - type: MothFood # Frontier
 
 - type: entity
@@ -179,12 +199,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Fiber
-          Quantity: 2
+          Quantity: 4
+        - ReagentId: Flavorol
+          Quantity: 1
   - type: MothFood # Frontier
 
 - type: entity
@@ -203,15 +225,6 @@
     - state: cornbread
   - type: SliceableFood
     slice: FoodBreadCornSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Flavorol
-          Quantity: 5
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -228,15 +241,6 @@
   - type: Sprite
     layers:
     - state: cornbread-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Flavorol
-          Quantity: 1
 
 - type: entity
   name: cream cheese bread
@@ -258,13 +262,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 30
         - ReagentId: Flavorol
+          Quantity: 10
+        - ReagentId: Vitamin
           Quantity: 5
 # Tastes like bread, cheese.
 
@@ -286,14 +290,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
         - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 2
         - ReagentId: Flavorol
-          Quantity: 1.5
+          Quantity: 1
 
 - type: entity
   name: meat bread
@@ -314,12 +318,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 75
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 50
+        - ReagentId: Protein
+          Quantity: 10
         - ReagentId: Flavorol
           Quantity: 10
   - type: Tag
@@ -345,12 +349,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 19
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 2
         - ReagentId: Flavorol
           Quantity: 2
   - type: Tag
@@ -378,17 +382,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Nothing
           Quantity: 5
         - ReagentId: MuteToxin
-          Quantity: 5
-        - ReagentId: Flavorol
           Quantity: 5
 # Tastes like bread, cheese.
 
@@ -409,17 +413,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+        - ReagentId: Flavorol
+          Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Nothing
           Quantity: 1
         - ReagentId: MuteToxin
-          Quantity: 1
-        - ReagentId: Flavorol
           Quantity: 1
 
 - type: entity
@@ -465,16 +469,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
+          Quantity: 40
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -500,11 +502,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 8
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 2
         - ReagentId: Flavorol
           Quantity: 2
   - type: Tag
@@ -532,16 +532,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 60
+        maxVol: 75
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Toxin
-          Quantity: 5
+          Quantity: 40
         - ReagentId: Flavorol
           Quantity: 10
+        - ReagentId: Protein
+          Quantity: 10
+        - ReagentId: Toxin
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -568,11 +568,11 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 2
         - ReagentId: Toxin
-          Quantity: .5
+          Quantity: 1
         - ReagentId: Flavorol
           Quantity: 2
   - type: Tag
@@ -600,14 +600,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 60 # Frontier: 48<60
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 40
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Protein
-          Quantity: 12
-        - ReagentId: Flavorol # Frontier
-          Quantity: 8 # Frontier
+          Quantity: 10
 # Tastes like bread, tofu.
 
 - type: entity
@@ -627,14 +627,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12 # Frontier: 10<12
+        maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2.4
-        - ReagentId: Flavorol # Frontier
-          Quantity: 1.6 # Frontier
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 2
+        - ReagentId: Flavorol
+          Quantity: 2
 
 - type: entity
   name: xeno meat bread
@@ -655,13 +655,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 40
         - ReagentId: Flavorol
+          Quantity: 10
+        - ReagentId: Protein
           Quantity: 10
   - type: Tag
     tags:
@@ -689,11 +689,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 8
+        - ReagentId: Protein
+          Quantity: 2
         - ReagentId: Flavorol
-          Quantity: 2.4
+          Quantity: 2
   - type: Tag
     tags:
     - Meat
@@ -716,18 +716,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 37
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 25
+        - ReagentId: Flavorol
+          Quantity: 5
         - ReagentId: TableSalt
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
-        - ReagentId: Flavorol # Frontier
-          Quantity: 5 # Frontier
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -772,14 +770,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 37
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 10
         - ReagentId: Fiber
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 15
+        - ReagentId: Flavorol
+          Quantity: 5
         - ReagentId: TableSalt
           Quantity: 1
         - ReagentId: Blackpepper
@@ -797,10 +795,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
-          Quantity: 0.5
+          Quantity: 2
         - ReagentId: Vitamin
           Quantity: 0.1
         - ReagentId: TableSalt
@@ -826,12 +824,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
-          Quantity: 0.25
+          Quantity: 0.8
         - ReagentId: Fiber
-          Quantity: 0.25
+          Quantity: 1.25
         - ReagentId: Vitamin
           Quantity: 0.1
         - ReagentId: TableSalt
@@ -855,10 +853,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 17
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Flavorol
@@ -880,14 +878,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 22
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Flavorol
-          Quantity: 1
+          Quantity: 5
 # Tastes like bread, butter.
 
 - type: entity
@@ -906,10 +904,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -932,10 +930,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 21
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Flavorol
@@ -977,10 +975,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 22
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Wine

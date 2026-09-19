@@ -124,10 +124,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 67
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 40
         - ReagentId: Flavorol
           Quantity: 10
         - ReagentId: Ichor
@@ -152,14 +152,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 33
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 1
+          Quantity: 5
 
 - type: entity
   name: breakfast bagel
@@ -179,14 +179,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 1
+          Quantity: 5
 
 - type: entity
   name: poppyseed breakfast bagel
@@ -206,12 +206,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 57
         reagents:
         - ReagentId: Bicaridine
           Quantity: 5
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 35
         - ReagentId: Protein
           Quantity: 7
         - ReagentId: Flavorol
@@ -237,14 +237,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
+          Quantity: 25
         - ReagentId: Vitamin
           Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 5
         - ReagentId: CucumberWater
-          Quantity: 10
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -267,10 +269,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 56
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Flavorol
@@ -300,10 +302,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 56
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Flavorol
@@ -334,14 +336,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 8
+          Quantity: 15
   - type: Tag
     tags:
     - Fruit
@@ -365,14 +367,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 46
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 8
         - ReagentId: Flavorol
-          Quantity: 8
+          Quantity: 15
         - ReagentId: Theobromine
           Quantity: 3
   - type: Tag
@@ -400,7 +402,7 @@
         maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20
         - ReagentId: Flavorol
           Quantity: 10
 
@@ -423,10 +425,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -455,10 +457,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -488,10 +490,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -522,15 +524,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
           Quantity: 10
-        - ReagentId: CapsaicinOil
+        - ReagentId: Protein
           Quantity: 3
   - type: Tag
     tags:
@@ -555,10 +557,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -616,10 +618,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 15
         - ReagentId: Flavorol
           Quantity: 5
   - type: Construction

@@ -37,7 +37,7 @@
   description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Food
   - type: Sprite
     drawdepth: Mobs
@@ -86,7 +86,7 @@
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
@@ -105,10 +105,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 28
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 3
   - type: Item
@@ -150,16 +150,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 3
         - ReagentId: Flavorol
-          Quantity: 6
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -180,10 +178,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 19
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
@@ -221,6 +221,7 @@
   - type: Tag
     tags:
     - Meat
+#left this one with low Nutriment, because its made with something inedible
 
 - type: entity
   name: bearger
@@ -237,16 +238,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -265,14 +266,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 43
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 17
-        - ReagentId: Vitamin
-          Quantity: 9
-        - ReagentId: Flavorol
+          Quantity: 35
+        - ReagentId: Protein
           Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 15
   - type: Sprite
     state: bigbite
   - type: Tag
@@ -295,16 +298,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -326,14 +329,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 3
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -354,15 +359,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 7
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 1
-        - ReagentId: Flavorol
+          Quantity: 5
+        - ReagentId: Vitamin
           Quantity: 5
   - type: Tag
     tags:
@@ -378,7 +381,7 @@
 # Tastes like bun, beef patty, cheese.
 
 - type: entity
-  name: chicken sandwich # Burger for you euro-cucks
+  name: chicken sandwich
   parent: FoodBurgerBase
   id: FoodBurgerChicken
   description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
@@ -387,23 +390,22 @@
     flavors:
       - bun
       - chicken
+      - mayonnaise
   - type: Sprite
     state: chicken
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Mayo
-          Quantity: 3
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -437,6 +439,7 @@
   - type: Tag
     tags:
     - Meat
+#left this one with low Nutriment, because its made with something inedible
 
 - type: entity
   name: corger #not curger
@@ -453,12 +456,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 55
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
           Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 12
   - type: Tag
     tags:
     - Meat
@@ -478,22 +487,22 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 20
         - ReagentId: Protein
           Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
+  name: crazy hamburger
   parent: FoodBurgerBase
   id: FoodBurgerCrazy
   description: This looks like the sort of food that a demented clown in a trenchcoat would make.
@@ -524,7 +533,7 @@
     - Meat
 
 - type: entity
-  name: duck sandwich # Burger for you sick bastards
+  name: duck sandwich
   parent: FoodBurgerBase
   id: FoodBurgerDuck
   description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
@@ -538,16 +547,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -576,7 +585,7 @@
           Quantity: 5
         - ReagentId: Flavorol
           Quantity: 5
-# Tastes like bun, pure electricity.
+# Tastes like bun, pure electricity, is barely food
 
 - type: entity
   name: fillet-o-carp burger
@@ -588,6 +597,19 @@
     flavors:
       - bun
       - fishy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 48
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Protein
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Sprite
     state: fish
   - type: Tag
@@ -610,18 +632,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: CapsaicinOil
-          Quantity: 5
-        - ReagentId: Blackpepper
+          Quantity: 20
+        - ReagentId: Protein
           Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
+        - ReagentId: CapsaicinOil
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -655,7 +677,7 @@
     tags:
       - ClothMade
       - Meat
-# Tastes like bun, ectoplasm.
+# Tastes like bun, ectoplasm. Barely Edible.
 
 - type: entity
   name: human burger
@@ -672,16 +694,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -701,16 +723,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -733,18 +755,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 49
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 7
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: BbqSauce
           Quantity: 1
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -791,19 +813,6 @@
       - meaty
   - type: Sprite
     state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -820,19 +829,6 @@
       - meaty
   - type: Sprite
     state: rat
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -854,9 +850,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Iron
           Quantity: 5
         - ReagentId: SulfuricAcid
           Quantity: 5
@@ -880,16 +878,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 43
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Protein
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
 # Tastes like bun, redditors.
 
 - type: entity
@@ -926,25 +922,26 @@
   description: This is a mountain of a burger. FOOD!
   components:
   - type: FlavorProfile
-    flavors: # What bun?
+    flavors:
+      - bun
       - meaty
       - oily
       - cheesy
+      - tomato
+      - egg
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 90 # Frontier: 60<90
+        maxVol: 110
         reagents:
         - ReagentId: Nutriment
-          Quantity: 29
+          Quantity: 55
+        - ReagentId: Protein
+          Quantity: 15
         - ReagentId: Vitamin
-          Quantity: 24
-        - ReagentId: TableSalt
-          Quantity: 5
-        - ReagentId: Blackpepper
-          Quantity: 5
+          Quantity: 10
         - ReagentId: Flavorol
-          Quantity: 20
+          Quantity: 25
   - type: Sprite
     state: superbite
   - type: Tag
@@ -967,16 +964,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 3
-        - ReagentId: Flavorol
           Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
 # Tastes like bun, tofu.
 
 - type: entity
@@ -995,16 +992,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -1029,14 +1026,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 4
+          Quantity: 5
         - ReagentId: Vitamin
-          Quantity: 7
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -1058,12 +1057,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 48
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 20
         - ReagentId: Protein
-          Quantity: 6
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Nothing
           Quantity: 5
   - type: Tag
