@@ -426,8 +426,8 @@
 
 - type: marking
   id: Nardo_backfluff
-  bodyPart: HeadSide
-  markingCategory: HeadSide
+  bodyPart: Chest
+  markingCategory: Chest
   speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid, ProtoReptile]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
@@ -435,8 +435,8 @@
 
 - type: marking
   id: Nardo_backfluff_large
-  bodyPart: HeadSide
-  markingCategory: HeadSide
+  bodyPart: Chest
+  markingCategory: Chest
   speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid, ProtoReptile]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
