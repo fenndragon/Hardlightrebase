@@ -15,6 +15,9 @@
         },
         {
             "name": "refill_passiondrobe"
+        },
+        {
+            "name": "refill_sprayvend"
         }
     ]
 }

@@ -1,0 +1,26 @@
+- type: vendingMachineInventory
+  id: sprayVendInventory
+  startingInventory:
+    SprayPaintBlue: 5
+    SprayPaintRed: 5
+    SprayPaintOrange: 5
+    SprayPaintBlack: 5
+    SprayPaintGreen: 5
+    SprayPaintPurple: 5
+    SprayPaintWhite: 5
+    DeathPaint: 5 
+    DeathPaintTwo: 5
+    SprayPaintBlueDeep: 5
+    SprayPaintRedDeep: 5
+    SprayPaintGreenDeep: 5
+    SprayPaintBlackDeep: 5
+    SprayPaintPurpleDeep: 5
+    SprayPaintSilver: 5
+    SprayPaintGrey: 5
+    SprayPaintGreyDeep: 5
+    SprayPaintAqua: 5
+    SprayPaintAquaDeep: 5
+    SprayPaintGold: 5
+    SprayPaintYellow: 5
+    SprayPaintPink: 5
+    SprayPaintBrown: 5
