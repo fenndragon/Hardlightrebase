@@ -73,6 +73,7 @@
     energy: 1.6
     color: "#B63BB8"
 
+#HL added a SprayVend to sell spraypaints
 - type: entity
   parent: VendingMachine
   id: sprayVend

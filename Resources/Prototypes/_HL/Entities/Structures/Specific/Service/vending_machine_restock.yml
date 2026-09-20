@@ -15,6 +15,7 @@
       shader: unshaded
     - state: refill_passiondrobe
 
+#HL This is the restock box for the SprayVend
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockSprayVend

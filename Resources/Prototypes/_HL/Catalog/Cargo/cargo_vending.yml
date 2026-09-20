@@ -16,6 +16,7 @@
   category: cargoproduct-category-name-fun
   group: market
 
+#HL This is the cargo request computer entry for the box of restocks
 - type: cargoProduct
   id: CrateVendingMachineRestockSprayVend
   icon:

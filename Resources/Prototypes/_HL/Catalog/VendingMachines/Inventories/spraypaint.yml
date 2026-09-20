@@ -1,3 +1,4 @@
+#HL This is the inventory of the SprayVend
 - type: vendingMachineInventory
   id: sprayVendInventory
   startingInventory:
