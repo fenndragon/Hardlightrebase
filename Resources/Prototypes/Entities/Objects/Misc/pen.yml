@@ -127,6 +127,9 @@
     state: pen_centcom
   - type: Item
     heldPrefix: pen_centcom
+  - type: Stamp # HardLight
+    stampedColor: "#004400" # HardLight
+    protected: True # HardLight
 
 - type: entity
   name: captain's fountain pen

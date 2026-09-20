@@ -451,6 +451,11 @@ public sealed class PaperSystem : EntitySystem
             _adminLogger.Add(LogType.Verb, LogImpact.Low,
                 $"{ToPrettyString(signer):player} has signed {ToPrettyString(paper):paper}.");
 
+            // HardLight: Protect papers signed by CCOs
+            if (stamp.Protected)
+                _tagSystem.AddTag(paper, NFPaperStampProtectedTag);
+            // End HardLight
+
             UpdateUserInterface(paper);
 
             DelayStamp(pen); // prevent stamp spam
