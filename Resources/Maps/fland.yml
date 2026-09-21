@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 05/30/2026 17:05:26
-  entityCount: 39193
+  entityCount: 39194
 maps:
 - 1
 grids:
@@ -244547,6 +244547,14 @@ entities:
     components:
     - type: Transform
       pos: 4.5,30.5
+      parent: 2
+#HL Placed a spraypaint vendor near cargofront
+- proto: sprayVend
+  entities:
+  - uid: 39194
+    components:
+    - type: Transform
+      pos: 9.5,-4.5
       parent: 2
 - proto: VinylPlayer
   entities:

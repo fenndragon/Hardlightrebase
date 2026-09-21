@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/04/2026 12:23:19
-  entityCount: 25618
+  entityCount: 25619
 maps:
 - 1
 grids:
@@ -170762,6 +170762,14 @@ entities:
     components:
     - type: Transform
       pos: -7.5,-10.5
+      parent: 2
+#HL add Sprayvend to cargofront
+- proto: sprayVend
+  entities:
+  - uid: 25619
+    components:
+    - type: Transform
+      pos: 7.5,12.5
       parent: 2
 - proto: VinylPlayer
   entities:

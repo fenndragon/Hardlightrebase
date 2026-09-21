@@ -37084,11 +37084,6 @@ entities:
       parent: 2
 - proto: BannerCargo
   entities:
-  - uid: 1428
-    components:
-    - type: Transform
-      pos: 136.5,107.5
-      parent: 2
   - uid: 1429
     components:
     - type: Transform
@@ -220497,6 +220492,14 @@ entities:
     components:
     - type: Transform
       pos: 54.5,105.5
+      parent: 2
+#HL replaced a banner with a spraypaint vendor near cargofront
+- proto: sprayVend
+  entities:
+  - uid: 1428
+    components:
+    - type: Transform
+      pos: 136.5,107.5
       parent: 2
 - proto: RCD
   entities:
