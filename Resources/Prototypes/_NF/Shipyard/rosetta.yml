@@ -1,0 +1,40 @@
+# Author Info
+# GitHub: The-Aisen
+# Discord: ich_bin_aisenberg
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Rosetta
+  parent: BaseVessel
+  name: NOV-Rosetta
+  description: The Rosetta-class is a xenoarcheological research platform produced by the enigmatic "System." Equal parts luxury survey craft and excavator, she trades internal crew comfort for reinforced hull plating and double of what you would normally expect in artifact chambers. Though her primary mining platform has been damaged in transit to the sector, it still makes short work of asteroids, and doubles and once restored it can act as defensive battery when a customer turns hostile. 
+  price: 99999
+  category: Medium
+  group: Shipyard
+  shuttlePath: /Maps/_Mono/Shuttles/rosetta.yml
+  guidebookPage: Null
+  class:
+  - Science
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Rosetta
+  mapName: 'NOV-Rosetta'
+  mapPath: /Maps/_Mono/Shuttles/rosetta.yml
+  minPlayers: 0
+  stations:
+    Rosetta:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Rosetta {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]
