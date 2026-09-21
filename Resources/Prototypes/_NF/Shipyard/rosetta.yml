@@ -8,8 +8,8 @@
   id: Rosetta
   parent: BaseVessel
   name: NOV-Rosetta
-  description: The Rosetta-class is a xenoarcheological research platform produced by the enigmatic "System." Equal parts luxury survey craft and excavator, she trades internal crew comfort for reinforced hull plating and double of what you would normally expect in artifact chambers. Though her primary mining platform has been damaged in transit to the sector, it still makes short work of asteroids, and doubles and once restored it can act as defensive battery when a customer turns hostile. 
-  price: 99999
+  description: The Rosetta-class is a xenoarcheological research platform produced by the enigmatic "System." Equal parts luxury survey craft and excavator, she trades internal crew comfort for reinforced hull plating and double of what you would normally expect in artifact chambers. Though her primary mining platform has been damaged in transit to the sector, it still makes short work of asteroids and once restored it can act as defensive battery when a customer turns hostile.
+  price: 110000
   category: Medium
   group: Shipyard
   shuttlePath: /Maps/_Mono/Shuttles/rosetta.yml
