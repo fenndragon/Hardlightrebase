@@ -137,7 +137,7 @@
   - type: Silicon
     entityType: enum.SiliconType.Player
     batteryPowered: true
-    drainPerSecond: 1.5
+    drainPerSecond: 0.5 # HardLight: reduced from 1.5 (a third) so cell lasts a full expedition
     chargeThresholdMid: 0.80
     chargeThresholdLow: 0.35
     chargeThresholdCritical: 0.10
