@@ -2,3 +2,28 @@
   id: FeroxiGnashes
   files:
   - /Audio/Effects/bite.ogg
+
+# HardLight: Ported from OmuStation
+- type: soundCollection
+  id: FeroxiScreams
+  files:
+  - /Audio/_Omu/Voice/Feroxi/feroxi-scream1.ogg
+  - /Audio/_Omu/Voice/Feroxi/feroxi-scream2.ogg
+
+- type: soundCollection
+  id: FeroxiCries
+  files:
+  - /Audio/_Omu/Voice/Feroxi/feroxi-cry1.ogg
+  - /Audio/_Omu/Voice/Feroxi/feroxi-cry2.ogg
+
+- type: soundCollection
+  id: FeroxiChirps
+  files:
+  - /Audio/_Omu/Voice/Feroxi/feroxi-chirp1.ogg
+  - /Audio/_Omu/Voice/Feroxi/feroxi-chirp2.ogg
+  - /Audio/_Omu/Voice/Feroxi/feroxi-chirp3.ogg
+
+- type: soundCollection
+  id: FeroxiSqueaks
+  files:
+  - /Audio/_Omu/Voice/Feroxi/feroxi-squeak.ogg

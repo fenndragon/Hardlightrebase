@@ -170,3 +170,35 @@
     - gnashed her teeth
     - gnashed his teeth
     - gnashed its teeth
+
+- type: emote
+  id: FeroxiChirp
+  name: omu-chat-emote-name-feroxi-chirp
+  category: Vocal
+  available: true
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-chirp"]
+  chatTriggers:
+    - chirp
+    - chirps
+
+- type: emote
+  id: FeroxiSqueak
+  name: omu-chat-emote-name-feroxi-squeak
+  category: Vocal
+  available: true
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-squeak"]
+  chatTriggers:
+    - squeak
+    - squeaks
