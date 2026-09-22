@@ -348,19 +348,28 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         UpdateLight(uid, component);
     }
 
-    public void ToggleBlinkingLight(EntityUid uid, PoweredLightComponent light, bool isNowBlinking)
+    public void ToggleBlinkingLight(EntityUid uid, bool isNowBlinking, TimeSpan? duration)
     {
-        if (light.IsBlinking == isNowBlinking)
-            return;
+        if (isNowBlinking)
+        {
+            var blink = EnsureComp<BlinkingPoweredLightComponent>(uid);
+            blink.StopBlinkingTime = duration;
+            Dirty(uid, blink);
+        }
+        else
+            RemCompDeferred<BlinkingPoweredLightComponent>(uid);
 
-        light.IsBlinking = isNowBlinking;
-        Dirty(uid, light);
 
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
         _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
     }
+
+    public void ToggleBlinkingLight(EntityUid uid, bool isNowBlinking) =>
+        ToggleBlinkingLight(uid, isNowBlinking, null);
+
+
 
     private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
     {
@@ -421,5 +430,18 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         EjectBulb(args.Args.Target.Value, args.Args.User, component);
 
         args.Handled = true;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = GameTiming.CurTime;
+        var query = EntityQueryEnumerator<BlinkingPoweredLightComponent>();
+        while (query.MoveNext(out var uid, out var blinkingComp))
+        {
+            if (curTime > blinkingComp.StopBlinkingTime)
+                RemCompDeferred<BlinkingPoweredLightComponent>(uid);
+        }
     }
 }
