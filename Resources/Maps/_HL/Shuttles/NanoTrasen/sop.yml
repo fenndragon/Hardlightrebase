@@ -29463,7 +29463,6 @@ entities:
     - type: Physics
       canCollide: True
     - type: ActionsContainer
-    - type: Timer
 - proto: LightTubeCrystalGreen
   entities:
   - uid: 4053

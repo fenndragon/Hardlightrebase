@@ -181586,7 +181586,7 @@ entities:
                [head=1]User Guide: DewDrop Mk7[/head]
 
 
-            The DewDrop is a Prison Transport Vessel running off of a single SMES, and must be docked to either Oasis Station or the Perma Exile to recharge. 
+            The DewDrop is a Prison Transport Vessel running off of a single SMES, and must be docked to either Oasis Station or the Perma Exile to recharge.
             [italic]This is a security measure to make the vessel non-viable for flight out-of-sector in the unlikely scenario that Station Security are overwhelmed by inmates.
         [/italic]
 
@@ -185587,13 +185587,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 22.5,4.5
       parent: 2
-    - type: Timer
   - uid: 18085
     components:
     - type: Transform
       pos: 22.5,9.5
       parent: 2
-    - type: Timer
   - uid: 18086
     components:
     - type: Transform
@@ -185647,7 +185645,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 30.5,-5.5
       parent: 2
-    - type: Timer
   - uid: 18095
     components:
     - type: Transform
@@ -186099,7 +186096,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -29.5,39.5
       parent: 2
-    - type: Timer
   - uid: 18173
     components:
     - type: Transform
