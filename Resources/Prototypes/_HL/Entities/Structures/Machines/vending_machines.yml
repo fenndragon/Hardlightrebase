@@ -75,7 +75,7 @@
 
 #HL added a SprayVend to sell spraypaints
 - type: entity
-  parent: VendingMachine
+  parent: [VendingMachine, BaseStructureDisableAnchoring]
   id: sprayVend
   name: SprayVend
   description: A vending machine for spray paint needs.
