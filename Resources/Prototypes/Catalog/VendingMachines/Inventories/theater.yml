@@ -168,6 +168,9 @@
     ClothingHeadHatJesterAlt: 8
     ClothingUniformJumpsuitJesterAlt: 8
     ClothingShoesJester: 8
+    ClothingUniformJumpsuitCCFID: 8 # HardLight
+    ClothingHeadHatCCFIDShako: 8 # HardLight
+    ClothingShoesBootsCCFID: 8 # HardLight
     ClothingNeckBellCollar: 8
     ClothingOuterWinterMusician: 4
     ClothingMaskJoy: 2
