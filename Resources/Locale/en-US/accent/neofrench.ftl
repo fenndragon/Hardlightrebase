@@ -1,7 +1,6 @@
-accent-neofrench-words-1 = hello
-accent-neofrench-words-1-2 = hi
-accent-neofrench-words-1-3 = heya
-accent-neofrench-words-1-4 = yo
+accent-neofrench-words-1 = hi
+accent-neofrench-words-1-2 = heya
+accent-neofrench-words-1-3 = yo
 accent-neofrench-words-replace-1 = salut
 
 accent-neofrench-words-2 = bye
@@ -33,3 +32,6 @@ accent-neofrench-words-replace-9 = monsieur
 accent-neofrench-words-10 = ma'am
 accent-neofrench-words-10-2 = maam
 accent-neofrench-words-replace-10 = madame
+
+accent-neofrench-words-11 = hello
+accent-neofrench-words-replace-11 = bonjour
