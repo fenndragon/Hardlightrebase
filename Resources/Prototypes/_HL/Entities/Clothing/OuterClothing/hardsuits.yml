@@ -797,3 +797,31 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
+# Cerulean Collective Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitCollective
+  name: Cerulean Standard Hardsuit
+  description: A sleek black hardsuit with blue detailings engraved into it. Designed with protection of the user first and foremost.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/collectiveHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/collectiveHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCollective
+
+# Cerulean Collective Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitCollective
+  name: Cerulean Standard Helmet
+  description: A sleek black helmet with blue detailings engraved into it. Designed with protection of the user first and foremost.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/Hardsuits/collectiveHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/Hardsuits/collectiveHS.rsi
+  - type: PointLight
+    color: "#87cefa"
