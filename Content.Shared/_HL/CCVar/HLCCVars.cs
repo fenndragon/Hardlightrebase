@@ -195,4 +195,26 @@ public sealed class HLCCVars
     public static readonly CVarDef<int> AntagTargetDisconnectRerollTimeout =
         CVarDef.Create("hardlight.antag.reroll.disconnecttime", 5, CVar.SERVERONLY,
             desc: "How many minutes should a player be ghosted or disconnected before re-rolling any antag objectives targeting them");
+
+    /// <summary>
+    /// Hardlight: The background color for paper windows when not editing. If set to white the
+    /// modulation from the PaperVisuals Component will be used instead.
+    /// </summary>
+    public static readonly CVarDef<string> PaperBackgroundColor =
+        CVarDef.Create("hardlight.paper_background_color", "#FFFFFFFF", CVar.CLIENTONLY,
+        desc: "The background color for paper windows when not editing.");
+
+    /// <summary>
+    /// Hardlight: The default text color for paper windows when not editing
+    /// </summary>
+    public static readonly CVarDef<string> PaperTextColor =
+        CVarDef.Create("hardlight.paper_text_color", "#191919FF", CVar.CLIENTONLY,
+        desc: "The default text color for paper windows when not editing.");
+
+    /// <summary>
+    /// Hardlight: Whether the custom paper colors should override special paper with image backgrounds
+    /// </summary>
+    public static readonly CVarDef<bool> PaperSpecialOverride =
+        CVarDef.Create("hardlight.paper_special_override", false, CVar.CLIENTONLY,
+        desc: "Whether the custom paper colors should override special paper with image backgrounds.");
 }
