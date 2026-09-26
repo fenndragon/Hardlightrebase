@@ -10,8 +10,10 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using Content.Client.UserInterface.RichText;
-using Robust.Shared.Input;
+using Content.Shared.HL.CCVar;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
+using Robust.Shared.Input;
 
 namespace Content.Client.Paper.UI
 {
@@ -20,9 +22,12 @@ namespace Content.Client.Paper.UI
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        [ViewVariables]
-        private static Color _defaultTextColor = new(25, 25, 25);
+        private Color _defaultTextColor;
+        private Color _defaultBackgroundColor;
+
+        private readonly bool _specialPaperOverride;
 
         // <summary>
         // Size of resize handles around the paper
@@ -71,6 +76,10 @@ namespace Content.Client.Paper.UI
             RobustXamlLoader.Load(this);
 
             FillableTag.OnTagClicked += OnTagClicked; //Hardlight
+            _defaultTextColor = Color.FromHex(_cfg.GetCVar(HLCCVars.PaperTextColor));
+            _defaultBackgroundColor = Color.FromHex(_cfg.GetCVar(HLCCVars.PaperBackgroundColor));
+            _specialPaperOverride = _cfg.GetCVar(HLCCVars.PaperSpecialOverride);
+            // Hardlight : overrode default colors.
 
             // We can't configure the RichTextLabel contents from xaml, so do it here:
             BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"), null, _defaultTextColor);
@@ -108,6 +117,13 @@ namespace Content.Client.Paper.UI
                 ("keybind", _inputManager.GetKeyFunctionButtonString(EngineKeyFunctions.MultilineTextSubmit)));
         }
 
+        private static Color Invertlumi(Color color)
+        {
+            var hsv = Color.ToHsv(color);
+            hsv.Z = 1f - hsv.Z;
+            return Color.FromHsv(hsv);
+        }
+
         /// <summary>
         ///     Initialize this UI according to <code>visuals</code> Initializes
         ///     textures, recalculates sizes, and applies some layout rules.
@@ -119,7 +135,9 @@ namespace Content.Client.Paper.UI
             StampDisplay.PlacementSeed = (int)entity;
 
             // Initialize the background:
-            PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate;
+            PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate == Color.White || _specialPaperOverride
+                                                    ? _defaultBackgroundColor
+                                                    : visuals.BackgroundModulate; // Hardlight
             var backgroundImage = visuals.BackgroundImagePath != null ? _resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
             if (backgroundImage != null)
             {
@@ -135,10 +153,13 @@ namespace Content.Client.Paper.UI
                     PatchMarginRight = backgroundPatchMargin.Right,
                     PatchMarginTop = backgroundPatchMargin.Top
                 };
-
+                _defaultTextColor = visuals.BackgroundModulate == Color.White || _specialPaperOverride
+                                    ? _defaultTextColor
+                                    : Color.FromHex(HLCCVars.PaperTextColor.DefaultValue); // Hardlight Not doing the luminance inversion here. just back to default.
             }
             else
             {
+                PaperBackground.ModulateSelfOverride = _defaultBackgroundColor;
                 PaperBackground.PanelOverride = null;
             }
 
@@ -150,12 +171,17 @@ namespace Content.Client.Paper.UI
                 HeaderImage.MinSize = HeaderImage.TextureNormal?.Size ?? Vector2.Zero;
             }
 
-            HeaderImage.ModulateSelfOverride = visuals.HeaderImageModulate;
+            HeaderImage.ModulateSelfOverride = Color.ToHsv(PaperBackground.ModulateSelfOverride ?? Color.White).Z > 0.5f
+                                                ? visuals.HeaderImageModulate
+                                                : Invertlumi(visuals.HeaderImageModulate); // Hardlight
             HeaderImage.Margin = new Thickness(visuals.HeaderMargin.Left, visuals.HeaderMargin.Top,
                     visuals.HeaderMargin.Right, visuals.HeaderMargin.Bottom);
 
 
-            PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
+            PaperContent.ModulateSelfOverride = visuals.BackgroundModulate == Color.White || _specialPaperOverride
+                                                ? _defaultBackgroundColor
+                                                : visuals.ContentImageModulate; // Hardlight
+
             WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
             FillStatus.ModulateSelfOverride = visuals.FontAccentColor;
 
