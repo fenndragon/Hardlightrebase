@@ -4,33 +4,33 @@
 
 # Shuttle Notes:
 #
-- type: vessel
-  id: Falena
-  parent: BaseVessel
-  name: NOV-Falena
-  description: Originally built as part of a defense swarm deployed by The System around the NOV-Naonis shipyard, this Falena drone has been retrofitted to support a live crew and, oddly enough, holding prisoners. Dirizher Cartel members habitually hijack these lone units whenever The System dispatches them to monitor points of interest and deep space anomalies outside of the swarm that patrols the shipyard.
+#- type: vessel
+ # id: Falena
+  #parent: BaseVessel
+  #name: NOV-Falena
+  #description: Originally built as part of a defense swarm deployed by The System around the NOV-Naonis shipyard, this Falena drone has been retrofitted to support a live crew and, oddly enough, holding prisoners. Dirizher Cartel members habitually hijack these lone units whenever The System dispatches them to monitor points of interest and deep space anomalies outside of the swarm that patrols the shipyard.
   #price: #[Not meant to be bought yet, price apprasied at 3,000,000 credits circa, use a price markup of 20% to avoid problems with the workflow. Used in events anyway, so who cares about the credit cost?]
-  category: Small
+  #category: Small
   #group: #[Insert Cartel Shipyard here when available]
-  shuttlePath: /Maps/_HL/Shuttles/falena.yml
-  guidebookPage: Null
-  class:
-  - Pursuit
-  engine:
-  - Plasma
+  #shuttlePath: /Maps/_HL/Shuttles/falena.yml
+  #guidebookPage: Null
+  #class:
+  #- Pursuit
+  #engine:
+  #- Plasma
 
-- type: gameMap
-  id: Falena
-  mapName: 'NOV-Falena'
-  mapPath: /Maps/_HL/Shuttles/falena.yml
-  minPlayers: 0
-  stations:
-    Falena:
-      stationProto: StandardFrontierVessel
-      components:
-        - type: StationNameSetup
-          mapNameTemplate: 'DZC Falena {1}'
-          nameGenerator:
-            !type:NanotrasenNameGenerator
-            prefixCreator: '14'
+#- type: gameMap
+  #id: Falena
+  #mapName: 'NOV-Falena'
+  #mapPath: /Maps/_HL/Shuttles/falena.yml
+  #minPlayers: 0
+  #stations:
+    #Falena:
+      #stationProto: StandardFrontierVessel
+      #components:
+        #- type: StationNameSetup
+          #mapNameTemplate: 'DZC Falena {1}'
+          #nameGenerator:
+            #!type:NanotrasenNameGenerator
+            #prefixCreator: '14'
        
