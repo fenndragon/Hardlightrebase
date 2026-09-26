@@ -51,6 +51,7 @@ public enum CollisionGroup
     // Machines, computers
     MachineMask = Impassable | MidImpassable | LowImpassable,
     MachineLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable,
+    TurretLayer = Opaque | MidImpassable | LowImpassable | BulletImpassable | DoorPassable, // Hardlight
     ConveyorMask = Impassable | MidImpassable | LowImpassable | DoorPassable,
 
     // Crates
@@ -78,6 +79,7 @@ public enum CollisionGroup
     ThrownItem = Impassable | HighImpassable | BulletImpassable,
     ItemSlideUnderDoorMask = Impassable | LowImpassable, // FLOOF ADD: Allows some items to slide under doors
     WallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    DWallLayer = Opaque | Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable | DoorPassable, // Hardlight : Added for door ignore
     GlassLayer = Impassable | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
     HalfWallLayer = MidImpassable | LowImpassable,
     FlimsyLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | InteractImpassable,

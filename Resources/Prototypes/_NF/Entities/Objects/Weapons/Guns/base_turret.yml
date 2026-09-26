@@ -21,7 +21,7 @@
         mask:
           - MachineMask
         layer:
-          - MachineLayer
+          - TurretLayer # Hardlight
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
     drawdepth: Mobs

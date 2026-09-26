@@ -635,7 +635,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
             // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
-            if (otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.GlassLayer || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.GlassAirlockLayer || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.TableLayer)
+            // DWallLayer for directional walls, TurretLayer for CDETs
+            if (otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.GlassLayer
+                || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.DWallLayer // Hardlight
+                || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.GlassAirlockLayer
+                || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.TableLayer
+                || otherPhysics.Comp.CollisionLayer == (int)CollisionGroup.TurretLayer // Hardlight
+                )
                 continue;
 
             // Ignore low-passable entities.
