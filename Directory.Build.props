@@ -38,8 +38,8 @@
 
   <!--Required Includes For Above Manifest-->
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\" />
-    <None Include="Resources/Textures/_HL/Logo/icon/icon-256x256.png" Pack="true" PackagePath="\" />
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+    <None Include="../Resources/Textures/_HL/Logo/icon/icon-256x256.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <PropertyGroup>
