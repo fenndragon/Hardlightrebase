@@ -4,8 +4,8 @@ meta:
   engineVersion: 274.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/25/2026 17:59:53
-  entityCount: 395
+  time: 09/25/2026 23:52:15
+  entityCount: 398
 maps: []
 grids:
 - 1
@@ -1502,19 +1502,20 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 397
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,-2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasPipeStraight
   entities:
   - uid: 231
     components:
     - type: Transform
       pos: 1.5,-3.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
-  - uid: 232
-    components:
-    - type: Transform
-      pos: 1.5,-2.5
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
@@ -1573,14 +1574,32 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 396
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasPipeTJunction
   entities:
+  - uid: 60
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 159
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-4.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 233
     components:
     - type: Transform
@@ -1620,6 +1639,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-4.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 241
     components:
     - type: Transform
@@ -1651,6 +1672,13 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 246
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 398
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
+      parent: 1
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GeneratorCRPinchShuttle
@@ -2392,11 +2420,6 @@ entities:
     - type: Transform
       pos: 4.5,-2.5
       parent: 1
-  - uid: 60
-    components:
-    - type: Transform
-      pos: -2.5,-3.5
-      parent: 1
   - uid: 61
     components:
     - type: Transform
@@ -2796,6 +2819,11 @@ entities:
     components:
     - type: Transform
       pos: -2.5,1.5
+      parent: 1
+  - uid: 232
+    components:
+    - type: Transform
+      pos: -2.5,-3.5
       parent: 1
   - uid: 261
     components:
