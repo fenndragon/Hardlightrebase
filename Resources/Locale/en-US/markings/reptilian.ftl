@@ -142,6 +142,9 @@ marking-Nardo_ears_large-Nardo_ears_large = Nardo Ears Large
 marking-Nardo_backfluff = Nardo Backfluff
 marking-Nardo_backfluff-Nardo_backfluff = Nardo Backfluff
 
+marking-Nardo_backfluff_long = Nardo Backfluff Long
+marking-Nardo_backfluff_long-Nardo_backfluff-long = Nardo Backfluff Long
+
 marking-Nardo_backfluff_large = Nardo Backfluff Large
 marking-Nardo_backfluff_large-Nardo_backfluff_large = Nardo Backfluff Large
 

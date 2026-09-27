@@ -443,6 +443,15 @@
     state: Nardo_backfluff_large
 
 - type: marking
+  id: Nardo_backfluff_long
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid, ProtoReptile]
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: Nardo_backfluff_long
+
+- type: marking
   id: Nardo_snoot
   bodyPart: Snout
   markingCategory: Snout
