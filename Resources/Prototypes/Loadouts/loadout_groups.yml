@@ -1415,6 +1415,7 @@
   loadouts:
   - ChiefMedicalOfficerBeret
   - CMOMedicalHeadMirror
+  - CMOVetBeret #Omu
   subgroups:
   - ContractorHead # HL - Add departmental NF-style loadouts
 
@@ -1438,6 +1439,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - CMOVetLabCoat #Omu
   subgroups:
   - ContractorOuterClothing # HL - Add departmental NF-style loadouts
 

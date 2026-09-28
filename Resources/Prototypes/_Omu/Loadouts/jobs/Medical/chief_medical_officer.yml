@@ -1,0 +1,29 @@
+- type: loadoutEffectGroup
+  id: VeteranCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist
+      time: 90000 #25 hours
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 270000  #75 hours
+
+- type: loadout
+  id: CMOVetLabCoat
+  equipment:
+    outerClothing: ClothingOuterCMOLabCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO
+
+- type: loadout
+  id: CMOVetBeret
+  equipment:
+    head: ClothingHeadHatBeretVeteranCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO
