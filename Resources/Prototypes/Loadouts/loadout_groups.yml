@@ -1427,7 +1427,12 @@
   - ChiefMedicalOfficerJumpskirt
   - ChiefMedicalOfficerTurtleneckJumpsuit
   - ChiefMedicalOfficerTurtleneckJumpskirt
-  - ChiefMedicalOfficerClothingJumpsuitThong # Add lingerie
+  - ChiefMedicalOfficerClothingJumpsuitThong
+  - ChiefMedicalOfficerVestJumpsuit #DV
+  - ChiefMedicalOfficerVestJumpskirt #DV
+  - ChiefMedicalOfficerFormalJumpsuit #DV
+  - ChiefMedicalOfficerFormalJumpskirt #DV
+   # Add lingerie
   subgroups:
   - MedicalJumpsuit # HL - Add departmental NF-style loadouts
   - ContractorJumpsuit # HL - Add departmental NF-style loadouts
@@ -1450,6 +1455,8 @@
   loadouts:
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
+  - ChiefMedicalOfficerShawl #DV
+  - ChiefMedicalOfficerOverShoulder #DV
   subgroups:
   - ContractorNeck # HL - Add departmental NF-style loadouts
 
