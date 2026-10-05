@@ -90,18 +90,23 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: jumpsuit-female-digi
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: shoes-digi
       accessory1:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Pointed it to the White Dream ported ones instead
+            state: jumpsuit-female-digi
       accessory2:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Pointed it to the White Dream ported ones instead
+            state: jumpsuit-female-digi
       head:
         sizeMaps:
           32:
@@ -113,6 +118,16 @@
             sprite: Mobs/Species/Reptilian/displacement.rsi
             state: mask
     displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: jumpsuit-digi
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: shoes-digi
       head:
         sizeMaps:
           32:
@@ -156,8 +171,13 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Reptilian/displacement.rsi
-            state: jumpsuit-female
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: jumpsuit-female-digi
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: shoes-digi
       head:
         sizeMaps:
           32:
@@ -169,6 +189,16 @@
             sprite: Mobs/Species/Reptilian/displacement.rsi
             state: mask
     displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: jumpsuit-digi
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _White/Mobs/Species/Reptilian/displacement.rsi # Hardlight: Ported from White Dream
+            state: shoes-digi
       head:
         sizeMaps:
           32:
