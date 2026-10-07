@@ -213,6 +213,7 @@
       max: 420
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
+    fillFromInGamePlayers: true
     definitions:
     - prefRoles: [ Traitor ]
       min: 1

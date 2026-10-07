@@ -133,6 +133,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             ChooseAntags((uid, comp), args.Players);
             AssignPreSelectedSessions((uid, comp));
+            FillFromInGamePlayers((uid, comp)); // HardLight
         }
 
         // Also process delayed rules that use IntraPlayerSpawn timing
@@ -238,16 +239,44 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
 
         if (component.AssignmentComplete)
+        {
+            FillFromInGamePlayers((uid, component)); // HardLight
             return;
+        }
 
-        var players = _playerManager.Sessions
+        ChooseAntags((uid, component), GetInGamePlayers(), midround: true); // HardLight: extracted GetInGamePlayers
+        AssignPreSelectedSessions((uid, component));
+    }
+
+    // HardLight start
+    private List<ICommonSession> GetInGamePlayers()
+    {
+        return _playerManager.Sessions
             .Where(x => GameTicker.PlayerGameStatuses.TryGetValue(x.UserId, out var status) &&
                         status == PlayerGameStatus.JoinedGame)
             .ToList();
-
-        ChooseAntags((uid, component), players, midround: true);
-        AssignPreSelectedSessions((uid, component));
     }
+
+    /// <summary>
+    /// Tops up a rule's unfilled antag slots from players already in the round.
+    /// See <see cref="AntagSelectionComponent.FillFromInGamePlayers"/>.
+    /// </summary>
+    private void FillFromInGamePlayers(Entity<AntagSelectionComponent> ent)
+    {
+        if (!ent.Comp.FillFromInGamePlayers || !ent.Comp.AssignmentComplete)
+            return;
+
+        // Drop round-start picks that never became antags so they don't count towards the target.
+        foreach (var set in ent.Comp.PreSelectedSessions.Values)
+        {
+            set.RemoveWhere(session => !ent.Comp.AssignedSessions.Contains(session));
+        }
+
+        ent.Comp.AssignmentComplete = false;
+        ChooseAntags(ent, GetInGamePlayers(), midround: true);
+        AssignPreSelectedSessions(ent);
+    }
+    // HardLight end
 
     /// <summary>
     /// Chooses antagonists from the given selection of players
@@ -279,7 +308,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var playerPool = GetPlayerPool(ent, pool, def);
         var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ? existingAntags.Count : 0;
-        var totalPlayerCount = GetTotalPlayerCount(pool);
+        var totalPlayerCount = GetTotalPlayerCount(_playerManager.Sessions);
         var targetCount = GetTargetAntagCount(ent, totalPlayerCount, def);
         var count = targetCount - existingAntagCount;
 
@@ -351,8 +380,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             foreach (var session in set)
             {
-                // Pre-selected sessions have already gone through filtering; don't block on preferences again.
-                // This allows traitors to be assigned even if no one had the traitor preference enabled.
+                // HardLight: Skip sessions already made antag by an earlier pass (see FillFromInGamePlayers).
+                if (ent.Comp.AssignedSessions.Contains(session))
+                    continue;
+
                 TryMakeAntag(ent, session, def, checkPref: true);
             }
         }
@@ -367,7 +398,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
 
-        if (checkPref && !HasPrimaryAntagPreference(session, def))
+        // HardLight: Fallback roles are opted into too, and GetPlayerPool picks from them.
+        if (checkPref && !HasPrimaryAntagPreference(session, def) && !HasFallbackAntagPreference(session, def))
             return false;
 
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
@@ -534,7 +566,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var preferredList = new List<ICommonSession>();
         var fallbackList = new List<ICommonSession>();
-        var anyValidList = new List<ICommonSession>();
         foreach (var session in sessions)
         {
             if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
@@ -551,19 +582,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             {
                 fallbackList.Add(session);
             }
-            else
-            {
-                // Track all other valid sessions so we can fall back to them if nobody has the preference set.
-                anyValidList.Add(session);
-            }
-        }
-
-        // If nobody has the preference (or fallback preference) enabled, allow picking from any valid session.
-        // This mirrors classic behavior where preferences are best-effort rather than hard requirements.
-        if (preferredList.Count == 0 && fallbackList.Count == 0 && anyValidList.Count > 0)
-        {
-            Log.Info($"Player pool Debug - No preferred or fallback candidates for {ToPrettyString(ent):rule}; falling back to any valid players: {anyValidList.Count}");
-            return new AntagSelectionPlayerPool(new() { anyValidList });
+            // HardLight: Players without the antag preference enabled are never picked.
         }
 
         return new AntagSelectionPlayerPool(new() { preferredList, fallbackList });

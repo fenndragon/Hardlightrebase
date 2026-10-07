@@ -68,6 +68,16 @@ public sealed partial class AntagSelectionComponent : Component
     /// </summary>
     [DataField]
     public bool RemoveUponFailedSpawn = true;
+
+    // HardLight start
+    /// <summary>
+    /// With round persistence most players stay in-game between rounds, so the round-start lobby pool is tiny.
+    /// If true, any antag slots left unfilled by round-start selection are topped up from players already in the round.
+    /// Only use this for antags that are applied to a player's existing body (e.g. traitor, thief), not spawning antags (e.g. wizard or nukie).
+    /// </summary>
+    [DataField]
+    public bool FillFromInGamePlayers;
+    // HardLight end
 }
 
 [DataDefinition]

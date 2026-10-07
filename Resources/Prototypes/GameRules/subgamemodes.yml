@@ -17,6 +17,7 @@
   - type: AntagSelection
     agentName: thief-round-end-agent-name
     selectionTime: IntraPlayerSpawn
+    fillFromInGamePlayers: true # HardLight
     definitions:
     - prefRoles: [ Thief ]
       max: 3
