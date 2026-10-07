@@ -1,0 +1,64 @@
+- type: spaceLaw
+  id: SpaceLaw003
+  code: 003
+  name: Superficial Vandalism
+  severity: Infraction
+  elements:
+    - Defaced station property or property belonging to another individual
+  greater:
+    - SpaceLaw103
+  punishment:
+    - Force repairing or 15k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+    [bullet/]1. [bold]Defaced[/bold] — Applied markings, paint, stickers, or otherwise cosmetically altered property. The key distinction from [bolditalic]103 — Minor Vandalism[/bolditalic] is that defacement here causes no permanent structural damage and can be cleaned or reversed.
+    [bullet/]2. [bold]Station or another's property[/bold] — Covers station walls, floors, furniture, and items owned by or assigned to any other crew member or individual aboard the station.
+
+    [bold]Standard of Proof[/bold] — Probable Cause required for charge
+
+    PC may be established by direct observation, camera footage, or credible witness testimony confirming the act. Finding spray cans or markers on a suspect near freshly defaced surfaces supports PC.
+
+    [bold]Officer Notes[/bold]
+    [bullet/]Prefer the fine and a cleanup order over brig time when the individual is cooperative.
+    [bullet/]If the damage is structural or irreparable (e.g., a smashed fixture), charge [bolditalic]103 — Minor Vandalism[/bolditalic] instead.
+
+
+- type: spaceLaw
+  id: SpaceLaw103
+  code: 103
+  name: Minor Vandalism
+  severity: Minor
+  elements:
+    - Damaged, destroyed, or permanently defaced
+    - Non-critical furniture, a vendor, or personal property
+  greater:
+    - SpaceLaw203
+  punishment:
+    - Work duty to repair damage
+    - Brig time varies by damage
+
+- type: spaceLaw
+  id: SpaceLaw203
+  code: 203
+  name: Vandalism, Major
+  severity: Misdemeanor
+  elements:
+    - Destroyed or damaged non-critical furniture, vendors, or personal property
+    - In a manner that cannot be repaired
+  punishment:
+    - Replacement of item(s)
+    - monetary recompensation
+    - 5 min brig
+
+- type: spaceLaw
+  id: SpaceLaw006
+  code: 006
+  name: Drug Possession
+  severity: Infraction
+  elements:
+    - Possessed illegal drugs
+    - In quantities consistent with personal use
+#  greater:
+#    - SpaceLaw106
+  punishment:
+    - Confiscation and 25k speso fine

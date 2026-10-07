@@ -1,0 +1,57 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              Orientation="Vertical"
+              Margin="5 5 5 5">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer Name="NameBackground" HorizontalExpand="True" VerticalExpand="False">
+                <RichTextLabel Name="LawFullName" HorizontalAlignment="Center"/>
+            </PanelContainer>
+
+            <BoxContainer Orientation="Vertical" Name="ElementsContainer" HorizontalExpand="True">
+                <Label Text="Elements"  Margin="5 0 0 0"/>
+                <GridContainer Name="ElementsDescriptionContainer"
+                    Margin="10 0 10 0"
+                    Columns="1"
+                    HSeparationOverride="5"
+                    HorizontalAlignment="Stretch"
+                    HorizontalExpand="True"/>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" Name="PunishmentContainer" HorizontalExpand="True">
+                <Label Text="Punishment"  Margin="5 0 0 0"/>
+                <GridContainer Name="PunishmentDescriptionContainer"
+                    Margin="10 0 10 0"
+                    Columns="1"
+                    HSeparationOverride="5"
+                    HorizontalAlignment="Stretch"
+                    HorizontalExpand="True"/>
+            </BoxContainer>
+
+            <BoxContainer Orientation="Vertical" Name="RelatedContainer" HorizontalExpand="True">
+                <Label Text="Related Offences"  Margin="5 0 0 0"/>
+                <GridContainer Name="RelatedDescriptionContainer"
+                    Margin="10 0 10 0"
+                    Columns="1"
+                    HSeparationOverride="5"
+                    HorizontalAlignment="Stretch"
+                    HorizontalExpand="True"/>
+            </BoxContainer>
+
+            <BoxContainer Name="DescriptionContainer" HorizontalExpand="True">
+                <Collapsible>
+                    <CollapsibleHeading Title="Description"/>
+                    <CollapsibleBody>
+                        <BoxContainer Name="TextDescriptionContainer"
+                                      Orientation="Vertical"
+                                      Margin="10 0 10 0"
+                                      HorizontalExpand="True"/>
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>
