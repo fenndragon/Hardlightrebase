@@ -1,0 +1,25 @@
+- type: guideEntry
+  id: SOP
+  name: Standard Operating Procedures
+  text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
+  priority: 1 # Frontier
+  children:
+  - SpaceLaw
+  - AlertLevels
+  - SOPDepartments
+  - SOPCommand
+  - CyborgRights
+
+# Departments
+# Security
+# Crimes
+
+- type: guideEntry
+  id: SOPDepartments
+  name: Departments
+  text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
+
+- type: guideEntry
+  id: SOPCommand
+  name: Command
+  text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"

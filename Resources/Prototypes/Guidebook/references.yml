@@ -11,6 +11,7 @@
   - MedicalRecipes # Frontier
   - ArchetypesRangedWeapons # Frontier
   - ColorCodesAmmo # Frontier
+  - Psionics
 
 - type: guideEntry
   id: Drinks

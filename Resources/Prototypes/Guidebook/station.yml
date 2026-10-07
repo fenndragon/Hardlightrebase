@@ -22,14 +22,6 @@
   priority: 3 # Frontier
 
 - type: guideEntry
-  id: SOP
-  name: Standard Operating Procedures
-  text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
-  priority: 1 # Frontier
-  children:
-  - AlertLevels
-
-- type: guideEntry
   id: AlertLevels
   name: Station Alert Levels
   text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/AlertLevelsSOP.xml"

@@ -6,7 +6,6 @@
   - Forensics
   - Defusal
   - CriminalRecords
-#  - SpaceLaw # Frontier - irrelevant
   - Smuggling # Frontier
 
 - type: guideEntry
@@ -25,12 +24,12 @@
   text: "/ServerInfo/Guidebook/Security/CriminalRecords.xml"
 
 # Frontier: not our lawset, shouldn't show up
-# - type: guideEntry
-#   id: SpaceLaw
-#   name: guide-entry-rules-space-law
-#   text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
-#   children:
-#   - SpaceLawCrimeList
+- type: guideEntry
+  id: SpaceLaw
+  name: guide-entry-rules-space-law
+  text: "/ServerInfo/Guidebook/ServerRules/SpaceLaw/SpaceLaw.xml"
+  children:
+  - SpaceLawCrimeList
 
 - type: guideEntry
   id: SpaceLawCrimeList
