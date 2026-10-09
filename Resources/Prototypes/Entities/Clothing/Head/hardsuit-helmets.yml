@@ -497,7 +497,6 @@
         shader: unshaded
       head-synth:
       - state: equipped-head-synth
-      - state: equipped-head-unshaded-synth
         shader: unshaded
   - type: PointLight
     color: "#daffad"
