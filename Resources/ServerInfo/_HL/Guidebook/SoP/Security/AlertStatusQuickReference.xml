@@ -1,0 +1,134 @@
+<Document>
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="5">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Status
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Threat Level
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Search Authority
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+C3 Equipment (Crew/Freelancers)
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Crew Obligation
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Green[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+None known
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Warrant required
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Prohibited
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Normal operations
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Blue[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Confirmed threat
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reasonable Suspicion
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Prohibited
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Remain vigilant; report suspicious activity
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Red[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Immediate threat
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Officer's discretion
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Authorized only when specifically approved by HoS/Captain
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Cooperate with Security; follow authorities
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Black[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Threat Beyond Security Control
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Officer's Discretion
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Authorized on Station
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Obey orders of Command and Security. Disobedience punishable by death.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

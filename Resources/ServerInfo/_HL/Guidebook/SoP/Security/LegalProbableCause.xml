@@ -1,0 +1,42 @@
+<Document>
+## Probable Cause
+
+A reasonable belief, supported by evidence or testimony, that a specific individual [bold]has committed, is committing, or intends to commit[/bold] a crime.
+
+Probable cause is the [bold]threshold for arrest and warrants[/bold]. It requires more than suspicion — it must be grounded in articulable, specific facts.
+
+### What Probable Cause Permits
+
+- Arrest and detention
+- Application for and execution of search warrants
+- Personal searches incident to arrest
+- Seizure of evidence
+- Implant searches where otherwise authorized by law
+
+### How Probable Cause May Be Established
+
+- Direct observation of a crime being committed
+- Physical evidence linking the individual to a crime
+- Security records (camera footage, access logs, station records)
+- Forensic evidence
+- Credible witness testimony
+- Admissions or confessions
+
+Probable cause does [bold]not[/bold] require absolute certainty, but must be supported by facts an officer can clearly articulate — not a hunch.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Example[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+During lawful investigatory detention, the officer questions the Research Assistant seen circling the bridge. The individual then flees. The officer gives a clear order to stop, and the individual continues fleeing. This establishes probable cause for [textlink="119 — Resist, Delay, or Obstruct Justice" link="HLSpaceLawList"]. Security uses a disabler to stop the individual, applies restraints, and conducts a search incident to arrest. During that lawful search, Security finds an access breaker and a syndicate uplink. Security has now lawfully located and arrested a syndicate operative before they could cause harm.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

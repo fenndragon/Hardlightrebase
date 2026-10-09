@@ -1,3 +1,4 @@
+# 0XX - Infractions
 - type: spaceLaw
   id: SpaceLaw003
   code: 003
@@ -11,17 +12,178 @@
     - Force repairing or 15k speso fine
   description: |2
     [bold]Elements in Detail[/bold]
-    [bullet/]1. [bold]Defaced[/bold] — Applied markings, paint, stickers, or otherwise cosmetically altered property. The key distinction from [bolditalic]103 — Minor Vandalism[/bolditalic] is that defacement here causes no permanent structural damage and can be cleaned or reversed.
-    [bullet/]2. [bold]Station or another's property[/bold] — Covers station walls, floors, furniture, and items owned by or assigned to any other crew member or individual aboard the station.
+    - 1. [bold]Defaced[/bold] — Applied markings, paint, stickers, or otherwise cosmetically altered property. The key distinction from [bolditalic]103 — Minor Vandalism[/bolditalic] is that defacement here causes no permanent structural damage and can be cleaned or reversed.
+    - 2. [bold]Station or another's property[/bold] — Covers station walls, floors, furniture, and items owned by or assigned to any other crew member or individual aboard the station.
 
     [bold]Standard of Proof[/bold] — Probable Cause required for charge
 
     PC may be established by direct observation, camera footage, or credible witness testimony confirming the act. Finding spray cans or markers on a suspect near freshly defaced surfaces supports PC.
 
     [bold]Officer Notes[/bold]
-    [bullet/]Prefer the fine and a cleanup order over brig time when the individual is cooperative.
-    [bullet/]If the damage is structural or irreparable (e.g., a smashed fixture), charge [bolditalic]103 — Minor Vandalism[/bolditalic] instead.
+    - Prefer the fine and a cleanup order over brig time when the individual is cooperative.
+    - If the damage is structural or irreparable (e.g., a smashed fixture), charge [bolditalic]103 — Minor Vandalism[/bolditalic] instead.
 
+- type: spaceLaw
+  id: SpaceLaw006
+  code: 006
+  name: Drug Possession
+  severity: Infraction
+  elements:
+    - Possessed illegal drugs
+    - In quantities consistent with personal use
+  greater:
+    - SpaceLaw106
+  punishment:
+    - Confiscation and 25k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Illegal drugs[/bold] — The substance must be confirmed as prohibited aboard the station. Some chemicals are legal when held by licensed medical personnel with documented justification.
+    - 2. [bold]Personal-use quantity[/bold] — Amounts consistent with individual consumption. If the quantity significantly exceeds what a single person would use, charge [bolditalic]106 — Illegal Distribution[/bolditalic] instead.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC is typically established by discovery of the substance during a lawful search. On Green Alert, a search requires a valid warrant (supported by PC) or the individual's consent. On Blue or Red Alert, a search of someone exhibiting suspicious behavior does not require a warrant, but PC for the charge still must be established by what is found.
+
+    [bold]Officer Notes[/bold]
+
+    - Quantity is the key distinction between 006 and [bolditalic]106 — Illegal Distribution[/bolditalic]. Two doses is personal use; twenty is distribution.
+    - Confiscation is mandatory regardless of whether the fine is also issued.
+    - Refer licensed medical personnel to the CMO before charging — their possession may be authorized.
+
+- type: spaceLaw
+  id: SpaceLaw007
+  code: 007
+  name: Disorderly Conduct
+  severity: Infraction
+  elements:
+    - Conducted oneself in a manner unsuitable for their position
+  punishment:
+    - "Brig until 25k speso fine paid; with M02: demotion"
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Conduct unsuitable for their position[/bold] — Behavior a reasonable person would find incompatible with the individual's role aboard the station. This is a catch-all for on-duty misconduct that does not fit a more specific charge.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by direct observation, supervisor reports, or multiple corroborating witness accounts. A single complaint without corroboration may be insufficient.
+
+    [bold]Officer Notes[/bold]
+
+    - Always prefer a more specific charge (e.g., [bolditalic]101 — Assault[/bolditalic], [bolditalic]111 — Discriminatory Language[/bolditalic]) when one applies. Use 007 only when no named offense fits.
+    - When combined with [bolditalic]M02 — Elevated Sentencing[/bolditalic], the outcome is demotion — this requires authorization from the HoS or Captain.
+
+- type: spaceLaw
+  id: SpaceLaw008
+  code: 008
+  name: Creating a Hazard
+  severity: Infraction
+  elements:
+    - Created a condition capable of causing harm to others
+    - During normal departmental operations
+  punishment:
+    - Forced removal of situation and 15k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Created a condition capable of causing harm[/bold] — Actively set up or caused a dangerous situation: uncontained chemical spills, exposed electrical hazards, blocked emergency exits, unsecured dangerous equipment, etc.
+    - 2. [bold]During normal departmental operations[/bold] — Hazards created under direct authorization or as part of a sanctioned emergency response may be exempt. The hazard must be in an operational context, not an isolated accidental event.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by directly linking the individual to the hazard via observation, witness testimony, or camera footage.
+
+    [bold]Officer Notes[/bold]
+
+    - Prioritize neutralizing the hazard before processing the individual — crew safety comes first.
+    - If harm has already occurred as a result, consider whether [bolditalic]108 — Criminal Negligence[/bolditalic] better fits the severity.
+    - A single, minor, accidental hazard from an otherwise cooperative crew member may warrant a warning on a first offense.
+
+- type: spaceLaw
+  id: SpaceLaw011
+  code: 011
+  name: Disruptive Comms
+  severity: Infraction
+  elements:
+    - Knowingly disrupted or needlessly populated a radio frequency
+    - With intent to be a nuisance
+  punishment:
+    - Brig until fine paid (unless M02); 10k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly disrupted or needlessly populated a frequency[/bold] — Repeated, intentional transmissions with no operational purpose: singing, noise, spam, or other non-functional content.
+    - 2. [bold]Intent to be a nuisance[/bold] — A pattern of behavior or explicit statements of intent are required. An isolated accidental key-up or a single misstep does not satisfy this element.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by a documented pattern of disruptive transmissions confirmed by radio logs or multiple witnesses. A single incident alone is insufficient unless the content makes intent clear.
+
+    [bold]Officer Notes[/bold]
+
+    - Issue a verbal warning first unless the disruption is severe, ongoing, or occurring during an active emergency.
+    - If the individual is already in brig, their headset may be confiscated for the duration of their sentence.
+    - Deliberate disruption during a Red Alert may warrant escalation under [bolditalic]M02 — Elevated Sentencing[/bolditalic].
+
+
+# 1XX - Minor Crimes
+- type: spaceLaw
+  id: SpaceLaw101
+  code: 101
+  name: Assault
+  severity: Minor
+  elements:
+    - Used physical force against another person
+    - Without apparent intent to kill
+  greater:
+    - SpaceLaw201
+  punishment:
+    - Restraining and separation; 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Physical force[/bold] — Direct physical contact was made: striking, shoving, grabbing, or use of a held object to strike. Verbal threats alone are [bolditalic]217 — Intimidation[/bolditalic], not Assault.
+    - 2. [bold]Against another person[/bold] — The target must be a recognized crew member, visitor, or individual aboard the station. Does not apply to an individual's own property.
+    - 3. [bold]Without apparent intent to kill[/bold] — The attack, while harmful, did not appear intended to cause death. If lethal intent is evident or a deadly weapon is used with intent, charge [bolditalic]201 — Aggravated Assault[/bolditalic] or higher.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, camera footage, credible victim report corroborated by visible injuries, or multiple witness accounts. Victim testimony alone from a credible witness can establish PC in the absence of footage.
+
+    [bold]Officer Notes[/bold]
+
+    - If the suspect claims self-defense, evaluate whether force was proportional — apply [bolditalic]M03 — Self Defense[/bolditalic] if warranted.
+    - If injuries are severe (broken bones, critical condition), escalate to [bolditalic]201 — Aggravated Assault[/bolditalic].
+    - Separate the parties before processing — continued proximity risks further incidents.
+
+- type: spaceLaw
+  id: SpaceLaw102
+  code: 102
+  name: Pickpocketing
+  severity: Minor
+  elements:
+    - Stole an item
+    - Directly from another person's person (pocket, hand, or worn equipment)
+  greater:
+    - SpaceLaw202
+  punishment:
+    - Return of item(s) and 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Stole an item[/bold] — Took possession of something that does not belong to them without consent.
+    - 2. [bold]Directly from another's person[/bold] — The item was taken from a pocket, hand, belt, or worn equipment slot — not from a bag left on the ground or a locker. Items taken from unattended property are [bolditalic]202 — Theft[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the item being found on the suspect, victim report with description of the missing item, or direct observation or footage of the act.
+
+    [bold]Officer Notes[/bold]
+
+    - Return of the item is mandatory — confirm the item is returned before releasing the individual.
+    - If items of significant value (workplace equipment, rare gear) are taken from someone's person, consider escalating to [bolditalic]202 — Theft[/bolditalic].
+    - If the individual had a concealed method for removing items (e.g., specialty gloves or tools), document it for the report.
 
 - type: spaceLaw
   id: SpaceLaw103
@@ -36,6 +198,419 @@
   punishment:
     - Work duty to repair damage
     - Brig time varies by damage
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Damaged, destroyed, or permanently defaced[/bold] — Physical harm to the object that leaves lasting damage or requires repair. Cosmetic defacement that can be cleaned is [bolditalic]003 — Superficial Vandalism[/bolditalic]. Complete destruction that cannot be repaired is [bolditalic]203 — Major Vandalism[/bolditalic].
+    - 2. [bold]Non-critical furniture, vendor, or personal property[/bold] — The target must not be critical station infrastructure. Walls, windows, vending machines, chairs, personal lockers, and crew-owned items qualify. Damage to APCs, pipes, air systems, or station machinery falls under [bolditalic]303 — Sabotage[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, camera footage, witness accounts, or the suspect being found with tools or materials consistent with the damage near the scene.
+
+    [bold]Officer Notes[/bold]
+
+    - Prefer work duty (repairing the damage) over brig time when possible — it addresses the harm directly.
+    - Assess repairability before charging: cosmetic = 003, repairable damage = 103, irreparable destruction = 203.
+    - Damage to critical systems is [bold]always[/bold] [bolditalic]303 — Sabotage[/bolditalic] or higher, regardless of apparent intent.
+
+- type: spaceLaw
+  id: SpaceLaw104
+  code: 104
+  name: Vigilantism
+  severity: Minor
+  elements:
+    - Performed the responsibilities or duties of the security department
+    - Without approval or due cause
+  punishment:
+    - 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Performed security duties or responsibilities[/bold] — Actively arresting, detaining, forcibly searching, or otherwise acting in the capacity of a security officer.
+    - 2. [bold]Without approval or due cause[/bold] — The individual has no security role, was not deputized, and had no authorization from the HoS or Captain. Acting in immediate self-defense does not constitute vigilantism.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of the individual performing security functions, witness accounts, or the individual's own admission.
+
+    [bold]Officer Notes[/bold]
+
+    - Citizens restraining an active attacker in defense of themselves or others is not vigilantism — apply [bolditalic]M03 — Self Defense[/bolditalic].
+    - Crew who assist security during a Red Alert under officer direction are not vigilantes, provided they reported in and followed orders. Crew who assist but [bold]fail to follow Security commands[/bold] are acting outside their authorization and may be charged under this offense.
+    - If the individual caused harm during their unauthorized "security" activity, layer appropriate charges (e.g., [bolditalic]101 — Assault[/bolditalic]).
+
+- type: spaceLaw
+  id: SpaceLaw106
+  code: 106
+  name: Illegal Distribution
+  severity: Minor
+  elements:
+    - Possessed illegal or dangerous drugs or equipment
+    - In quantities beyond reasonable personal use
+  punishment:
+    - 5 min brig and 40k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Possessed illegal or dangerous drugs or equipment[/bold] — The substance or item must be confirmed as prohibited aboard the station.
+    - 2. [bold]In quantities beyond reasonable personal use[/bold] — The amount substantially exceeds what one person would consume. There is no fixed cutoff — use judgment based on the substance and packaging (e.g., pre-packaged doses, large stockpiles).
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: discovery during a lawful search, evidence of sale or distribution activity (transaction records, multiple buyers identified), or quantities that make personal use implausible.
+
+    [bold]Officer Notes[/bold]
+
+    - Quantity and packaging are the primary distinguishing factors from [bolditalic]006 — Drug Possession[/bolditalic]. A single dose: 006. A crate of labeled doses: 106.
+    - If evidence of active distribution exists (buyers identified, credits exchanged), document it — it strengthens the charge.
+    - Confiscation of all illegal substances is required. Log quantities in the evidence report.
+
+- type: spaceLaw
+  id: SpaceLaw107
+  code: 107
+  name: Disturbing the Peace
+  severity: Minor
+  elements:
+    - Engaged in conduct that a reasonable person would find clearly disruptive, threatening, or harmful to public order
+    - Including excessive noise, public fighting, or abusive language that is directed, repeated, and likely to provoke immediate confrontation; mere insults alone are insufficient
+    - Or organized activity that materially disrupts normal operations
+  greater:
+    - SpaceLaw207
+  punishment:
+    - Warning first; then 5-10 min brig or 15k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Conduct a reasonable person would find disruptive[/bold] — Evaluate the behavior objectively, not based on the sensitivities of any one complainant. The conduct must meaningfully disrupt public order, not merely annoy.
+    - 2. [bold]Covered conduct[/bold] — Includes but is not limited to: sustained loud noise in shared spaces, public physical altercations, abusive or threatening language that is directed and repeated and likely to provoke immediate confrontation, and organized collective activity (sit-ins, blockades, work stoppages) that materially disrupts department function.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of the disruptive behavior, witness reports, or documented pattern of conduct that persisted after a warning.
+
+    [bold]Officer Notes[/bold]
+
+    - Always issue a verbal warning first and allow reasonable time to comply. Compliance can reduce or eliminate brig time. Escalate to brig or fine only if the conduct continues after warning.
+    - A single insult, sarcasm, or rude remark toward an officer is not enough on its own. The behavior must rise to an objectively disruptive level under the elements above.
+    - Use your judgment on brig vs. fine: if the disruption was brief and ended on warning, a fine is often appropriate. Persistent or physically threatening behavior warrants brig time.
+    - If the individual is part of a larger group committing property damage or felony offenses, charge [bolditalic]207 — Rioting[/bolditalic] instead of or in addition to this charge.
+    - For disruption via communications, consider [bolditalic]011 — Disruptive Comms[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw108
+  code: 108
+  name: Criminal Negligence
+  severity: Minor
+  elements:
+    - Failed in their duty to a negligent degree
+    - Caused or risked harm, illness, or negative effects to another
+    - Did not result in death
+  greater:
+    - SpaceLaw208
+  punishment:
+    - 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Failed in their duty to a negligent degree[/bold] — The individual had a responsibility (professional, situational, or assigned) and failed to meet it in a way that a reasonable person in that role would not.
+    - 2. [bold]Caused or risked harm to another[/bold] — The failure created a real risk of or actual harm, illness, or negative effect. Near-misses count if the risk was objectively serious.
+    - 3. [bold]Did not result in death[/bold] — If the negligence directly caused a fatality, charge [bolditalic]308 — Manslaughter[/bolditalic] instead.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: identifying the individual's duty, documenting their failure to perform it, and linking that failure to harm or serious risk through witness accounts, medical reports, or direct observation.
+
+    [bold]Officer Notes[/bold]
+
+    - Accidents without negligence are not crimes. The individual must have failed a recognizable duty.
+    - If multiple people or a whole department were harmed, escalate to [bolditalic]208 — Gross Criminal Negligence[/bolditalic].
+    - Reckless shuttle operation that does not result in death qualifies under this charge.
+
+- type: spaceLaw
+  id: SpaceLaw109
+  code: 109
+  name: Trespass
+  severity: Minor
+  elements:
+    - Present in an area without admission or access
+    - Or remained after being asked to leave by department staff
+  greater:
+    - SpaceLaw209
+  punishment:
+    - "Peacefully leaving: release. Otherwise: 5 min brig, or time equal to time spent trespassing if greater than 5 min"
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Present in an area without admission or access[/bold] — The individual is in a restricted, access-controlled, or department-exclusive area they have no authorization to enter.
+    - 2. [bold]Or remained after being asked to leave[/bold] — The individual had or previously had access but was instructed to leave by department staff and refused or failed to do so.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation in the restricted area, an access log showing unauthorized entry, or department staff testimony that the individual was asked to leave and refused.
+
+    [bold]Officer Notes[/bold]
+
+    - Leaving peacefully when approached results in release with no charge — reserve brig time for those who resist or refuse.
+    - Baseline trespass sentence is 5 minutes. If the individual remained in unauthorized space longer than 5 minutes, brig time may match the trespass duration.
+    - If the area trespassed is inherently dangerous (engineering, atmospherics, hazardous zones), charge [bolditalic]209 — Trespass, Inherently Dangerous Areas[/bolditalic].
+    - If the individual forced their way in rather than walking through an open door, [bolditalic]110 — Breaking and Entering[/bolditalic] may be charged in addition to [bolditalic]109 — Trespass[/bolditalic]. [bolditalic]110 — Breaking and Entering[/bolditalic] covers the act of unlawful entry; [bolditalic]109 — Trespass[/bolditalic] covers the unlawful presence in the restricted area.
+
+- type: spaceLaw
+  id: SpaceLaw110
+  code: 110
+  name: Breaking and Entering
+  severity: Minor
+  elements:
+    - Used a method of forcible entry to trespass into an area
+    - Includes non-destructive methods (hacking, bypassing access controls)
+    - Distinct from simple trespass and charged as the primary entry offense when forcible entry is proven
+  greater:
+    - SpaceLaw210
+  punishment:
+    - Baseline 7.5 min brig (50% above 109), increased further by damage caused
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Forcible entry[/bold] — The individual used any method to bypass normal access controls: hacking, cutting wires, bolt-cutting, prying doors, defeating airlocks, or exploiting access card vulnerabilities. The method does not need to be destructive.
+    - 2. [bold]To trespass into an area[/bold] — The destination was somewhere the individual was not authorized to enter. Forced entry into one's own department or a department in which one holds authorized access does not qualify.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of the entry method, signs of forced entry linked to the individual's presence, access logs, or witness testimony.
+
+    [bold]Officer Notes[/bold]
+
+    - Non-destructive entry (hacking a door panel) still qualifies — the method of entry does not need to cause damage.
+    - [bolditalic]110 — Breaking and Entering[/bolditalic] is distinct from [bolditalic]109 — Trespass[/bolditalic]. [bolditalic]110 — Breaking and Entering[/bolditalic] punishes the act of forcible entry; [bolditalic]109 — Trespass[/bolditalic] punishes remaining in a restricted area without authorization. If both are proven, both may be charged.
+    - If the destination was a high security area (armory, command offices, vault), charge [bolditalic]310 — Breaking and Entering, High Security Areas[/bolditalic].
+    - If the destination was inherently dangerous (engineering, atmos), charge [bolditalic]210 — Breaking and Entering, Inherently Dangerous Areas[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw111
+  code: 111
+  name: Discriminatory Language
+  severity: Minor
+  elements:
+    - Used language targeting an individual
+    - That demeans, generalizes, or de-personifies them
+  punishment:
+    - 10 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Used language targeting an individual[/bold] — The statement was directed at a specific person, not a general expression.
+    - 2. [bold]Demeans, generalizes, or de-personifies[/bold] — The language reduced the target to a stereotype, slur, or otherwise stripped them of individual dignity based on race, species, spirituality, gender identity, sexual orientation, or other classifiable characteristic.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct hearing by an officer, radio or communications logs, or credible witness accounts of the specific language used.
+
+    [bold]Officer Notes[/bold]
+
+    - The [bolditalic]M09 — Hate Crime[/bolditalic] modifier cannot be stacked on top of 111 — it is already implied by the nature of the charge.
+    - Document the specific language used in the arrest report — vague reports are harder to process.
+    - A first-time verbal offense from a cooperative individual may warrant a warning; repeat offenses or severe language warrants the full 10 minutes.
+
+- type: spaceLaw
+  id: SpaceLaw112
+  code: 112
+  name: Fine Evasion
+  severity: Minor
+  elements:
+    - Purposefully avoided, refused, or was unable to pay a legal fine
+    - After reasonable notice and opportunity to pay
+  punishment:
+    - 15 sec per 1k speso owed (e.g., 30k fine = 7.5 min brig)
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Avoided, refused, or was unable to pay a legal fine[/bold] — The individual received a valid fine issued under Space Law and has not paid it.
+    - 2. [bold]After reasonable notice and opportunity[/bold] — Security must have given the individual a reasonable window to pay before converting the fine to brig time.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC is established by: the fine record showing issuance and non-payment, and confirmation that the individual was informed and given time to pay.
+
+    [bold]Officer Notes[/bold]
+
+    - Calculate brig time as 15 seconds per 1,000 speso owed (e.g., 30k fine = 7.5 min brig).
+    - An individual who genuinely cannot pay is still subject to this charge — inability to pay is not a defense, though it may be a mitigating factor at the Warden's discretion.
+    - Once brig time is served, the underlying fine is considered satisfied.
+
+- type: spaceLaw
+  id: SpaceLaw116
+  code: 116
+  name: Brandishing
+  severity: Minor
+  elements:
+    - Brandished a weapon
+    - Without lawful purpose or due cause
+  greater:
+    - SpaceLaw217
+  punishment:
+    - 5 min brig or a person search
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Brandished a weapon[/bold] — Displayed, raised, aimed, or otherwise presented a weapon in a threatening or conspicuous manner in a public or shared space.
+    - 2. [bold]Without lawful purpose or due cause[/bold] — Security officers on duty, individuals responding to an active Red Alert threat, or individuals using weapons in their licensed professional capacity (e.g., a chef with a knife in the kitchen) are exempt.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, camera footage, or credible witness reports of the brandishing behavior in context.
+
+    [bold]Officer Notes[/bold]
+
+    - A person search is an appropriate alternative to brig time — brandishing often uncovers additional contraband charges.
+    - Brandishing during an active confrontation may escalate to [bolditalic]217 — Intimidation[/bolditalic] if accompanied by a verbal threat.
+    - If the weapon is illegal to possess, add the appropriate possession charge alongside 116.
+
+- type: spaceLaw
+  id: SpaceLaw117
+  code: 117
+  name: Harassment
+  severity: Minor
+  elements:
+    - Repeatedly targeted, followed, contacted, provoked, or otherwise engaged with another individual
+    - After being clearly told to stop
+    - Creating a hostile, intimidating, or disruptive environment
+  greater:
+    - SpaceLaw217
+  punishment:
+    - 5-10 min brig, 15k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Repeatedly targeted or engaged[/bold] — A pattern of behavior is required. A single unwanted contact does not satisfy this element — the individual must have continued after being clearly told to stop. The behavior need not be violent or threatening.
+    - 2. [bold]After being clearly told to stop[/bold] — The target or a security officer must have issued a clear instruction to cease contact. Ambiguous social cues do not satisfy this element; the stop order must have been unambiguous.
+    - 3. [bold]Creating a hostile, intimidating, or disruptive environment[/bold] — The aggregate effect of the conduct must be objectively hostile or disruptive. Mild annoyance without meaningful impact on the target's environment does not qualify.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim reports documenting the pattern of contact, communications logs showing repeated contact after a stop order was issued, or direct observation of the behavior continuing after a verbal warning.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge is distinct from [bolditalic]217 — Intimidation[/bolditalic] (which requires an explicit threat of violence) and [bolditalic]218 — Sexual Harassment[/bolditalic] (which covers unwelcome sexual conduct). 117 requires neither a threat nor a sexual element.
+    - A single incident without prior pattern generally warrants a warning rather than a charge. Document each incident in the report.
+    - If the individual continues after being charged, [bolditalic]M02 — Elevated Sentencing[/bolditalic] applies to repeat behavior.
+
+- type: spaceLaw
+  id: SpaceLaw118
+  code: 118
+  name: Failure to Identify
+  severity: Minor
+  elements:
+    - Refused to provide name, job, or identification
+    - During lawful questioning or detainment by security
+    - Or failed to wear a valid ID card while on Blue Alert or higher
+  punishment:
+    - Warning; 5 min brig if refusal continues
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Refused to provide name, job, or identification[/bold] — Actively declined, provided false information, or remained non-responsive when asked for identifying information. An individual who provides a name but lacks their ID card is not automatically in violation if they are otherwise cooperative, [bold]unless the station is on Blue Alert or higher[/bold], in which case the wearing of a visible ID card is mandatory.
+    - 2. [bold]During lawful questioning or detainment[/bold] — The questioning must be lawful: an officer must have reasonable suspicion or greater to initiate questioning. Demands for ID without any articulable basis are not lawful.
+    - 3. [bold]Failure to wear ID on Blue Alert or higher[/bold] — During Blue or Red Alert status, all crew are required to wear a valid ID card visibly. An individual who cannot produce or refuses to wear their ID card during heightened alert may be charged under this offense regardless of whether they verbally provide a name.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC is established by: the individual's direct refusal, confirmed provision of false information, documented non-response during a lawful stop, or confirmed absence of ID card during Blue or Red Alert.
+
+    [bold]Officer Notes[/bold]
+
+    - Always issue a verbal warning before charging. Most cooperative crew will comply when asked. Reserve the 5-minute brig for those who actively and persistently refuse.
+    - An individual who provides a name but cannot produce their ID card on Green Alert is not automatically in violation — give them an opportunity to retrieve it. On Blue or Red Alert, enforce the visible ID requirement.
+    - Providing false identification supports a charge of [bolditalic]314 — Impersonation[/bolditalic] in addition to this.
+
+- type: spaceLaw
+  id: SpaceLaw119
+  code: 119
+  name: Resist, Delay, or Obstruct Justice
+  severity: Minor
+  elements:
+    - Resisted, delayed, or obstructed a lawful arrest, investigation, evidence collection, prisoner transport, or security operation
+    - Including physically impeding officers, providing false information, slipping officers, failing to comply with reasonable requests to vacate or create space near officers or a crime scene, or any conduct that distracts or hinders Security response
+  greater:
+    - SpaceLaw214
+  punishment:
+    - 5-10 min brig, fine optional
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Resisted, delayed, or obstructed a lawful security operation[/bold] — Any conduct — active or passive — that impedes, delays, or frustrates the timely and effective performance of lawful security duties. This includes: physically blocking an arrest or transport, providing false information during an investigation, disrupting evidence collection, "slipping" officers or otherwise using actions that impair officer mobility, failing to move or create space when an officer reasonably directs bystanders to clear an area or crime scene, and any other conduct that distracts or interferes with Security response.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of the interference, officer testimony, or witness accounts of the obstructing behavior during an active security operation.
+
+    [bold]Officer Notes[/bold]
+
+    - [bold]Silence and non-cooperation are not illegal.[/bold] An individual has the right to remain silent. Refusing to answer questions is not obstruction. For refusal to provide identifying information, see [bolditalic]118 — Failure to Identify[/bolditalic] — that charge requires an active refusal when lawfully asked, not mere silence.
+    - [bold]Minor non-compliance warrants a warning first.[/bold] If a bystander is slow to move or isn't immediately responsive, issue a clear verbal direction before treating their inaction as obstruction. Reserve the brig for knowing, active interference.
+    - [bold]Active interference[/bold] — physically blocking, slipping officers, providing false leads, failing to vacate after a clear lawful order — warrants the charge.
+    - If the interference involved destroying, hiding, or tampering with evidence, charge [bolditalic]214 — Evidence Tampering[/bolditalic] instead of or in addition to 119.
+
+
+# 2XX - Misdemeanors
+- type: spaceLaw
+  id: SpaceLaw201
+  code: 201
+  name: Aggravated Assault
+  severity: Misdemeanor
+  elements:
+    - Took physical action against a person
+    - With intent to grievously harm
+    - But without intent to kill
+  greater:
+    - SpaceLaw301
+  punishment:
+    - 10 min brig, flat 25k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Physical action against a person[/bold] — Direct physical violence: striking with a weapon, stomping, sustained beating, or use of any object to cause serious harm.
+    - 2. [bold]Intent to grievously harm[/bold] — The attack was conducted with the purpose of causing serious injury. Indicators include weapon choice, continued attack on an incapacitated target, or stated intent.
+    - 3. [bold]Without intent to kill[/bold] — If lethal intent is evident (vital targeting, preventing revival, use of lethally calibrated weapons), charge [bolditalic]301 — Murder[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical evidence of serious injury, weapon or tool found on suspect consistent with injuries, direct observation or footage, or victim and witness testimony establishing intent.
+
+    [bold]Officer Notes[/bold]
+
+    - Intent is the key distinction from [bolditalic]101 — Assault[/bolditalic]. An attack that causes serious harm but appeared reckless rather than deliberate may still fit 101.
+    - If the victim died, regardless of initial intent, charge [bolditalic]301 — Murder[/bolditalic] or [bolditalic]308 — Manslaughter[/bolditalic] as applicable.
+    - Apply [bolditalic]M03 — Self Defense[/bolditalic] if the force used was a defensive response to a threat.
+
+- type: spaceLaw
+  id: SpaceLaw202
+  code: 202
+  name: Theft
+  severity: Misdemeanor
+  elements:
+    - Stole equipment or items from a workplace
+    - Or items of extraordinary value from a person's person
+  greater:
+    - SpaceLaw302
+  punishment:
+    - Return of items, 5 min brig, 20k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Stole equipment or items from a workplace[/bold] — Took property from a department workspace, locker, or common area without authorization. This covers tools, department equipment, and supplies — not items carried on a person.
+    - 2. [bold]Or items of extraordinary value from a person's person[/bold] — Took high-value items (valuable equipment, rare goods) directly from an individual. For common items taken from a person, see [bolditalic]102 — Pickpocketing[/bolditalic]. For rare or restricted items, see [bolditalic]302 — Larceny[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: item found on suspect, access or movement logs placing the individual at the location of the theft, or witness testimony.
+
+    [bold]Officer Notes[/bold]
+
+    - Return of items is mandatory before release. Document all items recovered in the evidence report.
+    - Value and source determine the tier: common item from a person = 102, workplace equipment = 202, rare/restricted item = 302.
+    - If items were taken from a secure or access-controlled area, consider adding [bolditalic]109 — Trespass[/bolditalic] or [bolditalic]110 — Breaking and Entering[/bolditalic].
 
 - type: spaceLaw
   id: SpaceLaw203
@@ -45,20 +620,1301 @@
   elements:
     - Destroyed or damaged non-critical furniture, vendors, or personal property
     - In a manner that cannot be repaired
+  greater:
+    - SpaceLaw303
   punishment:
     - Replacement of item(s)
     - monetary recompensation
     - 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Destroyed or damaged non-critical property[/bold] — The target was furniture, a vendor, or personal property — not critical station infrastructure.
+    - 2. [bold]In a manner that cannot be repaired[/bold] — The item is permanently destroyed, functionally inoperable, or must be wholly replaced. Property that can be repaired is [bolditalic]103 — Minor Vandalism[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the destroyed item and evidence linking the individual to its destruction, witness accounts, or footage.
+
+    [bold]Officer Notes[/bold]
+
+    - Assess the item's restorability before charging. If it can be repaired, charge 103 with work duty instead.
+    - Monetary recompensation is required — determine replacement value with the department head or Captain if contested.
+    - Destruction of critical systems is [bolditalic]303 — Sabotage[/bolditalic], not this charge, regardless of intent.
 
 - type: spaceLaw
-  id: SpaceLaw006
-  code: 006
-  name: Drug Possession
-  severity: Infraction
+  id: SpaceLaw204
+  code: 204
+  name: Conspiracy
+  severity: Misdemeanor
   elements:
-    - Possessed illegal drugs
-    - In quantities consistent with personal use
-#  greater:
-#    - SpaceLaw106
+    - Knowingly planned or conspired to commit a misdemeanor or greater offense
+    - With intent to carry that offense out
+  greater:
+    - SpaceLaw304
   punishment:
-    - Confiscation and 25k speso fine
+    - 5-10 min brig (discretionary)
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly planned or conspired[/bold] — Active planning, preparation, or coordination — not merely knowing about a crime or being present. Conspiracy can be committed by an individual acting alone; a co-conspirator is not required. Ignorance of the criminal nature of an action is a valid defense if credible.
+    - 2. [bold]With intent to carry the offense out[/bold] — The plan must be directed at an actual crime. Planning alone, with evidence of intent, is sufficient — the underlying crime does not need to have been completed.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: communications or messages showing coordination, evidence of logistical assistance, or testimony from a cooperating witness. Circumstantial evidence establishing a connection to an illegal plan can support PC.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge applies to conspiracy toward a Misdemeanor offense. For conspiracy toward a Felony or Capital crime, charge [bolditalic]304 — Grand Conspiracy[/bolditalic] instead.
+    - Cooperation with Security ([bolditalic]M13[/bolditalic]) may reduce the sentence.
+
+- type: spaceLaw
+  id: SpaceLaw205
+  code: 205
+  name: Hostile Agent
+  severity: Misdemeanor
+  elements:
+    - Knowingly supported, aided, or associated with a hostile organization
+    - In a non-combat capacity (recruitment, messaging, smuggling, harboring, or financing)
+  greater:
+    - SpaceLaw305
+  punishment:
+    - 5 min brig, 25k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly supported, aided, or associated[/bold] — Provided passive, logistical, or organizational assistance: recruiting members, relaying messages, smuggling supplies, harboring personnel, or financing operations. Active combat participation or direct offensive acts are [bolditalic]305 — Hostile Activity[/bolditalic].
+    - 2. [bold]In a non-combat capacity[/bold] — The distinction from 305 is the nature of involvement. If the individual took direct offensive action against the station or crew, 305 applies. If they enabled or supported operations without directly participating in attacks, 205 applies.
+    - 3. [bold]For a hostile organization[/bold] — As defined under [bolditalic]405 — Enemy of the Government[/bolditalic]: True Nexus, Actively Hostile Xenoborg Collective (see [bolditalic]Silicon Identifiers[/bolditalic]), hostile boarding parties, Changeling Hiveminds, cults, and Dirizher Cartel.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: intercepted communications, recovered materials connecting the individual to a hostile organization, or testimony from a witness with direct knowledge.
+
+    [bold]Officer Notes[/bold]
+
+    - Supporting a hostile group without directly participating in attacks distinguishes 205 from [bolditalic]305 — Hostile Activity[/bolditalic].
+    - If the individual is a confirmed member of a hostile organization (not merely a supporter), charge [bolditalic]405 — Enemy of the Government[/bolditalic].
+    - This charge often arises as part of a broader investigation — document all connections found.
+
+- type: spaceLaw
+  id: SpaceLaw206
+  code: 206
+  name: Possession, Contraband Equipment
+  severity: Misdemeanor
+  elements:
+    - Possessed Class 2 contraband equipment
+    - Without a valid C2 Permit
+  punishment:
+    - 5 min brig, 25k fine, confiscation
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Possessed Class 2 contraband equipment[/bold] — Class 2 items are restricted but not outright illegal in all contexts. They include certain weapons, implants, and tools that require a C2 permit to carry legally.
+    - 2. [bold]Without a valid C2 Permit[/bold] — The individual must not hold an active permit authorizing possession of the specific item.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: discovery during a lawful search, the item being visible on the individual's person, or recovery at the scene of a crime.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge applies regardless of whether the item was used in a crime. Simple possession without a permit is sufficient.
+    - Verify permit status with the Warden or HoS before charging — some crew may have authorized carry that is not immediately visible.
+    - Confiscation is mandatory. Log the item in the evidence locker.
+
+- type: spaceLaw
+  id: SpaceLaw207
+  code: 207
+  name: Rioting
+  severity: Misdemeanor
+  elements:
+    - Acted as a member of a group
+    - That collectively committed major vandalism, sabotage, or other felony crimes
+  greater:
+    - SpaceLaw307
+  punishment:
+    - HoS or Warden's judgement
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Acted as a member of a group[/bold] — The individual was an active participant in the collective action, not merely a bystander.
+    - 2. [bold]Collectively committed felony-level crimes[/bold] — The group as a whole engaged in major vandalism, sabotage, or other crimes of felony severity or higher. Minor property damage by a crowd is [bolditalic]107 — Disturbing the Peace[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of participation, camera footage, or witness accounts identifying the individual as an active member of the group committing the crimes.
+
+    [bold]Officer Notes[/bold]
+
+    - Each participant can be individually charged for 207 even if they did not personally commit the specific felony acts, provided they were an active member of the group.
+    - If the individual organized or incited the riot, charge [bolditalic]307 — Inciting a Riot[/bolditalic] instead.
+    - Document which individuals committed which acts where possible — it aids in layering additional charges.
+
+- type: spaceLaw
+  id: SpaceLaw208
+  code: 208
+  name: Gross Criminal Negligence
+  severity: Misdemeanor
+  elements:
+    - Negligent in their duty
+    - Caused harm to multiple individuals or a department
+    - Or directly led to serious injury requiring emergency medical treatment
+  greater:
+    - SpaceLaw320
+  punishment:
+    - Baseline 10 min brig (varies by severity), possible demotion, 30k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Negligent in their duty[/bold] — The individual failed in a professional or assigned responsibility in a way that a reasonably competent person in that role would not.
+    - 2. [bold]Caused widespread or serious harm[/bold] — The failure harmed multiple individuals, an entire department's function, or caused a single serious injury requiring emergency medical treatment. Single-person harm without emergency treatment needed is [bolditalic]108 — Criminal Negligence[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical records establishing the severity of harm, identification of the individual's duty and documented failure, and evidence linking that failure to the harm caused.
+
+    [bold]Officer Notes[/bold]
+
+    - Severity scales: one person with minor harm = 108; multiple people harmed or one person with critical injuries = 208.
+    - Possible demotion is discretionary and requires HoS or Captain authorization.
+    - If the negligence resulted in death, charge [bolditalic]308 — Manslaughter[/bolditalic] instead of or in addition to 208.
+
+- type: spaceLaw
+  id: SpaceLaw209
+  code: 209
+  name: Trespass, Inherently Dangerous Areas
+  severity: Misdemeanor
+  elements:
+    - Trespassed in an area that may lead to injury of oneself or others
+    - Includes No-Fly Zones (NFZs)
+  greater:
+    - SpaceLaw309
+  punishment:
+    - 15 min brig, 25k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Trespassed[/bold] — Present without authorization or remained after being asked to leave.
+    - 2. [bold]In an inherently dangerous area[/bold] — Areas where unauthorized presence creates a meaningful risk of injury: engineering, atmospherics, high-voltage areas, chemical labs, and No-Fly Zones (NFZs). These are more serious than ordinary trespass because the risk of harm is inherent to the location.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, access logs, or confirmation from department staff that the individual was in the restricted area without authorization.
+
+    [bold]Officer Notes[/bold]
+
+    - NFZ violations carry additional time beyond the base 15 minutes — add half the time spent in the NFZ to the sentence.
+    - If the individual forced entry into the area, add [bolditalic]210 — Breaking and Entering, Inherently Dangerous Areas[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw210
+  code: 210
+  name: Breaking and Entering, Inherently Dangerous Areas
+  severity: Misdemeanor
+  elements:
+    - Used forcible entry to trespass
+    - Into an area that may lead to injury of oneself or others
+  greater:
+    - SpaceLaw310
+  punishment:
+    - 10 min brig (potentially increased by damage), 30k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Forcible entry[/bold] — The individual bypassed access controls through any method: hacking, cutting, bypassing airlocks, destroying barriers. Entry does not need to be destructive.
+    - 2. [bold]Into a dangerous area[/bold] — As defined in [bolditalic]209 — Trespass, Inherently Dangerous Areas[/bolditalic]: engineering, atmospherics, hazardous labs, NFZ-covered spaces, etc.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: signs of forced entry with evidence linking the individual to the act, access logs, or direct observation.
+
+    [bold]Officer Notes[/bold]
+
+    - Always charge this alongside [bolditalic]209[/bolditalic] when forcible entry into a dangerous area is confirmed.
+    - Additional brig time may be applied based on damage caused to access panels, doors, or other infrastructure.
+    - If the destination was a high security area (armory, command offices), charge [bolditalic]310 — Breaking and Entering, High Security Areas[/bolditalic] instead.
+
+- type: spaceLaw
+  id: SpaceLaw211
+  code: 211
+  name: Insubordination
+  severity: Misdemeanor
+  elements:
+    - Knowingly disobeyed a lawful order
+    - From a superior or security officer
+    - Without good reason
+  punishment:
+    - 5 min brig, possible demotion, 25k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly disobeyed a lawful order[/bold] — The individual was aware of the order and chose not to comply. Inability to physically comply, or compliance that was delayed due to circumstances, is not insubordination.
+    - 2. [bold]From a superior or security officer[/bold] — The order must come from someone with recognized authority: a department head, the HoS, the Captain, or a security officer acting in their official capacity.
+    - 3. [bold]Without good reason[/bold] — A valid reason (safety concern, conflicting lawful order from a higher authority, ethical obligation) negates this charge. The individual must demonstrate the reason, not simply claim one.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation or testimony from the issuing officer or supervisor, documented order and documented non-compliance, or witness accounts.
+
+    [bold]Officer Notes[/bold]
+
+    - An unlawful order cannot be the basis for an insubordination charge. [bold]Orders that violate Space Law, SOP, or present an unreasonable danger are not lawful orders.[/bold]
+    - Demotion is discretionary — the relevant department head or command must authorize it.
+    - If an individual disobeys security specifically during an arrest, apply [bolditalic]M06 — Resisting Arrest[/bolditalic] in addition.
+
+- type: spaceLaw
+  id: SpaceLaw212
+  code: 212
+  name: Fraud
+  severity: Misdemeanor
+  elements:
+    - Misrepresented their intentions
+    - With the purpose of gaining property or money from another individual
+  punishment:
+    - 10 min brig, return of property or money, 45k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Misrepresented their intentions[/bold] — Deliberately presented false information, a false identity, or a false purpose.
+    - 2. [bold]To gain property or money[/bold] — The deception was executed with the goal of obtaining something of value — material goods, credits, access, or services — from another individual.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: evidence of the false representation (records, communications, witness accounts) and evidence that the individual received property or benefit as a result.
+
+    [bold]Officer Notes[/bold]
+
+    - Both elements must be satisfied: misrepresentation alone (without gain) may be [bolditalic]314 — Impersonation[/bolditalic]. Gain through other unlawful means may be [bolditalic]202 — Theft[/bolditalic].
+    - Return of all fraudulently obtained property or money is mandatory.
+    - If the fraud involved assuming another crew member's identity, layer [bolditalic]314 — Impersonation[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw213
+  code: 213
+  name: Mutilation
+  severity: Misdemeanor
+  elements:
+    - Purposefully modified a person without consent, or with intent to harm
+    - Includes minor medical malpractice
+  greater:
+    - SpaceLaw319
+    - SpaceLaw320
+  punishment:
+    - Reversal of operations if applicable, 5 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Purposefully modified a person[/bold] — Made a physical alteration to another individual's body through surgery, implants, forced chemical treatment, or other means.
+    - 2. [bold]Without consent or with intent to harm[/bold] — The individual did not agree to the modification, or the modification was carried out with the purpose of causing harm. For malpractice resulting in death, permanent disability, or other severe harm, see [bolditalic]320 — Gross Medical Malpractice[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical examination confirming modification, absence of consent documentation, or evidence of harmful intent from communications, medical records, or witnesses.
+
+    [bold]Officer Notes[/bold]
+
+    - Reversal of the modifications, if medically feasible, is required as part of sentencing — coordinate with the CMO.
+    - For implant-specific procedures (installing trackers, implants, mindshields, or deimplantation), charge [bolditalic]319 — Unauthorized Implantation / Deimplantation[/bolditalic] at the felony level instead.
+    - For malpractice that results in death, permanent disability, or other severe harm, charge [bolditalic]320 — Gross Medical Malpractice[/bolditalic] instead.
+    - If the individual performed modifications to benefit a hostile organization or as part of a larger conspiracy, consider layering applicable charges.
+
+- type: spaceLaw
+  id: SpaceLaw214
+  code: 214
+  name: Evidence Tampering
+  severity: Misdemeanor
+  elements:
+    - Destroyed, concealed, altered, planted, or stole evidence
+    - Related to an active or reasonably anticipated investigation
+  punishment:
+    - 10 min brig, 30k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Destroyed, concealed, altered, planted, or stole evidence[/bold] — Any deliberate act that changes the integrity or availability of evidence: destroying physical items, altering records, fabricating evidence, or removing items from a scene.
+    - 2. [bold]Related to an active or reasonably anticipated investigation[/bold] — The individual must have known, or had reasonable reason to believe, that an investigation was underway or imminent. Disposing of an item before any investigation could be expected does not satisfy this element.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation of the tampering act, evidence of missing or altered items linked to the individual, communications indicating intent to destroy or alter, or physical signs at the scene of tampering.
+
+    [bold]Officer Notes[/bold]
+
+    - Evidence tampering is a distinct offense from the underlying crime the evidence relates to — charge both where applicable.
+    - If the tampering was specifically designed to obstruct a security operation in progress, consider adding [bolditalic]119 — Obstruction of Justice[/bolditalic].
+    - The simple act of [italic]concealing[/italic] contraband or stolen property is not considered tampering.
+    - Document what evidence was affected and its status — this is critical for any subsequent prosecution of the underlying crime.
+
+- type: spaceLaw
+  id: SpaceLaw215
+  code: 215
+  name: False Imprisonment
+  severity: Misdemeanor
+  elements:
+    - Unlawfully arrested, detained, confined, or held a person
+    - Includes holding an individual beyond their lawful sentence
+    - Without legal authority to do so
+  punishment:
+    - 5 min brig, 20k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Unlawfully arrested, detained, confined, or held a person[/bold] — Encompasses the full spectrum of unlawful restriction: effecting an arrest without legal basis, detaining without charges, physically confining an individual, using restraints without authorization, or holding a prisoner past the expiration of their sentence.
+    - 2. [bold]Including holding beyond a lawful sentence[/bold] — A Security Officer who keeps a prisoner after their sentence has run, or extends a sentence without proper authorization, satisfies this element. The original arrest may have been lawful; the continued hold after the sentence ends is not.
+    - 3. [bold]Without legal authority[/bold] — No valid warrant, no officer-witness exception, no active emergency, no lawful sentence, and no consent. Security officers making lawful arrests are exempt; those arresting without basis or holding beyond sentence are not.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim testimony, physical evidence of restraint or confinement, access logs confirming a room was locked with the victim inside, or witness accounts.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge applies to anyone — including Security Officers — who arrest, detain, confine, or hold individuals without legal authority. Unlawful arrests (without warrant, officer-witness basis, or alert-level exception) satisfy this charge, not just physical confinement.
+    - If the individual transported the victim to a new location as well as confining them, consider [bolditalic]315 — Kidnapping[/bolditalic].
+    - Security officers who hold prisoners beyond their sentence may be charged under this offense; extreme or deliberate cases may also warrant [bolditalic]411 — Grand Dereliction[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw216
+  code: 216
+  name: False Report
+  severity: Misdemeanor
+  elements:
+    - Knowingly submitted a false criminal report, false witness statement, or false emergency call
+  punishment:
+    - 5-10 min brig, 25k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly submitted a false report[/bold] — The individual deliberately provided information they knew to be untrue in a criminal report, witness statement, or emergency communication. Honestly mistaken information, even if inaccurate, does not satisfy this element — knowing falsity is required.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: evidence that the reported events did not occur as described, communications or records contradicting the report, or the individual's own admission. Establishing that the individual [italic]knew[/italic] the report was false is key — consider their access to the facts and their stated certainty.
+
+    [bold]Officer Notes[/bold]
+
+    - False emergency calls that dispatched security to a non-existent threat are chargeable, particularly when crew or station safety was compromised by the diversion.
+    - If a false report was made with intent to have an innocent person arrested, consider whether [bolditalic]215 — False Imprisonment[/bolditalic] or [bolditalic]220 — Abuse of Authority[/bolditalic] should be added if the reporter held an authority role.
+    - Document the specific false content and the evidence contradicting it in the case file.
+
+- type: spaceLaw
+  id: SpaceLaw217
+  code: 217
+  name: Intimidation
+  severity: Misdemeanor
+  elements:
+    - Made a credible threat of violent action against a specific person
+    - That a reasonable person in the victim's position would believe could realistically be carried out
+    - Victim must agree to press charges
+  punishment:
+    - 5 min brig, 15k fine (increased to 35k if means to follow up are found on their person)
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Credible threat of violent action[/bold] — Made a statement, gesture, or demonstration communicating intent to cause physical harm that a reasonable person in the victim's position would genuinely believe could be carried out. Hyperbole, venting, or obvious expressions of frustration (e.g., "I'm going to melt you" said in a clearly non-serious context) do not satisfy this element — the threat must be specific and credibly actionable.
+    - 2. [bold]Against a specific person[/bold] — The threat was directed at an identifiable individual, not a vague or general expression of frustration.
+    - 3. [bold]Victim agreement to press charges[/bold] — This charge requires the victim's cooperation. Officers may not pursue this charge unilaterally if the victim declines to press charges.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the victim's testimony, radio or communications logs capturing the threat, or witness accounts of the threatening behavior.
+
+    [bold]Officer Notes[/bold]
+
+    - The credibility test is objective: would a reasonable person in the victim's position believe the threat could realistically be carried out? Emotional outbursts, hyperbolic insults, and obvious venting do not qualify.
+    - If the individual also possessed weapons or tools capable of carrying out the threat, increase the fine to 35k speso.
+    - If the threat is accompanied by physical action, charge [bolditalic]101 — Assault[/bolditalic] or [bolditalic]201 — Aggravated Assault[/bolditalic] in addition.
+    - Do not pursue this charge without a cooperative victim — document that the victim agreed to press charges in your report.
+
+- type: spaceLaw
+  id: SpaceLaw218
+  code: 218
+  name: Sexual Harassment
+  severity: Misdemeanor
+  elements:
+    - Engaged in unwelcome conduct of a sexual nature (physical touching, verbal comments, or non-verbal gestures)
+    - That either violated the victim's dignity, or created a hostile, intimidating, or offensive environment
+  greater:
+    - SpaceLaw318
+  punishment:
+    - 5 min brig, 10k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Unwelcome conduct of a sexual nature[/bold] — The behavior was sexual in nature and was not invited, consented to, or welcomed by the recipient. This includes physical touching, verbal comments, and non-verbal gestures.
+    - 2. [bold]That either violated the victim's dignity OR created a hostile environment[/bold] — Only one of these two outcomes needs to be satisfied: the conduct humiliated or degraded the victim (dignity violation), OR the conduct created a hostile, intimidating, or offensive environment. Both prongs are not required.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim testimony, witness accounts, communications logs, or documentation of a pattern of behavior.
+
+    [bold]Officer Notes[/bold]
+
+    - A single incident can be sufficient for this charge if it is severe. A pattern of lower-level behavior also qualifies.
+    - If the conduct involved physical contact that constitutes an involuntary sexual act, charge [bolditalic]318 — Sexual Assault[/bolditalic] instead.
+    - Handle reports with discretion — record victim statements carefully and limit disclosure of details to those directly involved in processing the charge.
+
+- type: spaceLaw
+  id: SpaceLaw219
+  code: 219
+  name: Unlawful Search
+  severity: Misdemeanor
+  elements:
+    - Conducted a search of a person, vessel, or department
+    - Without lawful cause, consent, a valid warrant, or emergency justification
+  greater:
+    - SpaceLaw220
+  punishment:
+    - 5 min brig, possible demotion
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Conducted a search[/bold] — Actively examined a person's body, belongings, vessel, or department space. Observing items in plain view does not constitute a search.
+    - 2. [bold]Without lawful justification[/bold] — No reasonable suspicion or probable cause existed; no valid warrant was obtained; the individual did not consent; and no emergency circumstances (active threat, imminent harm) applied.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the victim's testimony that no consent was given, absence of any warrant, absence of articulable suspicion, or documentation showing the search was conducted without procedural basis.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge applies primarily to Security Officers conducting searches outside their legal authority. Evidence obtained through an unlawful search may not be usable in further charges.
+    - On Blue Alert, individual search warrants are waived for individuals exhibiting suspicious behavior — this is not a blanket authorization to search everyone.
+    - If the unlawful search was part of a broader pattern of abuse of position, charge [bolditalic]220 — Abuse of Authority[/bolditalic] in addition to or instead of this.
+
+- type: spaceLaw
+  id: SpaceLaw220
+  code: 220
+  name: Abuse of Authority
+  severity: Misdemeanor
+  elements:
+    - Used a position of command, security, medical, or legal authority
+    - To harass, extort, falsely arrest, or unlawfully punish another individual
+  punishment:
+    - 10 min brig, demotion
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Used a position of authority[/bold] — The individual held a recognized role that conferred power over others: Security, Command, Medical, Legal, or equivalent. A crew member without such a role cannot be charged under this offense.
+    - 2. [bold]To harass, extort, falsely arrest, or unlawfully punish[/bold] — The authority was misused to cause harm: subjecting someone to unwanted enforcement action, leveraging authority to extract compliance or goods, arresting without cause, or imposing punishments outside legal authorization.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim testimony detailing the specific abuse, documentation of the unlawful action taken (false arrest record, unauthorized punishment), witness accounts, or a pattern of conduct evidencing misuse of authority.
+
+    [bold]Officer Notes[/bold]
+
+    - Security officers who conduct unlawful searches, make pretext arrests, or hold prisoners beyond their sentence may be charged under this offense. [bolditalic]219 — Unlawful Search[/bolditalic] covers the specific act; 220 covers the broader misuse.
+    - Demotion is required upon conviction — the individual loses the position that enabled the offense.
+
+- type: spaceLaw
+  id: SpaceLaw221
+  code: 221
+  name: Unlawful Butchering of Fauna
+  severity: Misdemeanor
+  elements:
+    - Killed or caused the death of a non-sentient creature aboard the station
+    - That posed no threat to the individual or others at the time
+    - Including station pets, common friendly station fauna, and similar non-hostile creatures
+  punishment:
+    - 5-10 min brig, 20k speso fine; restitution where applicable
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Killed or caused the death of a non-sentient creature[/bold] — The target must be confirmed as non-sentient. Station fauna, pets, scurrets, and common non-hostile creatures are covered. Borgs and mechs are not animals and fall under vandalism or sabotage.
+    - 2. [bold]That posed no threat at the time[/bold] — If the creature was actively attacking or posing a clear, immediate threat to the individual or others, lethal defense may be justified. The charge requires that the killing was unprovoked.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, witness accounts, or camera footage establishing the killing was unprovoked.
+
+    [bold]Officer Notes[/bold]
+
+    - This charge does not apply to authorized activities such as cooking or approved research use.
+    - For the killing of a sentient being — regardless of species — see [bolditalic]301 — Murder[/bolditalic].
+    - If the creature was a crew member's registered pet, consider layering [bolditalic]103 — Minor Vandalism[/bolditalic] or [bolditalic]203 — Major Vandalism[/bolditalic] for destruction of personal property.
+
+
+# 3XX - Felonies
+- type: spaceLaw
+  id: SpaceLaw301
+  code: 301
+  name: Murder
+  severity: Felony
+  elements:
+    - Intentionally killed another person with malice
+  greater:
+    - SpaceLaw401
+  punishment:
+    - 10-20 min brig, 40-60k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Purposefully killed[/bold] — The individual took actions that directly resulted in another person's death, with intent to kill. Accidental or negligent killing is [bolditalic]308 — Manslaughter[/bolditalic]. Killing with intent to prevent revival escalates to [bolditalic]401 — Capital Murder[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for arrest; Preponderance of Evidence required for sentencing[/italic]
+
+    PC may be established by: direct observation, camera footage, forensic evidence (cause of death, weapon), or credible witness testimony establishing the individual as the killer. Intent must be articulable — weapon choice, continued attack, or stated intent all support a murder charge over manslaughter.
+
+    [bold]Officer Notes[/bold]
+
+    - If the victim was revived, murder is still chargeable — the act of killing constitutes the offense.
+    - If the individual took steps to prevent revival (destroying the body, hiding it), charge [bolditalic]401 — Capital Murder[/bolditalic].
+    - Apply [bolditalic]M03 — Self Defense[/bolditalic] only when the force used was clearly proportional to a genuine threat — lethal force in response to minor aggression is not self-defense.
+
+- type: spaceLaw
+  id: SpaceLaw302
+  code: 302
+  name: Larceny
+  severity: Felony
+  elements:
+    - Stole rare, expensive (>50k speso value), or restricted equipment
+    - From a secure area or directly from a person
+  punishment:
+    - 10 min brig, return of items, 40k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Stole rare, expensive, or restricted equipment[/bold] — The item must be valued above 50,000 speso, be classified as rare, or be access-restricted (armory gear, medical implants, command equipment, etc.).
+    - 2. [bold]From a secure area or from a person[/bold] — The item was taken from a secured location or directly from an individual. Taking common items from unsecured workspaces is [bolditalic]202 — Theft[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: item found on the individual or traced to them, access logs, inventory discrepancy confirmed by department heads, or witness accounts.
+
+    [bold]Officer Notes[/bold]
+
+    - Value determines the tier: under 50k from a workplace = [bolditalic]202 — Theft[/bolditalic]; over 50k, restricted, or rare = 302.
+    - Confirm the value or restriction status with the relevant department head or Warden if contested.
+    - If the individual broke into a secure area to steal the item, layer the appropriate B&E charge.
+
+- type: spaceLaw
+  id: SpaceLaw303
+  code: 303
+  name: Sabotage
+  severity: Felony
+  elements:
+    - Destroyed station assets or resources critical to normal or emergency station procedures
+    - Or caused sections of the station to become uninhabitable
+  greater:
+    - SpaceLaw403
+  punishment:
+    - 10 min brig, 40k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Destroyed critical assets or resources[/bold] — The target must be something the station's normal or emergency operation depends on: power systems, atmospheric equipment, medical equipment, communication arrays, shuttle systems.
+    - 2. [bold]Or caused sections to become uninhabitable[/bold] — Actions that breached hull integrity, vented atmosphere, flooded with radiation, or otherwise rendered an area inaccessible or dangerous to crew.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the damage itself linked to the individual via access logs, direct observation, forensic evidence, or witness testimony.
+
+    [bold]Officer Notes[/bold]
+
+    - Distinguishing 303 from [bolditalic]103 — Minor Vandalism[/bolditalic] or [bolditalic]203 — Major Vandalism[/bolditalic]: the target must be critical to station operation. A broken chair is vandalism; a destroyed APC is sabotage.
+    - If the damage would render the entire station uninhabitable or collapse station function entirely, escalate to [bolditalic]403 — Grand Sabotage[/bolditalic].
+    - Intent is not strictly required — reckless destruction of critical systems qualifies.
+
+- type: spaceLaw
+  id: SpaceLaw304
+  code: 304
+  name: Grand Conspiracy
+  severity: Felony
+  elements:
+    - Knowingly planned or conspired to commit a Felony or Capital crime
+    - With intent to carry that offense out
+  punishment:
+    - Same punishment as the associated crime
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly planned or conspired[/bold] — Active planning, preparation, or coordination toward a criminal goal. Conspiracy can be committed by an individual acting alone; a co-conspirator is not required. Mere acquaintance with a criminal is not conspiracy.
+    - 2. [bold]Toward a Felony or Capital crime[/bold] — The planned crime must be at Felony level (300s) or Capital level (400s). Conspiracy toward misdemeanors or lower is [bolditalic]204 — Conspiracy[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: communications establishing coordination, evidence of shared planning or logistical support, or testimony from a cooperating co-conspirator.
+
+    [bold]Officer Notes[/bold]
+
+    - The punishment mirrors the associated crime — ensure the underlying felony or capital charge is clearly documented.
+    - All co-conspirators, if any, can be charged with Grand Conspiracy alongside the underlying crime.
+    - Cooperation with security ([bolditalic]M13[/bolditalic]) may reduce the sentence.
+
+- type: spaceLaw
+  id: SpaceLaw305
+  code: 305
+  name: Hostile Activity
+  severity: Felony
+  elements:
+    - Committed a direct hostile act against the station, crew, or Colonial Command
+    - In coordination with or on behalf of a hostile organization
+  greater:
+    - SpaceLaw405
+  punishment:
+    - 10 min brig, 20k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Committed a direct hostile act[/bold] — Took active offensive or operational action against the station, crew, or Colonial Command: direct attacks, sabotage operations, intelligence delivery, or coordinated disruption. Passive support (recruitment, logistics, harboring) is [bolditalic]205 — Hostile Agent[/bolditalic].
+    - 2. [bold]In coordination with or on behalf of a hostile organization[/bold] — The act was committed as part of, or at the direction of, a hostile organization (see [bolditalic]405 — Enemy of the Government[/bolditalic]). Standalone offenses committed without hostile organizational affiliation are charged under the specific offense (e.g., [bolditalic]303 — Sabotage[/bolditalic]) rather than 305.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: intercepted communications, evidence of material support (weapons, supplies, access), or direct observation of the hostile act.
+
+    [bold]Officer Notes[/bold]
+
+    - [bolditalic]205 — Hostile Agent[/bolditalic] covers passive support; 305 covers active participation. Direct attacks, sabotage operations, or intelligence delivery for a hostile group all fall under 305.
+    - If the individual is confirmed as a member of a hostile organization (not merely acting on their behalf), charge [bolditalic]405 — Enemy of the Government[/bolditalic].
+    - Document all evidence carefully — hostile activity charges are often part of larger investigations.
+
+- type: spaceLaw
+  id: SpaceLaw306
+  code: 306
+  name: Possession, Illegal Inherently Dangerous Equipment
+  severity: Felony
+  elements:
+    - Possessed restricted or illegal equipment
+    - With a primary purpose of causing harm or large-scale destruction
+    - C3 equipment is included
+  punishment:
+    - Item removal, 10 min brig, 35k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Possessed restricted or illegal equipment[/bold] — The item must be classified as C3 or otherwise prohibited without special authorization that does not exist for the individual.
+    - 2. [bold]With primary purpose of causing harm or destruction[/bold] — The item's primary design function is to harm people or cause large-scale damage: military-grade weapons, explosive devices, mass-casualty tools, etc. Items with dual use (tools that could be weaponized) do not automatically qualify.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: recovery of the item during a lawful search, discovery at the scene of an incident, or the item being openly displayed.
+
+    [bold]Officer Notes[/bold]
+
+    - Unlike [bolditalic]206 — Possession, Contraband Equipment[/bolditalic] (C2), there is no permit exception for most C3 items without explicit command authorization.
+    - During Red Alert, non-Security persons may possess C3 only while complying with reasonable Security direction.
+    - Red Alert is not blanket approval to keep, carry, or use C3 however they want.
+    - A person may still be charged under 306 during Red Alert when they ignore lawful orders (for example, looting and retaining a nuclear operative's equipment).
+    - If the item was used in an attack, add the appropriate assault or sabotage charge.
+
+- type: spaceLaw
+  id: SpaceLaw307
+  code: 307
+  name: Inciting a Riot
+  severity: Felony
+  elements:
+    - Performed actions intended to cause large-scale unrest
+    - Up to and including facilitating or causing rioting
+  punishment:
+    - 10 min brig, 45-60k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Actions intended to cause large-scale unrest[/bold] — The individual took specific steps to agitate, provoke, or coordinate others toward collective violence or disruption — not simply expressing anger.
+    - 2. [bold]Up to and including facilitating rioting[/bold] — The incitement either resulted in or was clearly aimed at producing the conditions for a riot. The riot does not need to have actually occurred if the intent and steps taken are documented.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: communications showing organizational intent, witness accounts identifying the individual as an instigator, or direct observation of the incitement.
+
+    [bold]Officer Notes[/bold]
+
+    - Distinguish from [bolditalic]207 — Rioting[/bolditalic]: a rioter is a participant; an inciter is an organizer or provocateur. Both charges may apply to the same individual if they both incited and participated.
+    - If a riot resulted but no leader can be clearly identified, charge participants with [bolditalic]207 — Rioting[/bolditalic] instead.
+    - The charge does not require the riot to have occurred — intent and steps taken are sufficient.
+
+- type: spaceLaw
+  id: SpaceLaw308
+  code: 308
+  name: Manslaughter
+  severity: Felony
+  elements:
+    - Unintentionally killed another person
+    - Through negligent but non-malicious actions
+  greater:
+    - SpaceLaw301
+  punishment:
+    - 10 min brig, 35-50k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Unintentionally killed another person[/bold] — The death was a direct result of the individual's actions, but killing was not the goal.
+    - 2. [bold]Through negligent but non-malicious actions[/bold] — The individual acted carelessly, recklessly, or failed in a duty — but did not intend harm. Malicious actions that result in unintended death still constitute [bolditalic]301 — Murder[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the cause of death linked to the individual's actions, and evidence that the actions were negligent rather than intentional (absence of stated intent, context suggesting recklessness, etc.).
+
+    [bold]Officer Notes[/bold]
+
+    - The key distinction from murder is [bold]intent[/bold]: was the individual trying to kill the victim, or did death result from carelessness? Context, weapon choice, and behavior before and after the incident inform this.
+    - If the individual shows remorse, attempted to help the victim, or called for medical aid, these are indicators of manslaughter rather than murder.
+    - If negligence was so extreme it demonstrated callous disregard for life, a murder charge may still be appropriate — consult the HoS.
+
+- type: spaceLaw
+  id: SpaceLaw309
+  code: 309
+  name: Trespass, High Security Areas
+  severity: Felony
+  elements:
+    - Trespassed without permission
+    - In Command areas, personal offices, weapons/explosive storage or production, or other high security areas
+    - Includes NT Vaults, Syndicate caches, and NFZ-covered space
+  punishment:
+    - 15 min brig, return of items taken, 45-60k speso fine; NFZ violation adds half the time spent in NFZ
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Trespassed without permission[/bold] — Present in a high security area without authorization, or remained after being asked to leave.
+    - 2. [bold]In a high security area[/bold] — Command areas, personal offices of command staff, weapons storage/production facilities, explosive storage/production facilities, NT Vaults, Syndicate caches, or NFZ-covered space. These are more restricted than dangerous areas (209) because of the combination of sensitivity and hazard.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: direct observation, access logs confirming unauthorized entry, or command/security staff testimony.
+
+    [bold]Officer Notes[/bold]
+
+    - NFZ violations add time beyond the base sentence: add half the total time spent in the NFZ to the sentence.
+    - Any items taken from the high security area must be returned — document all recovered items.
+    - If the individual broke in rather than finding an open door, add [bolditalic]310 — Breaking and Entering, High Security Areas[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw310
+  code: 310
+  name: Breaking and Entering, High Security Areas
+  severity: Felony
+  elements:
+    - Used forcible entry to trespass
+    - Into a high security area as defined under 309 — Trespass, High Security Areas
+  punishment:
+    - As per 210, plus an additional 10k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Forcible entry[/bold] — Bypassed access controls through any method: hacking, cutting, bypassing locks, exploiting access card vulnerabilities.
+    - 2. [bold]Into a high security area[/bold] — As defined under [bolditalic]309 — Trespass, High Security Areas[/bolditalic]: command offices, weapons/explosive storage, vaults, etc.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: signs of forced entry linked to the individual, access logs, or direct observation.
+
+    [bold]Officer Notes[/bold]
+
+    - Always charge alongside [bolditalic]309 — Trespass, High Security Areas[/bolditalic] when entry was forced.
+    - The base punishment mirrors [bolditalic]210[/bolditalic] with an additional 10k speso fine for the elevated security context.
+    - Document all items in the individual's possession when apprehended — recovery from high security areas often involves stolen restricted equipment.
+
+- type: spaceLaw
+  id: SpaceLaw311
+  code: 311
+  name: Dereliction
+  severity: Felony
+  elements:
+    - Willfully abandoned an obligation
+    - Critical to the station's continued operation
+  greater:
+    - SpaceLaw411
+  punishment:
+    - Demotion, 40k speso fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Willfully abandoned an obligation[/bold] — The individual actively chose not to perform their duty — not incapacity, emergency, or circumstance preventing them. Willfulness is required; being overwhelmed is not dereliction.
+    - 2. [bold]Critical to the station's continued operation[/bold] — The abandoned duty directly affected the station's ability to function: engineering not maintaining power, medical not responding to critical patients, security not responding to active threats.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: absence logs, witness accounts of the individual being absent or refusing duty, or documented failure to respond to critical calls.
+
+    [bold]Officer Notes[/bold]
+
+    - Demotion is the primary sanction — this charge is about professional responsibility. Confirm with the relevant department head and the Captain.
+    - If the dereliction was for the benefit of a hostile organization or materially harmed the station, escalate to [bolditalic]411 — Grand Dereliction[/bolditalic].
+    - Demotion requires command authorization — do not initiate without HoS or Captain approval.
+
+    [bold]Examples of Dereliction[/bold]
+
+    - [italic]Engineering:[/italic] Abandoning the station without power during an active emergency, or refusing to respond to repeated critical repair calls.
+    - [italic]Medical:[/italic] Abandoning critical patients, refusing to staff Medbay during mass casualties, or ignoring a Code Blue without reason.
+    - [italic]Security:[/italic] Abandoning post during a Red Alert, refusing to respond to confirmed hostile activity, or leaving the brig unattended with active prisoners.
+    - [italic]Command:[/italic] A department head who repeatedly ignores their department's needs, refuses all administrative duties, or abandons the station during an emergency.
+
+- type: spaceLaw
+  id: SpaceLaw312
+  code: 312
+  name: Embezzlement
+  severity: Felony
+  elements:
+    - Embezzled funds from station fund computers
+  punishment:
+    - Return of funds, 40k fine, demotion, 15 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Embezzled funds from station fund computers[/bold] — The individual accessed station financial systems and transferred, diverted, or misappropriated funds for personal gain or unauthorized purposes.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: financial records showing unauthorized transactions, access logs linking the individual to the terminal at the time of the transactions, or admissions.
+
+    [bold]Officer Notes[/bold]
+
+    - Return of all embezzled funds is mandatory. Work with the Captain to audit the station account and determine the amount taken.
+    - Demotion is required — the individual loses the access that enabled the crime.
+    - If funds were diverted to a hostile organization, consider adding [bolditalic]305 — Hostile Activity[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw313
+  code: 313
+  name: Illegal Mindbreaking
+  severity: Felony
+  elements:
+    - Permanently removed a psion's abilities
+    - Not as a lawful punishment, by a Mantis in the line of duty, or during an extenuating emergency
+  punishment:
+    - 15 min brig, 85k fine, restoration of psion's powers if able, removal of perpetrator's powers if applicable
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Permanently removed a psion's abilities[/bold] — Performed an action that results in the irreversible loss of a psion's psionic capabilities.
+    - 2. [bold]Not under authorized circumstances[/bold] — Lawful punishments ordered by command, actions by a Mantis performing their duty, or emergency situations where no alternative exists are exempt.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical confirmation of the loss of abilities, identification of the individual who performed the procedure, and absence of any lawful authorization.
+
+    [bold]Officer Notes[/bold]
+
+    - Restoration of abilities is required if medically possible — coordinate with the CMO and any available Mantis.
+    - If the perpetrator also possessed psionic abilities, removal of those abilities is part of the sentence.
+    - The 85k fine reflects the severity and near-irreversibility of the harm. Ensure the fine is documented in the case record.
+
+- type: spaceLaw
+  id: SpaceLaw314
+  code: 314
+  name: Impersonation
+  severity: Felony
+  elements:
+    - Assumed the identity of another individual or job
+  punishment:
+    - Removal of items used to impersonate, 40k speso fine, 10 min brig
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Assumed the identity of another individual or job[/bold] — Actively represented themselves as someone they are not — using another crew member's ID, wearing unauthorized uniforms, or falsely claiming a role or title.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: the individual being found with false ID or unauthorized uniform items, direct observation of the deceptive behavior, or witness accounts.
+
+    [bold]Officer Notes[/bold]
+
+    - Remove all items used to impersonate: ID cards, uniforms, access cards, fake name tags.
+    - If the impersonation was used to gain property or money, add [bolditalic]212 — Fraud[/bolditalic].
+    - Impersonating a security officer or command staff is an aggravating factor — note it in the report and consider whether [bolditalic]M02 — Elevated Sentencing[/bolditalic] applies.
+
+- type: spaceLaw
+  id: SpaceLaw315
+  code: 315
+  name: Kidnapping
+  severity: Felony
+  elements:
+    - Unlawfully abducted a person
+    - Transported them to a new location
+    - Confined them against their will
+  greater:
+    - SpaceLaw415
+  punishment:
+    - 10 min brig, 70k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Unlawfully abducted a person[/bold] — Took physical control of a person without their consent and without legal authority.
+    - 2. [bold]Transported them to a new location[/bold] — Moved the victim from where they were taken to a different place.
+    - 3. [bold]Confined them against their will[/bold] — Prevented them from leaving the new location. All three elements must be present — detention alone without transport is [bolditalic]215 — False Imprisonment[/bolditalic].
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim testimony, witness accounts of the abduction, access logs or camera footage showing the transport, or discovery of the victim at a location linked to the individual.
+
+    [bold]Officer Notes[/bold]
+
+    - All three elements must be established: abduction, transport, and confinement. Missing any one shifts the charge to [bolditalic]215 — False Imprisonment[/bolditalic].
+    - If the victim was a Command member or higher, charge [bolditalic]415 — Grand Kidnapping[/bolditalic] instead.
+    - Investigate the motive — kidnapping often accompanies other charges (coercion, hostile activity, etc.).
+
+- type: spaceLaw
+  id: SpaceLaw317
+  code: 317
+  name: Coercion
+  severity: Felony
+  elements:
+    - Offered or accepted a bribe as or to a contracted station member
+    - Or blackmailed someone
+  punishment:
+    - 10 min brig, removal of bribe money or items, 40k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Offered or accepted a bribe[/bold] — Either party to the exchange may be charged: the one offering and the one accepting.
+    - 2. [bold]As or to a contracted station member[/bold] — At least one party must be a crew member with official station responsibilities. Bribing a private citizen is fraud; bribing a crew member or official is coercion.
+    - 3. [bold]Or blackmailed someone[/bold] — Used knowledge of a real or fabricated compromising fact to extract money, goods, or actions under threat of exposure.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: communications documenting the offer or acceptance of a bribe, recovery of bribe funds or items, or victim testimony regarding blackmail.
+
+    [bold]Officer Notes[/bold]
+
+    - Both the briber and the recipient can be charged — document all parties involved.
+    - Removal of all bribe money or items is required as part of sentencing.
+    - If the coercion was to facilitate a crime (e.g., bribing security to release a prisoner), layer the appropriate additional charges.
+
+- type: spaceLaw
+  id: SpaceLaw318
+  code: 318
+  name: Sexual Assault
+  severity: Felony
+  elements:
+    - Engaged in an involuntary, non-consensual sexual act
+    - Ranging from unwanted touching to forced penetration
+    - Violating bodily autonomy
+  punishment:
+    - 15 min brig, 40k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Involuntary, non-consensual sexual act[/bold] — The act was sexual in nature and was not consented to by the victim.
+    - 2. [bold]Ranging from unwanted touching to forced penetration[/bold] — The charge covers a spectrum of severity. Greater severity within this range may warrant elevated sentencing via [bolditalic]M02[/bolditalic].
+    - 3. [bold]Violating bodily autonomy[/bold] — The victim's right to control what happens to their body was disregarded.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: victim testimony, corroborating witness accounts, medical evidence, or physical evidence.
+
+    [bold]Officer Notes[/bold]
+
+    - Handle with the utmost discretion. Victim statements should be recorded by the Warden or HoS, and details must not be shared beyond those directly processing the charge.
+    - If the conduct did not constitute a non-consensual act but was still unwelcome and sexual in nature, charge [bolditalic]218 — Sexual Harassment[/bolditalic] instead.
+    - Document the severity of the act in the case report — it informs the appropriate sentence within the 15 min / 40k range, and may warrant [bolditalic]M02 — Elevated Sentencing[/bolditalic] in severe cases.
+
+- type: spaceLaw
+  id: SpaceLaw319
+  code: 319
+  name: Unauthorized Implantation / Deimplantation
+  severity: Felony
+  elements:
+    - Implanted, removed, tracked, mindshielded, or otherwise physically modified another individual
+    - Without their informed consent or lawful authority
+  punishment:
+    - 10-15 min brig, 40k fine, reversal if possible
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Implanted, removed, tracked, mindshielded, or otherwise modified[/bold] — Performed a procedure involving any internal modification: placing an implant, removing one, installing a tracker, applying mindshield treatment, or equivalent procedures. Covers both adding and removing modifications.
+    - 2. [bold]Without informed consent or lawful authority[/bold] — The individual did not agree to the procedure with full knowledge of what was being done, or the individual performing the procedure had no legal authority to do so. Lawful authority includes: CMO authorization for medical implants, Security or Warden authorization for mindshields in lawful confinement, or a direct command order.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical examination confirming the implant or modification, absence of consent documentation, or victim testimony. The individual performing the procedure must be identified.
+
+    [bold]Officer Notes[/bold]
+
+    - Reversal is required where medically feasible — coordinate with the CMO to confirm whether the procedure can safely be reversed.
+    - [bolditalic]213 — Mutilation[/bolditalic] covers unauthorized modification broadly at the misdemeanor level; 319 is the felony-level charge specifically for implants, trackers, mindshields, and deimplantation.
+    - Unauthorized mindshielding (applying a mindshield without lawful justification) falls under this charge. Lawful justification requires either the individual's consent or a formal security order — not the officer's own judgment alone.
+
+- type: spaceLaw
+  id: SpaceLaw320
+  code: 320
+  name: Gross Medical Malpractice
+  severity: Felony
+  elements:
+    - Committed severe medical misconduct
+    - Resulting in death, permanent disability, wrongful Borgification, organ loss, or major irreversible harm
+    - Through willful disregard or gross negligence
+  punishment:
+    - 10-15 min brig, demotion, 50k fine
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Severe medical misconduct[/bold] — A medical professional or individual performing medical procedures acted with gross negligence or willful disregard for proper medical practice. The conduct must substantially deviate from accepted standards.
+    - 2. [bold]Resulting in serious harm[/bold] — The misconduct directly caused: death, permanent disability, wrongful Borgification, involuntary organ removal, or other major irreversible harm. Harm that is minor or reversible may fall under [bolditalic]213 — Mutilation[/bolditalic] or [bolditalic]208 — Gross Criminal Negligence[/bolditalic] instead.
+    - 3. [bold]Through willful disregard or gross negligence[/bold] — The individual knew or should have known their actions posed an unacceptable risk of serious harm and proceeded regardless. Simple mistakes without negligence do not qualify.
+
+    [bold]Standard of Proof[/bold] — [italic]Probable Cause required for charge[/italic]
+
+    PC may be established by: medical records documenting the procedure and resulting harm, the CMO's assessment identifying the departure from standard practice, or evidence of deliberate disregard (ignoring warnings, proceeding without authorization, performing procedures outside scope).
+
+    [bold]Officer Notes[/bold]
+
+    - Coordinate with the CMO before charging — medical standards are specialized and the CMO's assessment of whether conduct was grossly negligent is authoritative.
+    - Demotion is mandatory upon conviction — the individual loses medical access and duties.
+    - Wrongful Borgification — converting a person to a Borg without consent or lawful authorization — falls under this charge. If the Borgification was intentional and irreversible, escalate to [bolditalic]401 — Capital Murder[/bolditalic].
+
+
+# 4XX - Capital Crimes
+- type: spaceLaw
+  id: SpaceLaw401
+  code: 401
+  name: Capital Murder
+  severity: Capital
+  elements:
+    - Committed murder with clear intent to kill
+    - And materially took steps to prevent the victim's revival
+    - Or forced Borging or discorporealization without consent or authorization
+  punishment:
+    - Execution, Permanent Confinement, or Force Borgification
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Murder with clear intent to kill[/bold] — The base act of [bolditalic]301 — Murder[/bolditalic] must be established first: a purposeful killing.
+    - 2. [bold]Materially took steps to prevent revival[/bold] — Actions taken to ensure the victim cannot be resuscitated: destroying or hiding the body, preventing medical access, using lethally calibrated weapons set to bypass medical revival, or killing in an area where revival is impossible.
+    - 3. [bold]Or forced Borging/discorporealization[/bold] — Non-consensually converting a person to a Borg or discorporealized state without authorization from command constitutes Capital Murder even if the body technically survives.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required; Captain authorization for execution[/italic]
+
+    The HoS must document the killing and the anti-revival steps taken. The Captain must authorize the sentence. A fax to Colonial Command is required for all executions.
+
+    [bold]Officer Notes[/bold]
+
+    - Distinguish from [bolditalic]301 — Murder[/bolditalic] by the presence of anti-revival steps. A killing without such steps, however brutal, is 301.
+    - Forced Borging without command authorization elevates to Capital Murder regardless of whether the individual survived the procedure in a technical sense.
+    - Execution must be announced over comms with charges, reasoning, method, and time. A fax to Colonial Command must be sent. See [bolditalic]Brigging Procedures[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw403
+  code: 403
+  name: Grand Sabotage
+  severity: Capital
+  elements:
+    - Destroyed or modified station assets or equipment
+    - Without which the station may collapse or become entirely uninhabitable
+  punishment:
+    - Permanent Confinement, Demotion
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Destroyed or modified station assets[/bold] — Took deliberate action to damage, destroy, or alter critical station infrastructure.
+    - 2. [bold]Without which the station may collapse or become uninhabitable[/bold] — The targeted systems are so critical that their loss threatens the viability of the station itself: main power grid, life support, core structural integrity, or similar foundational systems.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: the scale of damage confirming it goes beyond [bolditalic]303 — Sabotage[/bolditalic], access logs and forensic evidence linking the individual, and confirmation from engineering or command of the systems affected.
+
+    [bold]Officer Notes[/bold]
+
+    - Distinguish from [bolditalic]303 — Sabotage[/bolditalic] by the scope: 303 damages important systems; 403 threatens station survival.
+    - Intent is not strictly required — willful destruction of foundational systems qualifies even if the individual claimed a different goal.
+    - Permanent Confinement is the baseline; Execution may be warranted in cases where the act resulted in mass casualties.
+
+- type: spaceLaw
+  id: SpaceLaw404
+  code: 404
+  name: Espionage
+  severity: Capital
+  elements:
+    - Knowingly betrayed critical station information
+    - To enemies of the station
+  punishment:
+    - Permanent Confinement
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Betrayed critical information[/bold] — Shared, transmitted, or leaked sensitive station data: security codes, ship layouts, personnel information, defensive capabilities, or operational plans.
+    - 2. [bold]To enemies of the station[/bold] — The recipient must be a hostile party: any organization listed under [bolditalic]405 — Enemy of the Government[/bolditalic], a rival faction, or an external entity in opposition to the station.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: intercepted transmissions, recovered data devices, testimony from a witness who observed the transfer, or access logs showing the individual accessed restricted information shortly before it appeared in enemy hands.
+
+    [bold]Officer Notes[/bold]
+
+    - The information must be confirmed as critical — sharing non-sensitive information with a hostile contact is [bolditalic]305 — Hostile Activity[/bolditalic], not Espionage.
+    - Espionage often accompanies [bolditalic]404 — Espionage[/bolditalic] with [bolditalic]405 — Enemy of the Government[/bolditalic] if the individual is also a confirmed member of a hostile organization.
+    - Fax Colonial Command — espionage cases may have off-station implications that command needs to know about.
+
+- type: spaceLaw
+  id: SpaceLaw405
+  code: 405
+  name: Enemy of the Government
+  severity: Capital
+  elements:
+    - "Is or was a confirmed member of a hostile organization: True Nexus, Xenoborg Collective, hostile boarding parties, Changeling Hiveminds, cults, or Dirizher Cartel"
+  punishment:
+    - Permanent Confinement or transportation to Colonial Command for interrogation
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Confirmed membership in a hostile organization[/bold] — The individual is, or was during the relevant period, an active member of: True Nexus, the Xenoborg Collective, hostile boarding parties, Changeling Hiveminds, cults, or the Dirizher Cartel.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: visual confirmation of affiliation (cult robes, syndicate gear, hive-link evidence), recovered membership materials, testimony, or deconversion confirming the individual was under the organization's influence.
+
+    [bold]Officer Notes[/bold]
+
+    - Mere sympathy for a hostile organization is [bolditalic]205 — Hostile Agent[/bolditalic]. Confirmed membership is 405.
+    - Individuals under [bolditalic]M12 — Hostile Brainwashing[/bolditalic] (mind control) are to be deconverted and released once freed — they are not charged with 405 if they acted under compulsion.
+    - Transportation to Colonial Command is an alternative to Permanent Confinement when intelligence value is high. Consult the Captain.
+
+- type: spaceLaw
+  id: SpaceLaw407
+  code: 407
+  name: Subversion of the Chain of Command
+  severity: Capital
+  elements:
+    - Disrupted the chain of command via the murder of a commanding officer
+    - Or illegally declared oneself to be a commanding officer
+  punishment:
+    - Permanent Confinement; Execution if Criminal is a Head Revolutionary
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Murdered a commanding officer[/bold] — Killed a recognized member of the Command staff in a way that disrupted the chain of command.
+    - 2. [bold]Or illegally declared oneself a commanding officer[/bold] — Assumed command authority without legitimate succession: declaring oneself Captain without authorization, taking over a department by force, etc.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required; Captain authorization for execution[/italic]
+
+    PC for murder: as per [bolditalic]301 — Murder[/bolditalic]. PC for false command assumption: witness testimony or documented communications of the false claim.
+
+    [bold]Officer Notes[/bold]
+
+    - Head Revolutionaries who subvert the chain of command may be executed — this requires Captain authorization and standard execution procedures.
+    - A legitimate succession (acting Captain during incapacitation of the Captain) does not qualify — the assumption of command must be illegal.
+    - If the HoS is the individual attempting subversion, escalate immediately to the Captain or Colonial Command via fax.
+
+- type: spaceLaw
+  id: SpaceLaw408
+  code: 408
+  name: Biological Terror
+  severity: Capital
+  elements:
+    - Knowingly released or caused the station to be affected by a disease, plant, or biological form
+    - That may spread uncontained and/or cause serious physical harm
+  punishment:
+    - Permanent Confinement, Execution, or Force Borgification
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Knowingly released a biological threat[/bold] — Deliberately introduced or caused the spread of a disease, plant, organism, or other biological agent. Accidental contamination should be investigated before charging.
+    - 2. [bold]Capable of spreading and causing serious harm[/bold] — The agent has the potential to propagate beyond initial release and cause meaningful physical harm to crew.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: identification of the biological agent and its source, access logs or physical evidence linking the individual to the release point, and medical/scientific confirmation of the agent's properties.
+
+    [bold]Officer Notes[/bold]
+
+    - Accidental contamination (a spill, a broken containment vessel) requires investigation before charging — "knowingly" is a key element. If intent cannot be established, consider [bolditalic]208 — Gross Criminal Negligence[/bolditalic] instead.
+    - Force Borgification is available as a sentence if the individual was the vector of transmission and poses continued risk.
+    - Coordinate with Medical immediately upon confirmation — containment takes priority over processing the individual.
+
+- type: spaceLaw
+  id: SpaceLaw411
+  code: 411
+  name: Grand Dereliction
+  severity: Capital
+  elements:
+    - As security or command, acted in a way detrimental to the station, sector, or Colonial Command
+    - Examples include selling station gear to spacers or intentionally permitting or encouraging felony or capital crimes
+  punishment:
+    - Permanent Confinement, transportation to Colonial Command, Execution in extreme cases
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]As security or command[/bold] — This charge applies only to individuals in security or command roles. It holds those with the most responsibility to the highest standard.
+    - 2. [bold]Acted to the detriment of the station, sector, or Colonial Command[/bold] — The dereliction must have materially harmed or endangered the station or its mission: selling gear, enabling criminals, providing cover for hostile activity, or deliberately ignoring serious threats.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: documented evidence of the harmful act, communications showing intent or coordination, witness testimony, or inventory/access records confirming the dereliction.
+
+    [bold]Officer Notes[/bold]
+
+    - Distinguish from [bolditalic]311 — Dereliction[/bolditalic] by role (must be security or command) and scale (the act was actively harmful to the station or Colonial Command, not merely a failure of duty).
+    - Execution is reserved for extreme cases where the dereliction constituted active betrayal — requires Captain authorization and full execution procedures.
+    - If the Grand Dereliction involved working with a hostile organization, layer [bolditalic]305 — Hostile Activity[/bolditalic] or [bolditalic]405 — Enemy of the Government[/bolditalic].
+
+- type: spaceLaw
+  id: SpaceLaw415
+  code: 415
+  name: Grand Kidnapping
+  severity: Capital
+  elements:
+    - Unlawfully abducted a Command member or higher authority
+    - And confined them against their will
+  punishment:
+    - Permanent Confinement
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Unlawfully abducted[/bold] — Took physical control of a person without their consent and without legal authority.
+    - 2. [bold]A Command member or higher authority[/bold] — The victim must hold a Command position: Captain, HoS, CMO, CE, RD, or equivalent. Kidnapping non-Command crew is [bolditalic]315 — Kidnapping[/bolditalic].
+    - 3. [bold]And confined them against their will[/bold] — Prevented them from leaving.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: victim testimony, witness accounts, camera footage of the abduction, or the victim being found at a location linked to the individual.
+
+    [bold]Officer Notes[/bold]
+
+    - The elevated charge reflects the threat to station command structure — the Captain and Colonial Command must be informed immediately.
+    - If the Command member was harmed or killed in the process, layer [bolditalic]301 — Murder[/bolditalic] or [bolditalic]401 — Capital Murder[/bolditalic] as applicable.
+    - Treat this as a station-wide priority — the incapacitation of Command is a strategic threat.
+
+- type: spaceLaw
+  id: SpaceLaw416
+  code: 416
+  name: Perfidy
+  severity: Capital
+  elements:
+    - Intentionally baited Security or Command with a peaceful resolution
+    - Then betrayed their trust to elude capture or launch a surprise attack
+  punishment:
+    - Permanent Confinement
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Baited Security or Command with a peaceful resolution[/bold] — The individual signaled willingness to surrender, comply, or negotiate peacefully: raised hands, verbal surrender, agreeing to be cuffed, requesting parley.
+    - 2. [bold]Then betrayed that trust[/bold] — Used the moment of reduced guard to escape, launch an attack, or otherwise exploit the situation created by the false peaceful signal.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: officer testimony describing the sequence of events, camera footage showing the feigned compliance followed by the attack or escape, or multiple witness accounts confirming both the false surrender and the subsequent betrayal.
+
+    [bold]Officer Notes[/bold]
+
+    - Both elements must be clearly established — the false surrender and the subsequent exploitation. A suspect who attacks during an arrest without any feigned compliance is not committing Perfidy.
+    - This charge exists to protect officers acting in good faith during negotiations. Document the sequence carefully.
+    - Perfidy charges may be layered with other offenses committed during the betrayal (assault, escape, etc.).
+
+- type: spaceLaw
+  id: SpaceLaw417
+  code: 417
+  name: Brainwashing
+  severity: Capital
+  elements:
+    - Brainwashed someone non-consensually
+    - Or caused them to commit crimes under mind control
+  punishment:
+    - Punishments applied for crimes committed by the brainwashed; Permanent Confinement, Forced Borgification, or Execution
+  description: |2
+    [bold]Elements in Detail[/bold]
+
+    - 1. [bold]Brainwashed someone non-consensually[/bold] — Used psionic, cult, chemical, or technological means to override or control another person's will without their agreement.
+    - 2. [bold]Or caused them to commit crimes under control[/bold] — The brainwashing resulted in the victim committing criminal acts they would not have committed freely.
+
+    [bold]Standard of Proof[/bold] — [italic]Preponderance of Evidence required[/italic]
+
+    PC may be established by: medical or psionic confirmation of the mind control, identification of the controlling individual by the victim or witnesses, or evidence of the methods used (cult artifacts, psionic equipment, chemicals).
+
+    [bold]Officer Notes[/bold]
+
+    - The brainwasher bears criminal responsibility for acts committed by the victim under their control — the victim is charged under [bolditalic]M12 — Hostile Brainwashing[/bolditalic] and released upon deconversion.
+    - The brainwasher's sentence includes the crimes committed by their victim — document all crimes committed by controlled individuals.
+    - Punishment options (Permanent Confinement, Force Borgification, Execution) reflect the severity and the risk of re-offense. Consult the HoS and Captain for sentencing.

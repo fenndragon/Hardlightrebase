@@ -1,0 +1,48 @@
+<Document>
+### Arrest Procedure
+
+1. Halt the citizen using a whistle or hailer to alert them that Security will be speaking with them. If the individual does not halt, Security is permitted to use non-lethal means to subdue them.
+2. Produce the arrest warrant (if on Green Alert) and verbally announce that the individual is being detained. 
+3. Approach to gain control of the individual, by first requesting their compliance to handcuffing. If the individual refuses to comply, non-lethal force may be used. If the individual is heavily armed, follow [textlink="Security Authority" link="HLSpaceLawUseOfForce"].
+4. Collect the individual's equipment and transport it with them to Security. Assist the Warden with processing until dismissed.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+If the detainee becomes belligerent, wields a long arm, draws a sidearm, or attempts to flee, the arresting officer may employ non-lethal or lethal force under [textlink="Security Authority" link="HLSpaceLawUseOfForce"].
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+#### Radio Call-Ins
+
+A call for help on radio does [bold]not[/bold] immediately mark a suspect for arrest. Proper investigation is still required to establish evidence. Suspects may be brought in for interrogation if they willingly comply; otherwise, an arrest warrant is required.
+
+#### Officer Witness
+
+If a Security Officer or member of Command directly witnesses a crime take place, the need for an arrest warrant is waived.
+
+#### Fleeing to a Ship
+
+If a suspect marked for arrest via a warrant flees onto a private vessel, that vessel becomes subject to immediate search and seizure of all contraband held within. Crew on board are [bold]not[/bold] subject to search unless they willingly impede officers or aid the individual being arrested.
+
+#### Security Mindshields
+Security is expected to maintain active mindshields throughout their time in service. If a individual is hired into Security, they shall receive a mindshield.
+
+#### Red Alert Equipment Protocol
+
+Upon entering Red Alert, the following is authorized by Colonial Command:
+
+1. Security may freely utilize C3 equipment to handle any given threat on station.
+2. Freelancers and crew may carry/brandish/employ C3 equipment strictly to combat the threat [bold]only when specifically authorized[/bold] by the HoS or Captain. Any freelancer aiding the station [bold]must[/bold] report to Security; the Harbor Master may direct freelancer coordination, but final authority rests with the HoS.
+3. Upon removal of the threat, an announcement is to be made stating individuals with illegal equipment must stow it off-station. [bold]No one may be pursued for equipment used during a Red Alert.[/bold] A 5-minute grace period is given from the time of announcement; after that, remaining contraband may be confiscated as spotted.
+
+</Document>

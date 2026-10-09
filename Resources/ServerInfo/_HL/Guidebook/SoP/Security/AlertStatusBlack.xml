@@ -1,0 +1,45 @@
+<Document>
+## Black Alert
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Quote[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+"There is an immediate threat to the sector beyond the control of security personnel."
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+Black Alert indicates an active, immediate threat that requires maximum response beyond the capabilities of station security.
+
+
+
+### Criteria for Declaring Black Alert
+
+Black Alert should be under the following cirtiera:
+
+- Red Alert criteria PLUS Security is unable to handle the threat themselves.
+
+Black Alert [bold]should not be treated as a permanent state.[/bold] It must be lifted as soon as the immediate threat is neutralized or contained. Leaving the station at Black Alert without active justification is a misuse of authority.
+
+### What Changes on Black Alert
+
+All Red Alert changes remain in effect, plus:
+
+[bold]C3 Equipment[/bold]
+All personnel are explicilty permitted to deploy class three contraband on station.
+
+[bold]Commanded Obedience[/bold]
+Obedience to directives by command and security is mandatory. Failure to obey commands may result in death.
+
+Crew shall:
+- Set suit sensors to tracking mode at all times.
+- Contribute towards defense of the station's critical assets.
+- Visibly arm themselves.
+
+</Document>

@@ -1,0 +1,65 @@
+<Document>
+## Arrest Authority
+
+The lawfulness of an arrest depends on whether probable cause exists and whether a warrant is required. These requirements vary depending on whether the offense was witnessed directly, the severity of the offense, and the threat classification of the suspect.
+
+### § 1 — Crimes Committed in View of an Officer
+
+When a Security Officer or member of Command [bold]directly and personally witnesses a crime being committed[/bold], the need for an arrest warrant is waived. The officer may immediately take the individual into custody.
+
+The witnessing officer must be capable of articulating what they observed in sufficient detail to satisfy probable cause. A credible, firsthand account by a Security Officer or Command member constitutes probable cause without further corroboration.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#ba292c" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Important[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      The officer-witness exception does not permit pretext stops. An officer cannot claim to have witnessed a crime they did not, in fact, observe.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+### § 2 — Crimes Not Committed in View — Non-Capital Offenses
+
+Where the suspected offense is a [bold]non-capital crime[/bold] (Infractions, Minor Crimes, Misdemeanors, or Felonies) and the individual is not a confirmed or credibly probable Enemy of the Government, a [bold]valid arrest warrant[/bold] must be obtained prior to effecting an arrest.
+
+A valid arrest warrant must contain:
+
+- The subject's full name and position aboard the station
+- The specific charge or charges alleged
+- A concise statement of the evidence establishing probable cause
+- An authorizing signature and stamp from the [bold]Warden, Head of Security, or Captain[/bold]
+
+[bold]Hearsay alone is not a valid basis for an arrest warrant.[/bold] Evidence must be articulable and, where possible, corroborated.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      [bold]Alert-Level Exception:[/bold] On Blue or Red Alert, the warrant requirement for non-capital offenses is waived. Arrests made under elevated alert status must nonetheless be supported by articulable probable cause and shall be documented and justifiable to Colonial Command upon request.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+### § 3 — Crimes Not Committed in View — Capital Offenses or Enemies of the Government
+
+Where the suspected offense is a [bold]Capital Crime[/bold] (400-series), or where the individual is a confirmed or credibly probable Enemy of the Government under [textlink="405 — Enemy of the Government" link="HLSpaceLawList"], an arrest may be effected [bold]without a warrant[/bold].
+
+This exception reflects the magnitude of harm posed by capital offenders and hostile actors. Delay for warrant issuance in such circumstances creates an unacceptable risk to the station and its crew. The operational necessity of immediate action supersedes the procedural warrant requirement.
+
+Probable cause must still exist and must be documented. Warrantless capital arrests are subject to post-incident review by the Captain, and must be justifiable to Colonial Command if a review is requested.
+
+</Document>

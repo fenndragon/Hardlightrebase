@@ -1,0 +1,192 @@
+<Document>
+# Service
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Service is responsible for maintaining crew morale, quality of life, and many of the station's day-to-day comforts.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Service Roles
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Role[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Responsibility[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      [textlink="Head of Personnel" link="SOPHoP"]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Oversees the Service Department, manages civilian personnel, handles access and job changes, and assists with station administration.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Chef
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Prepares meals, feeds the crew, and ensures the station has access to quality food throughout the shift.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Botanist
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Grows crops, produces ingredients, maintains hydroponics, and supplies the Chef and station with food, plants, and other botanical products.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Bartender
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Serves drinks, operates the bar, and provides a social gathering place for crew members to relax and socialize.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Janitor
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Keeps the station clean, removes hazards, and ensures public areas remain safe and presentable.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Service Worker
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Assists the Service Department wherever needed and supports other service roles as required.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Chaplain
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Provides spiritual guidance, moral support, and religious services to those who seek them.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Station Host
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Entertains the crew through broadcasts, interviews, announcements, and other public programs.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Librarian
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Maintains the library, preserves knowledge, and provides educational, cultural, and recreational opportunities for the crew.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Valet
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Assists visitors and crew members with transportation, hospitality, and general customer service throughout the station.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Boxer
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Participates in and promotes recreational sporting activities, providing entertainment through friendly competition.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Clown
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Entertains the crew through humor, harmless mischief, and lighthearted interactions that help improve station morale.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Mime
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Entertains the crew through silent performance, visual storytelling, and creative roleplay interactions.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Musician
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Provides musical entertainment and contributes to the station's atmosphere through artistic expression.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+## Department Expectations
+
+- Service personnel should strive to create enjoyable roleplay and social interactions for the crew.
+
+- Service personnel all contribute to the station in different ways. No service role should be viewed as inherently more important than another.
+
+- Service personnel are encouraged to host events, create activities, and foster social interaction among the crew.
+
+- Service staff should remain mindful of ongoing emergencies and station conditions. While social activities are important, there is a time and place for them.
+
+- Harmless pranks, entertainment, and lighthearted interactions are encouraged when appropriate to the situation and server rules.
+
+- Service personnel are often some of the most visible members of the station and should help create an engaging environment for everyone around them.
+
+- While Service may not directly maintain the station's infrastructure or security, maintaining crew morale is a valuable contribution in its own right.
+
+## Final Note
+
+The station is more than power generation, medical equipment, and security patrols. Service personnel help make it feel alive, and their contribution to the round is just as important as any other department.
+
+</Document>

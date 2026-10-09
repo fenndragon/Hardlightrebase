@@ -9,8 +9,8 @@
   - FoodRecipes
   - Writing
   - MedicalRecipes # Frontier
-  - ArchetypesRangedWeapons # Frontier
-  - ColorCodesAmmo # Frontier
+  # - ArchetypesRangedWeapons # Frontier
+  # - ColorCodesAmmo # Frontier
   - Psionics
 
 - type: guideEntry

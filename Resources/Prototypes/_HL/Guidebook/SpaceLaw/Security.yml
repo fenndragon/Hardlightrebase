@@ -1,0 +1,177 @@
+- type: guideEntry
+  id: SOPSecurity
+  name: Security
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/Overview.xml"
+  children:
+  - SOPSecurityOverviewPlayingSecurity
+  - SOPSecurityAuthorityOverview
+  - SOPSecurityPoliciesProcedures
+  - SOPSecurityTerminology
+  - SOPSecurityLegalStandards
+
+
+- type: guideEntry
+  id: SOPSecurityAuthorityOverview
+  name: Security Authority
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityAuthorityOverview.xml"
+  children:
+  - HLSpaceLawAuthority
+  - HLSpaceLawArrestAuthority
+  - HLSpaceLawWeaponsAuthority
+  - HLSpaceLawUseOfForce
+
+- type: guideEntry
+  id: SOPSecurityBriggingProcedures
+  name: Brigging Procedures
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/BriggingProcedures.xml"
+  children:
+  - SOPSecurityPrisonerTreatment
+
+- type: guideEntry
+  id: SOPSecurityTerminology
+  name: Security Terminology
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityPolicies.xml"
+  children:
+  - SOPSecurityPoliciesRoles
+  - SOPSecurityPoliciesTerminology
+
+- type: guideEntry
+  id: SOPSecurityLegalStandards
+  name: Legal Standards
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalStandards.xml"
+  children:
+  - SOPSecurityLegalReasonableSuspicion
+  - SOPSecurityLegalProbableCause
+  - SOPSecurityLegalBurdenOfProof
+
+- type: guideEntry
+  id: SOPSecurityPrisonerTreatment
+  name: Prisoner Treatment
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/PrisonerTreatment.xml"
+
+- type: guideEntry
+  id: SOPSecurityOverviewPlayingSecurity
+  name: A Note on Playing Security
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/PlayingSecurity.xml"
+  children:
+  - SOPSecurityOverviewRPFirstSentencing
+
+- type: guideEntry
+  id: SOPSecurityOverviewRPFirstSentencing
+  name: RP-First Sentencing
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/RPFirstSentencing.xml"
+
+- type: guideEntry
+  id: SOPSecurityPoliciesRoles
+  name: Security Roles
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityRoles.xml"
+
+- type: guideEntry
+  id: SOPSecurityPoliciesTerminology
+  name: Terminology
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityTerminology.xml"
+
+- type: guideEntry
+  id: SOPSecurityPoliciesCDET
+  name: CDET Policy
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/CDETPolicy.xml"
+
+- type: guideEntry
+  id: SOPSecurityPoliciesProcedures
+  name: Standard Procedures
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityProcedures.xml"
+  children:
+  - SOPSecurityPoliciesCDET
+  - SOPSecurityBriggingProcedures
+  - SOPSecurityProcedureArrest
+  - SOPSecurityProcedureShipBoarding
+  - SOPSecurityProcedureSentencing
+  - SOPSecurityProcedureSearches
+  - SOPSecurityProcedureEvidence
+  - SOPSecurityProcedurePermabrig
+  - SOPSecurityProcedureUseOfForce
+
+- type: guideEntry
+  id: SOPSecurityProcedureArrest
+  name: Arrest Procedure
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/ArrestProcedure.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedureShipBoarding
+  name: Ship Boarding Protocol
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/ShipBoardingProtocol.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedureSentencing
+  name: Sentencing Rules
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SentencingRules.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedureSearches
+  name: Searches
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/Searches.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedureEvidence
+  name: Evidence & Confiscated Material
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/EvidenceHandling.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedurePermabrig
+  name: Permabrig
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/Permabrig.xml"
+
+- type: guideEntry
+  id: SOPSecurityProcedureUseOfForce
+  name: Use of Force
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityProcedureUseOfForce.xml"
+
+- type: guideEntry
+  id: SOPSecurityLegalReasonableSuspicion
+  name: Reasonable Suspicion
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalReasonableSuspicion.xml"
+
+- type: guideEntry
+  id: SOPSecurityLegalProbableCause
+  name: Probable Cause
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalProbableCause.xml"
+
+- type: guideEntry
+  id: SOPSecurityLegalBurdenOfProof
+  name: Burden of Proof
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalBurdenOfProof.xml"
+
+# Security Authority
+
+- type: guideEntry
+  id: HLSpaceLawAuthority
+  name: guide-entry-rules-hl-authority
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityAuthority.xml"
+
+- type: guideEntry
+  id: HLSpaceLawArrestAuthority
+  name: guide-entry-rules-hl-arrest-authority
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/ArrestAuthority.xml"
+
+- type: guideEntry
+  id: HLSpaceLawWeaponsAuthority
+  name: guide-entry-rules-hl-weapons-authority
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/WeaponsAuthority.xml"
+
+- type: guideEntry
+  id: HLSpaceLawUseOfForce
+  name: guide-entry-rules-hl-use-of-force
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/UseOfForce.xml"
+  children:
+  - SOPSecurityForceSituationalReference
+  - SOPSecurityForceRelatedPages
+
+- type: guideEntry
+  id: SOPSecurityForceSituationalReference
+  name: Situational Deadly Force Reference
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SituationalDeadlyForce.xml"
+
+- type: guideEntry
+  id: SOPSecurityForceRelatedPages
+  name: Related Pages
+  text: "/ServerInfo/_HL/Guidebook/SoP/Security/UseOfForceReferences.xml"

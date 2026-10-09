@@ -1,0 +1,86 @@
+<Document>
+### Ship Boarding Protocol (Sector Operations)
+
+Use this protocol when dealing with ships operating in the station sector.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Step
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Requirement
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+1
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Broadcast intent in both [bold]Traffic[/bold] and [bold]Common[/bold] before boarding action.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+2
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+If boarding/search is warrant-based, send the warrant by fax where applicable before execution.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+3
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+If the suspect vessel is combat-capable, order it to depower before boarding.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+4
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+IFFless vessel status provides [bold]Reasonable Suspicion[/bold] for contact/investigation.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+5
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Mass-scanner radar red pings (red weapons icon or red shields) provide [bold]Probable Cause[/bold] for escalation/search action, but a warrant must still be obtained before any search unless another lawful exception applies.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+"Radar pings" in this protocol refers to mass-scanner console indicators showing guns in any color other than green, treated as C3-linked threat indicators.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

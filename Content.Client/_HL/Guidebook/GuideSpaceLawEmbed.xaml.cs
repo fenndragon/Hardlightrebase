@@ -1,4 +1,3 @@
-
 using Content.Client.Guidebook.Controls;
 using Content.Client.Guidebook.Richtext;
 using JetBrains.Annotations;
@@ -77,12 +76,12 @@ public sealed partial class GuideSpaceLawEmbed : BoxContainer, IDocumentTag, ISe
     private void GenerateControl(SpaceLawPrototype law)
     {
         RepresentedPrototype = law;
+        var (headerColor, textColor) = GetHeaderColors(law.Severity);
         NameBackground.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.LightGray
+            BackgroundColor = headerColor
         };
 
-        var textColor = Color.Black;
         var fullName = $"{law.Code} - {law.Name}";
         var prototypes = _prototype.EnumeratePrototypes<SpaceLawPrototype>();
 
@@ -168,5 +167,18 @@ public sealed partial class GuideSpaceLawEmbed : BoxContainer, IDocumentTag, ISe
             label.SetMessage(msg);
             TextDescriptionContainer.AddChild(label);
         }
+    }
+
+    private static (Color Background, Color Foreground) GetHeaderColors(LawSeverity severity)
+    {
+        return severity switch
+        {
+            LawSeverity.Infraction => (Color.LightGray, Color.Black),
+            LawSeverity.Minor => (Color.FromHex("#c8a404"), Color.Black),
+            LawSeverity.Misdemeanor => (Color.FromHex("#e67e22"), Color.Black),
+            LawSeverity.Felony => (Color.FromHex("#ba292c"), Color.White),
+            LawSeverity.Capital => (Color.Black, Color.White),
+            _ => (Color.LightGray, Color.Black),
+        };
     }
 }

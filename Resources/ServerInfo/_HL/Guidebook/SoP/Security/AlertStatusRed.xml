@@ -1,0 +1,49 @@
+<Document>
+## Red Alert
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Quote[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+"There is an immediate threat to the sector. Security should prepare to use lethal force if necessary. All crew should cooperate to ensure mutual safety and are advised to follow any present authorities."
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+Red Alert indicates an active, immediate threat that requires maximum readiness and coordinated response.
+
+### Criteria for Declaring Red Alert
+
+Red Alert should be declared when [bold]any[/bold] of the following apply:
+
+- Armed hostile engagement is active or imminent on the station
+- A confirmed armed intruder, terrorist, or hostile force is present
+- A capital-level crime is actively in progress with the subject at large
+- A station-threatening emergency is underway (e.g., active sabotage of critical systems)
+- The threat cannot be contained under Blue Alert conditions
+
+Red Alert [bold]should not be treated as a permanent state.[/bold] It must be lifted as soon as the immediate threat is neutralized or contained. Leaving the station at Red Alert without active justification is a misuse of authority.
+
+### What Changes on Red Alert
+
+All Blue Alert changes remain in effect, plus:
+
+[bold]C3 Equipment[/bold]
+Security personnel may carry and deploy C3 while acting in lawful security duties (see [textlink="Security Authority" link="HLSpaceLawWeaponsAuthority"]). Crew members and freelancers may carry C3 during Red Alert [bold]only if specifically requested[/bold] by the HoS or Captain — a Red Alert declaration alone is not general authorization. Unauthorized possession of C3 remains chargeable under [textlink="306 — Possession, Illegal Inherently Dangerous Equipment" link="HLSpaceLawList"].
+
+[bold]Lethal Force[/bold]
+Security is authorized to use lethal force when the situation warrants it. Lethal force is authorized — not mandated. Officers must still exercise judgment proportional to the threat. See [textlink="Security Authority" link="SOPSecurityAuthorityOverview"] for the full Use of Force framework.
+
+[bold]Crew Assistance[/bold]
+Crew may be directed by Security to assist in responding to the threat. Crew who assist must operate under direct officer supervision and follow all Security commands — unauthorized independent action remains chargeable under [textlink="104 — Vigilantism" link="HLSpaceLawList"]. See [textlink="M05 — Griseo Maris" link="HLSpaceLawList"].
+
+Freelancers who assist may be coordinated by the Harbor Master, but final direction and enforcement authority remain with the HoS.
+
+</Document>

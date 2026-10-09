@@ -1,0 +1,24 @@
+<Document>
+## CDET — Contraband Denying Energy Turrets
+
+Contraband Denying Energy Turrets (CDETs) are statically placed automatic weapons that fire upon any individual detected carrying Class 3 (C3) contraband. They are among the most powerful deterrent tools available to Security, and their use must be treated accordingly.
+
+### Deployment Policy
+
+- CDETs may only be deployed at the [bold]explicit authorization of any Command member[/bold]
+- Deployment requires a specific, articulable justification — CDETs may not be placed as a passive precaution or out of convenience
+- CDETs [bold]must not remain active for the entirety of a shift[/bold] without renewed justification; deployment should be time-limited and actively reviewed
+- When the threat that justified deployment is neutralized, CDETs must be deactivated promptly
+- Failure to follow these guidelines may constitute [textlink="220 — Abuse of Authority" link="HLSpaceLawList"]
+
+### CDET Firing — Evidentiary Standard
+
+[bold]A CDET firing on an individual is not, by itself, justification for a search or arrest.[/bold]
+
+A CDET activation establishes [textlink="Reasonable Suspicion" link="SOPSecurityLegalReasonableSuspicion"] for a contact — the responding officer may approach, request identification, and question the individual. The firing is one factor in the [textlink="Totality of the Circumstances" link="SOPSecurityLegalReasonableSuspicion"].
+
+Additional observable factors — flight from the officer, continued movement toward a sensitive area, evasive or deceptive behavior, presence during an active alert — may combine with the CDET indicator to collectively establish [textlink="Probable Cause" link="SOPSecurityLegalProbableCause"] for a search warrant.
+
+[bold]Exception — Blue Alert:[/bold] During Blue Alert, a CDET firing [bold]authorizes a search at the responding officer's discretion[/bold]. A warrant is not required when Blue Alert is active and a CDET has fired on the individual. See [textlink="Alert Statuses — Blue Alert" link="BlueAlert"].
+
+</Document>

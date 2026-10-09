@@ -1,0 +1,68 @@
+<Document>
+## Grant of Authority
+
+Members of the Security Department — including Security Officers, Detectives, the Warden, and the Head of Security — are authorized enforcement agents of Colonial Command aboard this station. By virtue of this appointment, Security personnel are empowered to:
+
+1. Enforce Space Law and the lawful directives of Colonial Command.
+2. Detain, investigate, arrest, search, and sentence individuals in accordance with Space Law and established procedures.
+3. Carry, brandish, and deploy weapons and equipment of any contraband classification while acting in the performance of authorized security duties.
+4. Use physical force, including deadly force, within the limits established by these provisions.
+
+This authority extends to [bold]all space within the station's operational sector[/bold] — including the station itself, all vessels present in the sector regardless of ownership or affiliation, planetary surfaces, and expedition sites reachable from the station. Authority persists outside the sector only in the active pursuit of a fleeing suspect who is subject to a valid arrest warrant or who has been lawfully arrested and has escaped custody.
+
+[bold]Exception — Colonial Command Territory:[/bold] Security does not exercise primary enforcement authority within Colonial Command's own territorial space. Security personnel may operate there only in exigent circumstances — specifically, active pursuit of a fleeing suspect, or situations requiring immediate action to prevent serious harm — and must defer to Colonial Command's authority upon contact.
+
+### Officer Discretion
+
+Members of the Security Department are permitted to exercise professional discretion when handling criminal offenses. Security personnel are not expected to be unthinking enforcement automatons; instead, they should evaluate the context of a situation to determine if a formal arrest, a warning, or conditional leniency is most appropriate. Officers may choose not to act upon or formally charge a minor offense if they can articulate a reasonable, common sense justification for doing so.
+
+When deciding whether to grant leniency, officers should weigh the totality of the circumstances. This includes looking at the suspect's intent, their history, and their level of cooperation, as well as whether the offense caused actual harm or damage. While minor infractions and petty crimes are excellent candidates for a simple verbal warning or, discretion should never be used to excuse behavior that actively compromises station safety.
+
+For Capital Crimes (400-series), discretion is heavily restricted and must never be applied frivolously or openly. Because these high level offenses present a severe threat to the crew and the station, standard enforcement and sentencing are mandatory. Any deviation or leniency for a Capital Crime requires an extraordinary, operational necessity such as needing the suspect's immediate help to prevent a greater disaster and must receive explicit, logged approval from appropiate command.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#c8a404" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Warning[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      The purpose of officer discretion is to create leniancy in the application of Space Law. It should not be used excessively to the point of derelection or corruption.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1b67a5" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Info[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Security players should refer to [textlink="RP-First Sentencing" link="SOPSecurityOverviewRPFirstSentencing"] to understand alternative avenues for addressing criminal offenses beyond simple confinement.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+### Jurisdiction Over Vessels
+
+Space Law applies to [bold]all vessels operating within sector space[/bold], regardless of their ownership, affiliation, or any claimed independence. A freelancer vessel, private ship, or independent craft is not exempt from Space Law by virtue of its private ownership. Vessels in this sector are not sovereign territory. No claim of independence, neutrality, or "castle doctrine" constitutes a valid basis for excluding Security authority.
+
+[bold]Freelancer and Private Vessels:[/bold] Freelancer vessels are private property — equivalent to a privately owned vehicle. They are not considered "station-affiliated" in any special sense, nor are they exempt. Space Law governs conduct aboard them the same as anywhere else in sector space.
+
+[bold]No Asylum:[/bold] No vessel within sector space may serve as a place of asylum from Space Law or from lawful Security enforcement. The law of New Avalon extends to all citizens and visitors within its claimed space, including those aboard private vessels.
+
+[bold]Victim Discretion:[/bold] For minor offenses committed aboard a private vessel — such as trespass — where the vessel owner or directly affected party declines to press charges, Security may, at its discretion, defer to that decision. This is a matter of enforcement discretion and does not limit jurisdiction. Security retains full authority to act regardless of victim preference where the offense is serious, where a third party was harmed, or where station safety is implicated.
+
+[bold]Boarding and Search:[/bold] A vessel owner may grant or deny consent to board their vessel. Absent consent, a boarding or search requires a warrant, except where a lawful exception applies. Whether Security may board is a procedural question — it does not affect whether Space Law applies aboard.
+
+
+</Document>

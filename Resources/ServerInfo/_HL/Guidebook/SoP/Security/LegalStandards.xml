@@ -1,0 +1,144 @@
+<Document>
+# Legal Standards
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Quote[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+These standards govern how security officers may act, what level of evidence is required before taking action, and how guilt is established. Understanding these principles is essential to operating lawfully and fairly as a member of the security department.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+## Standards at a Glance
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="3">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Situation
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Standard Required
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Authorized Actions
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Suspicious behavior observed
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reasonable Suspicion
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Detain briefly, question, request ID
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Credible witness report of a crime
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reasonable Suspicion → Probable Cause with corroboration
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Investigate; arrest once PC established
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Officer directly witnesses a crime
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Probable Cause (immediate)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Arrest, search, charge without warrant
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Physical evidence recovered
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Probable Cause
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Arrest, search, charge
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Crime confirmed by multiple sources
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Preponderance of Evidence
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Charge and sentence
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+## Applying Standards to the Elements of a Crime
+
+Every crime in [textlink="Space Law" link="HLSpaceLawList"] is defined by [bold]elements[/bold] — discrete conditions that must each be satisfied for a charge to hold. Security must be able to articulate how the evidence satisfies [bold]each element[/bold] of the charge.
+
+In instances where OR is used, such as [textlink="Trespass" link="HLSpaceLawList"], "Present in an area without admission or access" .. "[bold]Or[/bold] remained after being asked to leave" - the element that must be satisfied is either or.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Example[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+The elements are (1) damaged, destroyed, or permanently defaced, and (2) non-critical furniture, vendor, or personal property. An officer must be able to point to evidence showing both: what was damaged, and that it qualifies as non-critical property. Damage to an APC would satisfy element 1 but not element 2 — that is Sabotage instead.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+If any element cannot be established by a preponderance of evidence, the charge cannot stand. In those cases, consider whether a lesser offense better fits the available evidence.
+
+## Related Pages
+
+[italic]See [textlink="Crimes & Punishments" link="HLSpaceLawList"] for individual offense elements and [textlink="Legal Procedures" link="SOPSecurityPoliciesProcedures"] for arrest and search procedures.[/italic]
+
+</Document>

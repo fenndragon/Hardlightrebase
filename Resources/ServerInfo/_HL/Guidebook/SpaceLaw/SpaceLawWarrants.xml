@@ -1,0 +1,117 @@
+<Document>
+## Warrants
+A warrant is a formal application and authorization to either:
+
+- Search a specified person, vessel, or department area; or
+- Arrest a specified person.
+
+All warrants must be signed and stamped by the [bold]Warden, Head of Security, or Captain[/bold] to be valid.
+
+Warrants must include articulated [textlink="Probable Cause" link="SOPSecurityLegalProbableCause"]:
+
+- [bold]Arrest Warrant:[/bold] probable cause that the named person committed a crime.
+- [bold]Search Warrant (Individual/Ship/Department):[/bold] probable cause that evidence of a crime is located in the person/area to be searched.
+
+All warrants must also include an [bold]affidavit statement[/bold]: sworn testimony setting out the facts relied upon for probable cause.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#c8a404" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Warning[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Warrant Integrity Requirement (OOC Safety Standard)
+Due to abuse risk, warrants may not be based on information known to be false, and may not be issued or signed corruptly. Warrant submissions and approvals must reflect truth to the best of the submitter's and signer's knowledge.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+[bold]ALL warrants must have evidence backing issuance. Unsupported hearsay alone is not a valid basis for a warrant.[/bold]
+
+### Individual Warrant
+
+Refers to a specific individual and the contents of any worn equipment, bags, etc. Issued when a specific person needs to be searched for a potentially missing article or contraband. Does [bold]not[/bold] extend to any privately owned vessel.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+On Blue or Red Alert, the need for an individual search warrant is waived. This does NOT grant security a blanket excuse to search everyone — only those exhibiting suspicious behavior.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+### Ship Warrant
+
+Refers to a specific vessel docked to the station or in open space. Covers the entirety of said vessel and any individual on board at the time the warrant is executed.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Only on Red Alert is a Ship Search Warrant waived. This is not a blanket excuse to search every vessel in-sector — searches must still be justifiable to Colonial Command if a reason is requested post-incident.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+### Department Warrant
+
+Refers to a specific section of the station under an individual command member's jurisdiction (Science, Cargo, Service, etc.). Covers the entirety of said department and its employees. This warrant type is put under greater scrutiny due to its widespread impact — evidence [bold]must[/bold] be established before it is issued.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Only on Red Alert is the need for a department search warrant waived.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+### Arrest Warrant
+
+The lawful ordering of detainment of a citizen in Colonial space. Must include: the individual's name, position, charges, a brief statement of evidence, and an authorized signature.
+
+Individuals placed under arrest are subject to a [bold]personal[/bold] search — not a vessel search. If a vessel search is required, a separate warrant must be drafted.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+On Blue and Red Alerts, the need for an arrest warrant is waived. Arrests made under elevated alerts must be supported by reasonable evidence and justifiable to Colonial Command.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

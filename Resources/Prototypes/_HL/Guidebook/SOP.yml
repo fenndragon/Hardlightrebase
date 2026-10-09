@@ -4,22 +4,116 @@
   text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
   priority: 1 # Frontier
   children:
-  - SpaceLaw
   - AlertLevels
   - SOPDepartments
   - SOPCommand
-  - CyborgRights
+  - SiliconPolicy
 
-# Departments
-# Security
-# Crimes
+## Departments
 
 - type: guideEntry
   id: SOPDepartments
   name: Departments
   text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
+  children:
+  - SOPCargo
+  - SOPEngineering
+  - SOPMedical
+  - SOPScience
+  - SOPSecurity
+  - SOPService
+
+- type: guideEntry
+  id: SOPCargo
+  name: Cargo
+  text: "/ServerInfo/_HL/Guidebook/SoP/Departments/cargo.xml"
+
+- type: guideEntry
+  id: SOPEngineering
+  name: Engineering
+  text: "/ServerInfo/_HL/Guidebook/SoP/Departments/engineering.xml"
+
+- type: guideEntry
+  id: SOPMedical
+  name: Medical
+  text: "/ServerInfo/_HL/Guidebook/SoP/Departments/medical.xml"
+
+- type: guideEntry
+  id: SOPScience
+  name: Science
+  text: "/ServerInfo/_HL/Guidebook/SoP/Departments/science.xml"
+
+- type: guideEntry
+  id: SOPService
+  name: Service
+  text: "/ServerInfo/_HL/Guidebook/SoP/Departments/service.xml"
+
+## Command
 
 - type: guideEntry
   id: SOPCommand
   name: Command
-  text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/command.xml"
+  children:
+  - SOPCaptain
+  - SOPCE
+  - SOPCMO
+  - SOPHM
+  - SOPHoP
+  - SOPHoS
+  - SOPQM
+  - SOPRD
+  - SOPSTC
+
+
+- type: guideEntry
+  id: SOPCaptain
+  name: Captain
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/captain.xml"
+  children:
+    - SOPActingCaptain
+
+- type: guideEntry
+  id: SOPActingCaptain
+  name: Acting Captain
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/captain_acting.xml"
+
+- type: guideEntry
+  id: SOPCE
+  name: Chief Engineer
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/ce.xml"
+
+- type: guideEntry
+  id: SOPCMO
+  name: Chief Medical Officer
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/cmo.xml"
+
+- type: guideEntry
+  id: SOPHM
+  name: Harbormaster
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/hm.xml"
+
+- type: guideEntry
+  id: SOPHoP
+  name: Head of Personnel
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/hop.xml"
+
+- type: guideEntry
+  id: SOPHoS
+  name: Head of Security
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/hos.xml"
+
+- type: guideEntry
+  id: SOPQM
+  name: Quartermaster
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/qm.xml"
+
+- type: guideEntry
+  id: SOPRD
+  name: Research Director
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/rd.xml"
+
+- type: guideEntry
+  id: SOPSTC
+  name: Station Traffic Controller
+  text: "/ServerInfo/_HL/Guidebook/SoP/Command/stc.xml"

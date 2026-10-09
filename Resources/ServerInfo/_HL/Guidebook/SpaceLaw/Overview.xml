@@ -1,0 +1,120 @@
+<Document>
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1b67a5" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Info[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box Orientation="Vertical">
+      Space Law is a tool used to benefit the sector, not a cudgel. The greater good of the station is to be considered during sentencing. Space Law is designed to protect the station and crew, not to hinder them. Station-wide emergencies are to take priority over enforcing Space Law. Roleplay fun is to take priority over all others.
+
+      Read [textlink="RP-First Sentencing" link="SOPSecurityOverviewRPFirstSentencing"] in Security Overview before applying charges. Space Law is meant to support roleplay, reward cooperation, and avoid punitive maximization.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## RP-First Sentencing
+
+[bold]The purpose of Space Law is to create better roleplay, not to "win" against another player.[/bold] Officers, Wardens, and Command are expected to apply the law in ways that preserve scenes, reward cooperation, and let people lose gracefully when doing so does not meaningfully endanger the station.
+
+[bold]Maximum punishment is not the default.[/bold] If several lawful outcomes are available, prefer the one that creates the best scene, the clearest consequence, and the most room for continued play. A suspect who is cooperative, entertaining, remorseful, or trying to turn a scene into good roleplay should usually receive more discretion than one who is hostile, evasive, or repeatedly destructive.
+
+Security should actively look for RP-forward alternatives when they fit the facts, including:
+
+- Reducing to a lesser included offense when the circumstances reasonably support it.
+- Applying [textlink="M13 — Cooperation with Security" link="HLSpaceLawList"] generously when a suspect plays along, turns themselves in, or helps move the scene forward.
+- Offering work duty, cleanup, restitution, or community service in place of, or in partial substitution for, straight brig time when the offense and station conditions allow.
+- Letting a suspect argue for a lower charge or lighter sentence in-character when they make a coherent case.
+- Preserving harmless or low-impact gimmick items when keeping them clearly improves the scene and does not create a meaningful security risk.
+
+Examples of good "losing gracefully" and RP-first enforcement:
+
+- If a suspect makes a convoluted but entertaining in-character legal argument, it is acceptable to let that argument partially work when the result is still plausible under Space Law.
+- If pirates or similar raiders return and one wants to keep a pet coconut, toy, or other low-stakes gimmick item, security may allow it when the player gives a good in-character reason and the item is not meaningfully dangerous.
+- Do not search a PDA, bag, headset, or other item for contraband based on out-of-character suspicion or antag meta knowledge. Searches and escalations must be based on in-character facts, lawful cause, and observable behavior.
+- If a prisoner is cooperative and clearly engaging with the scene, offer alternatives to the harshest available outcome: reduced time, work duty, restitution, or a negotiated charge reduction.
+- If a crew member is "playing nice," officers should use that to build scene value rather than shutting it down with every possible stacked penalty, search, and enhancement.
+
+This discretion is not permission to ignore serious threats. It is permission to remember that the goal is station roleplay first, legal procedure second, and punitive maximization last.
+
+### Sentencing Reference
+
+The following table defines the baseline sentencing range for each crime tier, to provide context when applying [bold]M02 — Elevated Sentencing[/bold] (which elevates a charge by one tier).
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Tier
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Typical Sentence
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Infraction[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Fine only: 10–25k speso; no brig unless fine is evaded
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Minor Crime[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Up to 10 min brig; fine optional
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Misdemeanor[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+5–15 min brig; 20–45k speso fine
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Felony[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+10–20 min brig; 35–85k speso fine; possible demotion
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Capital Crime[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Permanent Confinement, Execution, or Force Borgification
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+### Lesser Included Offenses (No Stacking)
+
+When two charges describe the same criminal act at different severities, only the greatest applicable charge should be applied.
+
+[bold]Stacking is not permitted.[/bold] Security may not charge both a greater offense and its lesser included offense for the same underlying act. The greatest offense should be charged, but may be reduced to a lesser included offense at officer discretion.
+
+[bold]Trespass and Breaking and Entering are legally distinct offenses.[/bold] [textlink="109/209/309" link="HLSpaceLawList"] govern unlawful presence in a restricted area; [textlink="110/210/310" link="HLSpaceLawList"] govern the act of forcible entry. When both the unlawful entry and the unlawful presence are established, both charges may apply.
+
+</Document>

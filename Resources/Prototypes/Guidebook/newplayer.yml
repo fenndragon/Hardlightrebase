@@ -6,7 +6,6 @@
   children:
   - Controls
   - CharacterCreation
-  - StartingGear # Frontier
   - Survival
 
 - type: guideEntry
