@@ -101,7 +101,7 @@
   # abstract: true # Frontier
   icon:
     sprite: _Mono/Objects/Materials/Sheets/other.rsi
-    state: generic_materials
+    state: glass_3
   product: CrateMaterialBasicResource
   cost: 2150 # HL: Balancing prices for Cargo Arbitrage
   category: cargoproduct-category-name-materials
