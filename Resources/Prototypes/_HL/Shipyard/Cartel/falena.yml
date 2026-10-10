@@ -8,7 +8,7 @@
  # id: Falena
   #parent: BaseVessel
   #name: NOV-Falena
-  #description: Originally built as part of a defense swarm deployed by The System around the NOV-Naonis shipyard, this Falena drone has been retrofitted to support a live crew and, oddly enough, holding prisoners. Dirizher Cartel members habitually hijack these lone units whenever The System dispatches them to monitor points of interest and deep space anomalies outside of the swarm that patrols the shipyard.
+  #description: Originally built as part of a defensive swarm deployed by The System around the NOV-Naonis shipyard, this Falena drone has been retrofitted to support a live crew and, oddly enough, holding prisoners. Dirizher Cartel members habitually hijack these lone units whenever The System dispatches them to monitor points of interest and deep space anomalies outside of the swarm that patrols the shipyard.
   #price: #[Not meant to be bought yet, price apprasied at 3,000,000 credits circa, use a price markup of 20% to avoid problems with the workflow. Used in events anyway, so who cares about the credit cost?]
   #category: Small
   #group: #[Insert Cartel Shipyard here when available]
