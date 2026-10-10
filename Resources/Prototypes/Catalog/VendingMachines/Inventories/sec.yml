@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: SecTechInventory
   startingInventory: # HL - Paritied to NFSDtech inventory with minor changes
-    NFHyperlinkBookSpaceLaw: 20
+    HLBookSpaceLaw: 20 #HL
     SecurityWhistle: 5
     Handcuffs: 10
     Zipties: 12

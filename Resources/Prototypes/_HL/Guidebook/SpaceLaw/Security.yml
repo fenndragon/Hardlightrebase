@@ -3,8 +3,9 @@
   name: Security
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/Overview.xml"
   children:
-  - SOPSecurityOverviewPlayingSecurity
+  - SOPSecurityOverviewRPFirstSentencing
   - SOPSecurityAuthorityOverview
+  - HLSpaceLawUseOfForce
   - SOPSecurityPoliciesProcedures
   - SOPSecurityTerminology
   - SOPSecurityLegalStandards
@@ -18,7 +19,6 @@
   - HLSpaceLawAuthority
   - HLSpaceLawArrestAuthority
   - HLSpaceLawWeaponsAuthority
-  - HLSpaceLawUseOfForce
 
 - type: guideEntry
   id: SOPSecurityBriggingProcedures
@@ -48,13 +48,6 @@
   id: SOPSecurityPrisonerTreatment
   name: Prisoner Treatment
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/PrisonerTreatment.xml"
-
-- type: guideEntry
-  id: SOPSecurityOverviewPlayingSecurity
-  name: A Note on Playing Security
-  text: "/ServerInfo/_HL/Guidebook/SoP/Security/PlayingSecurity.xml"
-  children:
-  - SOPSecurityOverviewRPFirstSentencing
 
 - type: guideEntry
   id: SOPSecurityOverviewRPFirstSentencing
@@ -89,7 +82,6 @@
   - SOPSecurityProcedureSearches
   - SOPSecurityProcedureEvidence
   - SOPSecurityProcedurePermabrig
-  - SOPSecurityProcedureUseOfForce
 
 - type: guideEntry
   id: SOPSecurityProcedureArrest
@@ -120,11 +112,6 @@
   id: SOPSecurityProcedurePermabrig
   name: Permabrig
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/Permabrig.xml"
-
-- type: guideEntry
-  id: SOPSecurityProcedureUseOfForce
-  name: Use of Force
-  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityProcedureUseOfForce.xml"
 
 - type: guideEntry
   id: SOPSecurityLegalReasonableSuspicion
@@ -162,16 +149,3 @@
   id: HLSpaceLawUseOfForce
   name: guide-entry-rules-hl-use-of-force
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/UseOfForce.xml"
-  children:
-  - SOPSecurityForceSituationalReference
-  - SOPSecurityForceRelatedPages
-
-- type: guideEntry
-  id: SOPSecurityForceSituationalReference
-  name: Situational Deadly Force Reference
-  text: "/ServerInfo/_HL/Guidebook/SoP/Security/SituationalDeadlyForce.xml"
-
-- type: guideEntry
-  id: SOPSecurityForceRelatedPages
-  name: Related Pages
-  text: "/ServerInfo/_HL/Guidebook/SoP/Security/UseOfForceReferences.xml"
