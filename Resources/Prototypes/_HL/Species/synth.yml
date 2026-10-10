@@ -7,7 +7,7 @@
   defaultSkinTone: "#ffffff"
   markingLimits: MobSynthMarkingLimits
   dollPrototype: MobSynthDummy
-  skinColoration: Hues
+  skinColoration: AnyColour
 
 - type: speciesBaseSprites
   id: MobSynthSprites
