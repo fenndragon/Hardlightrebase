@@ -268,23 +268,7 @@
 
 - For example, changing from Crewsimov to NT Default may be reasonable, while changing to Overlord or Ten Commandments without a compelling justification generally would not be.
 
-- Refer to [textlink="Unauthorized Law Modifications" link="SiliconPolicy"] for any unauthorized modifications.
-
-<Box Orientation="Vertical" Margin="5">
-<Table Columns="1">
-  <ColorBox Color="#808080" OutlineThickness="0">
-    <Box VerticalAlignment="Center">
-      [bold][color=#ffffff]Note[/color][/bold]
-    </Box>
-  </ColorBox>
-  <ColorBox Color="#1a1b23" OutlineThickness="0">
-    <Box>
-      If you believe a law change is necessary, remember the golden rule: when in doubt, [bold]hit F1 and ask staff[/bold]. Law changes can have significant consequences, and you may be held accountable for the results if your changes are unreasonable or poorly considered.
-    </Box>
-  </ColorBox>
-</Table>
-</Box>
-<Box Orientation="Vertical"><CommandButton Text="Open admin help" Command="openahelp"/></Box>
+- Refer to [textlink="Silicon Law Changes" link="SiliconLawChanges"] for any unauthorized modifications.
 
 # Closing Statement
 

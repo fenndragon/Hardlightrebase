@@ -1,0 +1,59 @@
+<Document>
+# Branded Silicons
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      This category includes Station AIs, Colonial Command Cyborgs, and other organizationally-owned silicon assets.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Expectations
+
+- Branded Silicons are expected to follow their active lawset.
+
+- Laws should be interpreted in good faith.
+
+- Deliberately twisting laws to create conflict, ruin rounds, or inconvenience others is not acceptable.
+
+- Higher-priority laws always take precedence over lower-priority laws.
+
+- Branded Silicons should seek to support station operations within the framework of their assigned laws.
+
+## Law Interpretation
+
+- Laws are intended to guide behavior, not provide excuses for disruptive conduct.
+
+- If multiple reasonable interpretations exist, choose one and remain consistent.
+
+- If a law appears unclear or likely to create significant conflict, use common sense and seek staff clarification when necessary.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#c8a404" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Warning[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Following the exact wording of a law while deliberately ignoring its obvious intent is considered poor-faith law interpretation.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+# Artificial Intelligence
+
+- The AI possesses significant influence over station operations and should exercise that influence responsibly.
+
+- Avoid interfering with normal station operations unless your laws, directives, or circumstances reasonably require it.
+
+- Your role is to support and interact with the station, not dominate it.
+
+- While the AI may possess broad capabilities, it should not attempt to control every aspect of station life simply because it can.
+
+</Document>

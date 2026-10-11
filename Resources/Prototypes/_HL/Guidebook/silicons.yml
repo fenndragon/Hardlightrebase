@@ -2,8 +2,52 @@
   id: SiliconDefinition
   name: guide-entry-hl-silicon-definition
   text: "/ServerInfo/_HL/Guidebook/SiliconDefinition.xml"
+  children:
+  - SiliconDefinitionFTS
+  - SiliconDefinitionBranded
+  - SiliconDefinitionXenoborgs
+  - SiliconLawChanges
+
+- type: guideEntry
+  id: SiliconDefinitionFTS
+  name: Free-Thinking Sophonts
+  text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionFTS.xml"
+
+- type: guideEntry
+  id: SiliconDefinitionBranded
+  name: Branded Silicons
+  text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionBranded.xml"
+
+- type: guideEntry
+  id: SiliconDefinitionXenoborgs
+  name: Xenoborgs
+  text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionXenoborgs.xml"
 
 - type: guideEntry
   id: SiliconPolicy
   name: guide-entry-hl-silicon-policy
   text: "/ServerInfo/_HL/Guidebook/SiliconPolicy.xml"
+  children:
+  - SiliconPolicyFTS
+  - SiliconPolicyBranded
+  - SiliconPolicyXenoborgs
+
+- type: guideEntry
+  id: SiliconPolicyFTS
+  name: Free-Thinking Sophont Silicons
+  text: "/ServerInfo/_HL/Guidebook/SiliconPolicyFTS.xml"
+
+- type: guideEntry
+  id: SiliconPolicyBranded
+  name: Branded Silicons
+  text: "/ServerInfo/_HL/Guidebook/SiliconPolicyBranded.xml"
+
+- type: guideEntry
+  id: SiliconPolicyXenoborgs
+  name: Xenoborgs
+  text: "/ServerInfo/_HL/Guidebook/SiliconPolicyXenoborgs.xml"
+
+- type: guideEntry
+  id: SiliconLawChanges
+  name: Law Changes
+  text: "/ServerInfo/_HL/Guidebook/SiliconLawChanges.xml"

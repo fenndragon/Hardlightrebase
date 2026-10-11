@@ -6,7 +6,7 @@
   - Glimmer
   - PsionicInsulation
   - Mindbreaking
-  - AltarsGolemancy
+  # - AltarsGolemancy # HL
   - GlimmerCreatures
 
 - type: guideEntry
@@ -24,10 +24,10 @@
   name: guide-entry-mindbreaking
   text: "/ServerInfo/Guidebook/Psionics/Mindbreaking.xml"
 
-- type: guideEntry
-  id: AltarsGolemancy
-  name: guide-entry-altars-golemancy
-  text: "/ServerInfo/Guidebook/Psionics/Altar.xml"
+# - type: guideEntry # HL: temporarily disabled
+#   id: AltarsGolemancy
+#   name: guide-entry-altars-golemancy
+#   text: "/ServerInfo/Guidebook/Psionics/Altar.xml"
 
 - type: guideEntry
   id: GlimmerCreatures

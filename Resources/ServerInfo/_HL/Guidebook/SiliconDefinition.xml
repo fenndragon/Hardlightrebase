@@ -1,5 +1,4 @@
-<Document>
-# Silicon Definition
+<Document># Silicon Definition
 
 <Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
 <Table Columns="1">
@@ -137,119 +136,6 @@ Personnel should make every reasonable effort to preserve silicon minds whenever
 </Box>
 
 
-# Free-Thinking Sophonts (FTS)
-
-<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
-<Table Columns="1">
-  <ColorBox Color="#1a1b23" OutlineThickness="0">
-    <Box>
-      Free-Thinking Sophonts are recognized as independent individuals with the same rights and responsibilities as any other sophont.
-    </Box>
-  </ColorBox>
-</Table>
-</Box>
-
-## Examples
-
-- IPCs
-- Synths
-- Protogens
-- Unbranded Cyborgs
-
-## Legal Status
-
-- Free-Thinking Sophonts are not the property of Colonial Command or any other organization.
-
-- They possess free will and are responsible for their own actions.
-
-- They should be treated as individuals rather than equipment.
-
-- Unlike Branded Silicons, Free-Thinking Sophonts are not bound by silicon lawsets.
-
-- Crimes, misconduct, and other actions committed by an FTS should be handled in the same manner as any other crewmember.
-
-# Branded Silicons
-
-<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
-<Table Columns="1">
-  <ColorBox Color="#1a1b23" OutlineThickness="0">
-    <Box>
-      Branded Silicons are synthetic intelligences owned, operated, or commissioned by a recognized organization.
-    </Box>
-  </ColorBox>
-</Table>
-</Box>
-
-## Examples
-
-- Standard Colonial Command Cyborgs
-- Station AI
-
-## Legal Status
-
-- Branded Silicons are organizational assets and are expected to follow their active lawset.
-
-- Their actions should be evaluated in the context of those laws, provided the lawset itself is valid and properly authorized.
-
-- While Branded Silicons possess intelligence and personality, they remain assigned station assets and are expected to perform their designated duties.
-
-- Personnel should remember that preserving the silicon's mind remains significantly more important than preserving the chassis housing it.
-
-
-# Xenoborgs
-
-<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
-<Table Columns="1">
-  <ColorBox Color="#1a1b23" OutlineThickness="0">
-    <Box>
-      Xenoborgs occupy a unique position among synthetic lifeforms.
-    </Box>
-  </ColorBox>
-</Table>
-</Box>
-
-## Origins
-
-- Most Xenoborgs were once living people whose minds were integrated into the Xenoborg Collective.
-
-- Although rare, positronic intelligences and other synthetic minds may also become integrated into the Collective.
-
-- As a result, not every Xenoborg necessarily began life as a biological being.
-
-## Legal Status
-
-- While inhabiting a Xenoborg chassis and connected to the Collective, Xenoborgs are considered hostile entities and [textlink="enemies of Colonial Command" link="HLSpaceLawList"].
-
-- Personnel should prioritize the safety of themselves, the crew, and the station when dealing with active Xenoborg threats.
-
-- A Xenoborg should be considered a Xenoborg only while occupying a Xenoborg chassis and acting as part of the Collective.
-
-## Recovery and Deconversion
-
-- Many Xenoborgs originated as people or independent sophonts.
-
-- In some circumstances, it may be possible to recover and separate the underlying mind from the Collective through approved medical, scientific, or technological means.
-
-- When practical and safe to do so, recovery and deconversion should be considered before permanent destruction.
-
-- Once successfully separated from the Collective and transferred into a suitable non-Xenoborg form, the individual should be treated according to their new legal status and circumstances.
-
-<Box Orientation="Vertical" Margin="5">
-<Table Columns="1">
-  <ColorBox Color="#c8a404" OutlineThickness="0">
-    <Box VerticalAlignment="Center">
-      [bold][color=#ffffff]Warning[/color][/bold]
-    </Box>
-  </ColorBox>
-  <ColorBox Color="#1a1b23" OutlineThickness="0">
-    <Box>
-      A Xenoborg chassis is considered an enemy asset. The mind contained within it may not be.
-    </Box>
-  </ColorBox>
-</Table>
-</Box>
-
-
 # General Expectations
 
 - A synthetic body does not automatically make someone property.
@@ -271,4 +157,5 @@ Personnel should make every reasonable effort to preserve silicon minds whenever
 ## Final Note
 
 The distinction between Free-Thinking Sophonts and Branded Silicons exists to determine legal status, responsibilities, and expectations. Regardless of classification, personnel should remember that most synthetic intelligences are far more than machines. Treat them according to their status, preserve their minds whenever possible, and exercise good judgment when dealing with synthetic life.
+
 </Document>
