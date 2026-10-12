@@ -1,6 +1,6 @@
 - type: guideEntry
   id: SOPSecurity
-  name: Security
+  name: guide-entry-security
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/Overview.xml"
   children:
   - SOPSecurityOverviewRPFirstSentencing
@@ -13,7 +13,7 @@
 
 - type: guideEntry
   id: SOPSecurityAuthorityOverview
-  name: Security Authority
+  name: guide-entry-hl-security-authority
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityAuthorityOverview.xml"
   children:
   - HLSpaceLawAuthority
@@ -22,14 +22,14 @@
 
 - type: guideEntry
   id: SOPSecurityBriggingProcedures
-  name: Brigging Procedures
+  name: guide-entry-hl-brigging-procedures
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/BriggingProcedures.xml"
   children:
   - SOPSecurityPrisonerTreatment
 
 - type: guideEntry
   id: SOPSecurityTerminology
-  name: Security Terminology
+  name: guide-entry-hl-security-terminology
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityPolicies.xml"
   children:
   - SOPSecurityPoliciesRoles
@@ -37,7 +37,7 @@
 
 - type: guideEntry
   id: SOPSecurityLegalStandards
-  name: Legal Standards
+  name: guide-entry-hl-legal-standards
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalStandards.xml"
   children:
   - SOPSecurityLegalReasonableSuspicion
@@ -46,32 +46,32 @@
 
 - type: guideEntry
   id: SOPSecurityPrisonerTreatment
-  name: Prisoner Treatment
+  name: guide-entry-hl-prisoner-treatment
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/PrisonerTreatment.xml"
 
 - type: guideEntry
   id: SOPSecurityOverviewRPFirstSentencing
-  name: RP-First Sentencing
+  name: guide-entry-hl-rp-first-sentencing
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/RPFirstSentencing.xml"
 
 - type: guideEntry
   id: SOPSecurityPoliciesRoles
-  name: Security Roles
+  name: guide-entry-hl-security-roles
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityRoles.xml"
 
 - type: guideEntry
   id: SOPSecurityPoliciesTerminology
-  name: Terminology
+  name: guide-entry-hl-terminology
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityTerminology.xml"
 
 - type: guideEntry
   id: SOPSecurityPoliciesCDET
-  name: CDET Policy
+  name: guide-entry-hl-cdet-policy
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/CDETPolicy.xml"
 
 - type: guideEntry
   id: SOPSecurityPoliciesProcedures
-  name: Standard Procedures
+  name: guide-entry-hl-standard-procedures
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SecurityProcedures.xml"
   children:
   - SOPSecurityPoliciesCDET
@@ -85,47 +85,47 @@
 
 - type: guideEntry
   id: SOPSecurityProcedureArrest
-  name: Arrest Procedure
+  name: guide-entry-hl-arrest-procedure
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/ArrestProcedure.xml"
 
 - type: guideEntry
   id: SOPSecurityProcedureShipBoarding
-  name: Ship Boarding Protocol
+  name: guide-entry-hl-ship-boarding-protocol
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/ShipBoardingProtocol.xml"
 
 - type: guideEntry
   id: SOPSecurityProcedureSentencing
-  name: Sentencing Rules
+  name: guide-entry-hl-sentencing-rules
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/SentencingRules.xml"
 
 - type: guideEntry
   id: SOPSecurityProcedureSearches
-  name: Searches
+  name: guide-entry-hl-searches
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/Searches.xml"
 
 - type: guideEntry
   id: SOPSecurityProcedureEvidence
-  name: Evidence & Confiscated Material
+  name: guide-entry-hl-evidence-confiscated-material
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/EvidenceHandling.xml"
 
 - type: guideEntry
   id: SOPSecurityProcedurePermabrig
-  name: Permabrig
+  name: guide-entry-hl-permabrig
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/Permabrig.xml"
 
 - type: guideEntry
   id: SOPSecurityLegalReasonableSuspicion
-  name: Reasonable Suspicion
+  name: guide-entry-hl-reasonable-suspicion
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalReasonableSuspicion.xml"
 
 - type: guideEntry
   id: SOPSecurityLegalProbableCause
-  name: Probable Cause
+  name: guide-entry-hl-probable-cause
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalProbableCause.xml"
 
 - type: guideEntry
   id: SOPSecurityLegalBurdenOfProof
-  name: Burden of Proof
+  name: guide-entry-hl-burden-of-proof
   text: "/ServerInfo/_HL/Guidebook/SoP/Security/LegalBurdenOfProof.xml"
 
 # Security Authority

@@ -1,6 +1,6 @@
 - type: guideEntry
   id: SOP
-  name: Standard Operating Procedures
+  name: guide-entry-hl-standard-operating-procedures
   text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
   priority: 1 # Frontier
   children:
@@ -13,7 +13,7 @@
 
 - type: guideEntry
   id: SOPDepartments
-  name: Departments
+  name: guide-entry-hl-departments
   text: "/ServerInfo/_HL/Guidebook/SoP/SoP.xml"
   children:
   - SOPCargo
@@ -25,34 +25,34 @@
 
 - type: guideEntry
   id: SOPCargo
-  name: Cargo
+  name: guide-entry-cargo
   text: "/ServerInfo/_HL/Guidebook/SoP/Departments/cargo.xml"
 
 - type: guideEntry
   id: SOPEngineering
-  name: Engineering
+  name: guide-entry-engineering
   text: "/ServerInfo/_HL/Guidebook/SoP/Departments/engineering.xml"
 
 - type: guideEntry
   id: SOPMedical
-  name: Medical
+  name: guide-entry-medical
   text: "/ServerInfo/_HL/Guidebook/SoP/Departments/medical.xml"
 
 - type: guideEntry
   id: SOPScience
-  name: Science
+  name: guide-entry-science
   text: "/ServerInfo/_HL/Guidebook/SoP/Departments/science.xml"
 
 - type: guideEntry
   id: SOPService
-  name: Service
+  name: guide-entry-service
   text: "/ServerInfo/_HL/Guidebook/SoP/Departments/service.xml"
 
 ## Command
 
 - type: guideEntry
   id: SOPCommand
-  name: Command
+  name: guide-entry-command
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/command.xml"
   children:
   - SOPCaptain
@@ -68,52 +68,121 @@
 
 - type: guideEntry
   id: SOPCaptain
-  name: Captain
+  name: guide-entry-hl-captain
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/captain.xml"
   children:
     - SOPActingCaptain
 
 - type: guideEntry
   id: SOPActingCaptain
-  name: Acting Captain
+  name: guide-entry-hl-acting-captain
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/captain_acting.xml"
 
 - type: guideEntry
   id: SOPCE
-  name: Chief Engineer
+  name: guide-entry-hl-chief-engineer
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/ce.xml"
 
 - type: guideEntry
   id: SOPCMO
-  name: Chief Medical Officer
+  name: guide-entry-hl-chief-medical-officer
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/cmo.xml"
 
 - type: guideEntry
   id: SOPHM
-  name: Harbormaster
+  name: guide-entry-shipyard-harbormaster
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/hm.xml"
 
 - type: guideEntry
   id: SOPHoP
-  name: Head of Personnel
+  name: guide-entry-hl-head-of-personnel
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/hop.xml"
 
 - type: guideEntry
   id: SOPHoS
-  name: Head of Security
+  name: guide-entry-hl-head-of-security
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/hos.xml"
 
 - type: guideEntry
   id: SOPQM
-  name: Quartermaster
+  name: guide-entry-hl-quartermaster
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/qm.xml"
 
 - type: guideEntry
   id: SOPRD
-  name: Research Director
+  name: guide-entry-hl-research-director
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/rd.xml"
 
 - type: guideEntry
   id: SOPSTC
-  name: Station Traffic Controller
+  name: guide-entry-hl-station-traffic-controller
   text: "/ServerInfo/_HL/Guidebook/SoP/Command/stc.xml"
+
+## Alert Levels
+
+- type: guideEntry
+  id: AlertLevels
+  name: guide-entry-hl-station-alert-levels #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/AlertLevelsSOP.xml"
+  children:
+  - GreenAlert
+  - BlueAlert
+  - VioletAlert
+  - YellowAlert
+  - RedAlert
+  # - BlackAlert #HL #Todo
+  - DeltaAlert
+  - WhiteAlert #HL
+  - GammaAlert #HL
+  - EpsilonAlert #HL
+  - OmicronAlert #HL
+
+- type: guideEntry
+  id: DeltaAlert
+  name: guide-entry-hl-delta-alert-cocked-pistol #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/DeltaAlertSOP.xml"
+
+- type: guideEntry
+  id: GammaAlert
+  name: guide-entry-hl-gamma-alert-fast-pace #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/GammaAlertSOP.xml"
+
+- type: guideEntry
+  id: OmicronAlert
+  name: guide-entry-hl-omicron-alert-ragnarok #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/OmicronAlertSOP.xml"
+
+- type: guideEntry
+  id: EpsilonAlert
+  name: guide-entry-hl-epsilon-alert #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/EpsilonAlertSOP.xml"
+
+- type: guideEntry
+  id: VioletAlert
+  name: guide-entry-hl-violet-alert-corrupter #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/VioletAlertSOP.xml"
+
+- type: guideEntry
+  id: YellowAlert
+  name: guide-entry-hl-yellow-alert-ray-down #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/YellowAlertSOP.xml"
+
+- type: guideEntry
+  id: RedAlert
+  name: guide-entry-hl-red-alert-round-house #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/RedAlertSOP.xml"
+
+- type: guideEntry
+  id: BlueAlert
+  name: guide-entry-hl-blue-alert-double-take #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/BlueAlertSOP.xml"
+
+- type: guideEntry
+  id: GreenAlert
+  name: guide-entry-hl-green-alert-fade-out #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/GreenAlertSOP.xml"
+
+- type: guideEntry
+  id: WhiteAlert
+  name: guide-entry-hl-white-alert-mind-flayer #HL
+  text: "/ServerInfo/_HL/Guidebook/SoP/AlertLevels/WhiteAlertSOP.xml"

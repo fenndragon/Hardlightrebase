@@ -74,5 +74,5 @@
 
 - type: guideEntry
   id: RoleplayExpectations # HL
-  name: Roleplay Expectations
+  name: guide-entry-hl-roleplay-expectations #HL
   text: "/ServerInfo/_HL/Guidebook/Rules/CoreRules/RoleplayExpectations.xml"

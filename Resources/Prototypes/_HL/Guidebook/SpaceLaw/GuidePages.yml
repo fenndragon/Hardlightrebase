@@ -1,6 +1,6 @@
 - type: guideEntry
   id: HLSpaceLaw
-  name: guide-entry-rules-space-law
+  name: guide-entry-rules-hl-space-law
   text: "/ServerInfo/_HL/Guidebook/SpaceLaw/Overview.xml"
   children:
   - HLSpaceLawList
@@ -57,5 +57,5 @@
 
 - type: guideEntry
   id: HLSpaceLawWarrants
-  name: Warrants
+  name: guide-entry-rules-hl-warrants
   text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawWarrants.xml"

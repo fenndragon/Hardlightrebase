@@ -1,6 +1,6 @@
 - type: guideEntry
   id: SiliconDefinition
-  name: guide-entry-hl-silicon-definition
+  name: guide-entry-hl-silicons
   text: "/ServerInfo/_HL/Guidebook/SiliconDefinition.xml"
   children:
   - SiliconDefinitionFTS
@@ -10,22 +10,22 @@
 
 - type: guideEntry
   id: SiliconDefinitionFTS
-  name: Free-Thinking Sophonts
+  name: guide-entry-hl-free-thinking-sophonts
   text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionFTS.xml"
 
 - type: guideEntry
   id: SiliconDefinitionBranded
-  name: Branded Silicons
+  name: guide-entry-hl-branded-silicons
   text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionBranded.xml"
 
 - type: guideEntry
   id: SiliconDefinitionXenoborgs
-  name: Xenoborgs
+  name: guide-entry-xenoborgs
   text: "/ServerInfo/_HL/Guidebook/SiliconDefinitionXenoborgs.xml"
 
 - type: guideEntry
   id: SiliconPolicy
-  name: guide-entry-hl-silicon-policy
+  name: guide-entry-hl-silicons
   text: "/ServerInfo/_HL/Guidebook/SiliconPolicy.xml"
   children:
   - SiliconPolicyFTS
@@ -34,20 +34,20 @@
 
 - type: guideEntry
   id: SiliconPolicyFTS
-  name: Free-Thinking Sophont Silicons
+  name: guide-entry-hl-free-thinking-sophonts
   text: "/ServerInfo/_HL/Guidebook/SiliconPolicyFTS.xml"
 
 - type: guideEntry
   id: SiliconPolicyBranded
-  name: Branded Silicons
+  name: guide-entry-hl-branded-silicons
   text: "/ServerInfo/_HL/Guidebook/SiliconPolicyBranded.xml"
 
 - type: guideEntry
   id: SiliconPolicyXenoborgs
-  name: Xenoborgs
+  name: guide-entry-xenoborgs
   text: "/ServerInfo/_HL/Guidebook/SiliconPolicyXenoborgs.xml"
 
 - type: guideEntry
   id: SiliconLawChanges
-  name: Law Changes
+  name: guide-entry-hl-law-changes
   text: "/ServerInfo/_HL/Guidebook/SiliconLawChanges.xml"
