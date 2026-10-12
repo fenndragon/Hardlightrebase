@@ -112,18 +112,6 @@ telepathy-power-initialization-feedback =
     now my senses broaden, I come to a realization that they are part of a communal shared hallucination. Behind every voice is a glimmering sentience.
 psionic-telepathy-power-feedback = {CAPITALIZE($entity)} is capable of understanding and communicating without words or actions
 
-# Shadeskip
-action-name-shadeskip = Shadeskip
-action-description-shadeskip =
-    Call upon the Lords of the End of Time, and beseech them for a fragment of true entropy.
-shadeskip-power-description = { action-description-shadeskip }
-shadeskip-power-initialization-feedback =
-    I find myself standing in a frigid land, under a sky lacking in all starlight. Cold is the void at the End of Time.
-    I look to the pale blue within blue horizon, and find a great eye standing at the center of it all, black and emptier than the deepest reaches of space.
-    My soul begins to wither under its gaze, and I find myself begging for it to look away. The eye laughs, it demands that I serve it or die.
-    Knowing I have no choice, I pledge myself to it, and suddenly I am back in the material realm. The eye stares behind me still.
-shadeskip-power-metapsionic-feedback = {CAPITALIZE($entity)} has been claimed by the Lords of the End of Time.
-shadeskip-overcharge-feedback = My body reels from shock as it is overwhelmed by the sheer force flowing through me.
 
 # Telekinetic Pulse
 action-name-telekinetic-pulse = Telekinetic Pulse
@@ -133,6 +121,7 @@ telekinetic-pulse-power-description = { action-description-telekinetic-pulse }
 telekinetic-pulse-power-initialization-feedback =
     As I reach through the veil with my psyche, I discover a wellspring of pure kinetic energy. It courses through me, but I seem to lack fine control over it.
 telekinetic-pulse-power-metapsionic-feedback = {CAPITALIZE($entity)} has the essence of pure kinesis flowing through him.
+telekinetic-pulse-overcharge-feedback = My body reels from shock as it is overwhelmed by the sheer force flowing through me.
 
 # Pyrokinetic Flare
 action-name-pyrokinetic-flare = Pyrokinetic Flare

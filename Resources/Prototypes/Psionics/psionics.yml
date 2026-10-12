@@ -197,16 +197,6 @@
   powerSlotCost: 0
 
 - type: psionicPower
-  id: ShadeskipPower
-  name: Shadeskip
-  description: shadeskip-power-description
-  actions:
-  - ActionShadeskip
-  initializationFeedback: shadeskip-power-initialization-feedback
-  metapsionicFeedback: shadeskip-power-metapsionic-feedback
-  amplificationModifier: 1
-
-- type: psionicPower
   id: TelekineticPulsePower
   name: Telekinetic Pulse
   description: telekinetic-pulse-power-description
