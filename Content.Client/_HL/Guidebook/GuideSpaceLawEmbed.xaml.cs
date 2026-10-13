@@ -127,7 +127,7 @@ public sealed partial class GuideSpaceLawEmbed : BoxContainer, IDocumentTag, ISe
             PunishmentDescriptionContainer.AddChild(label);
         }
 
-        var lesser = prototypes.Where(x => x.Greater.Contains(law) );
+        var lesser = prototypes.Where(x => x.Greater.Contains(law));
         foreach (var less in lesser)
         {
             var label = new GuidebookRichPrototypeLink()
