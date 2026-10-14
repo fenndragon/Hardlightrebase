@@ -99,7 +99,7 @@
     sprite: _DV/Clothing/Shoes/Boots/winterbootshop.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: ClothingShoesBootsWinterSecFilled
   id: ClothingShoesBootsWinterHoS
   name: head of security winter boots
   components:
