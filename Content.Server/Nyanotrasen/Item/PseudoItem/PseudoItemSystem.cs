@@ -53,7 +53,7 @@ public sealed class PseudoItemSystem : SharedPseudoItemSystem
     protected override void OnGettingPickedUpAttempt(EntityUid uid, PseudoItemComponent component, GettingPickedUpAttemptEvent args)
     {
         // Try to pick the entity up instead first
-        if (args.User != args.Item && _carrying.TryCarry(args.User, uid))
+        if (args.User != args.Item && _carrying.CanCarry(args.User, uid)) // Hardlight : Changed from an attempt to a check.
         {
             args.Cancel();
             return;
