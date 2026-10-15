@@ -14,8 +14,8 @@
   maxLength: 500
   damage:
     types:
-      Heat: 350
-      Structural: 1250
+      Heat: 35
+      Structural: 125
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: proton_muzzle
@@ -90,8 +90,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 175
-        Piercing: 125
+        Structural: 75
+        Piercing: 25
 
 - type: entity
   id: AIAdderSpread
@@ -112,8 +112,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 27500
-        Blunt: 3000
+        Structural: 300
+        Blunt: 250
         Ion: 600
 
 - type: entity
@@ -125,9 +125,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 1250
-        Structural: 2125
-        Heat: 350
+        Radiation: 50
+        Structural: 150
+        Heat: 50
         Ion: 350
 
 - type: entity
@@ -139,6 +139,6 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 1500
-        Structural: 2500
-        Heat: 1000
+        Radiation: 100
+        Structural: 175
+        Heat: 75

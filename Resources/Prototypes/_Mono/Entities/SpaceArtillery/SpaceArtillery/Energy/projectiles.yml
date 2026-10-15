@@ -23,10 +23,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 1250
-        Structural: 4250
-        Heat: 350
-        Ion: 350
+        Radiation: 25
+        Structural: 500
+        Heat: 50
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
     layers:
@@ -47,9 +46,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DefaultShipGun
-    totalIntensity: 250
-    intensitySlope: 6
-    maxIntensity: 25
+    totalIntensity: 30
+    intensitySlope: 12
+    maxIntensity: 15
     maxTileBreak: 0
 
 # Cerberus
@@ -64,8 +63,8 @@
     damage:
       types:
         Radiation: 20
-        Structural: 350
-        Heat: 80
+        Structural: 120
+        Heat: 60
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
     layers:
@@ -84,8 +83,8 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 18
-    intensitySlope: 10
+    totalIntensity: 10
+    intensitySlope: 15
     maxIntensity: 15
 
 - type: entity
@@ -109,10 +108,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 600
-        Structural: 900
-        Heat: 120
-        Ion: 150
+        Radiation: 6
+        Structural: 20
+        Heat: 15
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
     layers:
@@ -134,9 +132,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DefaultShipGun
-    totalIntensity: 25
+    totalIntensity: 7
     intensitySlope: 2
-    maxIntensity: 40
+    maxIntensity: 4
     maxTileBreak: 0
 
 # Scylla
@@ -150,9 +148,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 10
-        Structural: 80
-        Heat: 40
+        Radiation: 5
+        Structural: 10
+        Heat: 10
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi
     layers:
@@ -170,7 +168,7 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 15
+    totalIntensity: 5
     intensitySlope: 3
     maxIntensity: 5
     maxTileBreak: 0
@@ -187,10 +185,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 700
-        Structural: 4000
-        Heat: 5000
-        Ion: 500
+        Radiation: 3
+        Structural: 70
+        Heat: 20
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/plasmashot.rsi
     layers:
@@ -212,9 +209,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DefaultShipGun
-    totalIntensity: 120
+    totalIntensity: 15
     intensitySlope: 9
-    maxIntensity: 70
+    maxIntensity: 5
     maxTileBreak: 0
 
 # M25
@@ -263,9 +260,8 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 75
-        Heat: 115
-        Ion: 375
+        Radiation: 5
+        Heat: 20
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
@@ -299,8 +295,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 10000
-        Heat: 10000
+        Structural: 500
+        Heat: 100
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/turbolaser_shot.rsi
     layers:
@@ -321,9 +317,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 1250
+    totalIntensity: 200
     intensitySlope: 10
-    maxIntensity: 55
+    maxIntensity: 100
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -340,9 +336,9 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 1500
-        Structural: 5000
-        Heat: 1000
+        Radiation: 35
+        Structural: 160
+        Heat: 35
   - type: Sprite
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_projectiles.rsi
     layers:
@@ -364,9 +360,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DefaultShipGun
-    totalIntensity: 500
-    intensitySlope: 35
-    maxIntensity: 50
+    totalIntensity: 45
+    intensitySlope: 25
+    maxIntensity: 15
     maxTileBreak: 0
 
 # Harbringer
@@ -380,8 +376,8 @@
   - type: Projectile
     damage:
       types:
-        Radiation: 750
-        Heat: 500
+        Radiation: 50
+        Heat: 35
   - type: Sprite
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_projectiles.rsi
     layers:
@@ -471,10 +467,10 @@
   - type: HitscanBasicDamage
     damage:
      types:
-      Heat: 100
-      Structural: 100
+      Heat: 35
+      Structural: 50
   - type: HitscanBasicRaycast
-    maxDistance: 1200
+    maxDistance: 400
 
 # Apollo
 
@@ -498,12 +494,12 @@
   - type: HitscanBasicDamage
     damage:
      types:
-      Heat: 1500       # ~3k DPS, better than Kargil + hitscan
-      Structural: 7500
+      Heat: 80       # ~3k DPS, better than Kargil + hitscan
+      Structural: 35
   - type: HitscanSpawnEntity
     spawnedEntity: ApolloExplosion
   - type: HitscanBasicRaycast
-    maxDistance: 1200
+    maxDistance: 600
 
 # Prometheus
 
@@ -516,7 +512,7 @@
     damage:
      types:
        Heat: 120
-       Structural: 500
+       Structural: 125
   - type: HitscanSpawnEntity
     spawnedEntity: PrometheusExplosion
   - type: HitscanBasicRaycast
@@ -544,8 +540,8 @@
   - type: HitscanBasicDamage
     damage:
      types:
-      Heat: 30000
-      Structural: 100000
+      Heat: 150
+      Structural: 8000
   - type: HitscanSpawnEntity
     spawnedEntity: TachyonExplosion
   - type: HitscanBasicRaycast
@@ -573,12 +569,12 @@
   - type: HitscanBasicDamage
     damage:
      types:
-      Heat: 350
-      Structural: 2500
+      Heat: 35
+      Structural: 150
   - type: HitscanSpawnEntity
     spawnedEntity: SunderExplosion
   - type: HitscanBasicRaycast
-    maxDistance: 1200
+    maxDistance: 900
 
 # Flayer
 
@@ -603,11 +599,11 @@
   - type: HitscanBasicDamage
     damage:
      types:
-      Piercing: 125
-      Heat: 25
-      Structural: 200
+      Piercing: 25
+      Heat: 5
+      Structural: 75
   - type: HitscanBasicRaycast
-    maxDistance: 1200
+    maxDistance: 500
 
 # Hitscan Explosions
 
@@ -632,9 +628,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 7000
-    intensitySlope: 100
-    maxIntensity: 2400
+    totalIntensity: 1200
+    intensitySlope: 35
+    maxIntensity: 250
     maxTileBreak: 0
 
 - type: entity

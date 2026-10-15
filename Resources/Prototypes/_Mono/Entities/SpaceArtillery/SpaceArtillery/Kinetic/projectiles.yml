@@ -65,9 +65,7 @@
   - type: Projectile
     damage:
       types:
-        Structural: 350
-        Blunt: 100
-        Piercing: 125
+        Piercing: 120
   - type: ShipWeaponProjectile
   - type: TimedDespawn
     lifetime: 3
@@ -136,8 +134,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 3500
-        Pierce: 4000
+        Structural: 75
+        Pierce: 40
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -158,9 +156,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 400
+    totalIntensity: 100
     intensitySlope: 18
-    maxIntensity: 1900
+    maxIntensity: 75
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -177,9 +175,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 6500
-        Blunt: 10000
-        Ion: 17500
+        Structural: 200
+        Blunt: 250
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -200,9 +197,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 1300
-    intensitySlope: 18
-    maxIntensity: 1900
+    totalIntensity: 60
+    intensitySlope: 5
+    maxIntensity: 35
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -219,9 +216,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 8500
-        Blunt: 12000
-        Ion: 20000
+        Structural: 350
+        Blunt: 250
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -242,9 +238,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 1000
-    intensitySlope: 25
-    maxIntensity: 75
+    totalIntensity: 95
+    intensitySlope: 5
+    maxIntensity: 45
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -261,9 +257,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 6000
-        Blunt: 7500
-        Ion: 14000
+        Structural: 200
+        Blunt: 150
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -284,9 +279,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 750
-    intensitySlope: 35
-    maxIntensity: 50
+    totalIntensity: 75
+    intensitySlope: 5
+    maxIntensity: 20
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -304,9 +299,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 12500
-        Blunt: 15000
-        Ion: 30000
+        Structural: 500
+        Blunt: 250
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -327,9 +321,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 1250
+    totalIntensity: 250
     intensitySlope: 5
-    maxIntensity: 1450
+    maxIntensity: 80
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -348,8 +342,7 @@
   - type: Projectile
     damage:
       types:
-        Structural: 350
-        Piercing: 125
+        Piercing: 45
   - type: ShipWeaponProjectile
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/50_armorpiercing_machinegun_casing.rsi
@@ -378,9 +371,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 2250
-        Blunt: 200
-        Piercing: 400
+        Structural: 225
+        Piercing: 40
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -426,7 +418,7 @@
     totalIntensity: 12
     intensitySlope: 2
     maxIntensity: 2
-    maxTileBreak: 1
+    maxTileBreak: 0
 
 # Hydra 200mm Shell
 
@@ -439,8 +431,8 @@
   - type: Projectile
     damage:
       types:
-        Structural: 6000
-        Blunt: 8000
+        Structural: 200
+        Blunt: 60
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/630_armorpiercing_shell_casing.rsi
     layers:
@@ -461,9 +453,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 1000
+    totalIntensity: 200
     intensitySlope: 18
-    maxIntensity: 1750
+    maxIntensity: 75
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -500,6 +492,6 @@
     totalIntensity: 20
     intensitySlope: 5
     maxIntensity: 5
-    maxTileBreak: 1
+    maxTileBreak: 0
   - type: ProjectileKnockback
     knockback: 75 # giga evil

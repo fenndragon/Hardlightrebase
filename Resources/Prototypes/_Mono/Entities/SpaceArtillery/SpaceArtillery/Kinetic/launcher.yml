@@ -41,8 +41,8 @@
     ports:
     - Toggle
   - type: Gun
-    fireRate: 8
-    projectileSpeed: 160
+    fireRate: 12
+    projectileSpeed: 192
     minAngle: 0
     maxAngle: 5
     soundGunshot:
@@ -118,10 +118,10 @@
     ports:
     - Toggle
   - type: Gun
-    fireRate: 9
-    projectileSpeed: 180
+    fireRate: 25
+    projectileSpeed: 216
     minAngle: 0
-    maxAngle: 8
+    maxAngle: 4
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/slammer.ogg
     soundEmpty:
@@ -192,7 +192,7 @@
     range: 500
   - type: Gun
     fireRate: 1.5
-    projectileSpeed: 250
+    projectileSpeed: 300
     minAngle: 0
     maxAngle: 2
     soundGunshot:
@@ -260,11 +260,11 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: Gun
-    fireRate: 2.5
-    projectileSpeed: 170
+    fireRate: 3
+    projectileSpeed: 204
     minAngle: 0
     maxAngle: 3
-    burstCooldown: 0.5
+    burstCooldown: 0.4
     burstFireRate: 10
     shotsPerBurst: 2
     selectedMode: Burst
@@ -520,11 +520,11 @@
   - type: Gun
     projectileSpeed: 290
     minAngle: 0
-    maxAngle: 3
-    fireRate: 5
+    maxAngle: 7
+    fireRate: 11
     burstCooldown: 8
     burstFireRate: 11
-    shotsPerBurst: 10
+    shotsPerBurst: 15
     selectedMode: Burst
     availableModes: Burst
     soundGunshot:
