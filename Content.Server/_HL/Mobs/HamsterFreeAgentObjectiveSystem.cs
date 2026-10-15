@@ -14,7 +14,7 @@ public sealed class HamsterFreeAgentObjectiveSystem : EntitySystem
 
     private const string HamsterTag = "Hamster";
     private const string FreeAgentRole = "FreeAgent";
-    private const string HamsterObjective = "HamsterGloriousDeathObjective";
+    private const string HamsterObjective = "HamsterFunnyDeathObjective";
 
     public override void Initialize()
     {

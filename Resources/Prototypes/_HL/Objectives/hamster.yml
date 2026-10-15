@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseObjective
-  id: HamsterGloriousDeathObjective
-  name: Die a glorious death
-  description: Seek the most dramatic end you can manage.
+  id: HamsterFunnyDeathObjective
+  name: Die a funny death
+  description: Seek the most funny and dramatic end you can manage.
   components:
   - type: Objective
     difficulty: 0.1
