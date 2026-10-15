@@ -214,18 +214,18 @@
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 1.0
-    sprintModifier: 1.0
+    walkModifier: 0.9
+    sprintModifier: 0.85
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.5
-        Heat: 0.3
-        Radiation: 0.1
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.75
+        Heat: 0.5
+        Radiation: 0.5
   - type: ExplosionResistance
-    damageCoefficient: 0.2
+    damageCoefficient: 0.5
   - type: TemperatureProtection
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
@@ -247,10 +247,10 @@
             - PowerCell
             - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 6
+    damageEnergyDraw: 10
     domePrototype: EnergyDomeSmallPink
   - type: PowerCellDraw
-    drawRate: 8
+    drawRate: 12
     useRate: 0
   - type: UseDelay
     delay: 10.0
