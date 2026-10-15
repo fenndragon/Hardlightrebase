@@ -47,6 +47,37 @@ def filter-changelog-trailers []: list<record<name: string, message: string>> ->
     $in | where name =~ '(?i)^Change-(Add|Remove|Tweak|Fix)$'
 }
 
+# Converts parsed trailers into changelog records, applying any author overrides.
+#
+# Extracts the Change-Author trailer if present to override the commit author,
+# then filters and formats the remaining changelog trailers.
+def build-changelog-records [
+    default_author: string # The original commit author
+    hash: string           # The commit hash
+]: list<record<name: string, message: string>> -> list<any> {
+    let trailers = $in
+
+    let override_trailer = ($trailers | where name =~ '(?i)^Change-Author$')
+    let author = if not ($override_trailer | is-empty) {
+        let extracted = ($override_trailer | first | get message | str trim)
+        if $extracted != "" { $extracted } else { $default_author }
+    } else {
+        $default_author
+    }
+
+    $trailers
+    | filter-changelog-trailers
+    | each {|t|
+        let cat = ($t.name | split row "-" | last | str lowercase)
+        {
+            category: $cat
+            message: $t.message
+            author: $author
+            hash: $hash
+        }
+    }
+}
+
 # Parses raw commit strings and extracts multiline changelog trailers.
 def parse-commits [
     commits: list<string> # The list of raw commit strings output by get-commits
@@ -66,16 +97,7 @@ def parse-commits [
         $trailers
         | split-trailers
         | parse-trailers
-        | filter-changelog-trailers
-        | each {|t|
-            let cat = ($t.name | split row "-" | last | str lowercase)
-            {
-                category: $cat
-                message: $t.message
-                author: $author
-                hash: $hash
-            }
-        }
+        | build-changelog-records $author $hash
     } | compact | flatten
 }
 
