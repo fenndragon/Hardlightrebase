@@ -905,7 +905,7 @@
       whitelist:
         tags:
           - SecurityUplink
-          
+
 - type: listing
   id: UplinkvolkitePowerPack
   name: uplink-security-volkitePowerPack-name
@@ -921,7 +921,7 @@
       whitelist:
         tags:
           - SecurityUplink
-          
+
 - type: listing
   id: UplinkSerpentia
   name: uplink-security-Serpenta-name
@@ -937,7 +937,7 @@
       whitelist:
         tags:
           - SecurityUplink
-          
+
 - type: listing
   id: UplinkvolkiteCharger
   name: uplink-security-Charger-name
@@ -953,7 +953,7 @@
       whitelist:
         tags:
           - SecurityUplink
-          
+
 - type: listing
   id: UplinkCaliver
   name: uplink-security-Caliver-name
@@ -969,7 +969,7 @@
       whitelist:
         tags:
           - SecurityUplink
-          
+
 - type: listing
   id: UplinkCulverin
   name: uplink-security-Culverin-name
@@ -1302,8 +1302,8 @@
   id: UplinkSecurityCash1000
   name: uplink-security-cash1000-name
   description: uplink-security-cash1000-desc
-  productEntity: SpaceCash1000
-  icon: { sprite: Objects/Economy/cash.rsi, state: cash_1000 }
+  productEntity: SpaceCash10000
+  icon: { sprite: Objects/Economy/cash.rsi, state: cash_10000 }
   cost:
     FrontierUplinkCoin: 1
   categories:
@@ -1317,7 +1317,7 @@
 - type: listing
   id: UplinkSecurityCash100000
   name: uplink-security-cash45000-name
-  description: uplink-security-cash1000-desc
+  description: uplink-security-cash10000-desc
   productEntity: SpaceCash100000
   icon: { sprite: Objects/Economy/cash.rsi, state: cash_25000 }
   cost:

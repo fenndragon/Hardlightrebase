@@ -2,7 +2,7 @@
   parent: [BaseStructureDisableAnchoring, StorePresetSecurityUplink, VendingMachine]
   id: VendingMachineSecurityVend1
   name: SecurityVend
-  description: Desgin by SESWC to help every officers day
+  description: Designed by SESWC to help every officers day
   components:
   - type: VendingMachine
     cashSlot: Null
