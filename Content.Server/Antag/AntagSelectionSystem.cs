@@ -81,7 +81,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !TryComp<AntagSelectionComponent>(rule, out var select))
             return;
 
-        TryMakeAntag((rule, select), args.Player, def, ignoreSpawner: true); // HL: Swap to TryMakeAntag to include extra checks
+        // HL: Swap to TryMakeAntag to include extra checks, ignore preferences for ghost roles tho
+        if (!TryMakeAntag((rule, select), args.Player, def, ignoreSpawner: true, checkPref: false))
+            return;
         args.TookRole = true;
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
@@ -432,7 +434,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
 
         // HL START: Double-check the player can actually be an antag
-        if (session != null)
+        if (session != null && checkPref)
         {
             var mind = session.GetMind();
             if (mind.HasValue && _jobs.MindTryGetJob(mind.Value, out var job) && job.CanBeAntag == false)
