@@ -1,7 +1,6 @@
 - type: gameMapPool
   id: NFMapPool
   maps:
-  - HardCore
   - Reach
   - Amber
   - Bagel
