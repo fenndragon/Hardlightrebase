@@ -8,7 +8,7 @@
   id: Rosetta
   parent: BaseVessel
   name: NOV-Rosetta
-  description: The Rosetta-class is a xenoarcheological research platform produced by the enigmatic "System." Equal parts luxury survey craft and excavator, she trades internal crew comfort for reinforced hull plating and double of what you would normally expect in artifact chambers. Though her primary mining platform has been damaged in transit to the sector, it still makes short work of asteroids and once restored it can act as defensive battery when a customer turns hostile.
+  description: The flagship model of NOV-Naonis and easily their most commercialized hull after her smaller sister, the Rosetta-class is the gold standard for deep space xenoarcheology. Built endlessly by the automated shipyard, she sacrifices crew amenities to employ most of her internal space in artifact research, with only the bridge being luxurious enough to be called a proper liveable space. Although her main mining bay has been retrograded to comply with the sector's shipbuilding regulations, once restored the Rosetta can either cut through asteroids, or serve as a modest battlestation with her additional hardpoints in the external hull.
   price: 110000
   category: Medium
   group: Shipyard
