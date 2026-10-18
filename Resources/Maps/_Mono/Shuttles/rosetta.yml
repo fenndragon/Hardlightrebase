@@ -2,10 +2,10 @@ meta:
   format: 7
   category: Grid
   engineVersion: 274.0.0
-  forkId: ""
-  forkVersion: ""
-  time: 09/18/2026 08:49:14
-  entityCount: 1207
+  forkId: HardLight
+  forkVersion: 0.2.0
+  time: 10/18/2026 19:09:41
+  entityCount: 1205
 maps: []
 grids:
 - 1
@@ -1198,7 +1198,7 @@ entities:
       pos: 0.5,-1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -28167.707
+      secondsUntilStateChange: -28500.184
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1211,7 +1211,7 @@ entities:
       pos: -1.5,0.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -31580.102
+      secondsUntilStateChange: -31912.578
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2067,6 +2067,17 @@ entities:
       solutions: null
       containers:
       - lube
+- proto: bluespacestash
+  entities:
+  - uid: 344
+    components:
+    - type: Transform
+      pos: 3.5,1.5
+      parent: 1
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
 - proto: BoxFolderClipboard
   entities:
   - uid: 847
@@ -3721,14 +3732,6 @@ entities:
     - type: ApcPowerReceiver
       powerLoad: 5
     - type: Battery
-- proto: ComputerPowerMonitoring
-  entities:
-  - uid: 20
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,-3.5
-      parent: 1
 - proto: ComputerTabletopGunneryConsole
   entities:
   - uid: 71
@@ -3818,7 +3821,7 @@ entities:
   - uid: 554
     components:
     - type: Transform
-      pos: 3.5,1.5
+      pos: 1.5,1.5
       parent: 1
 - proto: DrinkCoffeeLiqueurBottleFull
   entities:
@@ -5329,21 +5332,6 @@ entities:
     - type: Transform
       pos: -1.5,-5.5
       parent: 1
-- proto: Lamp
-  entities:
-  - uid: 878
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5868754,2.131767
-      parent: 1
-- proto: LockerResearchDirectorFilledHardsuit
-  entities:
-  - uid: 1138
-    components:
-    - type: Transform
-      pos: 1.5,1.5
-      parent: 1
 - proto: LockerWallColorL2RadiationFilled
   entities:
   - uid: 345
@@ -5461,7 +5449,7 @@ entities:
   - uid: 1143
     components:
     - type: Transform
-      pos: 3.7896786,-3.4035351
+      pos: 3.79478,-3.2843924
       parent: 1
     - type: SolutionContainerManager
       solutions: null
@@ -7367,7 +7355,7 @@ entities:
       parent: 1
 - proto: SuitStorageRD
   entities:
-  - uid: 344
+  - uid: 20
     components:
     - type: Transform
       pos: -8.5,12.5
