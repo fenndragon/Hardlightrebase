@@ -12,7 +12,7 @@
   id: Vauxhaul
   parent: BaseVessel
   name: PNC Vauxhaul
-  description: A Light crusier, decommissioned from the colonial navy, and given to Colsec. Communicate with Colonal Command for additional Torpedos.
+  description: A Light crusier, this model in particular is a balance of some kind between armor and firepower, seemingly focusing more on firepower and hoping the shield will hold.
   price: 165000 # HL: Rebalancing ship prices to 5% more than sell price (or using the MinPriceMarkup field)
   category: Large
   group: Security
