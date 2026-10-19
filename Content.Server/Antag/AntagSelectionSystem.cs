@@ -258,6 +258,32 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     }
 
     /// <summary>
+    /// Counts players readied in lobby and in-game; excludes ghosts, unreadied lobby (AFK) players, and aghosts
+    /// </summary>
+    public int GetActivePlayerCount()
+    {
+        var count = 0;
+        foreach (var session in _playerManager.Sessions)
+        {
+            if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
+                continue;
+
+            if (!GameTicker.PlayerGameStatuses.TryGetValue(session.UserId, out var status))
+                continue;
+
+            if (status == PlayerGameStatus.ReadyToPlay ||
+                status == PlayerGameStatus.JoinedGame &&
+                session.AttachedEntity is { } attached &&
+                !HasComp<GhostComponent>(attached))
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    /// <summary>
     /// Tops up a rule's unfilled antag slots from players already in the round.
     /// See <see cref="AntagSelectionComponent.FillFromInGamePlayers"/>.
     /// </summary>
@@ -308,7 +334,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         var playerPool = GetPlayerPool(ent, pool, def);
         var existingAntagCount = ent.Comp.PreSelectedSessions.TryGetValue(def, out var existingAntags) ? existingAntags.Count : 0;
-        var totalPlayerCount = GetTotalPlayerCount(_playerManager.Sessions);
+        var totalPlayerCount = GetActivePlayerCount(); // HardLight: only in-game and ready players count
         var targetCount = GetTargetAntagCount(ent, totalPlayerCount, def);
         var count = targetCount - existingAntagCount;
 
