@@ -158,9 +158,11 @@ public sealed partial class CloningSystem : EntitySystem
 
     private void ApplySelectedTraits(EntityUid original, EntityUid clone) // HardLight
     {
+        // Fix crash: Preferences are only cached while the player is connected, so DC'd / SSD players are missing data
         if (!_mind.TryGetMind(original, out _, out var mind) ||
             mind.UserId == null ||
-            _prefs.GetPreferences(mind.UserId.Value).SelectedCharacter is not HumanoidCharacterProfile profile)
+            !_prefs.TryGetCachedPreferences(mind.UserId.Value, out var prefs) ||
+            prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
         {
             return;
         }

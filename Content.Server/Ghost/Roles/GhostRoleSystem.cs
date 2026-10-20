@@ -242,25 +242,31 @@ public sealed class GhostRoleSystem : EntitySystem
             var foundWinner = false;
             var deciderPrototype = _prototype.Index(ghostRole.RaffleConfig.Decider);
 
-            // use the ghost role's chosen winner picker to find a winner
-            deciderPrototype.Decider.PickWinner(
-                raffle.CurrentMembers.AsEnumerable(),
-                session =>
-                {
-                    var success = TryTakeover(session, raffle.Identifier);
-                    foundWinner |= success;
-                    return success;
-                }
-            );
+            // HardLight: end raffle even on fail to prevent the "500 urists" crash
+            try
+            {
+                // use the ghost role's chosen winner picker to find a winner
+                deciderPrototype.Decider.PickWinner(
+                    raffle.CurrentMembers.AsEnumerable(),
+                    session =>
+                    {
+                        var success = TryTakeover(session, raffle.Identifier);
+                        foundWinner |= success;
+                        return success;
+                    }
+                );
+            }
+            finally
+            {
+                // raffle over
+                RemoveRaffleAndUpdateEui(entityUid, raffle);
+            }
 
             if (!foundWinner)
             {
                 Log.Warning($"Ghost role raffle for {entityUid} ({ghostRole.RoleName}) finished without " +
                             $"{ghostRole.RaffleConfig?.Decider} finding a winner");
             }
-
-            // raffle over
-            RemoveRaffleAndUpdateEui(entityUid, raffle);
         }
     }
 

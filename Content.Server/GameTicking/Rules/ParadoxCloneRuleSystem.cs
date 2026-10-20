@@ -15,6 +15,8 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Whitelist;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -28,6 +30,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!; // Goobstation
+    [Dependency] private readonly ISharedPlayerManager _player = default!; // hardlight
 
     public override void Initialize()
     {
@@ -41,16 +44,29 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     {
         base.Started(uid, component, gameRule, args);
 
-        // check if we got enough potential cloning targets, otherwise cancel the gamerule so that the ghost role does not show up
-        var allHumans = _mind.GetAliveHumans();
-        allHumans.RemoveWhere(human => _whitelist.IsBlacklistPass(component.TargetBlacklist, human)); // Goobstation
-        allHumans.RemoveWhere(human => human.Comp.OwnedEntity is { } body && _consent.HasConsent(body, "NoClone")); // Filter out players who don't want to be cloned
+        // HardLight: a target picked by an admin doesn't need a random one to exist
+        if (component.OriginalBody != null)
+            return;
 
-        if (allHumans.Count == 0)
+        // check if we got enough potential cloning targets, otherwise cancel the gamerule so that the ghost role does not show up
+        if (GetCloneTargets(component).Count == 0)
         {
             Log.Info("Could not find any alive players to create a paradox clone from! Ending gamerule.");
             ForceEndSelf(uid, gameRule);
         }
+    }
+
+    /// <summary>
+    /// Verified connected players that can be picked for paraclone spawning 
+    /// </summary>
+    private HashSet<Entity<MindComponent>> GetCloneTargets(ParadoxCloneRuleComponent component)
+    {
+        var targets = _mind.GetAliveHumans();
+        targets.RemoveWhere(human => _whitelist.IsBlacklistPass(component.TargetBlacklist, human)); // Goobstation
+        targets.RemoveWhere(human => human.Comp.OwnedEntity is { } body && _consent.HasConsent(body, "NoClone")); // Filter out players who don't want to be cloned
+        // Hardlight: only connected players
+        targets.RemoveWhere(human => !_player.TryGetSessionById(human.Comp.UserId, out var session) || session.Status != SessionStatus.InGame);
+        return targets;
     }
 
     // we have to do the spawning here so we can transfer the mind to the correct entity and can assign the objectives correctly
@@ -71,9 +87,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         else
         {
             // get possible targets
-            var allAliveHumanoids = _mind.GetAliveHumans();
-            allAliveHumanoids.RemoveWhere(human => _whitelist.IsBlacklistPass(ent.Comp.TargetBlacklist, human)); // Goobstation
-            allAliveHumanoids.RemoveWhere(human => human.Comp.OwnedEntity is { } body && _consent.HasConsent(body, "NoClone")); // Filter out players who don't want to be cloned
+            var allAliveHumanoids = GetCloneTargets(ent.Comp);
 
             // we already checked when starting the gamerule, but someone might have died since then.
             if (allAliveHumanoids.Count == 0)
