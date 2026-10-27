@@ -26,7 +26,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
+        - DWallLayer # Hardlight : Mappers use shutters over this
   - type: Repairable
   - type: Damageable
     damageContainer: StructuralInorganic
