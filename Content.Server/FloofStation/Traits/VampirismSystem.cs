@@ -88,11 +88,19 @@ public sealed class VampirismSystem : EntitySystem
         {
             if (!TryComp<StomachComponent>(organUid, out var stomach))
                 continue;
-
-            metabolizer.MetabolizerTypes = ent.Comp.MetabolizerPrototypes;
+            // Hardlight
+            // Changing the replacement from overwriting to fusion to avoid trait collision
+            if (metabolizer.MetabolizerTypes is null)
+                metabolizer.MetabolizerTypes = ent.Comp.MetabolizerPrototypes;
+            else
+                metabolizer.MetabolizerTypes.UnionWith(ent.Comp.MetabolizerPrototypes);
+            // Hardlight end
 
             if (ent.Comp.SpecialDigestible is { } whitelist)
+            {
                 stomach.SpecialDigestible = whitelist;
+                metabolizer.MetabolizerTypes.ExceptWith(ent.Comp.MetabolizerRemover); // Hardlight
+            }
         }
     }
 

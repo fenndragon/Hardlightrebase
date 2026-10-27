@@ -56,6 +56,7 @@ public sealed class LewdTraitSystem : SharedLewdTraitSystem // HL: Move LewdTrai
         solutionCum.MaxVolume = entity.Comp.MaxVolume;
 
         solutionCum.AddReagent(entity.Comp.ReagentId, entity.Comp.MaxVolume - solutionCum.Volume);
+        RaiseLocalEvent(entity, new CumCompPostInitEvent());
     }
 
     private void OnComponentInitMilk(Entity<MilkProducerComponent> entity, ref ComponentStartup args)
@@ -579,4 +580,11 @@ public sealed class LewdTraitSystem : SharedLewdTraitSystem // HL: Move LewdTrai
         //}
     }
     #endregion
+}
+
+/// <summary>
+/// Helper to hook after the component's init.
+/// </summary>
+public sealed class CumCompPostInitEvent : EntityEventArgs //Hardlight
+{
 }

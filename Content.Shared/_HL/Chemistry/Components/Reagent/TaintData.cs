@@ -57,10 +57,11 @@ public sealed partial class TaintData : ReagentData
 public readonly record struct TaintType(string Represent)
 {
     //public static readonly TaintType EXAMPLE = new("example");
+    public static readonly TaintType Succubus = new("Succubus");
 
     public static readonly HashSet<TaintType> ValidTaints =
     [
-
+        Succubus,
     ];
 
     public static implicit operator TaintType(string represent) => new(represent);
