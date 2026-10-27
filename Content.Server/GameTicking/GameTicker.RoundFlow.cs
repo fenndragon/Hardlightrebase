@@ -395,7 +395,10 @@ namespace Content.Server.GameTicking
                 readyPlayerProfiles.Add(userId, profile);
             }
 
-            DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
+            // HardLight: ReadyPlayerCount() also counts players still in-game from a persisted round, so compare
+            // against lobby-ready players only.
+            DebugTools.AssertEqual(readyPlayers.Count, _playerGameStatuses.Count(x =>
+                (!LobbyEnabled || x.Value == PlayerGameStatus.ReadyToPlay) && _playerManager.TryGetSessionById(x.Key, out _)));
 
             // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();

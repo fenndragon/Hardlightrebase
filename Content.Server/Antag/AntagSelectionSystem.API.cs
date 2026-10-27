@@ -97,7 +97,7 @@ public sealed partial class AntagSelectionSystem
         // make pool non-nullable
         // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
         // antag selection.
-        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
+        var poolSize = playerCount ?? GetActivePlayerCount(); // HardLight: only in-game and ready players count
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
