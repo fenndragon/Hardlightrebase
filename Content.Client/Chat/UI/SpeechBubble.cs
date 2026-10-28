@@ -162,7 +162,7 @@ namespace Content.Client.Chat.UI
 
         private void Die()
         {
-            if (Disposed)
+            if (!IsInsideTree)
             {
                 return;
             }
