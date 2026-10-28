@@ -1,0 +1,119 @@
+<Document>
+# Medical
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Medical is responsible for the health, wellbeing, and mental welfare of station personnel.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Medical Roles
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Position[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Purpose[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      [textlink="Chief Medical Officer" link="SOPCMO"]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Oversees the Medical Department, coordinates patient care, manages medical personnel, and ensures proper medical procedures are followed.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Paramedic
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Responds to medical emergencies, retrieves injured personnel, provides emergency treatment, and transports patients to Medical.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Geneticist
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Studies genetics, performs genetic modifications and treatments, and assists in the diagnosis and correction of genetic abnormalities.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Chemist
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Manufactures medicines, medical compounds, and other approved chemicals required for patient care and station operations.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Medical Doctor
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Diagnoses illnesses and injuries, treats patients, performs routine medical care, and helps maintain the overall health of the crew.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Medical Intern
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Assists Medical personnel with patient care and departmental duties while learning the responsibilities of the Medical Department.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Psychologist
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Provides mental health support, counseling, and emotional care to crew members experiencing stress, trauma, or other psychological concerns.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Department Expectations
+
+- Medical personnel are expected to provide care to those who need it regardless of personal feelings, departmental affiliation, or social status.
+
+- Patients should be treated with professionalism, respect, and dignity whenever possible.
+
+- Medical staff should make reasonable efforts to preserve life and minimize unnecessary harm.
+
+- Confidential medical information should remain confidential unless disclosure is required for safety, legal, or operational reasons.
+
+- Chemists, Doctors, Psychologists, and Paramedics should cooperate to provide effective care rather than operating as entirely separate groups.
+
+- Medical is encouraged to roleplay injuries, treatment, recovery, mental health, and long-term care rather than reducing every patient interaction to mechanical treatment.
+
+## Final Note
+
+Medical exists to preserve life and care for the crew. Professionalism, compassion, and cooperation are just as important as medical knowledge.
+
+</Document>

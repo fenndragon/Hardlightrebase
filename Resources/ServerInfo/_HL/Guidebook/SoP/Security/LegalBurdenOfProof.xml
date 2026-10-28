@@ -1,0 +1,39 @@
+<Document>
+## Burden of Proof
+
+The responsibility to establish, to the required standard, that a crime occurred [bold]and[/bold] that a specific individual committed it. This burden rests with [bold]Security[/bold], not the accused.
+
+For criminal proceedings, Security must establish guilt by a [bold]preponderance of available evidence[/bold] — meaning it is more likely than not, based on all available information, that the individual committed the offense.
+
+### What Counts as Evidence
+
+- Witness testimony
+- Physical evidence (weapons, stolen items, contraband)
+- Forensic evidence (medical scans, chemical analysis)
+- Security records and camera footage
+- Confessions and admissions
+- Investigative reports
+
+### Key Principles
+
+- The [bold]absence of direct evidence[/bold] does not automatically prevent a charge if the totality of available evidence reasonably supports it.
+- No individual shall be convicted on [bold]unsupported hearsay alone[/bold] — corroboration is required.
+- [bold]Contradictory or unreliable witness testimony[/bold] should be weighed against other available evidence.
+- The accused does [bold]not[/bold] have to prove their innocence — Security must prove guilt.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Example[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+No camera footage exists, but three independent witnesses report seeing the same individual attack a crew member unprovoked. The preponderance of evidence supports a charge of [textlink="101 — Assault" link="HLSpaceLawList"].
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

@@ -1,0 +1,25 @@
+# Section 12: Escalation Guidelines
+
+- type: serverRule
+  id: ServerRule12_1
+  section: 12
+  code: 12.1
+  text: "Lethal force against players should be a last resort."
+
+- type: serverRule
+  id: ServerRule12_2
+  section: 12
+  code: 12.2
+  text: "Don't disproportionately escalate in response to others' actions."
+
+- type: serverRule
+  id: ServerRule12_3
+  section: 12
+  code: 12.3
+  text: "Don't ignore critical or dead players unless related to an objective."
+
+- type: serverRule
+  id: ServerRule12_4
+  section: 12
+  code: 12.4
+  text: "Don't intentionally round remove other players unless related to an objective."

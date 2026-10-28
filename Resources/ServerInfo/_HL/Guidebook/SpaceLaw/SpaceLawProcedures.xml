@@ -1,0 +1,113 @@
+<Document>
+## Prisoner Infractions
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="4">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Prisoner Classification
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+E-01: In-Cell Vandalism
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+E-02: Attempted Escape
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+E-03: Escape
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Temporary[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reset timer
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reset timer / Isolation (discretionary)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Reset timer, +10 minutes
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Permanent[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Removal of luxuries
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Isolation 10 minutes
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Re-detained or Executed (discretionary)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Isolation[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Straight jacket
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Straightjacket or Execution (discretionary)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Re-detained or Executed (discretionary)
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+## Brigging Procedures
+
+When a suspect is brought to brig, contact the Warden/HoS ahead of time and have either ready to process them on arrival.
+
+- Suspects should be brought to a cell or interrogation as soon as possible, with their items stowed in the evidence locker outside their cell.
+- You may detain someone for [bold]10 minutes without charges maximum[/bold]. Time spent detained is subtracted from their sentence when charged. There is no double jeopardy for charges.
+- If planning a longer interrogation, you must do so while their timer is running and may not keep them longer without authorization from the head of their department.
+
+### Permanent Confinement
+
+If a sentence timer is longer than [bold]30 minutes[/bold], the incarcerated is to be transferred to permanent confinement to spend the rest of their sentence.
+
+### Executions
+
+Executions are to be authorized by the current Captain (acting or otherwise). The execution announcement must be made over the communications console [bold]before[/bold] the execution takes place, detailing the charges, reasoning, and method of execution. A fax to Colonial Command containing the same must also be sent.
+
+### Implant Search
+
+Security is permitted to perform implant searches on suspects who are suspected or confirmed to have an illegal implant. Probable cause includes: visual confirmation, visual cues, witness reports, and concrete evidence. Crimes that warrant permanent confinement permit security to perform a full body search.
+
+### Isolation
+
+Incarcerated individuals who are a threat to themselves or others are to be put into isolation. Isolation is a cell away from other crew with minimal required necessities (bed, toilet, etc.).
+
+</Document>

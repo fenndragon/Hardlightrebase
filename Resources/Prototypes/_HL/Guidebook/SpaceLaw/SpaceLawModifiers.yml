@@ -1,0 +1,103 @@
+- type: spaceLawModifier
+  id: SpaceLawModifierM01
+  code: M01
+  name: Good Samaritan Clause
+  description: >-
+    Crimes committed in the interest of saving life, property, or preventing a disaster may have their sentences reduced, voided, or expunged.
+  adjustment: Voiding of charges
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM02
+  code: M02
+  name: Elevated Sentencing
+  description: >-
+    The scope of the crime(s), or repetitive behavior committed, warrants the charge be elevated to a higher offence in increments of one level per instance.
+  adjustment: Decided by HoS, Warden, or Captain
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM03
+  code: M03
+  name: Self Defense
+  description: >-
+    Actions taken to defend oneself from an assailant may have sentences reduced, voided, or expunged if the officer(s) involved deem the use of force reasonable.
+  adjustment: Voiding of charges
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM04
+  code: M04
+  name: Non Compos Mentis
+  description: >-
+    Those of unstable mind should be referred to medical treatment or, if required, forced cryogenic storage.
+  adjustment: Forced medical treatment or cryogenic storage
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM05
+  code: M05
+  name: Griseo Maris
+  description: >-
+    Coordinated behavior by those with no clear assigned duty which interrupts the normal function of any one department may lead to sentencing for crimes committed during such actions being increased by one level.
+  adjustment: Severity increased by one level
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM06
+  code: M06
+  name: Resisting Arrest
+  description: >-
+    Knowingly resisting attempts at legal detention by members of the security team. Sentences should be increased by the recommended 20% of total duration.
+  adjustment: 20% punishment increase
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM07
+  code: M07
+  name: Escaped Prisoner
+  description: >-
+    Someone who has escaped their cell should be recaptured and returned to the brig. Their timer should be reset to the full length of the original sentence. If the prisoner is a Perma, they are to be stowed within Cryo.
+  adjustment: Reset of imprisonment time; if permanent confinement, cryogenic storage
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM08
+  code: M08
+  name: Attempted Crime
+  description: >-
+    Anyone who tries to commit a Felony or below offense but fails to achieve it is to be charged under the relevant crime while recording that it was an attempt. Attempts warrant a 5% decrease in punishment.
+  adjustment: Same crime, 5% decrease in punishment
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM09
+  code: M09
+  name: Hate Crime
+  description: >-
+    If the crime is committed to cause fear, injury, or harm due to racial, spiritual, physical, sexual orientation, gender identity, or other classifiable hate crime reasons. Cannot be applied to [textlink="111 — Discriminatory Language" link="#c111"], as it is implied.
+  adjustment: 50% time increase
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM10
+  code: M10
+  name: Colonial Command Directive
+  description: >-
+    A pardon or sentence modification issued by Colonial Command. Colonial Command may waive sections of Space Law. If issued, it is to be followed immediately.
+  adjustment: Immediate release or modification
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM11
+  code: M11
+  name: Medical Attention
+  description: >-
+    A sick or injured prisoner requires medical aid. Prisoners have the right to medical aid if injured or sick. In cases of self-harm, aid is discretionary by security. The timer continues running during medical aid.
+  adjustment: Running timer
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM12
+  code: M12
+  name: Hostile Brainwashing
+  description: >-
+    To be under the mind control of a Cult, a head revolutionary, a vampire, or other mind-controlling circumstances. Brainwashed persons are to be detained non-lethally if possible and deconverted. Once deconverted, they are to be released.
+  adjustment: Deconversion and release
+
+- type: spaceLawModifier
+  id: SpaceLawModifierM13
+  code: M13
+  name: Cooperation with Security
+  description: >-
+    To completely comply and work with security during detainment, search, or arrest — such as willingly being cuffed or actively turning oneself in. In cases of Capital crimes, lowers punishment to Permanent Confinement.
+  adjustment: 25% punishment decrease

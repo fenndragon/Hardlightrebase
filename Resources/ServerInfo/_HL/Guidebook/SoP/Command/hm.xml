@@ -1,0 +1,177 @@
+<Document>
+# Harbor Master
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      As the Harbor Master, your primary responsibility is maintaining relations between the station and the Freelancers that frequent Frontier space. While they are not employees of Colonial Command, they are often an important source of labor, resources, transportation, and emergency assistance. You act as the station's primary representative when interacting with them.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]A Good Harbor Master...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]A Poor Harbor Master...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Builds relationships with Freelancer crews
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treats Freelancers as station employees
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Coordinates civilian assistance
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Attempts to command independent crews
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Maintains organized docking operations
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Ignores station traffic and vessel records
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Works closely with Traffic Control
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Operates independently of station logistics
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Represents the station professionally
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Creates unnecessary conflict with visitors
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Solves problems through communication
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Tries to solve every problem personally
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#388c34" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Tip[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Freelancers are some of the station's most valuable allies. Your job is not to command them, but to build relationships that encourage them to help when assistance is needed.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+## Core Responsibilities
+
+- You are the station's primary representative when dealing with independent crews, merchants, salvagers, contractors, and other civilian vessels operating in Frontier space.
+
+- Your role is centered around diplomacy, coordination, administration, and maintaining positive working relationships with those who regularly interact with the station.
+
+- While you are a member of Command, your authority generally extends to station harbor operations and civilian relations rather than the management of station departments.
+
+## Freelancer Relations
+
+- You are responsible for coordinating civilian assistance when needed.
+
+- This may include arranging resource deliveries, requesting salvage support, coordinating emergency repairs, securing transportation assistance, obtaining medical aid, or seeking armed support during station emergencies.
+
+- Remember that Freelancers are independent contractors, not station personnel. You may request their assistance, negotiate agreements, and coordinate joint efforts, but you do not command them.
+
+- Good relationships with independent crews often provide the station with opportunities and resources that would otherwise be unavailable.
+
+## Docking and Vessel Administration
+
+- You oversee civilian docking operations and vessel registration.
+
+- Ensure arriving vessels are properly identified, documented when necessary, and directed to appropriate docking locations.
+
+- If a Freelancer wishes to rename their vessel, the request should generally be processed through you.
+
+- Maintain accurate records whenever practical to ensure harbor operations remain organized and efficient.
+
+## Traffic Coordination
+
+- You should work closely with the Station Traffic Controller to ensure traffic around the station remains organized and safe.
+
+- While the Station Traffic Controller handles much of the day-to-day movement of vessels, you retain overall responsibility for harbor operations and civilian traffic management.
+
+- Ensure docking traffic, departures, and civilian vessel activity do not unnecessarily interfere with station operations.
+
+## Command Responsibilities
+
+- As a member of Command, you should remain informed of major station events and emergencies.
+
+- During crises, you may be called upon to coordinate assistance from civilian vessels, organize evacuations, secure transportation, or establish communication with nearby crews.
+
+- Keep Command informed of significant civilian activity, unusual vessel behavior, or opportunities that may benefit the station.
+
+## Professional Standards
+
+- Do not treat Freelancers as unpaid station employees, personal assistants, or disposable labor.
+
+- Independent crews have their own goals, interests, and responsibilities. Respect their autonomy and treat them as professional partners rather than subordinates.
+
+- Avoid inserting yourself into matters outside your area of expertise. You are not Security, Cargo, or the Captain.
+
+- Your role is to facilitate cooperation, build relationships, and ensure the station remains connected to the wider Frontier community.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#c8a404" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Warning[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      The Harbor Master represents the station to much of the Frontier. The relationships you build—or damage—can have lasting effects on the station's reputation and access to civilian assistance.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+</Document>

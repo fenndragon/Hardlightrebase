@@ -1,0 +1,189 @@
+<Document>
+## Use of Force
+
+### General Standard
+
+A Security Officer is justified in using physical force upon another person when, and only to the extent that, the officer [bold]reasonably believes[/bold] such force to be necessary to:
+
+1. Effect a lawful arrest or detention of a person the officer reasonably believes has committed, is committing, or is about to commit a crime; or
+2. Prevent the escape of a person from lawful custody; or
+3. Defend themselves or a third person from the use or imminent use of unlawful physical force.
+
+Force employed must be [bold]proportional to the threat presented and the objective to be achieved[/bold]. An officer shall use the minimum degree of force reasonably necessary to accomplish the lawful objective. Where non-lethal means are practicable and sufficient to achieve that objective safely, they shall be employed in preference to lethal means.
+
+Where circumstances permit, an officer should:
+
+- Identify themselves as a Security Officer before applying force.
+- Issue a clear verbal command or warning before escalating to physical force.
+- Attempt de-escalation before elevating to any level of force.
+
+### Deadly Force
+
+[bold]Deadly force[/bold] means force applied through means designed or ordinarily used to cause death or critical physical incapacitation: kinetic firearms (non-rubber rounds), lethally-configured energy weapons, explosive devices, and equivalent armaments.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Operational context: Within this station's operational environment, death is not necessarily permanent — medical revival is feasible in most circumstances. Nevertheless, the application of deadly force carries full legal and ethical weight regardless of whether the target survives or is subsequently revived. An officer who employs deadly force must be prepared to justify that decision under the standard articulated below, and revival of the target does not retroactively exempt the officer from that obligation.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+[bold](1)[/bold] A Security Officer is justified in using physical force upon another person when the general standard above is satisfied.
+
+[bold](2)[/bold] A Security Officer is justified in using [bold]deadly force[/bold] upon another person for a purpose specified in subdivision (1) only when it is, or reasonably appears to be, necessary to:
+
+[bold](a)[/bold] Defend themselves or a third person from what they reasonably believe to be the use or imminent use of deadly physical force;
+
+[bold](b)[/bold] Effect an arrest or prevent the escape from custody of a person who the officer reasonably believes is attempting to escape by means of a deadly weapon, or who by their conduct or any other means indicates that they present an imminent threat of death or serious physical injury to others if not apprehended without delay; or
+
+[bold](c)[/bold] Prevent the escape of a person from custody imposed as a result of conviction for, or confirmed commission of, a Capital Crime (400-series offense), or a person confirmed to be an Enemy of the Government pursuant to [textlink="405 — Enemy of the Government" link="HLSpaceLawList"].
+
+Nothing in this provision constitutes justification for willful, malicious, or criminally negligent conduct by any officer that injures or endangers any person or property, nor shall it be construed to excuse or justify the use of unreasonable or excessive force.
+
+### Situational Deadly Force Reference
+
+The following categories identify specific operational circumstances that satisfy the justification standard above, and define post-incident treatment obligations. These categories operate [bold]within[/bold] the legal framework above — the legal standard is always controlling and the following does not supersede it. An officer applying deadly force in a listed category must still be able to articulate the applicable justification under subdivision (2)(a), (b), or (c).
+
+#### Non-Enemies of the Government and Petty Criminals
+
+Where lethal force is applied against a target who is not a confirmed Enemy of the Government, is not subject to a Kill on Sight order, and has not been sentenced to execution — the target [bold]must be revived and processed or deconverted as soon as practicable[/bold] following neutralization. Petty criminals against whom lethal force was applied are to receive immediate medical attention once secured.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Lethals Authorized — Post-Combat Revival Required[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Table Columns="5">
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+<Box>Armed and Dangerous (Lethals)</Box>
+<Box>Revolutionaries (Non-Heads)</Box>
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+<Box>Multiple Assailants (Armed)</Box>
+<Box>Armory Trespassers (Armed or otherwise)</Box>
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+<Box>Cultists (Flag, robes, highly armed, etc.)</Box>
+<Box>Risk of Harming Others (Physically)</Box>
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+<Box>Possessing Explosives (Grenades, etc.)</Box>
+<Box>Compromised/Dangerous Borg</Box>
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Enhanced Individuals (Stimulants, Implants, etc.)</Box>
+</ColorBox>
+</Table>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Lethals Recommended — Posthumous Revival Potentially Required[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Table Columns="4">
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Heavily Armed (Rifles, High-caliber Weapons, etc.)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Holoparasite Users (irrespective of type)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Hostile Exosuits (Any chassis)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Uncontainable Individuals (Shadeskip, Jaunt, etc.)</Box>
+</ColorBox>
+</Table>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Lethals Authorized — Kill on Sight[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Table Columns="4">
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Nuclear Operatives (including infiltration teams)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Exogenous threats (Xenos, Space bears, etc.)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Revolutionary Heads (Non-standard Revolutionaries)</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>Abominations (Cluwns)</Box>
+</ColorBox>
+</Table>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#ba292c" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Important[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Kill on Sight orders are authorized under subdivision (2)(b) — these targets present an imminent and ongoing threat of death or serious injury that cannot be safely neutralized by other means, or under (2)(c) where applicable. Posthumous revival of KOS targets is not required, but is permissible at the discretion of the HoS or Captain.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+### Security Reminder
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#ba292c" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Important[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Security is not judge, jury, and executioner. When in doubt, brig and consult the Captain or HoS.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+### Related Pages
+
+[italic]For evidence standards and legal definitions, see [textlink="Legal Standards" link="SOPSecurityLegalStandards"]. For arrest and search procedures, see [textlink="Legal Procedures" link="SOPSecurityPoliciesProcedures"]. For criminal charges and elements, see [textlink="Crimes & Punishments" link="HLSpaceLawList"].[/italic]
+
+</Document>

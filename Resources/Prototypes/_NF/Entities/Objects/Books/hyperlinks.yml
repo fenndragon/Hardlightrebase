@@ -16,6 +16,7 @@
   id: NFHyperlinkBookSpaceLaw
   name: space law
   description: A big book of laws for space courts.
+  categories: [ HideSpawnMenu ] #HL: Hide
   components:
   - type: Sprite
     sprite: _NF/Objects/Misc/books.rsi

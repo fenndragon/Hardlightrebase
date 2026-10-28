@@ -341,7 +341,7 @@
   table: !type:AllSelector
     children:
     - id: WeaponCaseLongESAR550
-    - id: NFHyperlinkBookSpaceLaw
+    - id: HLBookSpaceLaw #HL
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase
       prob: 0.50

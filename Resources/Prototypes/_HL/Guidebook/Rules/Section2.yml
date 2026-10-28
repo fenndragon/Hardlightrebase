@@ -1,0 +1,35 @@
+# Section 2: Game Server Rules
+
+- type: serverRule
+  id: ServerRule2_1
+  section: 2
+  code: 2.1
+  hardlit: Hardlit
+  text: "If you are banned from a role or department, you may not play that role. This includes seeking or accepting promotions into roles you are banned from or taking Ghost roles which hold the role in question."
+
+- type: serverRule
+  id: ServerRule2_2
+  section: 2
+  code: 2.2
+  hardlit: ZeroTolerance
+  text: "Do not make yourself a major problem, annoyance, or disruption for the crew while not being an antagonist (i.e. self-antagging)."
+
+- type: serverRule
+  id: ServerRule2_3
+  section: 2
+  code: 2.3
+  hardlit: Hardlit
+  text: "It is strictly forbidden to livestream rounds to others or share recorded gameplay outside of Hardlight without consent of all parties involved."
+
+- type: serverRule
+  id: ServerRule2_4
+  section: 2
+  code: 2.4
+  text: "Ghosting with with the sole intent of spying on others' personal activities is not permitted."
+
+- type: serverRule
+  id: ServerRule2_5
+  section: 2
+  code: 2.5
+  hardlit: Hardlit
+  text: "Any vandalism, theft, or major disturbance on ColComm is not permitted. You are also not to trespass within the central CC offices."

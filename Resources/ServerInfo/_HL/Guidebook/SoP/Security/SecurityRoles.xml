@@ -1,0 +1,69 @@
+<Document>
+## Security Roles
+
+Each Security role carries specific responsibilities and authorities. Personnel are expected to operate within their role's scope and defer to the appropriate chain of command.
+
+### Cadet
+
+The entry-level Security position. Cadets are in training and [bold]must be supervised[/bold] by a Security Officer, Warden, or the HoS at all times during active duty.
+
+- May assist with patrols under direct supervision
+- May not independently process, sentence, or hold prisoners
+- May not access the armory without Warden or HoS authorization
+- Should be assigned a supervising officer at the start of each shift
+- All actions taken by a Cadet are the shared responsibility of their supervising officer
+
+### Security Officer
+
+The frontline law enforcement role. Officers conduct patrols, respond to reported incidents, make arrests, and investigate crimes in progress.
+
+- May make arrests and conduct searches within authorized parameters
+- May access standard-issue equipment from the armory with Warden sign-off
+- Reports to the Warden for processing matters and the HoS for operational direction
+
+### Detective
+
+The Detective investigates crimes, gathers evidence, and builds cases for prosecution. Detectives are experienced officers and are not restricted from performing any action a Security Officer is authorized to take; investigations are their primary focus and preferred assignment.
+
+- May investigate crime scenes and collect physical evidence
+- May conduct witness interviews and follow-up questioning
+- May request search warrants through any Command member
+- May perform any action a Security Officer is authorized to take; is not restricted from patrols, arrests, or enforcement
+
+### Warden
+
+The Warden manages the brig, controls armory access, and is responsible for the lawful processing and timely release of all prisoners. The Warden is the legal guardian of anyone in custody.
+
+- Oversees all prisoner intake, sentencing, timer management, and release
+- Controls armory access and equipment distribution to officers
+- Should not leave the brig area without HoS authorization except in emergencies
+- Responsible for verifying that all sentences are lawful, correctly charged, and properly set
+- Must release prisoners when their timer expires unless new charges have been formally filed
+- May hold a prisoner beyond their sentence only with documented justification and HoS sign-off
+
+### Head of Security (HoS)
+
+The commanding officer of the Security department. The HoS sets operational priorities, authorizes elevated enforcement actions, and is ultimately responsible for the conduct and performance of all Security personnel.
+
+- May authorize arrests, warrants, permabrig placement, and elevated equipment issue
+- May declare Blue Alert or Red Alert.
+- May authorize AOS or KOS designations as the law permits. (see Terminology)
+- Responsible for the lawful and professional conduct of all Security staff
+- Reports to the Captain; must consult the Captain before capital-level actions where possible
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+[bold]Chain of Command:[/bold] Captain → Head of Security → Warden → Detective → Security Officer → Cadet
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

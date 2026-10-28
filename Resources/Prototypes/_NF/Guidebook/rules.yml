@@ -4,6 +4,8 @@
   text: "/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC0.xml"
   priority: -2
   ruleEntry: true
+  children:
+  - RoleplayExpectations # HL
 
 - type: guideEntry
   id: RuleC1
@@ -69,3 +71,8 @@
   id: RuleC13
   name: guide-entry-section13
   text: "/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC13.xml"
+
+- type: guideEntry
+  id: RoleplayExpectations # HL
+  name: guide-entry-hl-roleplay-expectations #HL
+  text: "/ServerInfo/_HL/Guidebook/Rules/CoreRules/RoleplayExpectations.xml"

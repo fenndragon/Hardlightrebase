@@ -6,7 +6,6 @@
   - Forensics
   - Defusal
   - CriminalRecords
-#  - SpaceLaw # Frontier - irrelevant
   - Smuggling # Frontier
 
 - type: guideEntry
@@ -32,8 +31,8 @@
 #   children:
 #   - SpaceLawCrimeList
 
-- type: guideEntry
-  id: SpaceLawCrimeList
-  name: guide-entry-rules-sl-crime-list
-  text: "/ServerInfo/_HL/Guidebook/SoP/HLCrimeList.xml"
-# End Frontier
+# - type: guideEntry
+#   id: SpaceLawCrimeList
+#   name: guide-entry-rules-sl-crime-list
+#   text: "/ServerInfo/_HL/Guidebook/SoP/Security/HLCrimeList.xml"
+# # End Frontier

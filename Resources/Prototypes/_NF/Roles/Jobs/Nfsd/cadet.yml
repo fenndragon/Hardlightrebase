@@ -30,7 +30,7 @@
   id: CadetGear
   equipment:
     pocket1: NFWeaponPistolUniversalNfsdLessLethal
-    pocket2: BookSecurity
+    pocket2: HLBookSecurity #HL
   storage:
     back:
     - Flash

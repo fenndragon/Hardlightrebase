@@ -40,7 +40,7 @@
         - Write
     # Frontier: space law slot
     bookSlot:
-      startingItem: NFHyperlinkBookSpaceLaw
+      startingItem: HLBookSpaceLaw #HL
       priority: -2
       whitelist:
         tags:
@@ -201,7 +201,7 @@
       - AstroNavCartridge # HardLight
       - MedTekCartridge
       - NanoChatCartridge # DeltaV
-      
+
 - type: entity
   parent: BasePDA
   id: BaseSciencePDA #HardLight
@@ -471,7 +471,7 @@
       insertSound: null
     # Frontier: silent book slot
     bookSlot:
-      startingItem: NFHyperlinkBookSpaceLaw
+      startingItem: HLBookSpaceLaw
       priority: -2
       whitelist:
         tags:

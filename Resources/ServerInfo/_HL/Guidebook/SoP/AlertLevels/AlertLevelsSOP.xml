@@ -18,6 +18,7 @@ Below are the listed pop-ups for each alert and the color associated with them.
 
 There are individual entries for each alert level and what they entail for station personnel.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#388c34">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -30,9 +31,11 @@ There are individual entries for each alert level and what they entail for stati
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#388c34]Green Alert[/color] will always appear at the start of shift and is the default station alert level.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#1b67a5">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -45,9 +48,11 @@ The [color=#388c34]Green Alert[/color] will always appear at the start of shift 
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#1b67a5]Blue Alert[/color] will appear when a threat or significant amount of crimes have been reported. This often stays around for a while.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#c8a404">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -60,9 +65,11 @@ The [color=#1b67a5]Blue Alert[/color] will appear when a threat or significant a
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#c8a404]Yellow Alert[/color] will appear for massive damage to the station or gas leaks.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#cc74fc">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -75,9 +82,11 @@ The [color=#c8a404]Yellow Alert[/color] will appear for massive damage to the st
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#cc74fc]Violet Alert[/color] is set for viral outbreaks when a zombie infection or other disease occurs.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#ba292c">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -90,9 +99,11 @@ The [color=#cc74fc]Violet Alert[/color] is set for viral outbreaks when a zombie
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#ba292c]Red Alert[/color] will appear for major hostile activities and/or threats to the station.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#db7093">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -105,9 +116,11 @@ The [color=#ba292c]Red Alert[/color] will appear for major hostile activities an
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#db7093]Gamma Alert[/color] is rare and often only used in extreme cases.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#FFFFF0">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -120,9 +133,11 @@ The [color=#db7093]Gamma Alert[/color] is rare and often only used in extreme ca
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#FFFFF0]Omicron Alert[/color] is Extremely rare and called only by Colonial Command.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#8b0000">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -135,9 +150,11 @@ The [color=#FFFFF0]Omicron Alert[/color] is Extremely rare and called only by Co
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#8b0000]Delta Alert[/color] will appear in situations where the station is actively about to self-destruct or be destroyed by other means.
 
+<Box Orientation="Vertical" Margin="5">
 <Table Columns="1">
   <ColorBox Color="#FFFFFF">
     <Box HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="10">
@@ -150,16 +167,19 @@ The [color=#8b0000]Delta Alert[/color] will appear in situations where the stati
     </Box>
   </ColorBox>
 </Table>
+</Box>
 
 The [color=#FFFFFF]White Alert[/color] is Called once glimmer levels are at a critical point.
 
 These alerts can be found in entries listed below:
-- [textlink="Green Alert" link="GreenAlert SOP"]
-- [textlink="Blue Alert" link="BlueAlert SOP"]
-- [textlink="Yellow Alert" link="YellowAlert SOP"]
-- [textlink="Red Alert" link="RedAlert SOP"]
-- [textlink="Delta Alert" link="DeltaAlert SOP"]
-- [textlink="Gamma Alert" link="GammaAlert SOP"]
-- [textlink="Violet Alert" link="VioletAlert SOP"]
+- [textlink="Green Alert" link="GreenAlert"]
+- [textlink="Blue Alert" link="BlueAlert"]
+- [textlink="Yellow Alert" link="YellowAlert"]
+- [textlink="Red Alert" link="RedAlert"]
+- [textlink="Delta Alert" link="DeltaAlert"]
+- [textlink="Gamma Alert" link="GammaAlert"]
+- [textlink="Omicron Alert" link="OmicronAlert"]
+- [textlink="Epsilon Alert" link="EpsilonAlert"]
+- [textlink="Violet Alert" link="VioletAlert"]
 
 </Document>

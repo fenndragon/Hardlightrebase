@@ -75,9 +75,9 @@
     - id: BookLeafLoversSecret
     - id: BookMedicalReferenceBook
     - id: BookScientistsGuidebook
-    - id: BookSecurity
+    - id: HLBookSecurity #HL
     - id: BookSpaceEncyclopedia
-    - id: NFHyperlinkBookSpaceLaw # Frontier: BookSpaceLaw<NFHyperlinkBookSpaceLaw
+    - id: HLBookSpaceLaw #HL
     - id: BookTheBookOfControl
 
 - type: entityTable

@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: NfsdTechInventory
   startingInventory:
-    NFHyperlinkBookSpaceLaw: 20
+    HLBookSpaceLaw: 20 #HL
     HyperlinkBookNfsdSop: 20
     Handcuffs: 10
     Zipties: 10

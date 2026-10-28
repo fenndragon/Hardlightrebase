@@ -1,0 +1,48 @@
+<Document>
+## Blue Alert
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Quote[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+"A confirmed threat to the sector has been identified. All crew should remain vigilant and report any suspicious activity to Security."
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+Blue Alert indicates that a credible, confirmed threat is present or that circumstances strongly suggest one is imminent.
+
+### Criteria for Declaring Blue Alert
+
+Blue Alert should be declared when [bold]any[/bold] of the following apply:
+
+- Credible intelligence of a threat is received (intercepted communications, confirmed hostile agent reports, a credible tip)
+- A hostile individual or group is confirmed aboard or in the sector
+- A high-security area has been breached without explanation
+- Unusual or coordinated suspicious activity suggests an organized threat
+- The Captain or HoS determines that elevated readiness is necessary for crew safety
+
+Any member of [bold]Command[/bold] may declare Blue Alert. The declaring member should notify the Captain and HoS promptly.
+
+### What Changes on Blue Alert
+
+[bold]Search Authority[/bold]
+Officers may conduct searches without a warrant when there is an articulable reason for the stop. Blue Alert does not authorize arbitrary or mass searches — the officer must still be able to state a reason. The standard is [italic]reasonable basis[/italic], not [italic]mere presence[/italic].
+
+[bold]Identification[/bold]
+All crew are required to wear their ID card visibly. Failure to produce or wear a valid ID card during Blue Alert is a chargeable offense under [textlink="118 — Failure to Identify" link="HLSpaceLawList"].
+
+[bold]CDET Activation[/bold]
+CDETs may be activated at Command authorization during Blue Alert. A CDET firing on an individual during Blue Alert [bold]authorizes a search at the responding officer's discretion[/bold] — no warrant is required. See [textlink="CDET — Contraband Denying Energy Turrets" link="SOPSecurityPoliciesCDET"].
+
+[bold]Equipment[/bold]
+Officers may visibly carry and display weapons. Officers may carry one step above their standard-issue load at HoS discretion.
+
+</Document>

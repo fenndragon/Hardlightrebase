@@ -197,13 +197,13 @@
       - id: BookLeafLoversSecret
       - id: BookEngineersHandbook
       - id: BookScientistsGuidebook
-      - id: BookSecurity
+      - id: HLBookSecurity #HL
       - id: BookHowToKeepStationClean
       - id: BookHowToRockAndStone
       - id: BookMedicalReferenceBook
       - id: BookHowToSurvive
       - id: BookChemicalCompendium
-      - id: NFHyperlinkBookSpaceLaw # Frontier: BookSpaceLaw<NFHyperlinkBookSpaceLaw
+      - id: HLBookSpaceLaw  #HL
 
 - type: entity
   id: CrateServiceSodaDispenser

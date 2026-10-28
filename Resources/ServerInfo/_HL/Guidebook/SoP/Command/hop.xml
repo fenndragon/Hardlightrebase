@@ -1,0 +1,177 @@
+<Document>
+# Head of Personnel
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      As the Head of Personnel, you are responsible for managing the station's workforce and overseeing the Service department. While Service may not always be the most glamorous department, it is often one of the most important. Botanists provide food, chefs prepare meals, bartenders provide a place for crew to unwind, chaplains offer spiritual guidance, and other service personnel contribute to the station's overall quality of life. Ensure your department remains productive, professional, and welcoming.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]A Good Head of Personnel...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]A Poor Head of Personnel...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Helps crew navigate station bureaucracy
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Creates unnecessary bureaucracy
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Coordinates with department heads
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Ignores department leadership
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Uses access responsibly
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Hands out access freely
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Resolves disputes through communication
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Escalates every problem to Security
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Supports station staffing needs
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Ignores understaffed departments
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treats crew fairly and impartially
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Plays favorites
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#388c34" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Tip[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      The Head of Personnel is often the first person crew members turn to when they have a problem. Good communication and sound judgment are more valuable than authority.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+## Personnel Management
+
+- Your primary responsibility is handling personnel matters. This includes access requests, job transfers, employment records, and assisting crew members with administrative concerns.
+
+- It is generally good practice to ask for a reason when approving access or job changes, especially when the request involves sensitive areas, specialized equipment, or additional responsibilities.
+
+- Access is a responsibility, not a reward. Granting someone access means trusting them with areas, equipment, and responsibilities they may not have previously had. Use good judgment when making these decisions.
+
+## Job Transfers and Access Changes
+
+- You have authority over Service department staffing and access.
+
+- Requests involving other departments should generally be discussed with the appropriate Head of Staff whenever possible.
+
+- If someone wishes to transfer into Engineering, consult the Chief Engineer. If someone wishes to join Medical, consult the Chief Medical Officer. Similar requests should be directed to the appropriate department leadership.
+
+- When a department head is unavailable, seek guidance from the Captain or Acting Captain before approving significant departmental transfers.
+
+- Whenever practical, ensure that personnel being transferred possess the knowledge, qualifications, or willingness to learn the responsibilities of their new role.
+
+## Crew Relations
+
+- The Head of Personnel serves as a bridge between crew members and station leadership.
+
+- Listen to concerns, assist with workplace disputes, and help resolve conflicts before they become larger problems.
+
+- Many issues can be solved through communication long before Security involvement becomes necessary.
+
+- While you are not a counselor, mediator, or lawyer, you are often in a position to help crew members reach reasonable solutions to everyday workplace problems.
+
+## Station Staffing
+
+- You should maintain awareness of staffing needs across the station.
+
+- If a department is critically understaffed, consider working with Command and department heads to identify qualified personnel who may be interested in transferring or assisting.
+
+- A station functions best when every department has the personnel it needs to perform its duties.
+
+## Command Responsibilities
+
+- While much of your work is administrative, you are still a member of Command.
+
+- Participate in command discussions, remain informed about station events, and help ensure personnel decisions support the station's overall needs.
+
+- Personnel decisions can have station-wide consequences. Consider the impact of transfers, promotions, and access changes before approving them.
+
+## Professional Standards
+
+- Do not grant access, job positions, or special treatment based on personal friendships, relationships, or favoritism.
+
+- The Head of Personnel should be fair, impartial, and focused on what is best for the station and its crew.
+
+- Crew members may not always agree with your decisions, but they should always be able to trust that those decisions were made fairly and in good faith.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#c8a404" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Warning[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      A Head of Personnel who gives out access recklessly can create just as many problems as someone who refuses every request. Strive for fairness, consistency, and good judgment.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+</Document>

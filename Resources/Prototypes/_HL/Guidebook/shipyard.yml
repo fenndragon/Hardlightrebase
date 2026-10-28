@@ -1,18 +1,14 @@
 - type: guideEntry
-  id: HardlightShipyard
-  name: "Hardlight Shipyards"
-  text: "/ServerInfo/_HL/Guidebook/Shipyard.xml"
-  priority: 7
-  children:
-  - ShipyardBottle
-  - ShipyardVerdure
+  id: ShipyardBuildingGuidelines
+  name: guide-entry-hl-ship-building-guidelines
+  text: "/ServerInfo/_HL/Guidebook/Shipyard/ShipBuildingGuidelines.xml"
 
 - type: guideEntry
   id: ShipyardBottle
-  name: "JDB Bottle"
+  name: guide-entry-hl-jdb-bottle
   text: "/ServerInfo/_HL/Guidebook/Shipyard/Bottle.xml"
 
 - type: guideEntry
   id: ShipyardVerdure
-  name: "JDB Verdure"
+  name: guide-entry-hl-jdb-verdure
   text: "/ServerInfo/_HL/Guidebook/Shipyard/Verdure.xml"

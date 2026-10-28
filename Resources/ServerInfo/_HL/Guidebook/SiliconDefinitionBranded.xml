@@ -1,0 +1,28 @@
+<Document>
+# Branded Silicons
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Branded Silicons are synthetic intelligences owned, operated, or commissioned by a recognized organization.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Examples
+
+- Standard Colonial Command Cyborgs
+- Station AI
+
+## Legal Status
+
+- Branded Silicons are organizational assets and are expected to follow their active lawset.
+
+- Their actions should be evaluated in the context of those laws, provided the lawset itself is valid and properly authorized.
+
+- While Branded Silicons possess intelligence and personality, they remain assigned station assets and are expected to perform their designated duties.
+
+- Personnel should remember that preserving the silicon's mind remains significantly more important than preserving the chassis housing it.
+</Document>

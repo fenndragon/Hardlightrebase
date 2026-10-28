@@ -1,0 +1,171 @@
+<Document>
+## Terminology
+
+Common terms used in Security operations and Space Law.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Term
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Definition
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]AOS[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[italic]Arrest on Sight[/italic] — An active authorization to arrest a specific individual upon locating them, without needing to re-establish PC at time of contact. Issued by the HoS or Captain. Must be based on existing PC.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]KOS[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[italic]Kill on Sight[/italic] — Authorization to use lethal force on a specific individual immediately upon locating them. Reserved for confirmed, active lethal threats where non-lethal options are not viable. Requires both HoS [bold]and[/bold] Captain authorization.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Brig[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+The Security detention facility. Contains short-term holding cells where prisoners serve timed sentences. Distinct from Permabrig (indefinite holding).
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Timer[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+The countdown on a cell indicating the time remaining in a prisoner's sentence.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Perma[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Short for [italic]Permanent Confinement[/italic] — indefinite brig detention reserved for capital crimes through lawful sentencing/placement. Perma prisoners retain the right to appeal to Colonial Command.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Processing[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+The intake procedure for a newly arrested individual: search, charge confirmation, sentence calculation, and timer set. Overseen by the Warden.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Stun[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Non-lethal incapacitation using a stun baton, taser, or equivalent. The preferred method of subduing a resisting suspect in most situations.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]C1[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Class 1 Contraband — Minor dangerous items. Not a criminal charge; but not permitted in the brig.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]C2[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Class 2 Contraband — Restricted equipment that may be legally possessed with a valid C2 Permit. Without a permit, possession is chargeable under [textlink="206 — Possession, Contraband Equipment" link="HLSpaceLawList"].
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]C3[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Class 3 Contraband — Dangerous or prohibited weapons and materials. Possession by non-Security personnel is chargeable under [textlink="306 — Possession, Illegal Inherently Dangerous Equipment" link="HLSpaceLawList"] unless explicitly authorized by applicable alert/command policy. Security personnel may carry/deploy C3 while acting in lawful security duties (see [textlink="Security Authority" link="HLSpaceLawWeaponsAuthority"]).
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]CDET[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[italic]Contraband Denying Energy Turret[/italic] — A statically placed automatic weapon that fires on any individual detected carrying C3 contraband. See [textlink="CDET Policy" link="SOPSecurityPoliciesCDET"] below.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Warrant[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+A formal authorization to search a person, vessel, or area. Requires Probable Cause and must be approved by the Warden, HoS, or Captain.
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]Alert Status[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+The station-wide threat level. Any member of Command may declare or change the alert status (Green / Blue / Red). See [textlink="Alert Statuses" link="AlertLevels"].
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]RS[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[italic]Reasonable Suspicion[/italic] — The minimum evidentiary threshold. Allows contact, questioning, and temporary detention. Does not authorize arrest or search on Green Alert. See [textlink="Legal Standards" link="SOPSecurityLegalStandards"].
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[bold]PC[/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+[italic]Probable Cause[/italic] — The threshold for arrest, warrants, and search. Requires articulable facts supporting a belief that a crime has occurred, is occurring, or is about to occur. See [textlink="Legal Standards" link="SOPSecurityLegalStandards"].
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

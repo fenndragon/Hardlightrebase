@@ -1,0 +1,19 @@
+<Document>
+# Security Policies & Guidebook
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Info[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Operational reference for Security department personnel. This page covers roles, terminology, standard procedures, use of force, and enforcement policy. For evidentiary standards (RS, PC, Preponderance), see [textlink="Legal Standards" link="SOPSecurityLegalStandards"]. For alert status changes, see [textlink="Alert Statuses" link="AlertLevels"].
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

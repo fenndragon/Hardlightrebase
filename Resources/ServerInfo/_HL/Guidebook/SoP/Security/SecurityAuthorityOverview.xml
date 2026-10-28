@@ -1,0 +1,19 @@
+<Document>
+# Security Authority
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      The authority granted to the Security Department is derived from Colonial Command and is exercised in trust. It is purposeful, limited, and accountable. Security officers act as agents of Colonial Command — not as independent arbiters of law. Authority that exceeds these bounds is itself a violation of Space Law.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+</Document>

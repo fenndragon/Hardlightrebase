@@ -1,0 +1,115 @@
+<Document>
+# Acting Captain
+
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Acting Captain Should...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Acting Captain Should Not...[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Continue performing their original role
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Abandon their department
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Coordinate emergencies
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Micromanage departments
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Use only necessary command equipment
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Loot the Captain's office
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Support department heads
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Override them unnecessarily
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Lead when needed
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treat the position as a promotion
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Appointment
+
+- Acting Captaincy should be determined by a majority vote of available Heads of Staff. The most senior title is not always the most qualified leader, and Command is encouraged to select the individual best suited to lead the station during the current shift. If another Head of Staff is better suited to lead, you are encouraged to support that decision regardless of your own position.
+
+- If a majority decision cannot be reached, Command should maintain open communication and continue operating collaboratively until a consensus is achieved. Colonial Command may be consulted for guidance when appropriate, but Command should make every reasonable effort to resolve the matter internally first.
+
+## Equipment
+
+- You should take only the tools necessary to perform command duties:
+
+  - Nuclear Authentication Disk
+  - Spare ID (Set Job Title to Acting Captain)
+  - Disk Pinpointer
+  - Door Remote
+  - Spare Captain's Headset
+
+- Other equipment should remain secured unless a legitimate emergency requires its use.
+
+## Responsibilities
+
+- As Acting Captain, your primary role remains your original department. You are not expected to abandon your departmental responsibilities simply because you have assumed command authority.
+
+- As Acting Captain, you are responsible for handling command-level decisions when necessary. This may include [textlink="alert level" link="AlertLevels"] changes, emergency coordination, shuttle calls, communication with Colonial Command, and cross-departmental leadership during major incidents.
+
+- Until a significant emergency occurs, department heads should generally retain authority over their respective departments. Offer guidance and support when needed, but avoid unnecessarily inserting yourself into departmental matters that are already being handled competently.
+
+- If a department lacks leadership, you may provide direction and assistance to help maintain station operations. Your goal is to support the station and its crew, not to centralize authority around yourself.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Acting Captaincy is a responsibility, not a promotion. Lead with restraint, communicate clearly, and remember that your purpose is to keep the station functioning until permanent command can resume.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+</Document>

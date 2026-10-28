@@ -1,0 +1,78 @@
+diff --git a/Resources/Prototypes/_HL/Guidebook/Rules/Section1.yml b/Resources/Prototypes/_HL/Guidebook/Rules/Section1.yml
+index 66670f1283..ceadc9aac6 100644
+--- a/Resources/Prototypes/_HL/Guidebook/Rules/Section1.yml
++++ b/Resources/Prototypes/_HL/Guidebook/Rules/Section1.yml
+@@ -4,14 +4,14 @@
+   id: ServerRule1_1
+   section: 1
+   code: 1.1
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Be respectful to others OOC."
+ 
+ - type: serverRule
+   id: ServerRule1_2
+   section: 1
+   code: 1.2
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Don't use hate speech, racism, or bigoted comments."
+ 
+ - type: serverRule
+diff --git a/Resources/Prototypes/_HL/Guidebook/Rules/Section2.yml b/Resources/Prototypes/_HL/Guidebook/Rules/Section2.yml
+index b89d1a6bab..c096670cb3 100644
+--- a/Resources/Prototypes/_HL/Guidebook/Rules/Section2.yml
++++ b/Resources/Prototypes/_HL/Guidebook/Rules/Section2.yml
+@@ -11,7 +11,7 @@
+   id: ServerRule2_2
+   section: 2
+   code: 2.2
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Do not make yourself a major problem, annoyance, or disruption for the crew while not being an antagonist (i.e. self-antagging)."
+ 
+ - type: serverRule
+diff --git a/Resources/Prototypes/_HL/Guidebook/Rules/Section6.yml b/Resources/Prototypes/_HL/Guidebook/Rules/Section6.yml
+index 1d58e3eddf..9f834a3a9c 100644
+--- a/Resources/Prototypes/_HL/Guidebook/Rules/Section6.yml
++++ b/Resources/Prototypes/_HL/Guidebook/Rules/Section6.yml
+@@ -10,7 +10,7 @@
+   id: ServerRule6_2
+   section: 6
+   code: 6.2
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Do not play excessively hostile or provocative characters. Playing a character accurately should never result in rulebreaks. - Ahelp for any questions relating to this."
+ 
+ - type: serverRule
+@@ -29,7 +29,7 @@
+   id: ServerRule6_5
+   section: 6
+   code: 6.5
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Respect other people's consent, dignity and boundaries. IF SOMEBODY ASKS YOU TO STOP BOTHERING THEM LOOC (local-out-of-character), do so. If this rule is abused, Ahelp right away."
+ 
+ - type: serverRule
+@@ -42,7 +42,7 @@
+   id: ServerRule6_7
+   section: 6
+   code: 6.7
+-  hardlit: Hardlit
++  hardlit: ZeroTolerance
+   text: "Roleplaying an underage character is strictly forbidden. So is talk of such activities."
+ 
+ - type: serverRule
+diff --git a/Resources/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC0.xml b/Resources/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC0.xml
+index 68d5b4d8a7..e0f5b6a357 100644
+--- a/Resources/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC0.xml
++++ b/Resources/ServerInfo/_HL/Guidebook/Rules/CoreRules/RuleC0.xml
+@@ -11,6 +11,8 @@
+ 
+ [head=3][color=#ff0000]Rules marked in Hardlight's [color=#00fffb]color[/color] will be enforced at all times. Other rules will only be enforced upon recieving a user report.[/head][/color]
+ 
++[head=3][color=#ff0000]Rules marked in [color=#00fffb]red[/color] are [bold]zero-tolerance[/bold]. Violating these rules will result in an immediate one-day ban at minimum.[/head][/color]
++
+   Each section contains its own list of rules. Click on the section name to view the full version.
+ 
+   - [textlink="Section 1. Behavioral Rules" link="RuleC1"]

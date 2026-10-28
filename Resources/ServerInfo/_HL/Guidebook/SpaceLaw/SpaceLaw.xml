@@ -1,0 +1,21 @@
+<Document>
+  # Crimes List
+  ## Modifiers
+  Modifiers adjust sentences up or down. Multiple modifiers may apply to a single charge.
+  <GuideSpaceLawModifierGroupEmbed />
+  ## Infractions
+  All of these crimes tend to be monetary punishments.
+  <GuideSpaceLawGroupEmbed Severity="Infraction" />
+  ## Minor Crimes
+  These crimes tend to be just brig time.
+  <GuideSpaceLawGroupEmbed Severity="Minor" />
+  ## Misdemeanors
+  These crimes tend to include both fines and brig time.
+  <GuideSpaceLawGroupEmbed Severity="Misdemeanor" />
+  ## Felonies
+  Crimes entail brig time and hefty fines.
+  <GuideSpaceLawGroupEmbed Severity="Felony" />
+  ## Capital Crimes
+  These tend to use extreme punishments.
+  <GuideSpaceLawGroupEmbed Severity="Capital" />
+</Document>
