@@ -26,6 +26,17 @@ namespace Content.Server.Stack
         private const float AutoStackUpdateInterval = 10f; // Check every 10 seconds
         private float _autoStackAccumulator;
 
+        // HardLight: stack types excluded from auto-stacking so dropped cash/coins stay separate (making it rain, gambling)
+        private static readonly HashSet<string> AutoStackBlacklist = new()
+        {
+            "Credit",
+            "TreasureCoinIron",
+            "TreasureCoinSilver",
+            "TreasureCoinGold",
+            "TreasureCoinAdamantine",
+            "TreasureCoinDiamond",
+        };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -65,6 +76,10 @@ namespace Content.Server.Stack
 
                 // Skip unlimited stacks
                 if (stack.Unlimited)
+                    continue;
+
+                // HardLight: skip blacklisted stack types; nearby stacks must share the type, so one check covers both
+                if (AutoStackBlacklist.Contains(stack.StackTypeId))
                     continue;
 
                 // Skip if already at max capacity
