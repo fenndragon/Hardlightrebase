@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCCFID
+  name: CCFID uniform
+  description: "A Colonial Command Formal Infantry Division uniform used for the most formal of wars: paperwork."
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Uniforms/ccfid_uniform.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Uniforms/ccfid_uniform.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCCFIDShako
+  name: CCFID hat
+  description: A gold lined hat to go along with the most classy of uniforms, sippy straw not included.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/ccfid_shako.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/ccfid_shako.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesBootsCCFID
+  name: CCFID boots
+  description: Boots lined with gold studs that you'll never use.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Shoes/ccfid_boots.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Shoes/ccfid_boots.rsi
