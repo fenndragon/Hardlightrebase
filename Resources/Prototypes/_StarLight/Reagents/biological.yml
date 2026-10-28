@@ -29,13 +29,13 @@
         - !type:OrganType
           type: Vampiric
         reagent: Water
-        amount: 0.1
+        amount: 0.5 # HL 0.1 -> 0.5
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
           type: Vampiric
         reagent: Protein
-        amount: 0.1
+        amount: 0.5 # HL 0.1 -> 0.5
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
