@@ -47,13 +47,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Flavorol
+          Quantity: 2
+        - ReagentId: JuicePear
           Quantity: 2
         - ReagentId: Theobromine
           Quantity: 1
@@ -86,14 +86,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 27
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 15
         - ReagentId: Honey
           Quantity: 2
         - ReagentId: Flavorol
-          Quantity: 2
+          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -116,11 +116,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 29
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 15
         - ReagentId: Sugar
           Quantity: 4
         - ReagentId: Flavorol
-          Quantity: 2
+          Quantity: 5

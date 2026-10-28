@@ -15,11 +15,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 60
+        maxVol: 80
         reagents:
         - ReagentId: Nutriment
-          Quantity: 40
+          Quantity: 50
         - ReagentId: Vitamin
+          Quantity: 10
+        - ReagentId: Flavorol
           Quantity: 10
 
 # Breakfasts

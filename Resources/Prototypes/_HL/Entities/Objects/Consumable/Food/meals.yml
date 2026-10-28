@@ -17,10 +17,10 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 30
+          maxVol: 55
           reagents:
             - ReagentId: Nutriment
-              Quantity: 20
+              Quantity: 50
     - type: Tag
       tags:
         - Meat
@@ -122,10 +122,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 40
         reagents:
           - ReagentId: Nutriment
-            Quantity: 40
+            Quantity: 35
 
 - type: entity
   name: vegetarian nutrient paste brick

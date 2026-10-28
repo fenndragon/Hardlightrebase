@@ -14,10 +14,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Flavorol
           Quantity: 10
 # Noodles
@@ -70,10 +70,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 8
         - ReagentId: Flavorol
@@ -95,10 +95,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Flavorol
@@ -123,14 +123,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Flavorol
-          Quantity: 5
+          Quantity: 10
 # Tastes like pasta, meat.
 
 - type: entity
@@ -150,14 +150,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Flavorol
-          Quantity: 11
+          Quantity: 10
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -175,10 +175,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like pasta, butter.

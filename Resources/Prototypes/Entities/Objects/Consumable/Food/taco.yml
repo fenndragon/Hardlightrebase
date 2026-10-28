@@ -1,5 +1,4 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
-
 - type: entity
   name: taco shell
   parent: FoodMealBase
@@ -53,12 +52,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 34
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 4
+        - ReagentId: Flavorol
+          Quantity: 5
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
     storedRotation: -90
@@ -99,15 +100,6 @@
   - type: Food
   - type: Sprite
     state: fishtaco
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 6
 
 - type: entity
   name: rat taco
@@ -118,15 +110,6 @@
   - type: Food
   - type: Sprite
     state: rattaco
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
 
 - type: entity
   name: beef taco supreme
@@ -140,12 +123,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 51
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 6
+        - ReagentId: Flavorol
+          Quantity: 5
 
 - type: entity
   name: chicken taco supreme
@@ -159,18 +144,20 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 51
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 6
+        - ReagentId: Flavorol
+          Quantity: 5
 
 - type: entity
   name: draco
   parent: FoodTacoBase
   id: FoodTacoDragon
-  description: A dragon taco, which is technically also a fish taco.
+  description: A dragon taco, tastes like taking a fireball to the face.
   components:
   - type: FlavorProfile
     flavors:
@@ -182,16 +169,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 32
+        maxVol: 51
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 25
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 6
         - ReagentId: Ichor
           Quantity: 4
         - ReagentId: CapsaicinOil
           Quantity: 6
+        - ReagentId: Flavorol
+          Quantity: 5
 
 - type: entity
   name: soft taco

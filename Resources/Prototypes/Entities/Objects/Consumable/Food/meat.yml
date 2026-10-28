@@ -15,14 +15,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 29
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 6
         - ReagentId: UncookedAnimalProteins
-          Quantity: 1
+          Quantity: 9
         - ReagentId: Fat
-          Quantity: 5
+          Quantity: 9
   - type: Item
     size: Tiny
   - type: Fixtures
@@ -55,6 +55,17 @@
   id: FoodMeatRawBase
   abstract: true
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 29
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: Tag
     tags:
     - Raw
@@ -87,14 +98,6 @@
   components:
   - type: Sprite
     state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -116,12 +119,6 @@
   components:
   - type: Sprite
     state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -145,7 +142,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 29
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
         - ReagentId: CarpoToxin
           Quantity: 5
   - type: Extractable
@@ -167,14 +171,6 @@
     - Meat
   - type: Sprite
     state: bacon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 2
-        - ReagentId: Fat
-          Quantity: 9
   - type: InternalTemperature
     conductivity: 0.44
     thickness: 0.004 # bacon is thin so faster to cook than a steak
@@ -192,14 +188,6 @@
   components:
   - type: Sprite
     state: bear
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -216,14 +204,6 @@
   components:
   - type: Sprite
     state: bird
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutlet
@@ -240,14 +220,6 @@
   components:
   - type: Sprite
     state: bird
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -266,14 +238,6 @@
   components:
   - type: Sprite
     state: bird
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
@@ -299,7 +263,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 49
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
         - ReagentId: Bicaridine
           Quantity: 20
   - type: StaticPrice
@@ -318,14 +289,6 @@
       - crabby
   - type: Sprite
     state: crab
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 1
-        - ReagentId: Fat
-          Quantity: 2
   - type: Construction
     graph: CrabSteak
     node: start
@@ -339,14 +302,6 @@
   components:
   - type: Sprite
     state: goliath
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 5
-        - ReagentId: Fat
-          Quantity: 3
   - type: InternalTemperature
     thickness: 0.1 # very big, do cook it in lava
   - type: Construction
@@ -372,7 +327,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 39
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
         - ReagentId: Ichor
           Quantity: 10
   - type: Extractable
@@ -399,11 +361,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 16
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
         - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+          Quantity: 4
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 4
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -416,14 +381,6 @@
   components:
   - type: Sprite
     state: lizard
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -480,14 +437,6 @@
   components:
   - type: Sprite
     state: spider
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -500,14 +449,6 @@
   components:
   - type: Sprite
     state: spiderleg
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 10
-        - ReagentId: Fat
-          Quantity: 3
 
 - type: entity
   name: meatwheat clump
@@ -542,9 +483,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 29
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
         - ReagentId: UncookedAnimalProteins
-          Quantity: 10
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 8
         - ReagentId: Toxin
           Quantity: 2
 
@@ -568,7 +514,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 49
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
         - ReagentId: SulfuricAcid
           Quantity: 20
   - type: SliceableFood
@@ -596,7 +549,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 49
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
         - ReagentId: SulfuricAcid
           Quantity: 20
   - type: Construction
@@ -624,6 +584,14 @@
   id: FoodMeatSalami
   description: A large tube of salami. Best not to ask what went into it.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Protein
+          Quantity: 9
   - type: Tag
     tags:
     - Raw
@@ -669,6 +637,17 @@
   id: FoodMeatMeatball
   description: A raw ball of meat. Meat ball.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 6
   - type: Tag
     tags:
     - Raw
@@ -687,6 +666,17 @@
   id: FoodMeatPatty
   description: A flat slab of ground meat. Ready for grillin'.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: Fat
+          Quantity: 6
   - type: Tag
     tags:
     - Raw
@@ -732,12 +722,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 16
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 3
+          Quantity: 1
         - ReagentId: Water
           Quantity: 4 #It makes saline if you add salt!
 
@@ -822,9 +814,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -860,9 +853,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: Construction
@@ -890,9 +884,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -922,9 +917,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -954,9 +950,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -992,9 +989,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 25
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
@@ -1011,9 +1009,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 38
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 25
         - ReagentId: Protein
           Quantity: 5
         - ReagentId: Ammonia
@@ -1035,9 +1034,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -1070,9 +1070,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: Construction
@@ -1100,9 +1101,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: Construction
@@ -1134,11 +1136,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Protein
-          Quantity: 10
+          Quantity: 5
   - type: Construction
     graph: RounySteak
     node: rouny steak
@@ -1164,9 +1167,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: SliceableFood
@@ -1196,9 +1200,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
@@ -1222,9 +1227,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 5
   - type: FoodSequenceElement
@@ -1251,11 +1257,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7.5
+          Quantity: 15
         - ReagentId: Protein
-          Quantity: 7.5
+          Quantity: 5
   - type: Construction
     graph: CookedPatty
     node: cooked meat patty
@@ -1280,14 +1287,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 16
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 7.5
         - ReagentId: Protein
-          Quantity: 3
-        - ReagentId: Water
-          Quantity: 4 # makes saline if you add salt!
+          Quantity: 3.5
   - type: FoodSequenceElement
     entries:
       Burger: MeatSnail
@@ -1339,11 +1344,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 32
         reagents:
         - ReagentId: Ichor
           Quantity: 6
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 6
   - type: SliceableFood
@@ -1377,11 +1383,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: Cutlet
     node: start
@@ -1406,11 +1415,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: BearCutlet
     node: start
@@ -1433,11 +1445,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: PenguinCutlet
     node: start
@@ -1460,11 +1475,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: ChickenCutlet
     node: start
@@ -1487,11 +1505,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: DuckCutlet
     node: start
@@ -1517,11 +1538,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: LizardCutlet
     node: start
@@ -1543,11 +1567,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 13
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
         - ReagentId: Fat
-          Quantity: 2
+          Quantity: 3
   - type: Construction
     graph: SpiderCutlet
     node: start
@@ -1573,9 +1600,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 19
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
         - ReagentId: SulfuricAcid
-          Quantity: 20
+          Quantity: 6
   - type: Construction
     graph: XenoCutlet
     node: start
@@ -1587,6 +1621,15 @@
   id: FoodMeatTomatoCutlet
   description: A cutlet from a slab of tomato.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Water
+          Quantity: 5
   - type: Tag
     tags:
     - Cutlet
@@ -1615,7 +1658,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Protein
           Quantity: 1
 
@@ -1638,7 +1681,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
+        - ReagentId: Fat
+          Quantity: 3
         - ReagentId: Ichor
           Quantity: 3
   - type: Construction
@@ -1664,11 +1714,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: Cutlet
     node: cutlet
@@ -1696,11 +1747,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: BearCutlet
     node: bear cutlet
@@ -1726,11 +1778,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: PenguinCutlet
     node: penguin cutlet
@@ -1756,11 +1809,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: ChickenCutlet
     node: chicken cutlet
@@ -1786,11 +1840,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: DuckCutlet
     node: duck cutlet
@@ -1817,11 +1872,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1.5
   - type: Construction
     graph: LizardCutlet
     node: lizard cutlet
@@ -1846,11 +1902,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 1.5
   - type: Construction
     graph: SpiderCutlet
     node: spider cutlet
@@ -1875,11 +1932,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 1.5
   - type: Construction
     graph: XenoCutlet
     node: xeno cutlet
@@ -1904,12 +1962,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 14
         reagents:
-        - ReagentId: Ichor
-          Quantity: 2
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 5
         - ReagentId: Protein
+          Quantity: 1.5
+        - ReagentId: Ichor
           Quantity: 2
   - type: Construction
     graph: DragonCutlet

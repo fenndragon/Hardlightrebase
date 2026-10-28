@@ -72,6 +72,7 @@
   solids:
     FoodBreadBun: 1
     FoodMeatBacon: 1
+    FoodMeat: 1
     FoodCheeseSlice: 2
   recipeType: Oven # Frontier
 

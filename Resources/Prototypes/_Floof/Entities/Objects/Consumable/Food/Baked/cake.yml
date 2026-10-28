@@ -96,7 +96,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 200
+        maxVol: 290
         reagents:
         - ReagentId: Nutriment
           Quantity: 108
@@ -104,6 +104,8 @@
           Quantity: 54
         - ReagentId: Vitamin
           Quantity: 18
+        - ReagentId: Flavorol
+          Quantity: 108
   - type: SliceableFood
     slice: FoodCakeTieredSlice
     count: 18
@@ -119,7 +121,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 21
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -127,3 +129,5 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+        - ReagentId: Flavorol
+          Quantity: 6
