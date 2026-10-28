@@ -38,7 +38,6 @@ namespace Content.Shared.Flash.Components
             Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
         };
 
-        public bool Flashing;
 
         [DataField]
         public float Probability = 1f;

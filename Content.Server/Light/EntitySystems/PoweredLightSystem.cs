@@ -3,7 +3,6 @@ using Content.Server.Ghost;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Random; // Frontier
-// HardLight
 using Content.Shared.Containers; // HardLight
 
 namespace Content.Server.Light.EntitySystems;
@@ -25,6 +24,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
+    // port remark : Upstream has this in the GhostSystem.
     private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
     {
         if (light.IgnoreGhostsBoo)
@@ -40,14 +40,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
 
         light.LastGhostBlink = time;
 
-        ToggleBlinkingLight(uid, light, true);
-        Robust.Shared.Timing.Timer.Spawn(light.GhostBlinkingTime, () =>
-        {
-            if (TerminatingOrDeleted(uid))
-                return;
-
-            ToggleBlinkingLight(uid, light, false);
-        });
+        ToggleBlinkingLight(uid, true, light.GhostBlinkingTime);
 
         args.Handled = true;
     }
@@ -61,13 +54,16 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         if (GetBulb(uid, light) == null && !HasComp<ContainerFillComponent>(uid))
             return;
 
-        ScheduleLateRefresh(uid);
+        //ScheduleLateRefresh(uid);
     }
+
+    /* Port: This looks like a fix so I'm commenting it out, it may need to be reimplemented.
+            Right now it has to go, Enitity timers are deprecated.
 
     // Schedules a light update for a later time to ensure bulbs are properly inserted before checking for them.
     private void ScheduleLateRefresh(EntityUid uid)
     {
-        Robust.Shared.Timing.Timer.Spawn(TimeSpan.FromSeconds(0.05), () =>
+        uid.SpawnTimer(TimeSpan.FromSeconds(0.05), () =>
         {
             if (TerminatingOrDeleted(uid))
                 return;
@@ -86,6 +82,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         });
     }
     // HardLight end
+    */
 
     private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
     {
@@ -96,5 +93,18 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
                 args.Affected = true;
         }
         // Frontier end
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = GameTiming.CurTime;
+        var query = EntityQueryEnumerator<BlinkingPoweredLightComponent>();
+        while (query.MoveNext(out var uid, out var blinkingComp))
+        {
+            if (curTime > blinkingComp.StopBlinkingTime)
+                RemCompDeferred<BlinkingPoweredLightComponent>(uid);
+        }
     }
 }

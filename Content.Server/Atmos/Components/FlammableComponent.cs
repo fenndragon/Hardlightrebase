@@ -2,14 +2,21 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     public sealed partial class FlammableComponent : Component
     {
-        [DataField]
-        public bool Resisting;
+        [ViewVariables]
+        public bool Resisting => ResistCompleteTime.HasValue;
+
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))] //Should also have AutoPauseField but our tech is too low
+        public TimeSpan? ResistCompleteTime;
+
+        [DataField, AutoNetworkedField]
+        public TimeSpan ResistTime = TimeSpan.FromSeconds(2);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]

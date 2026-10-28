@@ -31,6 +31,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Content.Server._NF.Atmos.Components; // Frontier
+using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -51,6 +52,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private EntityQuery<InventoryComponent> _inventoryQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -406,21 +408,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(uid, null) || flammable.Resisting)
                 return;
 
-            flammable.Resisting = true;
-
             _popup.PopupEntity(Loc.GetString("flammable-component-resist-message"), uid, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
 
-            // TODO FLAMMABLE: Make this not use TimerComponent...
-            Robust.Shared.Timing.Timer.Spawn(2000, () =>
-            {
-                if (Deleted(uid))
-                    return;
-
-                flammable.Resisting = false;
-                flammable.FireStacks -= 1f;
-                UpdateAppearance(uid, flammable);
-            });
+            flammable.ResistCompleteTime = _timing.CurTime + flammable.ResistTime;
         }
 
         public override void Update(float frameTime)
@@ -450,11 +441,12 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             _timer -= UpdateTime;
+            var curtime = _timing.CurTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             var toProcess = new List<EntityUid>();
             var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out _, out _))
+            while (query.MoveNext(out var uid, out var flammable, out _))
             {
                 toProcess.Add(uid);
             }
@@ -464,6 +456,15 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!TryComp<FlammableComponent>(uid, out var flammable) ||
                     !TryComp(uid, out TransformComponent? _))
                     continue;
+
+
+                // Fixing the Spawntimer usage without porting the broader per entity logic is a bit odd
+                // But this can be refactored from upstream cleanly later
+                if (curtime > flammable.ResistCompleteTime)
+                {
+                    flammable.FireStacks -= 1f; //Grabbed from fenn's timer exec directly, may not make sense here
+                    flammable.ResistCompleteTime = null;
+                }
 
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)

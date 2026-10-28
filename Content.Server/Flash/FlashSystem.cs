@@ -15,12 +15,14 @@ using Content.Shared.Traits.Assorted;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.StatusEffect;
 using Content.Shared.Examine;
+using Content.Shared.Timing;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Flash
 {
@@ -38,8 +40,29 @@ namespace Content.Server.Flash
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private UseDelaySystem _useDelay = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
+        // Handle the flash visuals
+        // TODO: Replace this with something like sprite flick once that exists to get rid of the update loop.
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var curTime = _timing.CurTime;
+            var query = EntityQueryEnumerator<ActiveFlashComponent>();
+            while (query.MoveNext(out var uid, out var active))
+            {
+                // reset the visuals and remove the component
+                if (active.ActiveUntil >= curTime)
+                    continue;
+
+                _appearance.SetData(uid, FlashVisuals.Flashing, false);
+                RemCompDeferred<ActiveFlashComponent>(uid);
+            }
+        }
 
         public override void Initialize()
         {
@@ -58,7 +81,7 @@ namespace Content.Server.Flash
         {
             if (!args.IsHit ||
                 !args.HitEntities.Any() ||
-                !UseFlash(uid, comp, args.User))
+                !TryUseFlashItem(uid, comp, args.User))
             {
                 return;
             }
@@ -72,25 +95,29 @@ namespace Content.Server.Flash
 
         private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
-            if (args.Handled || !UseFlash(uid, comp, args.User))
+            if (args.Handled || !TryUseFlashItem(uid, comp, args.User))
                 return;
 
             args.Handled = true;
             FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true, comp.Probability);
         }
 
-        private bool UseFlash(EntityUid uid, FlashComponent comp, EntityUid user)
+        private bool TryUseFlashItem(EntityUid uid, FlashComponent comp, EntityUid user)
         {
-            if (comp.Flashing)
+
+            // Port remark : Upstream has a Resolve code here because it is shared rather than server.
+
+            if (_useDelay.IsDelayed(uid))
                 return false;
 
-            TryComp<LimitedChargesComponent>(uid, out var charges);
-            if (_sharedCharges.IsEmpty((uid, charges)))
+            if (TryComp<LimitedChargesComponent>(uid, out var charges)
+                && !_sharedCharges.TryUseCharge((uid, charges)))
                 return false;
 
-            _sharedCharges.TryUseCharge((uid, charges));
             _audio.PlayPvs(comp.Sound, uid);
-            comp.Flashing = true;
+
+            var active = EnsureComp<ActiveFlashComponent>(uid);
+            Dirty(uid, active);
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
             if (_sharedCharges.IsEmpty((uid, charges)))
@@ -99,15 +126,6 @@ namespace Content.Server.Flash
                 _tag.AddTag(uid, TrashTag);
                 _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), user);
             }
-
-            Robust.Shared.Timing.Timer.Spawn(400, () =>
-            {
-                if (Deleted(uid))
-                    return;
-
-                _appearance.SetData(uid, FlashVisuals.Flashing, false);
-                comp.Flashing = false;
-            });
 
             return true;
         }
