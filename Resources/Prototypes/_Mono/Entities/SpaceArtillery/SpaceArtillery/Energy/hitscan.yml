@@ -2,11 +2,11 @@
 
 - type: hitscan
   id: PhalanxLaser
-  maxLength: 500
+  maxLength: 400
   damage:
     types:
-      Heat: 100
-      Structural: 100
+      Heat: 35
+      Structural: 50
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy
@@ -19,11 +19,11 @@
 
 - type: hitscan
   id: ApolloLaser
-  maxLength: 500
+  maxLength: 600
   damage:
     types:
-      Heat: 1500
-      Structural: 7500
+      Heat: 80
+      Structural: 35
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy2
@@ -36,11 +36,11 @@
 
 - type: hitscan
   id: PrometheusLaser
-  maxLength: 500
+  maxLength: 1000
   damage:
     types:
       Heat: 120
-      Structural: 500
+      Structural: 125
   muzzleFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: muzzle_beam_heavy2
@@ -56,8 +56,8 @@
   maxLength: 500
   damage:
     types:
-      Heat: 30000
-      Structural: 100000
+      Heat: 150
+      Structural: 200
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: muzzle_superheavy_prefrac
@@ -70,11 +70,11 @@
 
 - type: hitscan
   id: SunderLaser
-  maxLength: 500
+  maxLength: 900
   damage:
     types:
-      Heat: 350
-      Structural: 2500
+      Heat: 35
+      Structural: 150
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: proton_muzzle
@@ -90,9 +90,9 @@
   maxLength: 500
   damage:
     types:
-      Piercing: 125
-      Heat: 25
-      Structural: 200
+      Piercing: 25
+      Heat: 5
+      Structural: 75
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: gauss_muzzle
@@ -110,7 +110,7 @@
     types:
       Piercing: 25
       Heat: 5
-      Structural: 20
+      Structural: 50
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: gauss_muzzle
@@ -142,10 +142,10 @@
   maxLength: 500
   damage:
     types:
-      Radiation: 700
-      Structural: 4000
-      Heat: 5000
-      Ion: 500
+      Radiation: 70
+      Structural: 175
+      Heat: 50
+      Ion: 50
   muzzleFlash:
     sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
     state: muzzle_superheavy_prefrac

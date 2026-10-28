@@ -19,7 +19,7 @@
 - type: entity
   id: WeaponTurretType35
   name: Type-35 MARAUDER-type plasma cannon
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
   components:
   - type: StaticPrice
@@ -75,7 +75,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -150,7 +150,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#C92BCC"
+    radarColor: "#5bc65d"
     scale: 2.5
   - type: ShipGunType
     shipType: Energy
@@ -162,7 +162,7 @@
 - type: entity
   id: WeaponTurretType54
   name: Type-54C plasma autopulser
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: TSF ONLY, ADS ONLY
   description: A rapidly firing energy weapon, dealing a large amount of damage to its targets. Takes a long time to recharge.
   components:
@@ -219,7 +219,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -232,7 +232,7 @@
 - type: entity
   id: WeaponTurretType241
   name: Type-241 plasma lance
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: TSF ONLY, ADS ONLY
   description: A devastating weapon, usually used for large scale fire support and strategic destruction.
   components:
@@ -298,7 +298,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 4
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -387,7 +387,7 @@
 - type: entity
   id: WeaponTurretM220
   name: M220 RUBICON EMP launcher
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   description: Launches EMP projectiles at ships, disabling systems with powerful electromagnetic pulses. Ideal for non-lethal engagements and can be remotely activated or linked to a GCS.
   components:
   - type: StaticPrice
@@ -435,7 +435,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#0044FF"
+    radarColor: "#5bc65d"
     scale: 2
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -516,7 +516,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#C92BCC"
+    radarColor: "#5bc65d"
     scale: 2
   - type: ShipGunType
     shipType: Energy
@@ -527,7 +527,7 @@
 - type: entity
   id: WeaponTurretDymere
   name: ADEX-9 DYMERE Turbolaser
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: TSF ONLY, ADS ONLY
   description: Aetherion Dynamics' most iconic supercapital battery. Fires enormous ionized gas projectiles that melt through the toughest ship armor. Can be remotely activated or linked to a GCS.
   components:
@@ -586,7 +586,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     shape: square
     visibleFromOtherGrids: true
@@ -602,7 +602,7 @@
 - type: entity
   id: WeaponLaserTurretL1Phalanx
   name: L-1 Phalanx
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   description: A light laser emplactment designed by the Pantheon Collective, used to shred threats of all types
   components:
   - type: StaticPrice
@@ -659,7 +659,7 @@
   - type: ShipGunType
     shipType: Energy
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunClass
@@ -736,7 +736,7 @@
 
 - type: entity
   id: WeaponLaserTurretApollo
-  parent: [ WeaponLaserTurretL1Phalanx, BaseC3ExpeditionContraband ]
+  parent: [ WeaponLaserTurretL1Phalanx, BaseC2ExpeditionContraband ]
   name: L-20 Apollo Heavy Laser Cannon
   description: One of the Pantheon Collective's top weapons, the Apollo is aptly named for its beams heating surfaces to beyond the temperature of nearby stars.
   components:
@@ -783,7 +783,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -870,7 +870,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#C92BCC"
+    radarColor: "#5bc65d"
     scale: 3
     shape: square
     visibleFromOtherGrids: true
@@ -884,7 +884,7 @@
 - type: entity
   id: WeaponTurretReaper
   name: Curio-1089 tachyon lance "Reaper"
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: ADS ONLY
   description: One of the most powerful EMP weapons in sector, its a sign of doom for its targets.
   components:
@@ -945,7 +945,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 4
     shape: square
     visibleFromOtherGrids: true
@@ -959,7 +959,7 @@
 - type: entity
   id: WeaponTurretHarbringer
   name: Curio-129 ion cannon "Harbringer"
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: ADS ONLY
   description: One of the most powerful EMP weapons in sector, its a sign of doom for its targets.
   components:
@@ -1010,7 +1010,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#0044FF"
+    radarColor: "#5bc65d"
     scale: 4
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -1079,7 +1079,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#ab0707"
+    radarColor: "#5bc65d"
     scale: 2.5
   - type: ShipGunType
     shipType: Energy
@@ -1090,7 +1090,7 @@
 - type: entity
   id: WeaponTurretSunder
   name: Curio-1007 proton cannon "Sunder"
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: ADS ONLY
   description: A potent proton cannon from before the Fracture, known for melting holes through both inorganic and organic matter with ease.
   components:
@@ -1146,7 +1146,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -1159,7 +1159,7 @@
 - type: entity
   id: WeaponTurretScythe
   name: Curio-1008 neutron repeater "Scythe"
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: ADS ONLY
   description: A steadily firing neutron repeater, dealing solid damage to most targets. A pre-fracture marvel of weapons technology
   components:
@@ -1216,7 +1216,7 @@
         sound:
           collection: MetalBreak
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: ShipGunType
@@ -1229,7 +1229,7 @@
 - type: entity
   id: WeaponLaserTurretFlayer
   name: Curio-183 auto-coil "Flayer"
-  parent: [ BallisticArtilleryUnanchorable, BaseC3ExpeditionContraband ]
+  parent: [ BallisticArtilleryUnanchorable, BaseC2ExpeditionContraband ]
   suffix: ADS ONLY
   description: A unique pre-fracture weapon, the Flayer fires a storm of tungsten alloy darts at near the speed of light, barraging targets to pieces.
   components:
@@ -1268,7 +1268,7 @@
     proto: GaussRound
     fireCost: 25
   - type: RadarBlip
-    radarColor: "#DDFF00"
+    radarColor: "#5bc65d"
     scale: 3
     visibleFromOtherGrids: true
   - type: Destructible

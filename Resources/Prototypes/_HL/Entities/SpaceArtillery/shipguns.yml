@@ -4,7 +4,7 @@
   id: CVWeaponTurretReaper
   name: Civilian Curio-1089 tachyon lance "Reaper"
   description: A terrifying weapon to have aimed at you, the Reaper is an ancient piece of pre-fracture tech capable of shattering the strongest of hulls within one or two blasts. now made for kids.
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretReaper ]
+  parent: [ BaseC1Contraband, WeaponTurretReaper ]
   components:
   - type: Sprite
     sprite: _HL/Objects/ShuttleWeapons/cvreaper.rsi
@@ -26,7 +26,7 @@
 - type: entity
   id: CVWeaponTurretHarbringer
   name: Civilian Curio-129 ion cannon "Harbringer"
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretHarbringer ]
+  parent: [ BaseC1Contraband, WeaponTurretHarbringer ]
   description: One of the most powerful EMP weapons in sector, its a sign of doom for its targets. Made for all ages!
   components:
   - type: Sprite
@@ -49,7 +49,7 @@
 - type: entity
   id: CVWeaponTurretKargil
   name: Civilian Kargil 203mm cannon
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretKargil ]
+  parent: [ BaseC1Contraband, WeaponTurretKargil ]
   description: A (totally legal) cruiser artillery cannon that launches devastating 203mm shells for long-range ship-to-ship combat. Can be remotely activated or linked up to a GCS.
   components:
   - type: Sprite
@@ -72,8 +72,8 @@
 - type: entity
   id: CVWeaponTurretType54
   name: Civilian Type-54C plasma autopulser
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretType54 ]
   description: A rapidly firing energy weapon, dealing a large amount of damage to its targets. Takes a long time to recharge. Feels like it could give a really mean tan. 
+  parent: [ BaseC1Contraband, WeaponTurretType54 ]
   components:
   - type: Sprite
     sprite: _HL/Objects/ShuttleWeapons/cvt54.rsi
@@ -95,8 +95,8 @@
 - type: entity
   id: CVWeaponTurretTovek
   name: Civilian ADMX-23 TOVEK Hybrid EMP Pod
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretTovek ]
   description: A hybrid EMP missile pod by Aetherion Dynamics. Fires EMPHE warheads to disable and weaken enemy ships at long range. Can be remotely activated or linked to a GCS. Says "intended for oral use only". 
+  parent: [ BaseC1Contraband, WeaponTurretTovek ]
   components:
   - type: Sprite
     sprite: _HL/Objects/ShuttleWeapons/cvtovek.rsi
@@ -118,7 +118,7 @@
 - type: entity
   id: CVWeaponTurretSerpentMissile
   name: Civilian Serpent torpedo launcher
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretSerpentMissile ]
+  parent: [ BaseC1Contraband, WeaponTurretSerpentMissile ]
   description: A light torpedo launcher developed by the Syndicate during the corporate war, uses similar systems to the anaconda for self loading munitons. Additional lubrication required.
   components:
   - type: Sprite
@@ -142,8 +142,8 @@
 - type: entity
   id: CVWeaponTurretSunder
   name: Civilian Curio-1007 proton cannon "Sunder"
-  parent: [ BaseC2ContrabandUnredeemable, WeaponTurretSunder ]
   description: A potent proton cannon from before the Fracture, known for melting holes through both inorganic and organic matter with ease. Batteries sold separately 
+  parent: [ BaseC1Contraband, WeaponTurretSunder ]
   components:
   - type: Sprite
     sprite: _HL/Objects/ShuttleWeapons/cvsunder.rsi

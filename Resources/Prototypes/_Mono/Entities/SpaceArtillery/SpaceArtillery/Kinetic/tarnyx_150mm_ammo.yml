@@ -14,7 +14,7 @@
   - type: Projectile
     damage:
       types:
-        Structural: 1000
+        Structural: 100
         Ion: 10000
   - type: Sprite
     sprite: _Mono/Objects/SpaceArtillery/150_shell.rsi
@@ -36,7 +36,7 @@
   - type: EmpOnTrigger
     range: 10
     energyConsumption: 500000
-    disableDuration: 5.5
+    disableDuration: 15
 
 - type: entity
   id: ShipTarnyxApProjectile
@@ -88,7 +88,7 @@
   - type: EmpDescription
     range: 10
     energyConsumption: 500000
-    disableDuration: 5.5
+    disableDuration: 15
 
 # EMP end
 

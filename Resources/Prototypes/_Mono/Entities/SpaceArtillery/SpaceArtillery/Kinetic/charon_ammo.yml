@@ -14,8 +14,9 @@
   - type: Projectile
     damage:
       types:
-        Structural: 90000
+        Structural: 9000
         Blunt: 5000
+    penetrationThreshold: 2500
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
     layers:
@@ -36,9 +37,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 7500
-    intensitySlope: 100
-    maxIntensity: 6000
+    totalIntensity: 1500
+    intensitySlope: 40
+    maxIntensity: 200
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
@@ -99,9 +100,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: HardBombShipGun
-    totalIntensity: 25000
-    intensitySlope: 100
-    maxIntensity: 11000
+    totalIntensity: 12000
+    intensitySlope: 30
+    maxIntensity: 400
     maxTileBreak: 0
   - type: GatheringProjectile
   - type: MiningGatheringSoft
