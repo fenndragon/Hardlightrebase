@@ -650,6 +650,7 @@ namespace Content.Shared.Preferences
                 SpawnPriorityPreference.None => SpawnPriorityPreference.None,
                 SpawnPriorityPreference.Arrivals => SpawnPriorityPreference.Arrivals,
                 SpawnPriorityPreference.Cryosleep => SpawnPriorityPreference.Cryosleep,
+                SpawnPriorityPreference.ColComm => SpawnPriorityPreference.ColComm,
                 _ => SpawnPriorityPreference.None // Invalid enum values.
             };
 
