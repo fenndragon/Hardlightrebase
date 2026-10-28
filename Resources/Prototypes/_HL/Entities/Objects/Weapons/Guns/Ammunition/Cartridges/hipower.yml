@@ -370,10 +370,10 @@
     layers:
       - state: blank
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: Construction
-    graph: ShellShotgun23x75mmHiPowerBuckshotGraph
-    node: shell
-    
+  # - type: Construction
+  #   graph: ShellShotgun23x75mmHiPowerBuckshotGraph
+  #   node: shell
+
 - type: entity
   id: ShellShotgun23x75mmHiPowerSlug
   name: shotgun shell (4 gauge high-power slug)
@@ -386,9 +386,9 @@
     layers:
       - state: blank
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: Construction
-    graph: ShellShotgun23x75mmHiPowerSlugGraph
-    node: shell
+  # - type: Construction
+  #   graph: ShellShotgun23x75mmHiPowerSlugGraph
+  #   node: shell
 
 - type: entity
   id: ShellShotgun23x75mmFlechette
@@ -402,10 +402,10 @@
     layers:
       - state: blank
         map: [ "enum.AmmoVisualLayers.Base" ]
-  - type: Construction
-    graph: ShellShotgun23x75mmFlechetteGraph
-    node: shell
-    
+  # - type: Construction
+  #   graph: ShellShotgun23x75mmFlechetteGraph
+  #   node: shell
+
 - type: entity
   id: ShellShotgun12_gaugeHiPowerSlug
   name: shotgun shell (12 gauge high-power slug)
@@ -421,7 +421,7 @@
   - type: Construction
     graph: ShellShotgun12_gaugeHiPowerSlugGraph
     node: shell
-    
+
 - type: entity
   id: ShellShotgun12_gaugeHiPowerBuckshot
   name: shotgun shell (12 gauge high-power buckshot)
