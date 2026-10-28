@@ -94,3 +94,37 @@
         conditions:
           - !type:ReagentThreshold
             max: 0.1
+- type: reagent
+  id: Nepetalactone
+  name: reagent-name-nepetalactone
+  group: Medicine
+  desc: reagent-desc-nepetalactone
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: minty
+  color: "#979156"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MovespeedModifier # stimulant
+        walkSpeedModifier: 1.05
+        sprintSpeedModifier: 1.05
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
+        - !type:OrganType # same as thiobromine, not strictly chemically accurate, but id say its fair for balance. feel free to change this if anyone wants to add new organ types for vulpkanin/tajaran/felinid
+          type: Animal
+      - !type:MovespeedModifier # too much causes lethargy from overstimulation
+        walkSpeedModifier: 0.9
+        sprintSpeedModifier: 0.9
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        - !type:OrganType
+          type: Animal
+      - !type:ChemVomit # more too much make puke
+        probability: 0.10
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        - !type:OrganType
+          type: Animal
