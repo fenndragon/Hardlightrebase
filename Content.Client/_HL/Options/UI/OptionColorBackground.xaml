@@ -1,0 +1,13 @@
+﻿<!-- Hardlight -->
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <Label Name="TitleLabel" Access="Public" />
+        <PanelContainer Name="ExampleBackground" Access="Public">
+            <RichTextLabel Name="ExampleLabel" Access="Public" />
+        </PanelContainer>
+        <Label Name="TextLabel" Text="Text"/>
+        <ColorSelectorSliders Name="TextSlider" Access="Public" HorizontalExpand="True" />
+        <Label Name="BackgroundLabel" Text="Background"/> <!-- todo: loc this -->
+        <ColorSelectorSliders Name="BackgroundSlider" Access="Public" HorizontalExpand="True" />
+    </BoxContainer>
+</Control>

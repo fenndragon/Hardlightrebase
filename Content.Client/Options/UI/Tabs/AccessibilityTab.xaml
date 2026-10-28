@@ -1,6 +1,7 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:ui="clr-namespace:Content.Client.Options.UI">
+         xmlns:ui="clr-namespace:Content.Client.Options.UI"
+         xmlns:uihl="clr-namespace:Content.Client._HL.Options.UI"> <!-- Hardlight -->
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
@@ -20,6 +21,12 @@
                 <ui:OptionColorSlider Name="HighlightsColorSlider"
                     Title="{Loc 'ui-options-highlights-color'}"
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
+                <Label Text="{Loc ui-options-accessibility-header-paperwork}" StyleClasses="LabelKeyText"/> <!-- Hardlight -->
+                <uihl:OptionColorBackground Name="PaperBackgroundColor"
+                    Title="{Loc 'ui-options-paper-text-color'}"
+                    Example="{Loc 'ui-options-paper-text-example'}"
+                    ExampleStyle="PaperWrittenText"/> <!-- Hardlight -->
+                <CheckBox Name="EnableSpecialPaperOverride" Text="{Loc 'ui-options-specialpaper-override'}"/> <!-- Hardlight -->
                 <Label Text="{Loc 'ui-options-accessability-header-content'}"
                        StyleClasses="LabelKeyText"/>
                 <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
