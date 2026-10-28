@@ -199,7 +199,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: MaleScreams
+      collection: FeroxiScreams # HardLight: OmuStation
     Laugh:
       collection: MaleLaugh
     Snore:
@@ -209,7 +209,7 @@
     Sigh:
       collection: MaleSigh
     Crying:
-      collection: MaleCry
+      collection: FeroxiCries # HardLight: OmuStation
     Whistle:
       collection: Whistles
     Weh:
@@ -228,6 +228,10 @@
       path: /Audio/Animals/snake_hiss.ogg
     Gnash:
       collection: FeroxiGnashes
+    FeroxiChirp: # HardLight: OmuStation emote wheel
+      collection: FeroxiChirps
+    FeroxiSqueak: # HardLight: OmuStation emote wheel
+      collection: FeroxiSqueaks
 
 - type: emoteSounds
   id: FemaleFeroxi
@@ -235,7 +239,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      collection: FeroxiScreams # HardLight: OmuStation
     Laugh:
       collection: FemaleLaugh
     Sneeze:
@@ -251,7 +255,7 @@
     Sigh:
       collection: FemaleSigh
     Crying:
-      collection: FemaleCry
+      collection: FeroxiScreams # HardLight: OmuStation
     Whistle:
       collection: Whistles
     Weh:
@@ -262,6 +266,10 @@
       collection: VulpkaninBarks
     Gnash:
       collection: FeroxiGnashes
+    FeroxiChirp: # HardLight: OmuStation emote wheel
+      collection: FeroxiChirps
+    FeroxiSqueak: # HardLight: OmuStation emote wheel
+      collection: FeroxiSqueaks
 
 - type: emoteSounds
   id: MaleKitsune
