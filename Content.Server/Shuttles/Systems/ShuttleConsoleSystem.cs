@@ -365,18 +365,17 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private void UpdateState(EntityUid consoleUid, ref DockingInterfaceState? dockState)
     {
-        EntityUid? entity = consoleUid;
-
         var getShuttleEv = new ConsoleShuttleEvent
+        // Hardlight Start: shuffled a bit to make remote consoles properly share movement from console
         {
-            Console = entity,
+            Console = consoleUid,
         };
 
-        var entityUid = entity ?? consoleUid;
-        RaiseLocalEvent(entityUid, ref getShuttleEv);
-        entity = getShuttleEv.Console ?? entityUid;
+        RaiseLocalEvent(consoleUid, ref getShuttleEv);
+        var entityUid = getShuttleEv.Console ?? consoleUid;
 
-        TryComp(entity, out TransformComponent? consoleXform);
+        TryComp(entityUid, out TransformComponent? consoleXform);
+        // Hardlight End
         var shuttleGridUid = consoleXform?.GridUid;
 
         NavInterfaceState navState;
@@ -475,7 +474,10 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     // HL: WEP message handler
     private void OnWEPMessage(Entity<ShuttleConsoleComponent> ent, ref ShuttleConsoleWEPMessage args)
     {
-        var xform = Transform(ent.Owner);
+        var consoleUid = GetDroneConsole(ent.Owner);
+        if (consoleUid == null || !_xformQuery.TryGetComponent(consoleUid.Value, out var xform))
+            return;
+
         if (xform.GridUid is not { } gridUid || !TryComp<ShuttleComponent>(gridUid, out var shuttle))
             return;
 

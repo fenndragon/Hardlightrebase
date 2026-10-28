@@ -55,14 +55,31 @@ public sealed partial class ShuttleConsoleSystem
     {
         if (!Resolve(uid, ref sourceComp))
             return null;
+        //Hardlight Start: Added check for cached entity to avoid unnecessary query.
+        if (sourceComp.Entity is { } cachedUid &&
+            Exists(cachedUid) &&
+            TryComp(cachedUid, out ShuttleConsoleComponent? _) &&
+            TryComp(cachedUid, out NFDroneConsoleTargetComponent? cachedTarget) &&
+            sourceComp.Id == cachedTarget.Id)
+        {
+            return cachedUid;
+        }
+
+        sourceComp.Entity = null;
+        //Hardlight End
 
         var query = AllEntityQuery<ShuttleConsoleComponent, NFDroneConsoleTargetComponent>();
 
         while (query.MoveNext(out var cUid, out _, out var targetComp))
+        //Hardlight Start
         {
             if (sourceComp.Id == targetComp.Id)
+            {
+                sourceComp.Entity = cUid;
                 return cUid;
+            }
         }
+        //Hardlight End
 
         return null;
     }

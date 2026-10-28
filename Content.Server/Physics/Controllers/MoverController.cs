@@ -666,7 +666,16 @@ public sealed class MoverController : SharedMoverController
             var consoleEnt = pilot.Console;
 
             // TODO: This is terrible. Just make a new mover and also make it remote piloting + device networks
-            if (TryComp<DroneConsoleComponent>(consoleEnt, out var cargoConsole))
+            //Hardlight Start: Updated existing frontier code changes for remote consoles to work.
+            if (TryComp<NFDroneConsoleComponent>(consoleEnt, out var nfConsole))
+            {
+                if (nfConsole.Entity is not { } targetConsole || !Exists(targetConsole))
+                    continue;
+
+                consoleEnt = targetConsole;
+            }
+            else if (TryComp<DroneConsoleComponent>(consoleEnt, out var cargoConsole))
+            //Hardlight End
             {
                 consoleEnt = cargoConsole.Entity;
             }
