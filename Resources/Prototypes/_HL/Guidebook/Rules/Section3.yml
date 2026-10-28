@@ -1,0 +1,39 @@
+# Section 3: Metagaming Rules
+
+- type: serverRule
+  id: ServerRule3_1
+  section: 3
+  code: 3.1
+  text: "Use the chat channels for their intended purposes."
+
+- type: serverRule
+  id: ServerRule3_2
+  section: 3
+  code: 3.2
+  text: "Characters do not retain any knowledge of what happened while they were dead."
+
+- type: serverRule
+  id: ServerRule3_3
+  section: 3
+  code: 3.3
+  text: "Do not use any information gained by meta-communication."
+
+- type: serverRule
+  id: ServerRule3_4
+  section: 3
+  code: 3.4
+  hardlit: Hardlit
+  text: "Discussion about the current round is allowed on the Hardlight Discord server. HOWEVER, acting on information gained through this method is considered metagaming."
+
+- type: serverRule
+  id: ServerRule3_5
+  section: 3
+  code: 3.5
+  text: "Do not meta-grudge or meta-friend. (Using in or out-of-character information to give unfair treatment or advantages to others.)"
+
+- type: serverRule
+  id: ServerRule3_6
+  section: 3
+  code: 3.6
+  hardlit: Hardlit
+  text: "Do NOT antag-roll. (Intentionally ghosting or cryoing to look for antag roles.)"

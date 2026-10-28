@@ -1,0 +1,13 @@
+# Section 8: End-of-Round (EOR) Rules
+
+- type: serverRule
+  id: ServerRule8_1
+  section: 8
+  code: 8.1
+  text: "End-of-round-griefing (EORG) is not allowed under any circumstance. This includes but is not limited to: fighting, explosives, chemicals, destruction of property, or any other disruptive behavior. End-Of-Round is defined as any time after it has been chosen for the evac shuttle to not be recalled."
+
+- type: serverRule
+  id: ServerRule8_2
+  section: 8
+  code: 8.2
+  text: "Arrivals, as well as the Evac shuttle (and evac hallway), are considered Safezones in which this rule takes effect."

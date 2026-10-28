@@ -1,0 +1,31 @@
+# Section 10: Command and Security Rules
+
+- type: serverRule
+  id: ServerRule10_1
+  section: 10
+  code: 10.1
+  text: "Security and Command roles are expected to know and perform their jobs to the best of their ability. You will be held to a higher standard in these roles."
+
+- type: serverRule
+  id: ServerRule10_2
+  section: 10
+  code: 10.2
+  text: "Both Security and Command are required to Know Space Law, Standard Operating Procedures, Alert Procedure, and Company Policy."
+
+- type: serverRule
+  id: ServerRule10_3
+  section: 10
+  code: 10.3
+  text: "Don't abuse your position of power."
+
+- type: serverRule
+  id: ServerRule10_4
+  section: 10
+  code: 10.4
+  text: "You are expected to roleplay with others. This includes antagonists."
+
+- type: serverRule
+  id: ServerRule10_5
+  section: 10
+  code: 10.5
+  text: "If you're in Command, inform your department and Command before cryoing or disconnecting."
