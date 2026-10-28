@@ -11,6 +11,7 @@
   - DnaScannerConsoleComputerCircuitboard
   - IDComputerCircuitboard
   - StationAiUploadComputer
+  - sprayVend
   - MachineParadoxGenerator
   - ParadoxGeneratorMachineCircuitboard
   - VendingMachineAmmoPOI

@@ -15,3 +15,14 @@
   cost: 2300 #guesstimate
   category: cargoproduct-category-name-fun
   group: market
+
+#HL This is the cargo request computer entry for the box of restocks
+- type: cargoProduct
+  id: CrateVendingMachineRestockSprayVend
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockSprayVendFilled
+  cost: 10000 #guesstimate
+  category: cargoproduct-category-name-fun
+  group: market

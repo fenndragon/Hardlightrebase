@@ -73,6 +73,34 @@
     energy: 1.6
     color: "#B63BB8"
 
+#HL added a SprayVend to sell spraypaints
+- type: entity
+  parent: [VendingMachine, BaseStructureDisableAnchoring]
+  id: sprayVend
+  name: SprayVend
+  description: A vending machine for spray paint needs.
+  components:
+  - type: VendingMachine
+    pack: sprayVendInventory
+    offState: off
+    normalState: normal-unshaded
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: _HL/Structures/Machines/VendingMachines/sprayvend.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: "panel"
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.8
+    energy: 1.6
+    color: "#B63BB8"
+
 - type: entity
   parent: [BaseStructureDisableAnchoring, VendingMachine]
   id: VendingMachineRMCDrobe

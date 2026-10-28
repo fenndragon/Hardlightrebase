@@ -134941,7 +134941,8 @@ entities:
     - type: Transform
       pos: -113.5,2.5
       parent: 2
-- proto: PottedPlantRandomPlastic
+#HL replaced a potted plant with the sprayVend at cargofront
+- proto: sprayVend
   entities:
   - uid: 17584
     components:

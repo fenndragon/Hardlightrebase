@@ -111284,11 +111284,6 @@ entities:
     - type: Transform
       pos: 24.5,18.5
       parent: 2
-  - uid: 13387
-    components:
-    - type: Transform
-      pos: 4.5,25.5
-      parent: 2
   - uid: 13388
     components:
     - type: Transform
@@ -116106,6 +116101,14 @@ entities:
     components:
     - type: Transform
       pos: 12.5,50.5
+      parent: 2
+#HL Replaced a plant with a spraypaint vendor near cargofront
+- proto: sprayVend
+  entities:
+  - uid: 13387
+    components:
+    - type: Transform
+      pos: 4.5,25.5
       parent: 2
 - proto: RCD
   entities:
