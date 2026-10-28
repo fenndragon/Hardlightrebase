@@ -27,3 +27,28 @@
     state: eastern_dragon_overlay
   - sprite: _White/Mobs/Customization/snouts.rsi
     state: eastern_dragon_usiki
+
+# TAIL
+- type: marking
+  id: SnakeLargeTail
+  bodyPart: Tail
+  markingCategory: Tail
+  waggingId: SnakeLargeTailAnimated
+  speciesRestriction: [Reptilian, ProtoReptile]
+  sprites:
+  - sprite: _White/Mobs/Customization/reptilian_64x32.rsi
+    state: snake_large
+  - sprite: _White/Mobs/Customization/reptilian_64x32.rsi
+    state: snake_large_overlay
+
+- type: marking
+  id: SnakeLargeTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  staticId: SnakeLargeTail
+  speciesRestriction: []
+  sprites:
+  - sprite: _White/Mobs/Customization/reptilian_64x32.rsi
+    state: snake_large_wagging
+  - sprite: _White/Mobs/Customization/reptilian_64x32.rsi
+    state: snake_large_wagging_overlay
