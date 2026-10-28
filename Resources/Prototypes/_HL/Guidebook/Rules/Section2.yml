@@ -11,7 +11,7 @@
   id: ServerRule2_2
   section: 2
   code: 2.2
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Do not make yourself a major problem, annoyance, or disruption for the crew while not being an antagonist (i.e. self-antagging)."
 
 - type: serverRule

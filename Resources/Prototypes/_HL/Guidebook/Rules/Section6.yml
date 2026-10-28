@@ -10,7 +10,7 @@
   id: ServerRule6_2
   section: 6
   code: 6.2
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Do not play excessively hostile or provocative characters. Playing a character accurately should never result in rulebreaks. - Ahelp for any questions relating to this."
 
 - type: serverRule
@@ -29,7 +29,7 @@
   id: ServerRule6_5
   section: 6
   code: 6.5
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Respect other people's consent, dignity and boundaries. IF SOMEBODY ASKS YOU TO STOP BOTHERING THEM LOOC (local-out-of-character), do so. If this rule is abused, Ahelp right away."
 
 - type: serverRule
@@ -42,7 +42,7 @@
   id: ServerRule6_7
   section: 6
   code: 6.7
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Roleplaying an underage character is strictly forbidden. So is talk of such activities."
 
 - type: serverRule

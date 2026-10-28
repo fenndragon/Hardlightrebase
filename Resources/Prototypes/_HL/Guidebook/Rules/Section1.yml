@@ -4,14 +4,14 @@
   id: ServerRule1_1
   section: 1
   code: 1.1
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Be respectful to others OOC."
 
 - type: serverRule
   id: ServerRule1_2
   section: 1
   code: 1.2
-  hardlit: Hardlit
+  hardlit: ZeroTolerance
   text: "Don't use hate speech, racism, or bigoted comments."
 
 - type: serverRule
