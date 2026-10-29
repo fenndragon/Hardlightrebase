@@ -1,3 +1,11 @@
+// SPDX-FileCopyrightText: 2024 Aiden
+// SPDX-FileCopyrightText: 2024 DrSmugleaf
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 Toaster
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MIT
+
 namespace Content.Shared._RMC14.Random;
 
 // https://github.com/medo64/Medo.ScrambledLinear/blob/main/src/Xoroshiro/Xoroshiro64S.cs
