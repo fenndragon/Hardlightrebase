@@ -1012,7 +1012,7 @@
         maxVol: 38
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 2
         - ReagentId: Protein
           Quantity: 5
         - ReagentId: Ammonia
