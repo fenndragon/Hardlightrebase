@@ -80,6 +80,22 @@ public static class ClientPackaging
 
         await RobustClientPackaging.WriteClientResources(contentDir, inputPass, cancel);
 
+        foreach (var licenseFile in new[]
+                 {
+                     // Hardcoded lists bug the piss out of me, but we have to get specifically these things into the package.
+                     "LICENSE-AGPLv3.txt",
+                     "LICENSE-MIT.TXT",
+                     "LICENSE-MPL.txt",
+                     "LICENSE-Starlight.TXT",
+                     "LEGAL.md",
+                     "README.md",
+                 })
+        {
+            var fullPath = Path.Combine(contentDir, licenseFile);
+            if (File.Exists(fullPath))
+                inputPass.InjectFileFromDisk(licenseFile, fullPath);
+        }
+
         inputPass.InjectFinished();
     }
 }
