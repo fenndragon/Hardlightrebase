@@ -3417,3 +3417,180 @@
   - message: Removed Cyborgs shunting into chassis that already contain a Positronic Brain.
     author: Drekk
     hash: d78bda5575aa451e57cad65955cb44e40d821741
+0.3.0:
+  remove:
+  - message: Revert Nutriment levels on FoodMeatChickenFriedMystery.
+    author: Drekk
+    hash: f1862dfadc46699dacd21dc0bf72afc39eab0dd9
+  - message: If you're not a succubus, cum now only satiates thirst.
+    author: Alphonse de V
+    hash: aa2fab6579a7694c88d816cbc4ed994855535227
+  - message: Removed Shadeskip ability.
+    author: Cheep
+    hash: c9546aede69af2391b66a4f94a228d9312a08f0a
+  - message: Removed Core station from Rotation.
+    author: Rachel Thorne
+    hash: 87ae9c4ffb21df7e863fcade84fd750e50c1ad3d
+  add:
+  - message: Restore correct licenses to borrowed code.
+    author: Drekk
+    hash: f30e601ebc32bb46cd63679e8b95dbf549c8e472
+  - message: Added remote shuttle console pairs for mapping!
+    author: FFValor
+    hash: 29474e461afbe68c8a6f4e1a93cb8ac27ff89977
+  - message: Added the Vauxhaul Light Cruiser for Colonial Security
+    author: penguin_codest
+    hash: e3937a2902523955e5ce6a822877c900cbd1e11d
+  - message: Added a snake tail marking to reptilians!
+    author: fasuh
+    hash: eb6ac8fff30a8612c9c3bd243c2e2c23f5fdb951
+  - message: Added 8 new clothing items for the CMO to use!
+    author: SillyFisher
+    hash: 82e97ee12daaa5ee1b8b713d3b9985b426cc6352
+  - message: >-
+      Added a new ship, the Galilei Enforcer. The shipyard catalogue categorically
+      refuses to sell it or acknowledge its existance. Central Command recommends total
+      evacuation of any sector where this ship drops out of bluespace.
+    author: The-Aisen
+    hash: d0bde11e13b77ba7f3791c517bf5214e87d234ef
+  - message: Added CCFID uniform!
+    author: fasuh
+    hash: e19154b4433609639b98dfdb6d972301548eb119
+  - message: Added accessibility for paperwork
+    author: Alphonse de V
+    hash: cdc5cfb6115d2b45e0864f80c1b03f5bcaab9ac1
+  - message: >-
+      The NOV-Naonis orbital shipyard reports some of the drones in its protective
+      swarm missing. The Dirizher Cartel can now be spotted using reconverted drones from
+      NOV-Naonis.
+    author: The-Aisen
+    hash: a306e5aab2880cc6f1b3a54a482c3e94bd776f2a
+  - message: Added the first Cerulean Collective Hardsuit.
+    author: DocMoth
+    hash: 1ffb91c84d2d5fef431962170fc826de1355892a
+  - message: Add synth surgery localization strings.
+    author: Antelino
+    hash: b8e20055a9034332db14190f5bb8e4ce99b9780e
+  - message: Add new feroxi sounds.
+    author: Antelino
+    hash: fb0bfda8e1a87170bef173a9b5d9dcdd948b3817
+  - message: Added Sprayvend, A spraypaint vending machine!
+    author: ArtyTheBoog
+    hash: 111ade8bbb6da4e5ee0f823043088ecea8f2abdb
+  - message: added Neofrench accent
+    author: Aphast
+    hash: 280eebc5e8e16482045dba9bbf95375ce96b5ec8
+  - message: >-
+      Added Nardodragon costumization options! Check out new chest fluffs, tail, ears
+      and snouts!
+    author: NorwayFox
+    hash: 3925360499c87fe68e3205c2ca141ff5cda52b99
+  - message: >-
+      Clearance parameters for the Rosetta Experimental Research Vessel have been
+      updated by The System. Construction rights have been pushed to all Civilian Shipyard
+      printers. Get yours today!
+    author: The-Aisen
+    hash: 6faa180acfa57861839900ea4b9a2a79f492588e
+  - message: Added a new Colonial Command Spawn preference.
+    author: Alphonse de V
+    hash: 7f524679f95a7df0dbbd507dbbc0223324ed920e
+  - message: >-
+      Nepetalactone (mild stimulant), the active ingredient in catnip, only affects
+      animal liver-havers
+    author: NajaTheNaja
+    hash: 199366305c399f51671eea9b4edec6e44b8dac96
+  - message: Nepetalactone can be acquired via botany mutations.
+    author: NajaTheNaja
+    hash: 199366305c399f51671eea9b4edec6e44b8dac96
+  - message: Big Buddy is now C2, no FUC
+    author: Aphast
+    hash: 8c03fda9a6b4dfc5e63116c9509741839c3958e2
+  - message: "Added a new Succubus trait (0pts): Cum now refills your hunger (a little), so long as it doesn't come from another succubus."
+    author: Alphonse de V
+    hash: aa2fab6579a7694c88d816cbc4ed994855535227
+  - message: Enabled antag ghost roles that had buggy spawns. Report issues.
+    author: Cheep
+    hash: d4e6272774ca8c22a04e3bb70b783e35c0f8d4ca
+  tweak:
+  - message: Rebalanced Maxim values.
+    author: Hammeredmantis
+    hash: 2221865bba2b261cccaf296e61c973f36adb4b04
+  - message: Readjusted various shipgun market values.
+    author: Hammeredmantis
+    hash: b2419229450935f39b9b89af5c76400ee5b91946
+  - message: Changed civilian shipgun variants to C1.
+    author: Hammeredmantis
+    hash: bf67e2920f73d2810e6362d0c1da82d3cd49fa62
+  - message: Changed Blip colors to match new C2 ratings for shipguns.
+    author: Hammeredmantis
+    hash: d7cde1da517aff110405ada8e3aafb8ed1fb668b
+  - message: Reclassified *most* shipguns to C2.
+    author: Hammeredmantis
+    hash: 7e3f57e4d6f64f1023eec7cf228365cc2bc23238
+  - message: Drastically reduced shipgun damage across the board.
+    author: Hammeredmantis
+    hash: b4fbff690d282e7d71afd46e6f5c7c61f7f51b40
+  - message: Made synths able to use any "skin" color.
+    author: Antelino
+    hash: f2d06a32aaee51dcad9a9b764462b9239f03b284
+  - message: Increased nutritional content of food items
+    author: ItsBear
+    hash: 81c9e1fa40a1dcdb04625d4afc93a2d1cddb609b
+  - message: Changed reptilian legs from plantigrade to digitigrade
+    author: Antelino
+    hash: 33e8e51c68cecd79889de2efdc5ae368b8900818
+  - message: Increased vampire hunger and thirst satiation from consuming blood
+    author: zohfur
+    hash: e8bd31704b35139e98ec2efc5293a1a5b8ace8c1
+  - message: Increased vulp HeadTop slots
+    author: zohfur
+    hash: d5a26698bc1ac5b8e9e2d45d3a56fbabd3bbff44
+  - message: Prevent coins and spesos from automatically stacking.
+    author: zohfur
+    hash: 354089ee990ec15a857e381d591b7db5b130cf5c
+  - message: Made IPC's power cell drain rate a third of what it was.
+    author: Antelino
+    hash: 151025add96d95d405275fb942869f12c798f7f5
+  - message: Halved synth power cell drain rate.
+    author: Antelino
+    hash: b8e20055a9034332db14190f5bb8e4ce99b9780e
+  - message: Un-blacklisted synths from Vampirism and Lesser Vampirism traits.
+    author: Antelino
+    hash: b8e20055a9034332db14190f5bb8e4ce99b9780e
+  - message: Changed Hamlets objective to "Die a funny death"
+    author: Cheep
+    hash: 1cb64897adcc924129eb7a4c964264f6a7e4fabf
+  - message: 1 FUC is now worth 10K in the Sec Uplink.
+    author: TrylobyteWasTaken
+    hash: 66900a8e3779dc5c1c1b7fc261e6656b4a7351f2
+  fix:
+  - message: Itemized player can now be right clicked without getting dumped
+    author: Alphonse de V
+    hash: e6fcaa40ab1cb7210de3fbffcc7cb873863f9630
+  - message: Cleaned up guidebook and migrated SOP and Space Law from the old wiki
+    author: Slatebreaker
+    hash: 951916b08cf6fc5637e2bd28b60e3c8b0b7a0be9
+  - message: Fixed the scroll bug. (not me, Robust did. But we're now more Robust)
+    author: Alphonse de V
+    hash: 78e5acab253fa842b6a66fa27a622087b50d0734
+  - message: Paradox clones will no longer summon Five. Hundred. Urists.
+    author: zohfur
+    hash: 06abb3bec556b8b90547961f50fd66753431907a
+  - message: Fixed shutters not closing over CDETs and directional walls.
+    author: Alphonse de V
+    hash: 69dd3a04d0dcc444b454fa4e0671671129dc3ca0
+  - message: Fixes the sprites for the CE hardsuit for synths
+    author: Vanilla1040
+    hash: b0e1cc72f452fcef74bcabf5c9fb2793e1af5987
+  - message: Fixes the sprites in lathes for Plastic, Uranium and Plasma
+    author: Vanilla1040
+    hash: b0e1cc72f452fcef74bcabf5c9fb2793e1af5987
+  - message: Adjusted the screen delay on the chemmaster
+    author: Vanilla1040
+    hash: b0e1cc72f452fcef74bcabf5c9fb2793e1af5987
+  - message: Round-start antags should now spawn more reliably
+    author: zohfur
+    hash: 345df9ce45d9637a925290f5607316ef172313ca
+  - message: Antag counts no longer include unreadied lobby players, observers or ghosts
+    author: zohfur
+    hash: 899ce786673d0dcef602de278f83e42850254f55
