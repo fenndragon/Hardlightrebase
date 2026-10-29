@@ -1,4 +1,3 @@
-
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 using Content.Shared.Tools;
@@ -10,7 +9,7 @@ using System.Numerics;
 namespace Content.Shared._FarHorizons.Power.Generation.FissionGenerator;
 
 // Ported and modified from goonstation by Jhrushbe.
-// CC-BY-NC-SA-3.0
+// MIT
 // https://github.com/goonstation/goonstation/blob/ff86b044/code/obj/nuclearreactor/turbine.dm
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

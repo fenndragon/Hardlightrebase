@@ -1,9 +1,3 @@
-// SPDX-FileCopyrightText: 2025 jhrushbe <capnmerry@gmail.com>
-// SPDX-FileCopyrightText: 2025 rottenheadphones <juaelwe@outlook.com>
-// SPDX-FileCopyrightText: 2025 taydeo <td12233a@gmail.com>
-//
-// SPDX-License-Identifier: CC-BY-NC-SA-3.0
-
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared._FarHorizons.Power.Generation.FissionGenerator;
@@ -16,7 +10,7 @@ using Robust.Shared.Audio.Systems;
 namespace Content.Server._FarHorizons.Power.Generation.FissionGenerator;
 
 // Ported and modified from goonstation by Jhrushbe.
-// CC-BY-NC-SA-3.0
+// MIT
 // https://github.com/goonstation/goonstation/blob/ff86b044/code/obj/nuclearreactor/centrifuge.dm
 
 public sealed class NuclearCentrifugeSystem : EntitySystem

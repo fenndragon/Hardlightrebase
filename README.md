@@ -37,14 +37,13 @@ Content under these subdirectories originate from their respective forks and may
 | `_StarLight` | StarLight | https://github.com/ss14Starlight/space-station-14 | MIT |
 | `_Triad` | Triad Sector | https://github.com/Triad-Sector/Triad_Sector | AGPL 3.0 |
 | `_RMC14` | RMC-14 | https://github.com/RMC-14/RMC-14 | MIT |
-| `_FarHorizons` | Far-Horizons | https://github.com/Far-Horizons-SS14/Far-Horizons-SS14.git | MIT / Modified MIT (`LICENSE-Starlight.TXT`) / CC-BY-NC-SA-3.0 |
+| `_FarHorizons` | Far-Horizons | https://github.com/Far-Horizons-SS14/Far-Horizons-SS14.git | MIT / Modified MIT (`LICENSE-Starlight.TXT`) |
 | `_Crescent` | Hullrot | https://github.com/Sector-Crescent/Hullrot.git | AGPL 3.0|
 | `_Mono` | Monolith | https://github.com/Monolith-Station/Monolith | AGPL 3.0|
 | `_CS` | Coyote Station | https://github.com/ARF-SS13/coyote-frontier/ | AGPL 3.0|
 
 The above shows the general upstream repo license; It does not override file-specific `SPDX-License-Identifier` comments or inline/narrower license notices.
 - **`_RMC14`**: Upstream RMC-14 is `MIT`, but due to the supply chain in porting, we have some `AGPL-3.0-or-later` headers.
-- **`_FarHorizons`**: Carries `CC-BY-NC-SA-3.0` notices on Goonstation-derived nuclear reactor code.
 
 Additional repos that we have ported features from without subdirectories are listed below.
 
