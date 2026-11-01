@@ -353,7 +353,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         if (isNowBlinking)
         {
             var blink = EnsureComp<BlinkingPoweredLightComponent>(uid);
-            blink.StopBlinkingTime = duration;
+            blink.StopBlinkingTime = GameTiming.CurTime + duration;
             Dirty(uid, blink);
         }
         else
@@ -441,7 +441,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         while (query.MoveNext(out var uid, out var blinkingComp))
         {
             if (curTime > blinkingComp.StopBlinkingTime)
-                RemCompDeferred<BlinkingPoweredLightComponent>(uid);
+                ToggleBlinkingLight(uid, false);
         }
     }
 }
