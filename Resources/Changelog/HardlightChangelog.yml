@@ -3602,3 +3602,8 @@
   - message: Spawners are no longer overflowing on long rounds
     author: Tayrtahn
     hash: 8f470d2e90b92233ef3da4f6df39ba186724fc48
+0.3.0-uifix:
+  fix:
+  - message: Fixed some UI elements not working after closing/reopening, such as the chatbox.
+    author: Drekk
+    hash: 0e3cc602decf6aa24e071d410da4e30560b14da7
