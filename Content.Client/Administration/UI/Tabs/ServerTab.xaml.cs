@@ -54,9 +54,6 @@ namespace Content.Client.Administration.UI.Tabs
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
-            _config.OnValueChanged(CCVars.OocEnabled, OocEnabledChanged, true);
-            _config.OnValueChanged(CCVars.LoocEnabled, LoocEnabledChanged, true);
-
             ShutdownButton.OnPressed += _ => ShowShutdownStep(0);
         }
 
@@ -244,6 +241,15 @@ namespace Content.Client.Administration.UI.Tabs
         {
             SetLoocButton.Pressed = value;
         }
+
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            _config.OnValueChanged(CCVars.OocEnabled, OocEnabledChanged, true);
+            _config.OnValueChanged(CCVars.LoocEnabled, LoocEnabledChanged, true);
+        }
+        // HL END
 
         protected override void ExitedTree()
         {

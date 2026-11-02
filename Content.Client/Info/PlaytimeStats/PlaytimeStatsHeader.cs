@@ -16,9 +16,6 @@ public sealed partial class PlaytimeStatsHeader : Control
     {
         RobustXamlLoader.Load(this);
 
-        RoleLabel.OnKeyBindDown += RoleClicked;
-        PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
-
         UpdateLabels();
     }
 
@@ -71,6 +68,15 @@ public sealed partial class PlaytimeStatsHeader : Control
     {
         HeaderClicked(args, Header.Playtime);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        RoleLabel.OnKeyBindDown += RoleClicked;
+        PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

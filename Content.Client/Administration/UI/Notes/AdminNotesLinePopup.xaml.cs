@@ -48,9 +48,6 @@ public sealed partial class AdminNotesLinePopup : Popup
         {
             DeleteButton.Text = Loc.GetString("admin-notes-hide");
         }
-
-        EditButton.OnPressed += EditPressed;
-        DeleteButton.OnPressed += DeletePressed;
     }
 
     public int NoteId { get; }
@@ -94,6 +91,15 @@ public sealed partial class AdminNotesLinePopup : Popup
         DeleteButton.Text = Loc.GetString("admin-notes-delete");
         DeleteButton.ModulateSelfOverride = null;
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        EditButton.OnPressed += EditPressed;
+        DeleteButton.OnPressed += DeletePressed;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

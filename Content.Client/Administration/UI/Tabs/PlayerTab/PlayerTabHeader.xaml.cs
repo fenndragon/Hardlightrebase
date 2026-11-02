@@ -14,13 +14,6 @@ public sealed partial class PlayerTabHeader : Control
     public PlayerTabHeader()
     {
         RobustXamlLoader.Load(this);
-
-        UsernameLabel.OnKeyBindDown += UsernameClicked;
-        CharacterLabel.OnKeyBindDown += CharacterClicked;
-        JobLabel.OnKeyBindDown += JobClicked;
-        RoleTypeLabel.OnKeyBindDown += RoleTypeClicked;
-        PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
-        BalanceLabel.OnKeyBindDown += BalanceClicked; // Frontier
     }
 
     public Label GetHeader(Header header)
@@ -87,6 +80,19 @@ public sealed partial class PlayerTabHeader : Control
     {
         HeaderClicked(args, Header.Balance);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        UsernameLabel.OnKeyBindDown += UsernameClicked;
+        CharacterLabel.OnKeyBindDown += CharacterClicked;
+        JobLabel.OnKeyBindDown += JobClicked;
+        RoleTypeLabel.OnKeyBindDown += RoleTypeClicked;
+        PlaytimeLabel.OnKeyBindDown += PlaytimeClicked;
+        BalanceLabel.OnKeyBindDown += BalanceClicked; // Frontier
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

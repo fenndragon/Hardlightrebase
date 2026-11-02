@@ -137,11 +137,17 @@ public sealed class VoteAuditWindow : DefaultWindow
         root.AddChild(rightPanel);
 
         Contents.AddChild(root);
+    }
 
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
         // Subscribe to the vote manager's response event and fetch list immediately
         _voteManager.VoteAuditResponseReceived += OnResponseReceived;
         RequestList();
     }
+    // HL END
 
     protected override void ExitedTree()
     {

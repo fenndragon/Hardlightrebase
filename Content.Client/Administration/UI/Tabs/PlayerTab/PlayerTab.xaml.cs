@@ -44,20 +44,15 @@ public sealed partial class PlayerTab : Control
         RobustXamlLoader.Load(this);
 
         _adminSystem = _entManager.System<AdminSystem>();
-        _adminSystem.PlayerListChanged += RefreshPlayerList;
-        _adminSystem.OverlayEnabled += OverlayEnabled;
-        _adminSystem.OverlayDisabled += OverlayDisabled;
 
         _config.OnValueChanged(CCVars.AdminPlayerTabRoleSetting, RoleSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerlistButtonStyling, PlayerListButtonStylingChanged, true);
 
-        OverlayButton.OnPressed += OverlayButtonPressed;
         ShowDisconnectedButton.OnPressed += ShowDisconnectedPressed;
 
         ListHeader.BackgroundColorPanel.PanelOverride = new StyleBoxFlat(_altColor);
-        ListHeader.OnHeaderClicked += HeaderClicked;
 
         SearchList.SearchBar = SearchLineEdit;
         SearchList.GenerateItem += GenerateButton;
@@ -98,6 +93,20 @@ public sealed partial class PlayerTab : Control
         _showDisconnected = args.Button.Pressed;
         RefreshPlayerList(_players);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        _adminSystem.PlayerListChanged += RefreshPlayerList;
+        _adminSystem.OverlayEnabled += OverlayEnabled;
+        _adminSystem.OverlayDisabled += OverlayDisabled;
+
+        OverlayButton.OnPressed += OverlayButtonPressed;
+
+        ListHeader.OnHeaderClicked += HeaderClicked;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

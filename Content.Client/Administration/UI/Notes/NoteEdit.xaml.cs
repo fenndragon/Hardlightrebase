@@ -69,12 +69,6 @@ public sealed partial class NoteEdit : FancyWindow
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-high"), (int)Shared.Database.NoteSeverity.High);
         SeverityOption.OnItemSelected += OnSeverityChanged;
 
-        PermanentCheckBox.OnPressed += OnPermanentPressed;
-        SecretCheckBox.OnPressed += OnSecretPressed;
-        SubmitButton.OnPressed += OnSubmitButtonPressed;
-        SubmitButton.OnMouseEntered += OnSubmitButtonMouseEntered;
-        SubmitButton.OnMouseExited += OnSubmitButtonMouseExited;
-
         if (note is null && !canCreate)
         {
             TypeOption.Disabled = true;
@@ -321,6 +315,18 @@ public sealed partial class NoteEdit : FancyWindow
         ExpiryLineEdit.ModulateSelfOverride = null;
         return true;
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        PermanentCheckBox.OnPressed += OnPermanentPressed;
+        SecretCheckBox.OnPressed += OnSecretPressed;
+        SubmitButton.OnPressed += OnSubmitButtonPressed;
+        SubmitButton.OnMouseEntered += OnSubmitButtonMouseEntered;
+        SubmitButton.OnMouseExited += OnSubmitButtonMouseExited;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

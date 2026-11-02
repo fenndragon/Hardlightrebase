@@ -18,7 +18,6 @@ public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedBan>
         RobustXamlLoader.Load(this);
 
         Ban = ban;
-        IdsHidden.OnPressed += IdsPressed;
 
         BanListEui.SetData(this, ban);
     }
@@ -27,6 +26,14 @@ public sealed partial class BanListLine : BoxContainer, IBanListLine<SharedBan>
     {
         IdsClicked?.Invoke(this);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        IdsHidden.OnPressed += IdsPressed;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

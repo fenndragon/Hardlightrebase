@@ -75,7 +75,6 @@ namespace Content.Client.Paper.UI
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
 
-            FillableTag.OnTagClicked += OnTagClicked; //Hardlight
             _defaultTextColor = Color.FromHex(_cfg.GetCVar(HLCCVars.PaperTextColor));
             _defaultBackgroundColor = Color.FromHex(_cfg.GetCVar(HLCCVars.PaperBackgroundColor));
             _specialPaperOverride = _cfg.GetCVar(HLCCVars.PaperSpecialOverride);
@@ -362,6 +361,14 @@ namespace Content.Client.Paper.UI
             }
             return mode & _allowedResizeModes;
         }
+
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            FillableTag.OnTagClicked += OnTagClicked;
+        }
+        // HL END
 
         protected override void ExitedTree()
         {

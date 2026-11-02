@@ -40,26 +40,19 @@ public partial class ChatBox : UIWidget
         _loc = IoCManager.Resolve<ILocalizationManager>();
         _entManager = IoCManager.Resolve<IEntityManager>();
 
-        ChatInput.Input.OnTextEntered += OnTextEntered;
-        ChatInput.Input.OnKeyBindDown += OnInputKeyBindDown;
-        ChatInput.Input.OnTextChanged += OnTextChanged;
         ChatInput.Input.OnFocusEnter += OnFocusEnter;
         ChatInput.Input.OnFocusExit += OnFocusExit;
-        ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
         ChatInput.FilterButton.Popup.OnNewHighlights += OnNewHighlights;
         ChatInput.FilterButton.Popup.OnRadioFilterChanged += OnRadioFilterChanged;
-        ChatInput.FilterButton.Popup.OnFilterBulkUpdated += OnFilterBulkUpdated; // HardLight: Added "Toggle All" button to channel filter popup
 
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
         _controller.HighlightsUpdated += OnHighlightsUpdated;
-        _controller.RegisterChat(this);
 
         // WD EDIT START
         _cfg = IoCManager.Resolve<IConfigurationManager>();
         _coalescence = _cfg.GetCVar(CCVars.CoalesceIdenticalMessages); // i am uncomfortable calling repopulate on chatbox in its ctor, even though it worked in testing i'll still err on the side of caution
-        _cfg.OnValueChanged(CCVars.CoalesceIdenticalMessages, UpdateCoalescence, false); // eplicitly false to underline the above comment
         // WD EDIT END
     }
 
@@ -281,6 +274,21 @@ public partial class ChatBox : UIWidget
         // Warn typing indicator about focus
         _controller.NotifyChatFocus(false);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        ChatInput.Input.OnTextEntered += OnTextEntered;
+        ChatInput.Input.OnKeyBindDown += OnInputKeyBindDown;
+        ChatInput.Input.OnTextChanged += OnTextChanged;
+        ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
+        ChatInput.FilterButton.Popup.OnFilterBulkUpdated += OnFilterBulkUpdated; // HardLight: Added "Toggle All" button to channel filter popup
+        _cfg.OnValueChanged(CCVars.CoalesceIdenticalMessages, UpdateCoalescence, false); // WD: eplicitly false to underline the above comment
+        _controller.RegisterChat(this); // HL: Move Registering to Tree Entering rather than on creation
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

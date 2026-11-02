@@ -58,7 +58,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 SubTabs.SetTabTitle((int)SubTabIndex.Players, Loc.GetString("admin-menu-players-tab"));
                 SubTabs.SetTabTitle((int)SubTabIndex.Objects, Loc.GetString("admin-menu-objects-tab"));
                 SubTabs.SetTabTitle((int)SubTabIndex.Statistics, Loc.GetString("admin-tools-tab-statistics"));
-                SubTabs.OnTabChanged += OnSubTabChanged;
                 LoadSavedCommands();
                 RefreshSavedCommandsList();
 
@@ -93,8 +92,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 TriageResetButton.OnPressed += _ => ResetTriageKeywords();
 
                 RefreshStatisticsButton.OnPressed += _ => RefreshStatistics();
-                RolesSearchBox.OnTextChanged += _ => ApplyRolesFilter();
-                _bwoinkSystem.AdminStatisticsReceived += UpdateStatistics;
 
                 SavedCommandRunButton.OnPressed += _ => RunSavedCommand();
                 SavedCommandSaveButton.OnPressed += _ => SaveSavedCommand();
@@ -104,8 +101,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 AutoReplyCategory.OnItemSelected += args => OnAhelpCategorySelected(args.Id);
                 AutoReplyTemplatesList.OnItemSelected += args => OnAutoReplyCategoryListSelected(args.ItemIndex);
                 TriageRulesList.OnItemSelected += args => OnTriageCategoryListSelected(args.ItemIndex);
-                _bwoinkSystem.AhelpAdminConfigUpdated += UpdateAhelpConfig;
-                _bwoinkSystem.SharedAdminMacrosUpdated += UpdateSharedAdminMacros;
 
                 UpdateSavedCommandButtons();
                 UpdateCustomVoteButton();
@@ -137,6 +132,18 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 _console.WriteError(null, "AdminTab failed to initialize completely. Some controls may be unavailable this session.");
             }
         }
+
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            SubTabs.OnTabChanged += OnSubTabChanged;
+            _bwoinkSystem.AhelpAdminConfigUpdated += UpdateAhelpConfig;
+            _bwoinkSystem.SharedAdminMacrosUpdated += UpdateSharedAdminMacros;
+            _bwoinkSystem.AdminStatisticsReceived += UpdateStatistics;
+            RolesSearchBox.OnTextChanged += _ => ApplyRolesFilter();
+        }
+        // HL END
 
         protected override void ExitedTree()
         {

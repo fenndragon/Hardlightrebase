@@ -51,7 +51,6 @@ namespace Content.Client.ContextMenu.UI
             MenuPanel.MaxHeight = MaxItemsBeforeScroll * (ContextMenuElement.ElementHeight + 2 * ContextMenuElement.ElementMargin) + styleSize.Y;
 
             UserInterfaceManager.ModalRoot.AddChild(this);
-            MenuBody.OnChildRemoved += ctrl => _uiController.OnRemoveElement(this, ctrl);
             MenuBody.VSeparationOverride = 0;
             MenuBody.HSeparationOverride = 0;
 
@@ -69,6 +68,14 @@ namespace Content.Client.ContextMenu.UI
                     _uiController.CloseSubMenus(ParentElement.ParentMenu);
             };
         }
+
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            MenuBody.OnChildRemoved += ctrl => _uiController.OnRemoveElement(this, ctrl);
+        }
+        // HL END
 
         protected override void ExitedTree()
         {

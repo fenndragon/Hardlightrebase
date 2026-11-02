@@ -15,7 +15,7 @@ public sealed class ChannelSelectorPopup : Popup
         ChatSelectChannel.Subtle, // Floofstation
         ChatSelectChannel.SubtleOOC,
         ChatSelectChannel.Radio,
-        ChatSelectChannel.Telepathic, //Nyano - Summary: determines the order in which telepathic shows. 
+        ChatSelectChannel.Telepathic, //Nyano - Summary: determines the order in which telepathic shows.
         ChatSelectChannel.LOOC,
         ChatSelectChannel.OOC,
         ChatSelectChannel.Dead,
@@ -39,7 +39,6 @@ public sealed class ChannelSelectorPopup : Popup
         };
 
         _chatUIController = UserInterfaceManager.GetUIController<ChatUIController>();
-        _chatUIController.SelectableChannelsChanged += SetChannels;
         SetChannels(_chatUIController.SelectableChannels);
 
         AddChild(_channelSelectorHBox);
@@ -115,6 +114,14 @@ public sealed class ChannelSelectorPopup : Popup
     {
         Selected?.Invoke(channel);
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        _chatUIController.SelectableChannelsChanged += SetChannels;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

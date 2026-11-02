@@ -17,9 +17,6 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab
         public ObjectsTabHeader()
         {
             RobustXamlLoader.Load(this);
-
-            ObjectNameLabel.OnKeyBindDown += ObjectNameClicked;
-            EntityIDLabel.OnKeyBindDown += EntityIDClicked;
         }
 
         public Label GetHeader(Header header)
@@ -65,6 +62,15 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab
         {
             HeaderClicked(args, Header.EntityID);
         }
+
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            ObjectNameLabel.OnKeyBindDown += ObjectNameClicked;
+            EntityIDLabel.OnKeyBindDown += EntityIDClicked;
+        }
+        // HL END
 
         protected override void ExitedTree()
         {

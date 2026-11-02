@@ -37,7 +37,6 @@ public sealed partial class AdminNotesControl : Control
         _noteFreshDays = _cfg.GetCVar(CCVars.NoteFreshDays);
         _noteStaleDays = _cfg.GetCVar(CCVars.NoteStaleDays);
 
-        NewNoteButton.OnPressed += OnNewNoteButtonPressed;
         ShowMoreButton.OnPressed += OnShowMoreButtonPressed;
     }
 
@@ -206,6 +205,14 @@ public sealed partial class AdminNotesControl : Control
         NewNoteButton.Visible = create;
         NewNoteButton.Disabled = !create;
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        NewNoteButton.OnPressed += OnNewNoteButtonPressed;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

@@ -26,22 +26,8 @@ public sealed partial class AdminLogsControl : Control
     {
         RobustXamlLoader.Load(this);
 
-        TypeSearch.OnTextChanged += TypeSearchChanged;
-        PlayerSearch.OnTextChanged += PlayerSearchChanged;
-        LogSearch.OnTextChanged += LogSearchChanged;
-
-        SelectAllTypesButton.OnPressed += SelectAllTypes;
-        SelectNoTypesButton.OnPressed += SelectNoTypes;
-
-        IncludeNonPlayersButton.OnPressed += IncludeNonPlayers;
-        SelectAllPlayersButton.OnPressed += SelectAllPlayers;
-        SelectNoPlayersButton.OnPressed += SelectNoPlayers;
-
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
-        RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
         RoundSpinBox.InitDefaultButtons();
-
-        ResetRoundButton.OnPressed += ResetRoundPressed;
 
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
@@ -513,6 +499,26 @@ public sealed partial class AdminLogsControl : Control
             ("showing", ShownLogs), ("total", TotalLogs), ("round", RoundLogs)
         );
     }
+
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        TypeSearch.OnTextChanged += TypeSearchChanged;
+        PlayerSearch.OnTextChanged += PlayerSearchChanged;
+        LogSearch.OnTextChanged += LogSearchChanged;
+
+        SelectAllTypesButton.OnPressed += SelectAllTypes;
+        SelectNoTypesButton.OnPressed += SelectNoTypes;
+
+        IncludeNonPlayersButton.OnPressed += IncludeNonPlayers;
+        SelectAllPlayersButton.OnPressed += SelectAllPlayers;
+        SelectNoPlayersButton.OnPressed += SelectNoPlayers;
+
+        RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
+        ResetRoundButton.OnPressed += ResetRoundPressed;
+    }
+    // HL END
 
     protected override void ExitedTree()
     {

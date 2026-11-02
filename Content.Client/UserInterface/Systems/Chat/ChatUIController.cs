@@ -333,6 +333,7 @@ public sealed partial class ChatUIController : UIController
         }
 
         chatBox.Main = setting;
+        Chats.Select(x => x.Main);
     }
 
     private void SetChatSizing(string sizing, InGameScreen screen, bool setting)
