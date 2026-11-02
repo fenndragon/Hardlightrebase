@@ -3594,3 +3594,11 @@
   - message: Antag counts no longer include unreadied lobby players, observers or ghosts
     author: zohfur
     hash: 899ce786673d0dcef602de278f83e42850254f55
+0.3.0-timerfix:
+  fix:
+  - message: Lights now stop blinking correctly on clients
+    author: Alphonse de V
+    hash: 47f9e86b26b9670f47af12130ab73872cb6b4e48
+  - message: Spawners are no longer overflowing on long rounds
+    author: Tayrtahn
+    hash: 8f470d2e90b92233ef3da4f6df39ba186724fc48
