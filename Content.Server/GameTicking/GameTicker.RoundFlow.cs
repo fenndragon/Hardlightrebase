@@ -1,5 +1,9 @@
 using System.Linq;
 using System.Numerics;
+using Content.Server._HL.CD;
+using Content.Shared._NF.Shipyard.Components;
+using Content.Server._NF.PublicTransit.Components;
+//using Content.Server._NF.RoundNotifications.Events; // Frontier
 using System.Threading.Tasks;
 using Content.Server.Announcements;
 using Content.Server.CrewManifest;
@@ -11,9 +15,13 @@ using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Server._NF.Bank;
 using Content.Server._NF.GameRule;
+using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.HL.CCVar; // HL
 using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Players;
@@ -43,6 +51,9 @@ namespace Content.Server.GameTicking
         [Dependency] private DiscordWebhook _discord = default!;
         [Dependency] private RoleSystem _role = default!;
         [Dependency] private ITaskManager _taskManager = default!;
+        [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!; // Hardlight
+        [Dependency] private readonly WindDownSystem _windDownSystem = default!; // HardLight: CD Shutdown
         [Dependency] private CrewManifestSystem _crewManifest = default!;
         [Dependency] private StationSystem _stationSystem = default!;
         [Dependency] private BankSystem _bank = default!;
@@ -499,14 +510,165 @@ namespace Content.Server.GameTicking
 
         public void EndRound(string text = "")
         {
-            // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
                 return;
 
-            DebugTools.Assert(RunLevel == GameRunLevel.InRound);
+            // Prevent duplicate round end processing if multiple callers race
+            if (_endingRound)
+            {
+                _sawmill.Warning("EndRound called while already ending – ignoring duplicate call.");
+                return;
+            }
+
+            if (RunLevel != GameRunLevel.InRound)
+            {
+                _sawmill.Warning($"EndRound called when RunLevel={RunLevel}, expected InRound – ignoring.");
+                return;
+            }
+
+            _endingRound = true;
             _sawmill.Info("Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
+
+            // HardLight start: Made edits to end-round FTL logic to better handle non-evac shuttles.
+            // FTL all non-evac shuttles to Colcomm without attempting docking.
+            // The emergency shuttle handles its own docked arrival separately.
+            EntityUid? colcommMap = null;
+            var colcommQuery = AllEntityQuery<StationColcommComponent>();
+            if (colcommQuery.MoveNext(out var colcommComp))
+            {
+                // Prefer explicit map entity, but fall back to the Colcomm grid's map if needed.
+                if (colcommComp.MapEntity != null && !Deleted(colcommComp.MapEntity.Value))
+                    colcommMap = colcommComp.MapEntity.Value;
+                else if (colcommComp.Entity != null)
+                {
+                    var colcommXform = Transform(colcommComp.Entity.Value);
+                    if (colcommXform.MapUid != null)
+                        colcommMap = colcommXform.MapUid.Value;
+                }
+            }
+
+            if (colcommMap != null)
+            {
+                const float colcommArrivalMinRadius = 220f;
+                const float colcommArrivalMinSpacing = 64f;
+                const float colcommArrivalSpacingBuffer = 24f;
+                var shuttlesToMove = new List<(EntityUid Uid, ShuttleComponent Shuttle, float Radius)>();
+
+                void QueueShuttle(EntityUid shuttleUid, ShuttleComponent shuttle, TransformComponent xform)
+                {
+                    // Only evacuate shuttles that are currently on the round's station map.
+                    if (xform.MapID != DefaultMap)
+                        return;
+
+                    HashSet<Entity<ShuttleConsoleComponent>> consoles = new();
+                    _lookup.GetChildEntities(shuttleUid, consoles);
+                    if (consoles.Any(entity => !entity.Comp.CanFTL))
+                    {
+                        return;
+                    }
+
+                    var shuttleRadius = 32f;
+                    if (TryComp<MapGridComponent>(shuttleUid, out var grid))
+                        shuttleRadius = MathF.Max(shuttleRadius, MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) * 0.5f);
+
+                    shuttlesToMove.Add((shuttleUid, shuttle, shuttleRadius));
+                }
+
+                // Queue each ShuttleDeed shuttle for deterministic Colcomm placement.
+                var shuttleQuery = EntityQueryEnumerator<ShuttleComponent, ShuttleDeedComponent, TransformComponent>();
+                while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out _, out var xform))
+                {
+                    QueueShuttle(shuttleUid, shuttle, xform);
+                }
+
+                // Queue each TransitShuttle (but not ShuttleDeed) for deterministic Colcomm placement.
+                var transitShuttleQuery = EntityQueryEnumerator<ShuttleComponent, TransitShuttleComponent, TransformComponent>();
+                while (transitShuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out _, out var xform))
+                {
+                    // Skip if it also has ShuttleDeedComponent (already handled above)
+                    if (HasComp<ShuttleDeedComponent>(shuttleUid))
+                        continue;
+
+                    QueueShuttle(shuttleUid, shuttle, xform);
+                }
+
+                shuttlesToMove.Sort((a, b) => b.Radius.CompareTo(a.Radius));
+
+                var shuttleIndex = 0;
+                float previousRingRadius = 0f;
+                float previousRingMaxRadius = 0f;
+
+                while (shuttleIndex < shuttlesToMove.Count)
+                {
+                    // Each ring uses spacing from its largest shuttle, so a single giant ship
+                    // does not force all smaller ships into very distant rings.
+                    var ringMaxRadius = shuttlesToMove[shuttleIndex].Radius;
+                    var inRingSpacing = MathF.Max(colcommArrivalMinSpacing, (ringMaxRadius * 2f) + colcommArrivalSpacingBuffer);
+
+                    float ringRadius;
+                    if (previousRingRadius <= 0f)
+                        ringRadius = MathF.Max(colcommArrivalMinRadius, inRingSpacing);
+                    else
+                        ringRadius = previousRingRadius + previousRingMaxRadius + ringMaxRadius + colcommArrivalSpacingBuffer;
+
+                    int slotsInRing;
+                    if (inRingSpacing >= ringRadius * 2f)
+                    {
+                        slotsInRing = 1;
+                    }
+                    else
+                    {
+                        // Use chord distance so neighboring slots are at least inRingSpacing apart.
+                        slotsInRing = Math.Max(1,
+                            (int)MathF.Floor(MathF.PI / MathF.Asin(inRingSpacing / (2f * ringRadius))));
+                    }
+
+                    var shipsInRing = Math.Min(slotsInRing, shuttlesToMove.Count - shuttleIndex);
+                    var angleStep = 360f / shipsInRing;
+
+                    for (var slot = 0; slot < shipsInRing; slot++)
+                    {
+                        var (shuttleUid, shuttle, _) = shuttlesToMove[shuttleIndex + slot];
+                        var angle = Angle.FromDegrees(angleStep * slot);
+                        var targetCoordinates = new EntityCoordinates(colcommMap.Value, angle.ToWorldVec() * ringRadius);
+
+                        // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
+                        // even if they are currently in FTL cooldown.
+                        if (HasComp<FTLComponent>(shuttleUid))
+                            RemComp<FTLComponent>(shuttleUid);
+
+                        _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, angle);
+                    }
+
+                    shuttleIndex += shipsInRing;
+                    previousRingRadius = ringRadius;
+                    previousRingMaxRadius = ringMaxRadius;
+                }
+            }
+            // HardLight end
+            // --- End Corrected Colcomm logic ---
+
+            // Aggressively delete the default map after a 30 second delay
+            var defaultMapEntityUid = _map.GetMapOrInvalid(DefaultMap);
+            if (DefaultMap != MapId.Nullspace)
+            {
+                Timer.Spawn(TimeSpan.FromSeconds(30), () =>
+                {
+                    // Send all players on the default map to the lobby before deleting the map
+                    foreach (var session in _playerManager.Sessions)
+                    {
+                        var attachedEntity = session.AttachedEntity;
+                        if (attachedEntity != null && Transform(attachedEntity.Value).MapID == DefaultMap)
+                        {
+                            PlayerJoinLobby(session);
+                        }
+                    }
+
+                    QueueDel(defaultMapEntityUid);
+                });
+            }
 
             try
             {
@@ -525,16 +687,8 @@ namespace Content.Server.GameTicking
             {
                 Log.Error($"Error while sending round end Discord message: {e}");
             }
-
-            try
-            {
-                SendCrewManifestDiscordMessage(_replayRoundPlayerInfo);
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Error while sending crew manifest Discord message: {e}");
-            }
         }
+
 
         public void ShowRoundEndScoreboard(string text = "")
         {
@@ -1022,7 +1176,23 @@ namespace Content.Server.GameTicking
                 Log.Error($"Error while sending discord round starting message:\n{e}");
             }
         }
+        private void QueueDeleteEntities(params string[] prototypeIds)
+        {
+            var cleanupPrototypeIds = prototypeIds.ToHashSet();
+            var metaQuery = EntityQueryEnumerator<MetaDataComponent>();
 
+            while (metaQuery.MoveNext(out var entityUid, out var metadata))
+            {
+                var prototype = metadata.EntityPrototype;
+                if (prototype == null)
+                    continue;
+
+                if (cleanupPrototypeIds.Contains(prototype.ID))
+                {
+                    QueueDel(entityUid);
+                }
+            }
+        }
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -1030,9 +1200,12 @@ namespace Content.Server.GameTicking
         private void ResettingCleanup()
         {
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.Sessions)
+            if (!_cfg.GetCVar(HLCCVars.RoundPersistenceEnabled) && LobbyEnabled)
             {
-                PlayerJoinLobby(player);
+                foreach (var player in _playerManager.Sessions)
+                {
+                    PlayerJoinLobby(player);
+                }
             }
 
             // Round restart cleanup event, so entity systems can reset.
@@ -1040,14 +1213,38 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(ev);
 
             // So clients' entity systems can clean up too...
-            RaiseNetworkEvent(ev);
+            //RaiseNetworkEvent(ev);
 
-            EntityManager.FlushEntities();
+            //EntityManager.FlushEntities();
 
-            _banManager.Restart();
+            //_banManager.Restart();
+            if (_map.MapExists(DefaultMap))
+                _map.DeleteMap(DefaultMap);
 
             _gameMapManager.ClearSelectedMap();
-
+            
+            QueueDeleteEntities(
+                "RescueBeacon",
+                "PinpointerNuclear", // todo: make old pinpointers have a defunct state instead of just deleting them for better rp.
+                "HandTeleporter",
+                "BoxFolderQmClipboard",
+                "DoorRemoteArmory",
+                "DoorRemoteCargo",
+                "DoorRemoteEngineering",
+                "DoorRemoteMedical",
+                "DoorRemoteResearch",
+                "DoorRemoteSecurity",
+                "DoorRemoteService",
+                "DoorRemoteCustom",
+                "DoorRemoteCommand",
+                "PinpointerMothership", // todo: same here as nuke pinpointer
+                "Demag",
+                "EncryptionKeySyndie", // The syndicate rotates their encryption! Your old ones won't work :3
+                "ShadowPortal", // Don't want shadow anomaly shenanigans on CC
+                "ShadowKudzu",
+                "ShadowKudzuWeak",
+                "ShadowTree"
+            );
             // Clear up any game rules.
             ClearGameRules();
             CurrentPreset = null;
@@ -1055,10 +1252,31 @@ namespace Content.Server.GameTicking
             _allPreviousGameRules.Clear();
 
             DisallowLateJoin = false;
-            _playerGameStatuses.Clear();
-            foreach (var session in _playerManager.Sessions)
+            //_playerGameStatuses.Clear();
+            //foreach (var session in _playerManager.Sessions)
+            //{
+            //    _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+            //}
+            DefaultMap = MapId.Nullspace;
+            RoundId = 0;
+            if (!_cfg.GetCVar(HLCCVars.RoundPersistenceEnabled))
+                return;
+
+            //Remove all job slots from every station
+            stationQuery = EntityQueryEnumerator<StationDataComponent>();
+            while (stationQuery.MoveNext(out var stationUid, out _)) // HL: Moved to a Enumerator to avoid .Owner deprication
             {
-                _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+                var jobs = _stationJobs.GetJobs(stationUid);
+                foreach (var job in jobs.Keys.ToList())
+                {
+                    //if (!_stationJobs.IsJobUnlimited(station.Owner, job))
+                    //{
+                    // Set slot count to zero if not already
+                    if (jobs[job] != 0)
+                        _stationJobs.TrySetJobSlot(stationUid, job, 0); // HL: Moved from .Owner to stationUid
+
+                    //}
+                }
             }
         }
 

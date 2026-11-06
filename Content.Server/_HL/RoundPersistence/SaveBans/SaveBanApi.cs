@@ -1,0 +1,143 @@
+using Content.Server.Botany.Components;
+using Content.Shared._HL.RoundPersistence.SaveBans;
+using Content.Shared.Atmos;
+using Robust.Shared.Prototypes;
+using static Content.Shared._HL.RoundPersistence.SaveBans.SaveBanStore.SaveBanFlag;
+using static Content.Shared._HL.RoundPersistence.SaveBans.SaveBanStore.SaveBanFlag.SaveBanSeedFlag;
+
+namespace Content.Server._HL.RoundPersistence.SaveBans;
+
+/// <summary>
+/// This class is the API or interface for checking what is save-banned and what isn't.
+/// Generally speaking a null response indicates clear status, or not banned.
+/// </summary>
+public sealed class SaveBanApi : EntitySystem
+{
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    /// <summary>
+    /// The actual save-banned list itself.
+    /// </summary>
+    public IReadOnlyList<SaveBanStore.SaveBan> Bans = null!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        Bans =
+        [
+            .. _prototypeManager.EnumeratePrototypes<SaveBanPrototype>()
+                .SelectMany(ban => new[]
+                {
+                    ban.Prototypes.Select(p =>
+                        SaveBanStore.SaveBan.Entity(p, ban.Reason, ban.Strictness)),
+
+                    ban.Components.Select(c =>
+                        SaveBanStore.SaveBan.Component(c, ban.Reason, ban.Strictness)),
+
+                    ban.SeedGasses.Select(g =>
+                        new SaveBanStore.SaveBan(
+                            new SaveBanSeedFlagByGasProduction(Enum.Parse<Gas>(g)), ban.Reason, ban.Strictness)),
+
+                    ban.SeedReagents.Select(r =>
+                        new SaveBanStore.SaveBan(
+                            new SaveBanSeedFlagByReagent(r), ban.Reason, ban.Strictness))
+
+                }.SelectMany(x => x))
+        ];
+    }
+
+    /// <summary>
+    /// This is the type that is returned when querying an items ban status.
+    /// It includes the item uid itself, alongside any bans found, and relevant info.
+    /// </summary>
+    public abstract record SaveBanResult(EntityUid EntityUid)
+    {
+        /// <summary>
+        /// This response variant indicates the item itself has a ban or restriction.
+        /// </summary>
+        public sealed record IsSaveRestricted(EntityUid EntityUid, SaveBanStore.SaveBan Ban) : SaveBanResult(EntityUid);
+
+        /// <summary>
+        /// This response variant indicates that while this item does *not* have an outstanding ban or restriction,
+        /// it contains items that do.
+        /// </summary>
+        public sealed record ContainsSaveRestricted(EntityUid EntityUid, IReadOnlyList<SaveBanResult> Restrictions)
+            : SaveBanResult(EntityUid);
+    }
+
+    /// <summary>
+    /// This is the primary checking method. Given one entity, it checks it, and any children that it may contain.
+    /// </summary>
+    public SaveBanResult? CheckForRestrictions(EntityUid entityUid)
+    {
+        if (TerminatingOrDeleted(entityUid)) // Catch things like artifact nodes that get insta-deleted when the artifact is serialized
+            return null;
+
+        var entityPrototype = Prototype(entityUid)?.ID;
+
+        if (entityPrototype is null)
+            return null;
+
+        var ban = Bans.FirstOrDefault(ban => ban.BannedFlag switch
+        {
+            SaveBanFlagByEntity entityFlag => entityFlag.Prototype == entityPrototype,
+            SaveBanFlagByComponent componentFlag => HasComp(entityUid,
+                _componentFactory.GetRegistration(componentFlag.Name).Type),
+            SaveBanSeedFlagByGasProduction gasFlag => CompOrNull<SeedComponent>(entityUid) is
+            { Seed.ExudeGasses: { } gases }
+                                                      && gases.ContainsKey(gasFlag.ProducedGas),
+            SaveBanSeedFlagByReagent reagentFlag => CompOrNull<SeedComponent>(entityUid) is
+            { Seed.Chemicals: { } reagents }
+                                                    && reagents.ContainsKey(reagentFlag.ReagentName),
+            _ => throw new ArgumentOutOfRangeException(ban.BannedFlag.ToString()),
+        });
+
+        if (ban is not null)
+            return new SaveBanResult.IsSaveRestricted(entityUid, ban);
+
+        var restrictions = new List<SaveBanResult>();
+
+        var childEnumerator = Transform(entityUid).ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            var result = CheckForRestrictions(child);
+
+            if (result is not null)
+                restrictions.Add(result);
+        }
+
+        return restrictions.Count > 0
+            ? new SaveBanResult.ContainsSaveRestricted(
+                entityUid,
+                restrictions)
+            : null;
+    }
+
+    /// <summary>
+    /// Helper method. To take the recursive ContainsSaveRestricted, and flatten it down into an enumerable list of IsSaveRestricteds
+    /// </summary>
+    public static IEnumerable<SaveBanResult.IsSaveRestricted> FlattenRestrictions(SaveBanResult result)
+    {
+        switch (result)
+        {
+            case SaveBanResult.IsSaveRestricted restricted:
+                yield return restricted;
+                yield break;
+
+            case SaveBanResult.ContainsSaveRestricted contains:
+                foreach (var child in contains.Restrictions)
+                {
+                    foreach (var flattened in FlattenRestrictions(child))
+                    {
+                        yield return flattened;
+                    }
+                }
+                yield break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(result));
+        }
+    }
+}
