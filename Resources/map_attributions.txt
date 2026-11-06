@@ -6,11 +6,11 @@
 
 - files: ["barratry.yml"]
   authors: Emogarbage, Scribbles0
- 
+
 - files: ["box.yml"]
   authors: ACJM, Emisse
 
-- files: ["centcomm.yml"]
+- files: ["colcomm.yml"]
   authors: Emisse
 
 - files: ["cluster.yml"]
@@ -60,3 +60,6 @@
 
 - files: ["convex.yml"]
   authors: Spacemann
+
+- file: ["amber.yml"]
+  authors: Southbridge, Flipsie27

@@ -1,0 +1,182 @@
+- type: entity
+  id: BaseFoamNoSpread
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: ThinPipe
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - GlassLayer
+  - type: Smoke
+  - type: SolutionContainerManager
+    solutions:
+      solutionArea:
+        maxVol: 600
+        canReact: false
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 0.5
+    color: "#FFFF0055"
+
+- type: entity
+  id: BaseFoamNoSlip
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Effects
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: SmokeVisuals
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        hard: false
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - GlassLayer
+  - type: Smoke
+  - type: ActiveEdgeSpreader
+  - type: EdgeSpreader
+    id: Smoke
+  - type: SolutionContainerManager
+    solutions:
+      solutionArea:
+        maxVol: 600
+        canReact: false
+  - type: PointLight
+    netsync: false
+    enabled: false
+    radius: 2
+    energy: 0.5
+    color: "#FFFF0055"
+
+- type: entity
+  parent: BaseFoamNoSpread
+  id: SmokeNoSlip
+  name: smoke
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Occluder
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    drawdepth: ThinPipe
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseFoamNoSpread
+  id: FoamNoSpread
+  name: blessing
+  categories: [ HideSpawnMenu ]
+  components:
+#  - type: SmoothEdge
+#  - type: IconSmooth
+#    mode: NoSprite
+  - type: Sprite
+    sprite: _HL/Structures/Magic/Misc/blessing.rsi
+    layers:
+      - state: circle
+        color: '#FFFF0055'
+        shader: unshaded
+        drawdepth: ThinPipe
+
+- type: entity
+  parent: BaseFoamNoSlip
+  id: FoamNoSlip
+  name: wide blessing
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    color: "#FFFF0055"
+    sprite: _HL/Structures/Magic/Misc/aoeblessing.rsi
+    drawdepth: ThinPipe
+    layers:
+    - map: ["enum.FoamVisualLayers.Base"]
+      state: base
+    - map: [ "enum.EdgeLayer.South" ]
+      state: blessoutlineS
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.East" ]
+      state: blessoutlineE
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.North" ]
+      state: blessoutlineN
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.West" ]
+      state: blessoutlineW
+      shader: unshaded
+  - type: SmoothEdge
+  - type: IconSmooth
+    mode: NoSprite
+
+- type: entity
+  parent: BaseFoamNoSlip
+  id: FoamNoSlipRain
+  name: the rain
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    color: "#FFFF0055"
+    sprite: _HL/Structures/Magic/Misc/aoeblessing.rsi
+    drawdepth: ThinPipe
+    layers:
+    - map: ["enum.FoamVisualLayers.Base"]
+      state: rain
+    - map: [ "enum.EdgeLayer.South" ]
+      state: blessoutlineS
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.East" ]
+      state: blessoutlineE
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.North" ]
+      state: blessoutlineN
+      shader: unshaded
+    - map: [ "enum.EdgeLayer.West" ]
+      state: blessoutlineW
+      shader: unshaded
+  - type: SmoothEdge
+  - type: IconSmooth
+    mode: NoSprite
+
+- type: reagent
+  id: SpaceCleanerFast
+  name: reagent-name-space-cleaner
+  desc: reagent-desc-space-cleaner
+  physicalDesc: reagent-physical-desc-lemony-fresh
+  evaporationSpeed: 1
+  flavor: bitter
+  color: "#3291a8"
+  recognizable: true
+  boilingPoint: 147.0 # Made this up, loosely based on bleach
+  meltingPoint: -11.0
+  tileReactions:
+    - !type:CleanTileReaction {}
+    - !type:CleanDecalsReaction {}

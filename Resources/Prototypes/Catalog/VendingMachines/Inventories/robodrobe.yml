@@ -8,7 +8,7 @@
     ClothingHandsGlovesRobohands: 2
     ClothingHeadHatCorpsoft: 2
     ClothingHeadBandSkull: 2
-    ClothingHeadsetRobotics: 2
+    #ClothingHeadsetRobotics: 2
     ClothingOuterWinterRobo: 2
     ClothingShoesBootsWinterRobo: 2 #Delta V: Add departmental winter boots
     # WOLFGATE(MeridianClothing) START: Meridian Rift clothing, written by Tools/_WF/MeridianClothing/port.py

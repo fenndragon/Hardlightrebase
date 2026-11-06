@@ -1,0 +1,529 @@
+- type: entity
+  name: "vinyl disk: EMULATOR"
+  id: VinylDiskNulbEmulator
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: blue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/emulator.ogg
+
+- type: entity
+  name: "vinyl disk: Eruption"
+  id: VinylDiskNulbEruption
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/eruption.ogg
+
+- type: entity
+  name: "vinyl disk: Everpresence"
+  id: VinylDiskNulbEverpresence
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: orange-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/everpresence.ogg
+
+- type: entity
+  name: "vinyl disk: Hakonechloa"
+  id: VinylDiskNulbHakonechloa
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: purple-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/hakonechloa.ogg
+
+- type: entity
+  name: "vinyl disk: Hyperacusis"
+  id: VinylDiskNulbHyperacusis
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/hyperacusis.ogg
+
+- type: entity
+  name: "vinyl disk: I'm Down"
+  id: VinylDiskNulbImDown
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/imdown.ogg
+
+- type: entity
+  name: "vinyl disk: Recalled"
+  id: VinylDiskNulbRecalled
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightishred-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/recalled.ogg
+
+- type: entity
+  name: "vinyl disk: Take Your TIME"
+  id: VinylDiskNulbTakeYourTime
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/takeyourtime.ogg
+
+- type: entity
+  name: "vinyl disk: Ballsfish"
+  id: VinylDiskNulbBallsfish
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: cyan-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/ballsfish.ogg
+
+- type: entity
+  name: "vinyl disk: Chronograph"
+  id: VinylDiskNulbChronograph
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: glossy-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/chronograph.ogg
+
+- type: entity
+  name: "vinyl disk: Cruelty Engines"
+  id: VinylDiskNulbCrueltyEngines
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: forgotten-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/crueltyengines.ogg
+
+- type: entity
+  name: "vinyl disk: Due Time"
+  id: VinylDiskNulbDueTime
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/duetime.ogg
+
+- type: entity
+  name: "vinyl disk: Interloc"
+  id: VinylDiskNulbInterloc
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: purple-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/interloc.ogg
+
+- type: entity
+  name: "vinyl disk: RE-Recalled"
+  id: VinylDiskNulbReRecalled
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightishred-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/rerecalled.ogg
+
+- type: entity
+  name: "vinyl disk: SEIGE!" # not a typo
+  id: VinylDiskNulbSeige
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: yellow-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/seige.ogg
+
+- type: entity
+  name: "vinyl disk: Timeout!"
+  id: VinylDiskNulbTimeout
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: pink-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nulb/timeout.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 1"
+  id: VinylDiskTWV1
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar1.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 2"
+  id: VinylDiskTWV2
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar2.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 3"
+  id: VinylDiskTWV3
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar3.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 4"
+  id: VinylDiskTWV4
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar4.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 5"
+  id: VinylDiskTWV5
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar5.ogg
+
+- type: entity
+  name: "vinyl disk: turf war vol 6"
+  id: VinylDiskTWV6
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: red-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/turfwar6.ogg
+
+- type: entity
+  name: "vinyl disk: Nebula"
+  id: VinylDiskNebula
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: purple-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/nebula.ogg
+
+- type: entity
+  name: "vinyl disk: Icosa"
+  id: VinylDiskIcosa
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightishred-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/icosa.ogg
+
+- type: entity
+  name: "vinyl disk: tetracosa"
+  id: VinylDiskTetracosa
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightishred-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/tetracosa.ogg
+
+- type: entity
+  name: "vinyl disk: ACES"
+  id: VinylDiskAces
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: blue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/aces.ogg
+
+- type: entity
+  name: "vinyl disk: raindrop prelude"
+  id: VinylDiskRaindrop
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/raindropprelude.ogg
+
+- type: entity
+  name: "vinyl disk: Standchen"
+  id: VinylDiskStandchen
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: lightblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/standchen.ogg
+
+- type: entity
+  name: "vinyl disk: The Show Begins"
+  id: VinylDiskShowBegins
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/showbegins.ogg
+
+- type: entity
+  name: "vinyl disk: Young Spirits"
+  id: VinylDiskYoungSpirit
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/youngspirit.ogg
+
+
+- type: entity
+  name: "vinyl disk: Aggressive Brazilian Phonk"
+  id: VinylDiskBrazilianPhonk
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/absolutesound-aggressive-brazilian-phonk.ogg
+
+- type: entity
+  name: "vinyl disk: Cyberpunk Techno"
+  id: VinylDiskCyberpunkTechno
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/humanstudioedm-cyberpunk-techno.ogg
+
+
+- type: entity
+  name: "vinyl disk: SkubStep"
+  id: VinylDiskSkubStep
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/finket_ss14skubstep.ogg
+
+- type: entity
+  name: "vinyl disk: Into Darkness"
+  id: VinylDiskIntoDarkness
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/muzaproduction-into-darkness.ogg
+
+- type: entity
+  name: "vinyl disk: Boardwalk In Rio"
+  id: VinylDiskTKBoardwalkInRio
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: yellow-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/boardwalkinrio.ogg
+
+- type: entity
+  name: "vinyl disk: Catch A Cab"
+  id: VinylDiskTKCatchACab
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: white-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/catchacab.ogg
+
+- type: entity
+  name: "vinyl disk: Congestion"
+  id: VinylDiskTKCongestion
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: cyan-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/congestion.ogg
+
+- type: entity
+  name: "vinyl disk: Cool Cat Boogie"
+  id: VinylDiskTKCoolCatBoogie
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: purple-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/coolcatboogie.ogg
+
+- type: entity
+  name: "vinyl disk: C Thee Major"
+  id: VinylDiskTKCTheeMajor
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: pink-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/ctheemajor.ogg
+
+- type: entity
+  name: "vinyl disk: Danny The Dog"
+  id: VinylDiskTKDannyTheDog
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: orange-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/dannythedog.ogg
+
+- type: entity
+  name: "vinyl disk: Marimba Marinade"
+  id: VinylDiskTKMarimbaMarinade
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: green-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/marimbamarinade.ogg
+
+- type: entity
+  name: "vinyl disk: Red & Blue Lights"
+  id: VinylDiskTKRedAndBlueLights
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: blue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/redandbluelights.ogg
+
+- type: entity
+  name: "vinyl disk: Saturday Night Solo"
+  id: VinylDiskTKSaturdayNightSolo
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: glossy-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/saturdaynightsolo.ogg
+
+- type: entity
+  name: "vinyl disk: Trying To Vibe"
+  id: VinylDiskTKTryingToVibe
+  parent: BaseVinylDisk
+  components:
+  - type: Sprite
+    state: darkblue-vinyl-disk
+  - type: Vinyl
+    song:
+      path: /Audio/_HL/RadioStation/music/timkulig/jazz/tryingtovibe.ogg
+
+# Sleeves
+- type: entity
+  name: jazzy vinyl sleeve
+  suffix: A
+  description: A sleeve for storing only the jazziest of records.
+  id: VinylSleeveJazz
+  parent: BaseVinylSleeveEmpty
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Misc/RadioStation/vinylsleeves.rsi
+    state: jazz-vinyl-sleeve
+  - type: ContainerFill
+    containers:
+      vinyl:
+      - VinylDiskTKDannyTheDog
+      vinyl_2:
+      - VinylDiskTKMarimbaMarinade
+      vinyl_3:
+      - VinylDiskTKRedAndBlueLights
+      vinyl_4:
+      - VinylDiskTKSaturdayNightSolo
+      vinyl_5:
+      - VinylDiskTKTryingToVibe
+
+- type: entity
+  id: VinylSleeveJazzAlt
+  parent: VinylSleeveJazz
+  suffix: B
+  components:
+  - type: Sprite
+    state: jazz-alt-vinyl-sleeve
+  - type: ContainerFill
+    containers:
+      vinyl:
+      - VinylDiskTKBoardwalkInRio
+      vinyl_2:
+      - VinylDiskTKCatchACab
+      vinyl_3:
+      - VinylDiskTKCongestion
+      vinyl_4:
+      - VinylDiskTKCoolCatBoogie
+      vinyl_5:
+      - VinylDiskTKCTheeMajor

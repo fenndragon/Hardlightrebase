@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.Message;
 using Content.Shared.GameTicking;
@@ -6,9 +5,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-// Goob Station - End of Round Screen
-using Content.Client.Stylesheets;
-using Content.Shared.Mobs;
+// Starlight Start
+using Content.Client.RichText;
+// Starlight End
 
 namespace Content.Client.RoundEnd
 {
@@ -37,7 +36,7 @@ namespace Content.Client.RoundEnd
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestTab(info));
 
-            Contents.AddChild(roundEndTabs);
+            ContentsContainer.AddChild(roundEndTabs);
 
             OpenCenteredRight();
             MoveToFront();
@@ -50,6 +49,37 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical,
                 Name = Loc.GetString("round-end-summary-window-round-end-summary-tab-title")
             };
+
+            // <summary>
+            // Starlight-start: Search filter Box
+            // Search container for round end text
+            // </summary>
+            var searchContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                Margin = new Thickness(10, 10, 10, 5),
+                VerticalExpand = false,
+                HorizontalExpand = true
+            };
+
+            var searchLabel = new Label
+            {
+                Text = Loc.GetString("round-end-summary-window-search-label"),
+                MinSize = new Vector2(80, 0),
+                VerticalAlignment = VAlignment.Center
+            };
+
+            var searchInput = new LineEdit
+            {
+                PlaceHolder = Loc.GetString("round-end-summary-window-search-placeholder"),
+                HorizontalExpand = true,
+                MinHeight = 30
+            };
+
+            searchContainer.AddChild(searchLabel);
+            searchContainer.AddChild(searchInput);
+            roundEndSummaryTab.AddChild(searchContainer);
+            // Starlight-end of Search container
 
             var roundEndSummaryContainerScrollbox = new ScrollContainer
             {
@@ -82,8 +112,25 @@ namespace Content.Client.RoundEnd
             if (!string.IsNullOrEmpty(roundEnd))
             {
                 var roundEndLabel = new RichTextLabel();
-                roundEndLabel.SetMarkup(roundEnd);
+                UpdateRoundEndTextForSearch(roundEndLabel, roundEnd, "");
                 roundEndSummaryContainer.AddChild(roundEndLabel);
+
+                // Add dynamic search functionality
+                searchInput.OnTextChanged += (args) =>
+                {
+                    var isSearchDone = UpdateRoundEndTextForSearch(roundEndLabel, roundEnd, args.Text);
+                    // the return value is only interesting for us to know if the two labels should be visible or not
+                    if (isSearchDone)
+                    {
+                        gamemodeLabel.Visible = false;
+                        roundTimeLabel.Visible = false;
+                    }
+                    else
+                    {
+                        gamemodeLabel.Visible = true;
+                        roundTimeLabel.Visible = true;
+                    }
+                };
             }
 
             roundEndSummaryContainerScrollbox.AddChild(roundEndSummaryContainer);
@@ -92,8 +139,52 @@ namespace Content.Client.RoundEnd
             return roundEndSummaryTab;
         }
 
-        #region Goob Station
-        // Everything inside this region is heavily edited for goob.
+        // <summary>
+        // Starlight-start: Search filter Box
+        // This adds the filter input box. Skip this part if you only want to know how the list gets populated.
+        // </summary>
+        private bool UpdateRoundEndTextForSearch(RichTextLabel label, string fullText, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // If no search term, show all text with sanitized tags
+                label.SetMessage(
+                    FormattedMessage.FromMarkupPermissive(fullText),
+                    UserFormattableTags.BaseAllowedTags
+                );
+                return false;
+            }
+
+            // In the player manifest it's fine to split by every line but
+            // in the round end summary it's better to give context to the search term
+            // so we split by double newlines to provide the whole paragraph of text
+            var blocks = fullText.Split(new[] { "\n\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Filter blocks that contain the search term
+            var matchingBlocks = blocks.Where(block =>
+                block.ToLowerInvariant().Contains(searchTerm.ToLowerInvariant()));
+
+            // Join matching blocks back together
+            var filteredText = string.Join("\n\n", matchingBlocks);
+
+            if (string.IsNullOrEmpty(filteredText))
+            {
+                // If no matches found, don't show anything
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(""), []);
+                return true;
+            }
+            else
+            {
+                // Sanitize filtered text
+                label.SetMessage(
+                    FormattedMessage.FromMarkupPermissive(filteredText),
+                    UserFormattableTags.BaseAllowedTags
+                );
+                return true;
+            }
+        }
+        // Starlight-end: Search filter Box
+
         private BoxContainer MakePlayerManifestTab(RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
         {
             var playerManifestTab = new BoxContainer
@@ -112,45 +203,57 @@ namespace Content.Client.RoundEnd
                 Orientation = LayoutOrientation.Vertical
             };
 
+            // <summary>
+            // Starlight-start: Search filter Box
+            // This adds the filter input box. Skip this part if you only want to know how the list gets populated.
+            // </summary>
+            var searchContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                Margin = new Thickness(10, 10, 10, 5),
+                VerticalExpand = false,
+                HorizontalExpand = true
+            };
+
+            var searchLabel = new Label
+            {
+                Text = Loc.GetString("round-end-summary-window-search-label"),
+                MinSize = new Vector2(80, 0),
+                VerticalAlignment = VAlignment.Center
+            };
+
+            var searchInput = new LineEdit
+            {
+                PlaceHolder = Loc.GetString("round-end-summary-window-search-placeholder"),
+                HorizontalExpand = true,
+                MinHeight = 30
+            };
+
+            searchInput.OnTextChanged += (args) => OnSearchTextChanged(args, playerInfoContainer, playersInfo);
+
+            searchContainer.AddChild(searchLabel);
+            searchContainer.AddChild(searchInput);
+
+            playerManifestTab.AddChild(searchContainer);
+            // End of search box
+
+            PopulatePlayManifestList(playerInfoContainer, playersInfo);
+
+            playerInfoContainerScrollbox.AddChild(playerInfoContainer);
+            playerManifestTab.AddChild(playerInfoContainerScrollbox);
+
+            return playerManifestTab;
+        }
+
+        private void PopulatePlayManifestList(BoxContainer playerInfoContainer, RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
+        {
             //Put observers at the bottom of the list. Put antags on top.
             var sortedPlayersInfo = playersInfo.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
 
             //Create labels for each player info.
             foreach (var playerInfo in sortedPlayersInfo)
             {
-                var panel = new PanelContainer
-                {
-                    StyleClasses = { StyleNano.StyleClassBackgroundBaseDark },
-                    Margin = new Thickness(0, 0, 0, 6)
-                };
-
                 var hBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                    VerticalExpand = true
-                };
-
-                if (playerInfo.PlayerNetEntity != null)
-                {
-                    hBox.AddChild(new SpriteView(playerInfo.PlayerNetEntity.Value, _entityManager)
-                    {
-                        OverrideDirection = Direction.South,
-                        VerticalAlignment = VAlignment.Center,
-                        SetSize = new Vector2(64, 64),
-                        VerticalExpand = true,
-                        Stretch = SpriteView.StretchMode.Fill,
-                        Margin = new Thickness(3, 0, 3, 0)
-                    });
-                }
-
-                var textVBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    VerticalExpand = true,
-                    SeparationOverride = 2,
-                };
-
-                var playerTitleBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                 };
@@ -161,166 +264,70 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
+                if (playerInfo.PlayerNetEntity != null)
+                {
+                    hBox.AddChild(new SpriteView(playerInfo.PlayerNetEntity.Value, _entityManager)
+                    {
+                        OverrideDirection = Direction.South,
+                        VerticalAlignment = VAlignment.Center,
+                        SetSize = new Vector2(32, 32),
+                        VerticalExpand = true,
+                    });
+                }
+
                 if (playerInfo.PlayerICName != null)
                 {
-                    var playerNameText = new Label
+                    if (playerInfo.Observer)
                     {
-                        VerticalAlignment = VAlignment.Bottom,
-                        StyleClasses = { StyleNano.StyleClassLabelHeading },
-                        Margin = new Thickness(0, 0, 6, 0),
-                        Text = playerInfo.PlayerICName
-                    };
-                    playerTitleBox.AddChild(playerNameText);
-
-                    var role = Loc.GetString(playerInfo.Role);
-                    var playerRoleText = new Label
-                    {
-                        VerticalAlignment = VAlignment.Bottom,
-                        StyleClasses = { StyleNano.StyleClassLabelSubText },
-                        Text = Loc.GetString("round-end-summary-window-player-name",
-                            ("player", playerInfo.PlayerOOCName))
-                    };
-
-                    if (role != "Unknown")
-                        playerRoleText.Text = Loc.GetString("round-end-summary-window-player-name-role",
-                                ("role", role),
-                                ("player", playerInfo.PlayerOOCName));
-
-                    playerTitleBox.AddChild(playerRoleText);
-                }
-
-                textVBox.AddChild(playerTitleBox);
-
-                if (!string.IsNullOrWhiteSpace(playerInfo.LastWords))
-                {
-                    var playerLastWordsText = new RichTextLabel
-                    {
-                        VerticalAlignment = VAlignment.Center,
-                        VerticalExpand = true,
-                    };
-
-                    playerLastWordsText.SetMarkup(Loc.GetString("round-end-summary-window-last-words",
-                        ("lastWords", playerInfo.LastWords)));
-
-                    textVBox.AddChild(playerLastWordsText);
-                }
-
-                var hDeathBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                };
-
-                var deathLabel = new RichTextLabel
-                {
-                    VerticalAlignment = VAlignment.Center,
-                    VerticalExpand = true,
-                };
-
-                textVBox.AddChild(deathLabel);
-
-                if (playerInfo.EntMobState == MobState.Dead
-                    && playerInfo.DamagePerGroup.Values.Any(v => v > 0))
-                {
-                    var totalDamage = playerInfo.DamagePerGroup.Values.Sum(static v => (decimal) v);
-                    var severityAdj = totalDamage switch
-                    {
-                        >= 1000 => "catastrophic",
-                        >= 750 => "devastating",
-                        >= 500 => "agonizing",
-                        >= 300 => "painful",
-                        >= 200 => "brutal",
-                        _ => "tragic"
-                    };
-
-                    var highestDamage = playerInfo.DamagePerGroup
-                        .OrderByDescending(kvp => kvp.Value)
-                        .First();
-                    var typeAdj = highestDamage.Key switch
-                    {
-                        "Burn" => "fiery",
-                        "Brute" => "crushing",
-                        "Toxin" => "poisonous",
-                        "Airloss" => "suffocating",
-                        "Genetic" => "twisted",
-                        "Metaphysical" => "otherworldly",
-                        "Electronic" => "shocking",
-                        _ => "mysterious",
-                    };
-
-                    deathLabel.SetMarkup(
-                        Loc.GetString("round-end-summary-window-death",
-                            ("severity", severityAdj),
-                            ("type", typeAdj)));
-
-                    var damageTable = new GridContainer
-                    {
-                        Columns = playerInfo.DamagePerGroup.Count,
-                    };
-
-                    foreach (var damage in playerInfo.DamagePerGroup)
-                    {
-                        if (damage.Value <= 0)
-                            continue;
-
-                        var color = damage.Key switch
-                        {
-                            "Burn" => Color.Orange,
-                            "Brute" => Color.Red,
-                            "Toxin" => Color.Green,
-                            "Airloss" => Color.Blue,
-                            "Genetic" => Color.Cyan,
-                            "Metaphysical" => Color.Purple,
-                            "Electronic" => Color.DarkOrange,
-                            _ => Color.White,
-                        };
-                        var damagePanel = new PanelContainer
-                        {
-                            StyleClasses = { StyleNano.StyleClassBackgroundBaseLight },
-                            Margin = new Thickness(2, 2, 2, 2)
-                        };
-                        var damageBox = new BoxContainer
-                        {
-                            Orientation = LayoutOrientation.Vertical,
-                            Margin = new Thickness(1)
-                        };
-                        var valueLabel = new Label
-                        {
-                            Text = Math.Round((float) damage.Value).ToString(),
-                            FontColorOverride = color,
-                            HorizontalAlignment = HAlignment.Center,
-                            VerticalAlignment = VAlignment.Center,
-                        };
-                        var headerLabel = new Label
-                        {
-                            Text = damage.Key,
-                            FontColorOverride = Color.Gray,
-                            HorizontalAlignment = HAlignment.Center,
-                            VerticalAlignment = VAlignment.Center,
-                        };
-                        damagePanel.AddChild(damageBox);
-                        damageBox.AddChild(valueLabel);
-                        damageBox.AddChild(headerLabel);
-                        damageTable.AddChild(damagePanel);
+                        playerInfoText.SetMarkup(
+                            Loc.GetString("round-end-summary-window-player-info-if-observer-text",
+                                          ("playerOOCName", playerInfo.PlayerOOCName),
+                                          ("playerICName", playerInfo.PlayerICName)));
                     }
-
-                    textVBox.AddChild(damageTable);
+                    else
+                    {
+                        //TODO: On Hover display a popup detailing more play info.
+                        //For example: their antag goals and if they completed them sucessfully.
+                        var icNameColor = playerInfo.Antag ? "red" : "white";
+                        playerInfoText.SetMarkup(
+                            Loc.GetString("round-end-summary-window-player-info-if-not-observer-text",
+                                ("playerOOCName", playerInfo.PlayerOOCName),
+                                ("icNameColor", icNameColor),
+                                ("playerICName", playerInfo.PlayerICName),
+                                ("playerRole", Loc.GetString(playerInfo.Role))));
+                    }
                 }
-                else if (playerInfo.EntMobState == MobState.Invalid)
-                {
-                    deathLabel.SetMarkup(Loc.GetString("round-end-summary-window-death-unknown"));
-                }
+                hBox.AddChild(playerInfoText);
+                playerInfoContainer.AddChild(hBox);
+            }
+        }
 
-                hBox.AddChild(textVBox);
-                panel.AddChild(hBox);
-                playerInfoContainer.AddChild(panel);
+        private void OnSearchTextChanged(LineEdit.LineEditEventArgs searchTerm, BoxContainer playerInfoContainer, RoundEndMessageEvent.RoundEndPlayerInfo[] playersInfo)
+        {
+            // Empty the result box when we star typing
+            playerInfoContainer.RemoveAllChildren();
+
+            string newText = searchTerm.Text;
+            if (string.IsNullOrWhiteSpace(newText))
+            {
+                // If search is empty, show all text and all players
+                PopulatePlayManifestList(playerInfoContainer, playersInfo);
+                return;
             }
 
-            playerInfoContainerScrollbox.AddChild(playerInfoContainer);
-            playerManifestTab.AddChild(playerInfoContainerScrollbox);
+            // Filter the player list based on search term
+            // Searches: Player OOC Name, Player IC Name, and Player Role
+            var filteredPlayersInfo = playersInfo.Where(player =>
+                player.PlayerOOCName.ToLowerInvariant().Contains(newText.ToLowerInvariant()) ||
+                (player.PlayerICName != null && player.PlayerICName.ToLowerInvariant().Contains(newText.ToLowerInvariant())) ||
+                Loc.GetString(player.Role).ToLowerInvariant().Contains(newText.ToLowerInvariant())
+            ).ToArray();
 
-            return playerManifestTab;
+            // Populate the player list with filtered results
+            PopulatePlayManifestList(playerInfoContainer, filteredPlayersInfo);
         }
-        #endregion
+
+        // Starlight-end
     }
 
 }

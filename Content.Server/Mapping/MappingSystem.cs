@@ -1,4 +1,3 @@
-using System.IO;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -27,7 +26,7 @@ public sealed partial class MappingSystem : EntitySystem
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>
-    ///     map id -> next autosave timespan & original filename.
+    ///     map id -> next autosave timespan &amp; original filename.
     /// </summary>
     /// <returns></returns>
     private Dictionary<EntityUid, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
@@ -60,7 +59,7 @@ public sealed partial class MappingSystem : EntitySystem
         if (!_autosaveEnabled)
             return;
 
-        foreach (var (uid, (time, name))in _currentlyAutosaving)
+        foreach (var (uid, (time, name)) in _currentlyAutosaving)
         {
             if (_timing.RealTime <= time)
                 continue;
@@ -73,10 +72,12 @@ public sealed partial class MappingSystem : EntitySystem
             }
 
             _currentlyAutosaving[uid] = (CalculateNextTime(), name);
-            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name);
+            var saveDir = Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/');
             _resMan.UserData.CreateDir(new ResPath(saveDir).ToRootedPath());
 
-            var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml"));
+            // Hardlight change: was crashing due to windows seperators, so added Path.DirectorySeparatorChar //
+            var path = new ResPath(Path.Combine(saveDir, $"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml")
+                .Replace(Path.DirectorySeparatorChar, '/'));
             Log.Info($"Autosaving map {name} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
 
             if (HasComp<MapComponent>(uid))
@@ -104,7 +105,7 @@ public sealed partial class MappingSystem : EntitySystem
             ToggleAutosave(uid.Value, path);
     }
 
-    public void ToggleAutosave(EntityUid uid, string? path=null)
+    public void ToggleAutosave(EntityUid uid, string? path = null)
     {
         if (!_autosaveEnabled)
             return;

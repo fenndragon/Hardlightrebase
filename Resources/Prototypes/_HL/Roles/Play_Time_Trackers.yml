@@ -1,0 +1,29 @@
+- type: playTimeTracker
+  id: JobServiceQuadBorg
+
+- type: playTimeTracker
+  id: JobMedicalQuadBorg
+
+- type: playTimeTracker
+  id: JobSecurityQuadBorg
+
+- type: playTimeTracker
+  id: JobEngineeringQuadBorg
+
+- type: playTimeTracker
+  id: JobSalvageQuadBorg
+
+- type: playTimeTracker
+  id: JobInterdyne
+
+- type: playTimeTracker
+  id: JobInterdyneHead
+
+- type: playTimeTracker
+  id: JobCentralCommandDirectorate
+
+- type: playTimeTracker
+  id: JobColonialNavyman
+
+- type: playTimeTracker
+  id: RoleAnomaly

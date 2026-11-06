@@ -107,16 +107,17 @@
       state: generic
   - type: RandomSpawner
     rarePrototypes:
-    - BorgModuleDefibrillator
+    - BorgModuleRescue
     - BorgModuleAdvancedCleaning
-    - BorgModuleClowning
+    # - BorgModuleClowning # Frontier: base
     - BorgModuleGardening
     - BorgModuleHarvesting
+    - BorgModuleChef # Frontier
     rareChance: 0.1
     prototypes:
-    - BorgModuleCable
-    - BorgModuleFireExtinguisher
-    - BorgModuleGPS
+    - BorgModuleJetpack # Was fire extinguisher, no longer exists
+    # - BorgModuleCable # Frontier: base
+    # - BorgModuleGPS # Frontier: useless
     - BorgModuleRadiationDetection
     - BorgModuleTool
     - BorgModuleArtifact

@@ -1,0 +1,733 @@
+using Content.Server.Popups;
+using Content.Server.Shuttles.Save;
+using Content.Shared._HL.Rooms;
+using Content.Shared.SprayPainter.Components;
+using Content.Shared.SprayPainter.Prototypes;
+using Content.Shared.Interaction;
+using Content.Server.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Shuttles.Save;
+using Content.Shared.Timing;
+using Content.Shared.Decals;
+using Content.Server.Decals;
+using Robust.Server.Player;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
+using Robust.Shared.Enums;
+using Robust.Shared.Player;
+using Content.Shared.Verbs;
+using System.Numerics;
+using Content.Server._HL.RoundPersistence.SaveBans;
+using Content.Shared._HL.RoundPersistence.SaveBans;
+using Content.Shared._HL.Shipyard;
+using Robust.Server.GameObjects;
+
+namespace Content.Server._HL.Rooms;
+
+public sealed class RoomGridSpawnerSystem : EntitySystem
+{
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ShipSerializationSystem _shipSerialization = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly SaveBanApi _saveBanApi = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+
+    private readonly Dictionary<NetUserId, PendingRoomLoad> _pendingLoads = new();
+    private readonly Dictionary<NetUserId, ActiveRoomSession> _activeSessions = new();
+
+    private EntityQuery<MapGridComponent> _gridQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
+        _player.PlayerStatusChanged += OnPlayerStatusChanged;
+
+        SubscribeLocalEvent<RoomGridSpawnerConsoleComponent, InteractHandEvent>(OnConsoleInteract);
+        SubscribeLocalEvent<RoomGridSpawnerConsoleComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
+        SubscribeLocalEvent<MindContainerComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeNetworkEvent<SendRoomGridDataMessage>(OnRoomGridData);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _player.PlayerStatusChanged -= OnPlayerStatusChanged;
+    }
+
+    private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+    {
+        if (e.NewStatus is not (SessionStatus.Disconnected or SessionStatus.Zombie))
+            return;
+
+        // Only clear stale pending loads for disconnected players.
+        // Active sessions are intentionally left untouched to avoid impacting live room state.
+        _pendingLoads.Remove(e.Session.UserId);
+    }
+
+    private void OnConsoleInteract(EntityUid uid, RoomGridSpawnerConsoleComponent component, InteractHandEvent args)
+    {
+        if (args.Handled || args.User == EntityUid.Invalid)
+            return;
+
+        if (component.InUse)
+        {
+            _popup.PopupEntity("This console is already in use.", args.User, args.User);
+            args.Handled = true;
+            return;
+        }
+
+        if (!_xformQuery.TryComp(uid, out var consoleXform) || consoleXform.GridUid == null)
+            return;
+
+        if (TryComp<UseDelayComponent>(uid, out var useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
+            return;
+
+        if (!_mind.TryGetMind(args.User, out _, out var mindComp) || mindComp.UserId == null)
+            return;
+
+        var session = _player.GetSessionById(mindComp.UserId.Value);
+        if (session == null)
+            return;
+
+        if (_pendingLoads.ContainsKey(mindComp.UserId.Value))
+        {
+            _popup.PopupEntity("Your room is already being loaded.", args.User, args.User);
+            args.Handled = true;
+            return;
+        }
+
+        if (_activeSessions.TryGetValue(mindComp.UserId.Value, out var activeSession))
+        {
+            var message = activeSession.ConsoleUid == uid
+                ? "Your room is already loaded here."
+                : "You already have a room loaded. Stash it before loading another.";
+
+            _popup.PopupEntity(message, args.User, args.User);
+            args.Handled = true;
+            return;
+        }
+
+        if (!TryGetAreaMarker(uid, component, consoleXform, out var markerUid, out var markerComp, out var markerXform))
+        {
+            _popup.PopupEntity("No linked room marker found.", args.User, args.User);
+            return;
+        }
+
+        var bounds = GetAreaBounds(markerComp, markerXform);
+        var characterKey = BuildCharacterKey(mindComp.UserId.Value, mindComp.CharacterName ?? session.Name);
+        var gridUid = consoleXform.GridUid.Value;
+        var anchorTile = _gridQuery.TryComp(gridUid, out var anchorGrid)
+            ? _map.LocalToTile(gridUid, anchorGrid, markerXform.Coordinates)
+            : new Vector2i((int)MathF.Floor(markerXform.LocalPosition.X), (int)MathF.Floor(markerXform.LocalPosition.Y));
+        var anchorPosition = markerXform.LocalPosition;
+        // Apartment markers in maps are placed with rot: 0; the console is the entity that
+        // carries the bay's facing direction (it's wall-mounted on the entrance). Use the
+        // console rotation so saved rooms re-orient to match each bay's entrance.
+        // See HardLightSector/HardLight#1493 / #1512.
+        var anchorRotation = consoleXform.LocalRotation;
+
+        var pending = new PendingRoomLoad(uid, markerUid, gridUid, bounds, characterKey, anchorTile, anchorPosition, anchorRotation);
+        _pendingLoads[mindComp.UserId.Value] = pending;
+
+        RaiseNetworkEvent(new RequestRoomGridLoadMessage(GetNetEntity(uid), characterKey), session);
+        _popup.PopupEntity("Looking for your saved room...", args.User, args.User);
+        args.Handled = true;
+    }
+
+    private void OnGetAlternativeVerbs(Entity<RoomGridSpawnerConsoleComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!TryGetUserId(args.User, out var userId))
+            return;
+
+        if (!_activeSessions.TryGetValue(userId, out var activeSession) || activeSession.ConsoleUid != ent.Owner)
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = "Save room",
+            Act = () =>
+            {
+                if (!_activeSessions.TryGetValue(userId, out var session) || session.ConsoleUid != ent.Owner)
+                    return;
+
+                if (TrySaveRoom(userId, session))
+                    _popup.PopupEntity("Room saved.", user, user);
+                else
+                    _popup.PopupEntity("Failed to save room.", user, user);
+            }
+        });
+
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = "Stash room",
+            Act = () =>
+            {
+                if (!_activeSessions.TryGetValue(userId, out var session) || session.ConsoleUid != ent.Owner)
+                    return;
+
+                SaveAndResetRoom(userId, session);
+                _popup.PopupEntity("Room stashed.", user, user);
+            }
+        });
+    }
+
+    private void OnRoomGridData(SendRoomGridDataMessage msg, EntitySessionEventArgs args)
+    {
+        var userId = args.SenderSession.UserId;
+        if (!_pendingLoads.TryGetValue(userId, out var pending))
+            return;
+
+        _pendingLoads.Remove(userId);
+
+        if (msg.CharacterKey != pending.CharacterKey)
+            return;
+
+        if (!TryGetEntity(msg.ConsoleNetEntity, out var consoleUid) || Deleted(consoleUid))
+            return;
+
+        var consoleEntity = consoleUid.Value;
+
+        var roomData = msg.RoomData;
+        if (!msg.Found || string.IsNullOrWhiteSpace(roomData))
+        {
+            var blank = CreateBlankRoomData(pending.Bounds, BlankRoomSize, BlankRoomTileId);
+            NormalizeRoomDataToAnchor(blank, pending.AnchorTile, pending.AnchorPosition, pending.AnchorRotation);
+            roomData = _shipSerialization.SerializeShipGridDataToYaml(blank);
+            RaiseNetworkEvent(new SendRoomGridSaveDataClientMessage(pending.CharacterKey, roomData), args.SenderSession);
+            _popup.PopupEntity("No saved room found. Created a blank room.", consoleEntity, args.SenderSession);
+        }
+
+        if (!_gridQuery.TryComp(pending.GridUid, out var gridComp))
+            return;
+
+        consoleEntity = ClearArea(pending.GridUid, gridComp, pending.Bounds, consoleEntity, pending.MarkerUid, DeleteContainedEntitiesOnReset);
+
+        var shipData = _shipSerialization.DeserializeShipGridDataFromYaml(roomData, userId);
+        DenormalizeRoomDataToAnchor(shipData, pending.AnchorTile, pending.AnchorPosition, pending.AnchorRotation);
+        shipData = FilterShipGridDataToBounds(shipData, pending.Bounds);
+        _shipSerialization.ReconstructShipOnExistingGrid(shipData, pending.GridUid, Vector2.Zero);
+
+        if (TryComp<RoomGridSpawnerConsoleComponent>(consoleEntity, out var consoleComp))
+        {
+            consoleComp.InUse = true;
+            _appearance.SetData(consoleEntity, RoomGridSpawnerVisuals.InUse, true);
+        }
+
+        _activeSessions[userId] = new ActiveRoomSession(consoleEntity, pending.MarkerUid, pending.GridUid, pending.Bounds, pending.CharacterKey, pending.AnchorTile, pending.AnchorPosition, pending.AnchorRotation);
+
+        _popup.PopupEntity("Room loaded.", consoleEntity, args.SenderSession);
+    }
+
+    private void OnMindRemoved(EntityUid uid, MindContainerComponent component, MindRemovedMessage args)
+    {
+        NetUserId? userId = args.Mind.Comp.UserId;
+        if (userId == null && _player.TryGetSessionByEntity(uid, out var playerSession))
+            userId = playerSession.UserId;
+
+        if (userId == null)
+            return;
+
+        _pendingLoads.Remove(userId.Value);
+
+        if (!_activeSessions.TryGetValue(userId.Value, out var activeSession))
+            return;
+
+        SaveAndResetRoom(userId.Value, activeSession);
+    }
+
+    private void SaveAndResetRoom(NetUserId userId, ActiveRoomSession session)
+    {
+        TrySaveRoom(userId, session);
+        ResetRoom(userId, session);
+    }
+
+    private void StampSprayPaintedInBounds(EntityUid gridId, Box2 bounds)
+    {
+        var query = EntityQueryEnumerator<SprayPaintedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var painted, out var xform))
+        {
+            if (xform.GridUid != gridId)
+                continue;
+            if (!bounds.Contains(xform.LocalPosition))
+                continue;
+            if (_appearance.TryGetData(uid, PaintableVisuals.Prototype, out string styleProto))
+            {
+                painted.PaintedPrototype = styleProto;
+                Dirty(uid, painted);
+            }
+        }
+    }
+
+    private bool TrySaveRoom(NetUserId userId, ActiveRoomSession session)
+    {
+        if (!_gridQuery.TryComp(session.GridUid, out var gridComp))
+            return false;
+
+        var excluded = new HashSet<EntityUid> { session.ConsoleUid, session.MarkerUid };
+        StampSprayPaintedInBounds(session.GridUid, session.Bounds);
+        EnforceSaveBans(session.GridUid, session.Bounds);
+        var shipData = _shipSerialization.SerializeShipArea(session.GridUid, userId, $"Room_{session.CharacterKey}", session.Bounds, excluded, includeVendors: true);
+        NormalizeRoomDataToAnchor(shipData, session.AnchorTile, session.AnchorPosition, session.AnchorRotation);
+        var yaml = _shipSerialization.SerializeShipGridDataToYaml(shipData);
+
+        if (_player.TryGetSessionById(userId, out var playerSession))
+        {
+            RaiseNetworkEvent(new SendRoomGridSaveDataClientMessage(session.CharacterKey, yaml), playerSession);
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Evaluates and enforces save bans on the grid within the specified bounds.
+    /// </summary>
+    private void EnforceSaveBans(EntityUid gridUid, Box2 bounds)
+    {
+        var exclusions = GetExcludedEntities(gridUid).ToHashSet();
+
+        var entities = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(gridUid, bounds, entities);
+
+        var violations = entities
+            .Except(exclusions)
+            .Select(e => (Entity: e, Result: _saveBanApi.CheckForRestrictions(e) as SaveBanApi.SaveBanResult.IsSaveRestricted))
+            .Where(v => v.Result is not null); // IF YOU REMOVE THIS, ENSURE YOU REMOVE LATER NULL-SUPPRESSIONS!
+
+        foreach (var (entity, restriction) in violations)
+        {
+            // Check Deleted here because a TotalBan on a parent in a previous iteration
+            // will implicitly delete its children.
+            if (Deleted(entity))
+                continue;
+
+            var isSaveRestricted = restriction!; // We can safely null-suppress here due to the `Where` clause.
+
+            switch (isSaveRestricted.Ban)
+            {
+                case { Strictness: SaveBanStore.SaveRestrictionStrictness.TotalBan }:
+                    Del(entity);
+                    break;
+
+                // In this case, we can currently assume it is a stripbanned component. This is **NOT** a stable guarantee!
+                // TODO: Update this when the TypeEnforcedValidSavebanFlagStrictness TODO is resolved. (TypeEnforcedValidSavebanFlagStrictness)
+                case
+                {
+                    Strictness: SaveBanStore.SaveRestrictionStrictness.StripBan,
+                    BannedFlag: SaveBanStore.SaveBanFlag.SaveBanFlagByComponent compFlag,
+                }
+                when _componentFactory.TryGetRegistration(compFlag.Name, out var reg):
+                    RemComp(entity, reg.Type);
+                    break;
+            }
+        }
+
+        return;
+
+        // Function to handle enumerator loops to keep the main method body more declarative.
+        IEnumerable<EntityUid> GetExcludedEntities(EntityUid root)
+        {
+            var childEnumerator = Transform(root).ChildEnumerator;
+            while (childEnumerator.MoveNext(out var child))
+            {
+                if (!HasComp<HLPersistOnShipSaveComponent>(child))
+                    continue;
+
+                yield return child;
+
+                var descendants = Transform(child).ChildEnumerator;
+                while (descendants.MoveNext(out var descendant))
+                {
+                    yield return descendant;
+                }
+            }
+        }
+    }
+
+    private void ResetRoom(NetUserId userId, ActiveRoomSession session)
+    {
+        if (_gridQuery.TryComp(session.GridUid, out MapGridComponent? gridComp))
+            ClearArea(session.GridUid, gridComp, session.Bounds, session.ConsoleUid, session.MarkerUid, DeleteContainedEntitiesOnReset);
+
+        _activeSessions.Remove(userId);
+    }
+
+    private bool TryGetUserId(EntityUid user, out NetUserId userId)
+    {
+        userId = default;
+
+        if (!_mind.TryGetMind(user, out _, out var mindComp) || mindComp.UserId == null)
+            return false;
+
+        userId = mindComp.UserId.Value;
+        return true;
+    }
+
+    private bool TryGetAreaMarker(EntityUid consoleUid, RoomGridSpawnerConsoleComponent component, TransformComponent consoleXform,
+        out EntityUid markerUid, out RoomGridSpawnAreaComponent markerComp, out TransformComponent markerXform)
+    {
+        markerUid = default;
+        markerComp = default!;
+        markerXform = default!;
+
+        if (consoleXform.GridUid == null || string.IsNullOrWhiteSpace(component.AreaGroup))
+            return false;
+
+        var bestDist = float.MaxValue;
+        var query = EntityQueryEnumerator<RoomGridSpawnAreaComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var areaComp, out var xform))
+        {
+            if (!string.Equals(areaComp.AreaGroup, component.AreaGroup, StringComparison.OrdinalIgnoreCase))
+                continue;
+            if (xform.GridUid != consoleXform.GridUid)
+                continue;
+
+            var dist = (xform.LocalPosition - consoleXform.LocalPosition).LengthSquared();
+            if (dist >= bestDist)
+                continue;
+
+            bestDist = dist;
+            markerUid = uid;
+            markerComp = areaComp;
+            markerXform = xform;
+        }
+
+        return markerUid != default;
+    }
+
+    private Box2 GetAreaBounds(RoomGridSpawnAreaComponent markerComp, TransformComponent markerXform)
+    {
+        var widthTiles = Math.Max(1, (int)MathF.Round(markerComp.Width));
+        var heightTiles = Math.Max(1, (int)MathF.Round(markerComp.Height));
+
+        var centerTile = markerXform.GridUid != null && _gridQuery.TryComp(markerXform.GridUid, out var grid)
+            ? _map.LocalToTile(markerXform.GridUid.Value, grid, markerXform.Coordinates)
+            : new Vector2i((int)MathF.Floor(markerXform.LocalPosition.X), (int)MathF.Floor(markerXform.LocalPosition.Y));
+
+        var centerX = centerTile.X;
+        var centerY = centerTile.Y;
+
+        var left = centerX - widthTiles / 2;
+        var bottom = centerY - heightTiles / 2;
+
+        return new Box2(
+            new Vector2(left, bottom),
+            new Vector2(left + widthTiles, bottom + heightTiles));
+    }
+
+    private EntityUid ClearArea(EntityUid gridUid, MapGridComponent grid, Box2 bounds, EntityUid consoleUid, EntityUid markerUid, bool includeContained)
+    {
+        var respawnConsole = consoleUid != EntityUid.Invalid && Exists(consoleUid);
+        EntityCoordinates? consoleCoords = null;
+        Angle consoleRotation = Angle.Zero;
+
+        if (respawnConsole && _xformQuery.TryComp(consoleUid, out var consoleXform))
+        {
+            consoleCoords = consoleXform.Coordinates;
+            consoleRotation = consoleXform.LocalRotation;
+        }
+
+        var entities = new HashSet<EntityUid>();
+        var innerBounds = bounds.Enlarged(-0.001f);
+        var flags = includeContained ? LookupFlags.All : LookupFlags.All & ~LookupFlags.Contained;
+        _lookup.GetLocalEntitiesIntersecting(gridUid, bounds, entities, flags);
+        foreach (var entity in entities)
+        {
+            if (entity == gridUid || entity == markerUid)
+                continue;
+
+            if (HasComp<MapGridComponent>(entity))
+                continue;
+
+            if (HasComp<MindContainerComponent>(entity))
+                continue;
+
+            if (_xformQuery.TryComp(entity, out var entityXform) && !innerBounds.Contains(entityXform.LocalPosition))
+                continue;
+
+            Del(entity);
+        }
+
+        if (respawnConsole)
+            Del(consoleUid);
+
+        foreach (var (decalId, _) in _decal.GetDecalsIntersecting(gridUid, bounds).ToList())
+        {
+            _decal.RemoveDecal(gridUid, decalId);
+        }
+
+        var minX = (int)MathF.Floor(bounds.Left);
+        var maxX = (int)MathF.Ceiling(bounds.Right) - 1;
+        var minY = (int)MathF.Floor(bounds.Bottom);
+        var maxY = (int)MathF.Ceiling(bounds.Top) - 1;
+
+        var tile = new Tile(_tileDefManager[BlankRoomTileId].TileId);
+        for (var x = minX; x <= maxX; x++)
+        {
+            for (var y = minY; y <= maxY; y++)
+            {
+                _map.SetTile(gridUid, grid, new Vector2i(x, y), tile);
+            }
+        }
+
+        if (respawnConsole && consoleCoords != null)
+        {
+            var newConsole = Spawn(RoomConsolePrototype, consoleCoords.Value);
+            _transform.SetLocalRotation(newConsole, consoleRotation);
+            if (TryComp<RoomGridSpawnerConsoleComponent>(newConsole, out var consoleComp))
+                consoleComp.InUse = false;
+            _appearance.SetData(newConsole, RoomGridSpawnerVisuals.InUse, false);
+            return newConsole;
+        }
+
+        return consoleUid;
+    }
+
+    private ShipGridData FilterShipGridDataToBounds(ShipGridData source, Box2 bounds)
+    {
+        var filtered = new ShipGridData
+        {
+            Metadata = source.Metadata,
+            Grids = new List<GridData>()
+        };
+
+        if (source.Grids.Count == 0)
+            return filtered;
+
+        var grid = source.Grids[0];
+        var gridOut = new GridData
+        {
+            GridId = grid.GridId,
+            AtmosphereData = null,
+            DecalData = FilterDecalDataToBounds(grid.DecalData, bounds)
+        };
+
+        foreach (var tile in grid.Tiles)
+        {
+            var pos = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
+            if (bounds.Contains(pos))
+                gridOut.Tiles.Add(tile);
+        }
+
+        var included = new HashSet<string>();
+        foreach (var entity in grid.Entities)
+        {
+            if (entity.IsContained)
+                continue;
+            if (bounds.Contains(entity.Position))
+                included.Add(entity.EntityId);
+        }
+
+        bool added;
+        do
+        {
+            added = false;
+            foreach (var entity in grid.Entities)
+            {
+                if (included.Contains(entity.EntityId))
+                    continue;
+                if (string.IsNullOrEmpty(entity.ParentContainerEntity))
+                    continue;
+                if (!included.Contains(entity.ParentContainerEntity))
+                    continue;
+
+                included.Add(entity.EntityId);
+                added = true;
+            }
+        }
+        while (added);
+
+        foreach (var entity in grid.Entities)
+        {
+            if (included.Contains(entity.EntityId))
+                gridOut.Entities.Add(entity);
+        }
+
+        filtered.Grids.Add(gridOut);
+        return filtered;
+    }
+
+    // Save: convert tile indices and entity positions/rotations into a frame anchored at the
+    // room marker's tile / position / rotation, so the same data can be loaded into any apartment.
+    // Tiles use pure integer arithmetic (exact for 90° marker rotations) to avoid the
+    // banker's-rounding collisions that occur when rotating tile centers around a half-integer anchor.
+    private void NormalizeRoomDataToAnchor(ShipGridData data, Vector2i anchorTile, Vector2 anchorPosition, Angle anchorRotation)
+    {
+        if (data.Grids.Count == 0)
+            return;
+
+        var anchorTheta = (float)anchorRotation.Theta;
+        var inverseRotation = Matrix3x2.CreateRotation(-anchorTheta);
+        var grid = data.Grids[0];
+
+        foreach (var tile in grid.Tiles)
+        {
+            var rel = new Vector2(tile.X - anchorTile.X, tile.Y - anchorTile.Y);
+            var rotated = Vector2.Transform(rel, inverseRotation);
+            tile.X = (int)MathF.Round(rotated.X);
+            tile.Y = (int)MathF.Round(rotated.Y);
+        }
+
+        foreach (var entity in grid.Entities)
+        {
+            var relativePosition = Vector2.Transform(entity.Position - anchorPosition, inverseRotation);
+            entity.Position = new Vector2(
+                MathF.Round(relativePosition.X, 3),
+                MathF.Round(relativePosition.Y, 3));
+            entity.Rotation = MathF.Round(entity.Rotation - anchorTheta, 3);
+        }
+
+        grid.DecalData = TransformDecalData(
+            grid.DecalData,
+            decal =>
+            {
+                var relativePosition = Vector2.Transform(decal.Coordinates - anchorPosition, inverseRotation);
+                return decal
+                    .WithCoordinates(new Vector2(
+                        MathF.Round(relativePosition.X, 3),
+                        MathF.Round(relativePosition.Y, 3)))
+                    .WithRotation(decal.Angle - anchorRotation);
+            });
+
+        data.Metadata.RoomRelative = true;
+        data.Metadata.RoomAnchorPosition = anchorPosition;
+        data.Metadata.RoomAnchorRotation = anchorTheta;
+    }
+
+    private void DenormalizeRoomDataToAnchor(ShipGridData data, Vector2i anchorTile, Vector2 anchorPosition, Angle anchorRotation)
+    {
+        if (!data.Metadata.RoomRelative || data.Grids.Count == 0)
+            return;
+
+        var anchorTheta = (float)anchorRotation.Theta;
+        var forwardRotation = Matrix3x2.CreateRotation(anchorTheta);
+        var grid = data.Grids[0];
+
+        foreach (var tile in grid.Tiles)
+        {
+            var rel = new Vector2(tile.X, tile.Y);
+            var rotated = Vector2.Transform(rel, forwardRotation);
+            tile.X = anchorTile.X + (int)MathF.Round(rotated.X);
+            tile.Y = anchorTile.Y + (int)MathF.Round(rotated.Y);
+        }
+
+        foreach (var entity in grid.Entities)
+        {
+            var absolutePosition = Vector2.Transform(entity.Position, forwardRotation) + anchorPosition;
+            entity.Position = new Vector2(
+                MathF.Round(absolutePosition.X, 3),
+                MathF.Round(absolutePosition.Y, 3));
+            entity.Rotation = MathF.Round(entity.Rotation + anchorTheta, 3);
+        }
+
+        grid.DecalData = TransformDecalData(
+            grid.DecalData,
+            decal =>
+            {
+                var absolutePosition = Vector2.Transform(decal.Coordinates, forwardRotation) + anchorPosition;
+                return decal
+                    .WithCoordinates(new Vector2(
+                        MathF.Round(absolutePosition.X, 3),
+                        MathF.Round(absolutePosition.Y, 3)))
+                    .WithRotation(decal.Angle + anchorRotation);
+            });
+    }
+
+    private string? FilterDecalDataToBounds(string? decalData, Box2 bounds)
+    {
+        return TransformDecalData(decalData, decal => decal, decal => bounds.Contains(decal.Coordinates));
+    }
+
+    private string? TransformDecalData(string? decalData, Func<Decal, Decal> transform, Func<Decal, bool>? predicate = null)
+    {
+        return _shipSerialization.TransformSerializedDecalData(decalData, transform, predicate);
+    }
+
+    private static string BuildCharacterKey(NetUserId userId, string characterName)
+    {
+        var safeName = characterName.Trim();
+        if (string.IsNullOrWhiteSpace(safeName))
+            safeName = "unknown";
+
+        return $"{userId.UserId:N}_{safeName}";
+    }
+
+    private static ShipGridData CreateBlankRoomData(Box2 bounds, int size, string tileId)
+    {
+        var half = (size - 1) / 2;
+        var center = bounds.Center;
+        var originX = (int)MathF.Floor(center.X) - half;
+        var originY = (int)MathF.Floor(center.Y) - half;
+
+        var grid = new GridData
+        {
+            AtmosphereData = null,
+            DecalData = null
+        };
+
+        for (var x = 0; x < size; x++)
+        {
+            for (var y = 0; y < size; y++)
+            {
+                grid.Tiles.Add(new TileData
+                {
+                    X = originX + x,
+                    Y = originY + y,
+                    TileType = tileId
+                });
+            }
+        }
+
+        return new ShipGridData
+        {
+            Metadata = new ShipMetadata
+            {
+                ShipName = "BlankRoom",
+                Timestamp = DateTime.UtcNow
+            },
+            Grids = new List<GridData> { grid }
+        };
+    }
+
+    private const int BlankRoomSize = 7;
+    private const string BlankRoomTileId = "FloorSteel";
+    private const string RoomConsolePrototype = "ComputerRoomGridSpawner";
+    private const bool DeleteContainedEntitiesOnReset = false;
+
+    private readonly record struct PendingRoomLoad(
+        EntityUid ConsoleUid,
+        EntityUid MarkerUid,
+        EntityUid GridUid,
+        Box2 Bounds,
+        string CharacterKey,
+        Vector2i AnchorTile,
+        Vector2 AnchorPosition,
+        Angle AnchorRotation);
+
+    private readonly record struct ActiveRoomSession(
+        EntityUid ConsoleUid,
+        EntityUid MarkerUid,
+        EntityUid GridUid,
+        Box2 Bounds,
+        string CharacterKey,
+        Vector2i AnchorTile,
+        Vector2 AnchorPosition,
+        Angle AnchorRotation);
+}

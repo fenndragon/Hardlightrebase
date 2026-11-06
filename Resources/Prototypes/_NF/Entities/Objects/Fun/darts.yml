@@ -18,10 +18,11 @@
   - type: Tag
     tags:
     - NFTrackingDart
+    - DartGunAmmo
   - type: Ammo
     muzzleFlash: null
   - type: Sprite
-    sprite: _NF/Objects/Weapons/Guns/Projectiles/tracking_dart.rsi
+    sprite: _NF/Objects/Weapons/Guns/Ammunition/Projectiles/tracking_dart.rsi
     rotation: -45
     layers:
     - state: icon

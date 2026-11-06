@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
@@ -10,7 +9,6 @@ using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -19,6 +17,8 @@ using Robust.Shared.Physics.Components;
 using Content.Shared.Whitelist; // Frontier
 using Content.Shared.Buckle.Components; // Frontier
 using Content.Shared.Buckle; // Frontier
+using Content.Shared.Mind.Components; // Frontier
+using Content.Server.Ghost.Roles.Components; // Frontier
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
 
@@ -191,7 +191,7 @@ public sealed partial class MechGrabberSystem : EntitySystem
         if (!_mech.TryChangeEnergy(equipmentComponent.EquipmentOwner.Value, component.GrabEnergyDelta))
             return;
 
-        // Frontier: Remove people from chairs
+        // Frontier: Remove people from chairs and containers
         if (TryComp<StrapComponent>(args.Args.Target, out var strapComp) && strapComp.BuckledEntities != null)
         {
             foreach (var buckleUid in strapComp.BuckledEntities)
@@ -199,7 +199,35 @@ public sealed partial class MechGrabberSystem : EntitySystem
                 _buckle.Unbuckle(buckleUid, args.Args.User);
             }
         }
-        // End Frontier
+
+        // Remove contained humanoids
+        // TODO: revise condition for "generic player entities"
+        if (TryComp<ContainerManagerComponent>(args.Args.Target, out var containerManager))
+        {
+            EntityCoordinates? coords = null;
+            if (TryComp(equipmentComponent.EquipmentOwner, out TransformComponent? xform))
+                coords = xform.Coordinates;
+
+            List<EntityUid> toRemove = new();
+            foreach (var container in containerManager.Containers)
+            {
+                toRemove.Clear();
+                foreach (var contained in container.Value.ContainedEntities)
+                {
+                    if (HasComp<GhostRoleComponent>(contained)
+                        || TryComp<MindContainerComponent>(contained, out var mindContainer)
+                        && mindContainer.HasMind)
+                    {
+                        toRemove.Add(contained);
+                    }
+                }
+                foreach (var removeUid in toRemove)
+                {
+                    _container.Remove(removeUid, container.Value, destination: coords);
+                }
+            }
+        }
+        // End Frontier: Remove people from chairs and containers
 
         _container.Insert(args.Args.Target.Value, component.ItemContainer);
         _mech.UpdateUserInterface(equipmentComponent.EquipmentOwner.Value);

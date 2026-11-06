@@ -1,14 +1,11 @@
 using Content.Server.Construction.Components;
-using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
 using Content.Shared.Database;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Server.Construction
 {
@@ -325,7 +322,7 @@ namespace Content.Server.Construction
             var newUid = EntityManager.CreateEntityUninitialized(newEntity, transform.Coordinates);
 
             // Construction transferring.
-            var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);
+            var newConstruction = EnsureComp<ConstructionComponent>(newUid);
 
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
@@ -366,13 +363,30 @@ namespace Content.Server.Construction
             var newTransform = Transform(newUid);
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
-            newTransform.Anchored = transform.Anchored;
+            if (!transform.Anchored)
+                TransformSystem.Unanchor(newUid, newTransform);
+
+            // Preserve stack information when changing prototypes (e.g., roasting a stack of beans)
+            if (TryComp<Shared.Stacks.StackComponent>(uid, out var oldStack) && TryComp<Shared.Stacks.StackComponent>(newUid, out var newStack))
+            {
+                // Copy non-count properties first
+                newStack.Unlimited = oldStack.Unlimited;
+                newStack.MaxCountOverride = oldStack.MaxCountOverride;
+                newStack.Lingering = oldStack.Lingering;
+                newStack.ThrowIndividually = oldStack.ThrowIndividually;
+                newStack.BaseLayer = oldStack.BaseLayer;
+                newStack.IsComposite = oldStack.IsComposite;
+                newStack.LayerStates = new List<string>(oldStack.LayerStates);
+
+                // Then set the count via the stack system to ensure proper handling
+                _stackSystem.SetCount(newUid, oldStack.Count, newStack);
+            }
 
             // Container transferring.
             if (containerManager != null)
             {
                 // Ensure the new entity has a container manager. Also for resolve goodness.
-                var newContainerManager = EntityManager.EnsureComponent<ContainerManagerComponent>(newUid);
+                var newContainerManager = EnsureComp<ContainerManagerComponent>(newUid);
 
                 // Transfer all construction-owned containers from the old entity to the new one.
                 foreach (var container in construction.Containers)
@@ -400,12 +414,18 @@ namespace Content.Server.Construction
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
 
-            foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
+            var currentNode = GetCurrentNode(newUid, newConstruction);
+            if (currentNode != null)
             {
-                logic.Transform(uid, newUid, userUid, new(EntityManager));
+                foreach (var logic in currentNode.TransformLogic)
+                {
+                    logic.Transform(uid, newUid, userUid, new(EntityManager));
+                }
             }
 
             EntityManager.InitializeAndStartEntity(newUid);
+            if (transform.Anchored && !newTransform.Anchored)
+                TransformSystem.AnchorEntity(newUid, newTransform);
 
             QueueDel(uid);
 

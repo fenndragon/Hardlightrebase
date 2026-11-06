@@ -1,6 +1,5 @@
 using Content.Shared.Gateway;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Gateway.UI;
@@ -24,6 +23,11 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
         _window.OpenPortal += destination =>
         {
             SendMessage(new GatewayOpenPortalMessage(destination));
+        };
+
+        _window.SpawnDockingArm += destination =>
+        {
+            SendMessage(new GatewaySpawnDockingArmMessage(destination));
         };
     }
 

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Administration.Notes;
 using Content.Shared.CCVar;
@@ -38,7 +37,6 @@ public sealed partial class AdminNotesControl : Control
         _noteFreshDays = _cfg.GetCVar(CCVars.NoteFreshDays);
         _noteStaleDays = _cfg.GetCVar(CCVars.NoteStaleDays);
 
-        NewNoteButton.OnPressed += OnNewNoteButtonPressed;
         ShowMoreButton.OnPressed += OnShowMoreButtonPressed;
     }
 
@@ -139,7 +137,7 @@ public sealed partial class AdminNotesControl : Control
         }
         else
         {
-            alpha = (float) (1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
+            alpha = (float)(1 - Math.Clamp((timeDiff.TotalDays - _noteFreshDays) / (_noteStaleDays - _noteFreshDays), 0, 1));
         }
 
         input.Modulate = input.Modulate.WithAlpha(alpha);
@@ -208,14 +206,17 @@ public sealed partial class AdminNotesControl : Control
         NewNoteButton.Disabled = !create;
     }
 
-    protected override void Dispose(bool disposing)
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
     {
-        base.Dispose(disposing);
+        base.EnteredTree();
+        NewNoteButton.OnPressed += OnNewNoteButtonPressed;
+    }
+    // HL END
 
-        if (!disposing)
-        {
-            return;
-        }
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
 
         Inputs.Clear();
         NewNoteButton.OnPressed -= OnNewNoteButtonPressed;

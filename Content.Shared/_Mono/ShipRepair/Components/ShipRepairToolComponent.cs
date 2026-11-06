@@ -6,8 +6,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Mono.ShipRepair.Components;
 
+// WOLFGATE: correct malformed XML documentation after merge
 /// <summary>
-/// Allows item to act as a tool that repairs missing tiles and entities of a grid with <see cref="ShipRepairDataComponent">.
+/// Allows item to act as a tool that repairs missing tiles and entities of a grid with <see cref="ShipRepairDataComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ShipRepairToolComponent : Component
@@ -33,8 +34,9 @@ public sealed partial class ShipRepairToolComponent : Component
     [DataField, AutoNetworkedField]
     public float TileRepairTime = 0.5f;
 
+    // WOLFGATE: correct malformed XML documentation after merge
     /// <summary>
-    /// Charges to take from <see cref="LimitedChargesComponent"> when repairing tiles.
+    /// Charges to take from <see cref="LimitedChargesComponent"/> when repairing tiles.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int TileRepairCost = 1;

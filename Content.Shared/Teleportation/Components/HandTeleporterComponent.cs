@@ -14,17 +14,23 @@ namespace Content.Shared.Teleportation.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class HandTeleporterComponent : Component
 {
-    [ViewVariables, DataField("firstPortal")]
+    [ViewVariables]
     public EntityUid? FirstPortal = null;
 
-    [ViewVariables, DataField("secondPortal")]
+    [ViewVariables]
     public EntityUid? SecondPortal = null;
 
     /// <summary>
-    ///     Portals can't be placed on different grids?
+    ///     Should the portals be able to be placed across grids?
     /// </summary>
     [DataField]
     public bool AllowPortalsOnDifferentGrids;
+
+    /// <summary>
+    ///     Should the portals work across maps?
+    /// </summary>
+    [DataField]
+    public bool AllowPortalsOnDifferentMaps;
 
     [DataField("firstPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string FirstPortalPrototype = "PortalRed";
@@ -32,7 +38,8 @@ public sealed partial class HandTeleporterComponent : Component
     [DataField("secondPortalPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SecondPortalPrototype = "PortalBlue";
 
-    [DataField("newPortalSound")] public SoundSpecifier NewPortalSound =
+    [DataField("newPortalSound")]
+    public SoundSpecifier NewPortalSound =
         new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
         {
             Params = AudioParams.Default.WithVolume(-2f)

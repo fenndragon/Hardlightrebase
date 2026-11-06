@@ -1,10 +1,8 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
-using Content.Server.Maps;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Maps;
-using Robust.Shared.Map;
+using Content.Shared.Shuttles.Components; // Frontier
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -128,4 +126,19 @@ public partial class AtmosphereSystem
 
         _tile.PryTile(tileRef);
     }
+
+    // Frontier: disable atmos off maps
+    /// <summary>
+    ///     Checks if atmos input devices are allowed to run on the given map entity.
+    /// </summary>
+    /// <param name="mapUid">The map in question.</param>
+    public bool AtmosInputCanRunOnMap(EntityUid? mapUid)
+    {
+        // Frontier: check running gas extraction
+        if (!TryComp<MapComponent>(mapUid, out var mapComp))
+            return false;
+
+        return AllowMapGasExtraction || HasComp<FTLMapComponent>(mapUid) || mapComp.MapId == _gameTicker.DefaultMap;
+    }
+    // End Frontier: disable atmos off maps
 }

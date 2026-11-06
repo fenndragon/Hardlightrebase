@@ -7,7 +7,7 @@ namespace Content.IntegrationTests.Tests
     public sealed class RestartRoundTest
     {
         [Test]
-        public async Task Test()
+        public async Task RestartRoundTestRun()
         {
             await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {

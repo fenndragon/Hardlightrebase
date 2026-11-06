@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Trinary.Components
 {
@@ -17,12 +17,15 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
 
         public float NodeOne { get; }
 
-        public GasMixerBoundUserInterfaceState(string mixerLabel, float outputPressure, bool enabled, float nodeOne)
+        public bool HighFlow { get; }
+
+        public GasMixerBoundUserInterfaceState(string mixerLabel, float outputPressure, bool enabled, float nodeOne, bool highFlow)
         {
             MixerLabel = mixerLabel;
             OutputPressure = outputPressure;
             Enabled = enabled;
             NodeOne = nodeOne;
+            HighFlow = highFlow;
         }
     }
 

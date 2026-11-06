@@ -72,7 +72,7 @@
   - type: InputMover
   - type: MobMover
   - type: ZombieImmune
-  - type: ProtectedFromStepTriggers
+  - type: Dispellable
 
 - type: entity
   abstract: true
@@ -101,11 +101,20 @@
       - SimpleHostile
   - type: Damageable
     damageContainer: StructuralInorganic
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - orecrab-feedback
+  - type: InnatePsionicPowers
+    powersToAdd:
+      - TelepathyPower
 
 - type: entity
   parent: MobOreCrab
   id: MobQuartzCrab
   description: An ore crab made from Quartz.
+  suffix: Quartz
   components:
   - type: Sprite
     state: quartz_crab
@@ -130,6 +139,7 @@
   parent: MobOreCrab
   id: MobIronCrab
   description: An ore crab made from iron.
+  suffix: Iron
   components:
   - type: Sprite
     state: iron_crab
@@ -159,8 +169,41 @@
 
 - type: entity
   parent: MobOreCrab
+  id: MobCoalCrab
+  description: An ore crab made from coal.
+  suffix: Coal
+  components:
+  - type: Sprite
+    state: coal_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2.5
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.0
+    baseSprintSpeed : 1.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Coal1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
   id: MobUraniumCrab
   description: An ore crab made from uranium.
+  suffix: Uranium
   components:
   - type: FactionException
   - type: NPCRetaliation
@@ -195,8 +238,8 @@
 - type: entity
   parent: MobOreCrab
   id: MobSilverCrab
-  name: ore crab
   description: An ore crab made from silver.
+  suffix: Silver
   components:
   - type: Sprite
     state: silver_crab
@@ -216,6 +259,35 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           SilverOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobGoldCrab
+  description: An ore crab made from gold.
+  suffix: Gold
+  components:
+  - type: Sprite
+    state: gold_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GoldOre1:
             min: 1
             max: 3
       - !type:DoActsBehavior
@@ -298,6 +370,14 @@
     solution: bloodstream
   - type: DrainableSolution
     solution: bloodstream
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - reagent-slime-feedback
+  - type: InnatePsionicPowers
+    powersToAdd:
+      - TelepathyPower
 
 - type: entity
   name: Reagent Slime Spawner

@@ -1,11 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -13,19 +9,12 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
-
     public const float PresetFailedCooldownIncrease = 30f;
 
     /// <summary>
     /// The selected preset that will be used at the start of the next round.
     /// </summary>
     public GamePresetPrototype? Preset { get; private set; }
-
-    /// <summary>
-    /// The selected preset that will be shown at the lobby screen to fool players.
-    /// </summary>
-    public GamePresetPrototype? Decoy { get; private set; }
 
     /// <summary>
     /// The preset that's currently active.
@@ -39,7 +28,6 @@ public sealed partial class GameTicker
 
     private bool StartPreset(ICommonSession[] origReadyPlayers, bool force)
     {
-        _sawmill.Info($"Attempting to start preset '{CurrentPreset?.ID}'");
         var startAttempt = new RoundStartAttemptEvent(origReadyPlayers, force);
         RaiseLocalEvent(startAttempt);
 
@@ -61,13 +49,10 @@ public sealed partial class GameTicker
             var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
             var startFailed = true;
 
-            _sawmill.Info($"Fallback - Failed to start round, attempting to start fallback presets.");
             foreach (var preset in fallbackPresets)
             {
-                _sawmill.Info($"Fallback - Clearing up gamerules");
                 ClearGameRules();
-                _sawmill.Info($"Fallback - Attempting to start '{preset}'");
-                SetGamePreset(preset, resetDelay: 1);
+                SetGamePreset(preset);
                 AddGamePresetRules();
                 StartGamePresetRules();
 
@@ -84,7 +69,6 @@ public sealed partial class GameTicker
                     startFailed = false;
                     break;
                 }
-                _sawmill.Info($"Fallback - '{preset}' failed to start.");
             }
 
             if (startFailed)
@@ -96,7 +80,6 @@ public sealed partial class GameTicker
 
         else
         {
-            _sawmill.Info($"Fallback - Failed to start preset but fallbacks are disabled. Returning to Lobby.");
             FailedPresetRestart();
             return false;
         }
@@ -109,7 +92,7 @@ public sealed partial class GameTicker
         SetGamePreset(LobbyEnabled ? _cfg.GetCVar(CCVars.GameLobbyDefaultPreset) : "sandbox");
     }
 
-    public void SetGamePreset(GamePresetPrototype? preset, bool force = false, GamePresetPrototype? decoy = null, int? resetDelay = null)
+    public void SetGamePreset(GamePresetPrototype? preset, bool force = false, int? resetDelay = null)
     {
         // Do nothing if this game ticker is a dummy!
         if (DummyTicker)
@@ -129,7 +112,6 @@ public sealed partial class GameTicker
         }
 
         Preset = preset;
-        Decoy = decoy;
         ValidateMap();
         UpdateInfoText();
 
@@ -139,11 +121,11 @@ public sealed partial class GameTicker
         }
     }
 
-    public void SetGamePreset(string preset, bool force = false, int? resetDelay = null)
+    public void SetGamePreset(string preset, bool force = false)
     {
         var proto = FindGamePreset(preset);
         if (proto != null)
-            SetGamePreset(proto, force, null, resetDelay);
+            SetGamePreset(proto, force);
     }
 
     public GamePresetPrototype? FindGamePreset(string preset)

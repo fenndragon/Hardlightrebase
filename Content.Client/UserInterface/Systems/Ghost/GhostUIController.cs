@@ -1,17 +1,13 @@
-using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
-using Content.Shared.CCVar;
 using Content.Shared._NF.CCVar; // Frontier
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Shared.IoC;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Timing;
 using Content.Client._Corvax.Respawn; // Frontier
 
 namespace Content.Client.UserInterface.Systems.Ghost;
@@ -27,7 +23,6 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
     [UISystemDependency] private readonly RespawnSystem? _respawn = default;
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
-    private bool _canUncryo = true; // Frontier. TODO: find a reliable way to update this, for now it just stays active all the time
 
     public override void Initialize()
     {
@@ -93,7 +88,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
 
         Gui.Visible = _system?.IsGhost ?? false;
         Gui.Update(_system?.AvailableGhostRoleCount, _system?.Player?.CanReturnToBody,
-            _canUncryo && _cfg.GetCVar(NFCCVars.CryoReturnEnabled));
+            _cfg.GetCVar(NFCCVars.CryoReturnEnabled) ? _system?.Player?.CanReturnFromCryo : false);
     }
 
     private void UpdateRespawn(TimeSpan? timeOfDeath)
@@ -104,12 +99,12 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
     private void OnPlayerRemoved(GhostComponent component)
     {
         Gui?.Hide();
-//        UpdateRespawn(component.TimeOfDeath);
+        //        UpdateRespawn(component.TimeOfDeath);
     }
 
     private void OnPlayerUpdated(GhostComponent component)
     {
-//        UpdateRespawn(component.TimeOfDeath);
+        //        UpdateRespawn(component.TimeOfDeath);
         UpdateGui();
     }
 

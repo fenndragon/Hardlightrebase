@@ -1,0 +1,11 @@
+# Section 5: Naming Rules
+
+- type: serverRule
+  id: ServerRule5_1
+  section: 5
+  code: 5.1
+  text: "Don't make meta references."
+  description: |-
+    Try to be creative by picking a believable and fitting name and/or surname.
+
+    Leeway is given to theatrical roles such as the clown, boxer, and mime; these roles are allowed stage names with some amount of freedom.

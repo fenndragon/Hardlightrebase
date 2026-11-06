@@ -408,12 +408,13 @@ public abstract partial class SharedMindSystem : EntitySystem
         return false;
     }
 
+    // WOLFGATE: close the malformed XML remarks tag
     /// <summary>
     /// Tries to find an objective that has the same prototype as the argument.
     /// </summary>
     /// <remarks>
     /// Will not work for objectives that have no prototype, or duplicate objectives with the same prototype.
-    /// <//remarks>
+    /// </remarks>
     public bool TryFindObjective(Entity<MindComponent?> mind, string prototype, [NotNullWhen(true)] out EntityUid? objective)
     {
         objective = null;

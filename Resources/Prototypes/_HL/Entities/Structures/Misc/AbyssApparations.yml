@@ -1,0 +1,540 @@
+- type: entity
+  id: AbyssApparationDeco
+  parent: BaseStructureDynamic
+  name: abyssal apparition
+  description: What was that? A figment of your imagination? Or something more sinister?
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_apparation1.rsi
+    state: apparation-abyss-1
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
+  id: AbyssApparationDecoB
+  parent: BaseStructureDynamic
+  name: abyssal apparition
+  description: What was that? A figment of your imagination? Or something more sinister?
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_apparation2.rsi
+    state: apparation-abyss-2
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
+  id: AbyssApparationDecoC
+  parent: BaseStructureDynamic
+  name: abyssal apparition
+  description: What was that? A figment of your imagination? Or something more sinister?
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_apparation3.rsi
+    state: apparation-abyss-3
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
+  id: AbyssApparationDecoD
+  parent: BaseStructureDynamic
+  name: abyssal apparition
+  description: What was that? A figment of your imagination? Or something more sinister?
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_apparation4.rsi
+    state: apparation-abyss-4
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
+  id: AbyssApparationDecoE
+  parent: BaseStructureDynamic
+  name: abyssal apparition
+  description: What was that? A figment of your imagination? Or something more sinister?
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_apparation5.rsi
+    state: apparation-abyss-5
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: TimedDespawn
+    lifetime: 5
+
+- type: entity
+  id: AbyssApparationDecoPerm
+  parent: BaseStructureDynamic
+  name: abyssal projection
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection1.rsi
+    state: apparation-abyss-1
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssApparationDecoBPerm
+  parent: BaseStructureDynamic
+  name: abyssal projection
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection2.rsi
+    state: apparation-abyss-2
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssApparationDecoCPerm
+  parent: BaseStructureDynamic
+  name: abyssal projection
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection3.rsi
+    state: apparation-abyss-3
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssApparationDecoDPerm
+  parent: BaseStructureDynamic
+  name: abyssal projection
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection4.rsi
+    state: apparation-abyss-4
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssApparationDecoEPerm
+  parent: BaseStructureDynamic
+  name: abyssal projection
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection5.rsi
+    state: apparation-abyss-5
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssApparationCrack
+  parent: BaseStructureDynamic
+  name: abyssal cracks
+  description: A series of cracks that seem to pulse with a dark energy, hinting at the abyss beyond.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyssal_crack.rsi
+    state: abysscrack
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.35
+          layer:
+          - LowImpassable
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 1.5
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 10
+  - type: Damageable
+    damageContainer: ShadowHaze
+
+- type: entity
+  id: AbyssMoundBase
+  parent: BaseStructureDynamic
+  name: abyssal mound
+  description: A mound of pulsing black.
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Abyssal/abyss_mound.rsi
+    state: abyssmound
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: true
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.75
+          layer:
+          - WallLayer
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 50
+  - type: Damageable
+    damageContainer: ShadowHaze
+
+- type: entity
+  id: AbyssTentacleMob
+  parent: BaseStructureDynamic
+  name: abyssal tentacle
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Abyssal/abyss_tentacles.rsi
+    state: abysstentacle
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+           !type:PhysShapeCircle
+            radius: 0.85
+          layer:
+          - LowImpassable
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Items/hiss.ogg
+              params:
+                variation: 0.08
+  - type: DamagedByFlashing
+    flashDamage:
+      types:
+        Heat: 45
+  - type: Damageable
+    damageContainer: ShadowHaze
+  - type: DamageContacts
+    damage:
+        types:
+          Slash: 1.5
+          Cold: 3
+    ignoreWhitelist:
+        tags:
+        - Abyssal
+
+- type: entity
+  id: AbyssStorageTest
+  parent: BaseStructureDynamic
+  name: abyssal storage
+  description: What is it? A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: Sprite
+    sprite: _HL/Effects/Projections/abyss_projection4.rsi
+    state: apparation-abyss-4
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 15
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Storage
+    grid:
+    - 0,0,25,20
+    maxItemSize: Ginormous
+#structures

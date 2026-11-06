@@ -1,6 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
-using Content.Shared.Audio;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
@@ -36,7 +35,7 @@ public sealed partial class AreaReactionEffect : EntityEffect
     /// <summary>
     /// The entity prototype that will be spawned as the effect.
     /// </summary>
-    [DataField("prototypeId", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("prototypeId", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     private string _prototypeId = default!;
 
     /// <summary>
@@ -60,7 +59,7 @@ public sealed partial class AreaReactionEffect : EntityEffect
             if (reagentArgs.Source == null)
                 return;
 
-            var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / OverflowThreshold).Float()));
+            var spreadAmount = (int)Math.Max(0, Math.Ceiling((reagentArgs.Quantity / OverflowThreshold).Float()));
             var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
             var transform = reagentArgs.EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
             var mapManager = IoCManager.Resolve<IEntityManager>().System<SharedMapSystem>();
@@ -86,7 +85,7 @@ public sealed partial class AreaReactionEffect : EntityEffect
             smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
 
             var audio = reagentArgs.EntityManager.System<SharedAudioSystem>();
-            audio.PlayPvs(_sound, reagentArgs.TargetEntity, AudioHelpers.WithVariation(0.125f));
+            audio.PlayPvs(_sound, reagentArgs.TargetEntity, AudioParams.Default.WithVariation(0.125f));
             return;
         }
 

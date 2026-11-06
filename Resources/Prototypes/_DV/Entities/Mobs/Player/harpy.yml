@@ -17,6 +17,7 @@
   - type: MobMover
   - type: InputMover
   - type: Respirator
+    updateInterval: 1
   - type: Alerts
   - type: Actions
   - type: Eye
@@ -27,3 +28,4 @@
     factions:
     - NanoTrasen
     - Harpy # Frontier
+  - type: PotentialPsionic

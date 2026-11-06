@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Mind;
 using Content.Shared.Players;
@@ -66,7 +65,7 @@ namespace Content.Server.GameTicking.Commands
             _gameTicker.Respawn(targetPlayer);
         }
 
-      public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
                 return CompletionResult.Empty;

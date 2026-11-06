@@ -33,6 +33,12 @@
 			"name": "mag-unshaded-4"
 		},
 		{
+			"name": "equipped-SUITSTORAGE"
+		},
+		{
+			"name": "equipped-BELT"
+		},
+		{
 			"name": "inhand-left-0",
 			"directions": 4
 		},
@@ -79,6 +85,12 @@
 		{
 			"name": "inhand-right-unshaded",
 			"directions": 4
+		},
+		{
+			"name": "mode-lethal"
+		},
+		{
+			"name": "mode-disabler"
 		}
 	]
 }

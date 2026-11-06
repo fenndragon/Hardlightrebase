@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Content.Shared.Wires;
 using NUnit.Framework;
 using Robust.UnitTesting;
@@ -12,8 +10,8 @@ namespace Content.Tests.Shared
     [TestFixture]
     public sealed class WireHackingTest : RobustUnitTest
     {
-        public static IEnumerable<WireColor> ColorValues = (WireColor[]) Enum.GetValues(typeof(WireColor));
-        public static IEnumerable<WireLetter> LetterValues = (WireLetter[]) Enum.GetValues(typeof(WireLetter));
+        public static IEnumerable<WireColor> ColorValues = (WireColor[])Enum.GetValues(typeof(WireColor));
+        public static IEnumerable<WireLetter> LetterValues = (WireLetter[])Enum.GetValues(typeof(WireLetter));
 
         [Test]
         public void TestColorNameExists([ValueSource(nameof(ColorValues))] WireColor color)

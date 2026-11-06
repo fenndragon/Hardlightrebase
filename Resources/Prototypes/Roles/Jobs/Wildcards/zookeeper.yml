@@ -3,19 +3,45 @@
   name: job-name-zookeeper
   description: job-description-zookeeper
   playTimeTracker: JobZookeeper
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
   startingGear: ZookeeperGear
   icon: "JobIconZookeeper"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+  # - Zookeeper # Unused for now
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: MonkeyDay
     prototype: MonkeyCubeBox
+  # Starlight-start: Languages
+  - !type:AddComponentSpecial
+    components:
+    - type: AdditionalLanguageKnowledge # If we just put in LanguageKnowledge, it'd overwrite your normal languages
+      understands:
+      - Ancestor
+      - Bat
+      - Carptongue
+      - Cat
+      - Chicken
+      - Dog
+      - Duck
+      - Fox
+      - Mothroach
+      - Mouse
+      - Pig
+      - ScurretSign
+      - Xeno
+      # While spoken by some crew, these are spoken by slimes and spiders as their language
+      - Bubblish
+      - Chittin
+  # Starlight-end
 
 - type: startingGear
   id: ZookeeperGear
@@ -25,6 +51,6 @@
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

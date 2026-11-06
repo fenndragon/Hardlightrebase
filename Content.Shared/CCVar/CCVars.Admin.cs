@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -20,7 +20,7 @@ public sealed partial class CCVars
     ///     Should users be able to see their own notes? Admins will be able to see and set notes regardless
     /// </summary>
     public static readonly CVarDef<bool> SeeOwnNotes =
-        CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("admin.see_own_notes", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     Should the server play a quick sound to the active admins whenever a new player joins?
@@ -64,6 +64,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ServerBanDefaultSeverity =
         CVarDef.Create("admin.server_ban_default_severity", "High", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>  
+    ///     Default severity for imprisonment # KS14
+    /// </summary>
+    public static readonly CVarDef<string> ImprisonmentDefaultSeverity =
+        CVarDef.Create("admin.imprisonment_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Whether a server ban will ban the player's ip by default.
@@ -140,7 +146,7 @@ public sealed partial class CCVars
     ///     If 0, appearing as a new player is disabled.
     /// </summary>
     public static readonly CVarDef<int> NewPlayerThreshold =
-        CVarDef.Create("admin.new_player_threshold", 0, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("admin.new_player_threshold", 300, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     How long an admin client can go without any input before being considered AFK.
@@ -157,7 +163,7 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     Determines whether admins count towards the total playercount when determining whether the server is over <see cref="SoftMaxPlayers"/>
-    ///     Ideally this should be used in conjuction with <see cref="AdminBypassPlayers"/>.
+    ///     Ideally this should be used in conjuction with AdminBypassPlayers.
     ///     This also applies to playercount limits in whitelist conditions
     ///     If false, then admins will not be considered when checking whether the playercount is already above the soft player cap
     /// </summary>

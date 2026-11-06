@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -29,7 +29,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var ban = await dbMan.GetServerBanAsync(banId);
+            var ban = await dbMan.GetBanAsync(banId);
 
             if (ban == null)
             {
@@ -52,7 +52,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+            await dbMan.AddUnbanAsync(new UnbanDef(banId, player?.UserId, DateTimeOffset.Now));
 
             shell.WriteLine($"Pardoned ban with id {banId}");
         }

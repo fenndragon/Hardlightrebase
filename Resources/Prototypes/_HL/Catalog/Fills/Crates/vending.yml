@@ -1,0 +1,22 @@
+- type: entity
+  id: CrateVendingMachineRestockPassionDrobeFilled
+  parent: CrateGenericSteel
+  name: PassionDrobe restock crate
+  description: Contains two restock boxes for the PassionDrobe.
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockPassionDrobe
+      amount: 2
+
+#HL This is the box ordered from cargo for the sprayvend
+- type: entity
+  id: CrateVendingMachineRestockSprayVendFilled
+  parent: CrateGenericSteel
+  name: SprayVend restock crate
+  description: Contains two restock boxes for the SprayVend.
+  components:
+  - type: StorageFill
+    contents:
+    - id: VendingMachineRestockSprayVend
+      amount: 1

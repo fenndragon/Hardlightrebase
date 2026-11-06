@@ -1,6 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
@@ -80,7 +78,7 @@ public sealed class NukeOpsTest
         Assert.That(entMan.Count<MapGridComponent>(), Is.Zero);
         Assert.That(entMan.Count<StationMapComponent>(), Is.Zero);
         Assert.That(entMan.Count<StationMemberComponent>(), Is.Zero);
-        Assert.That(entMan.Count<StationCentcommComponent>(), Is.Zero);
+        Assert.That(entMan.Count<StationColcommComponent>(), Is.Zero);
 
         // And no nukie related components
         Assert.That(entMan.Count<NukeopsRuleComponent>(), Is.Zero);
@@ -108,7 +106,7 @@ public sealed class NukeOpsTest
         // Maps now exist
         Assert.That(entMan.Count<MapComponent>(), Is.GreaterThan(0));
         Assert.That(entMan.Count<MapGridComponent>(), Is.GreaterThan(0));
-        Assert.That(entMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
+        Assert.That(entMan.Count<StationColcommComponent>(), Is.EqualTo(1));
 
         // And we now have nukie related components
         Assert.That(entMan.Count<NukeopsRuleComponent>(), Is.EqualTo(1));
@@ -157,7 +155,7 @@ public sealed class NukeOpsTest
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
         var rule = entMan.AllComponents<NukeopsRuleComponent>().Single();
         var ruleComp = rule.Component;
-        var gridsRule = entMan.AllComponents<RuleGridsComponent>().Single().Component;
+        var gridsRule = entMan.GetComponent<RuleGridsComponent>(rule.Uid);
         foreach (var grid in gridsRule.MapGrids)
         {
             Assert.That(entMan.EntityExists(grid));
@@ -224,7 +222,7 @@ public sealed class NukeOpsTest
 
         // Check the nukie commander passed basic training and figured out how to breathe.
         var totalSeconds = 30;
-        var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
+        var totalTicks = (int)Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
         var increment = 5;
         var resp = entMan.GetComponent<RespiratorComponent>(player);
         var damage = entMan.GetComponent<DamageableComponent>(player);
@@ -254,7 +252,7 @@ public sealed class NukeOpsTest
                 "All nukies were deleted, but the round didn't end!");
         });
 
-        ticker.SetGamePreset((GamePresetPrototype?) null);
+        ticker.SetGamePreset((GamePresetPrototype?)null);
         await pair.CleanReturnAsync();
     }
 }

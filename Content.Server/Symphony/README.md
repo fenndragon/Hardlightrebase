@@ -93,8 +93,5 @@ ticket table, the feedback table or any of the endpoints change.
   - Symphony, not one who passed a running whitelist, so a revoke holds
   - Symphony, with the Discord link that gets them whitelisted
   - Symphony, so a later revoke is checked on reconnect rather than waved through
-- [`Content.Server/GameTicking/GameTicker.LobbyBackground.cs`](../GameTicking/GameTicker.LobbyBackground.cs)
-  - a background the SSymphony panel set holds over every round until it is cleared
-  - or one from the panel's pool, a different one each round
 
 <!-- WOLFGATE-GENERATED END -->

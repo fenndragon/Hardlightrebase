@@ -1,4 +1,3 @@
-using Content.Server.StationEvents.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Dataset;
 using Content.Shared.Procedural;
@@ -137,15 +136,15 @@ public sealed partial class BluespaceDungeonSpawnGroup : IBluespaceSpawnGroup
     /// <summary>
     /// Minimum distance from the map's origin to
     /// </summary>
-    public float MinimumDistance { get; }
+    public float MinimumDistance { get; set; }
 
-    public float MaximumDistance { get; }
-
-    /// <inheritdoc />
-    public List<LocId> NameLoc { get; } = new();
+    public float MaximumDistance { get; set; }
 
     /// <inheritdoc />
-    public ProtoId<LocalizedDatasetPrototype>? NameDataset { get; }
+    public List<LocId> NameLoc { get; set; } = new();
+
+    /// <inheritdoc />
+    public ProtoId<LocalizedDatasetPrototype>? NameDataset { get; set; }
 
     /// <inheritdoc />
     public BluespaceDatasetNameType NameDatasetType { get; set; } = BluespaceDatasetNameType.FTL;
@@ -175,12 +174,12 @@ public sealed partial class BluespaceGridSpawnGroup : IBluespaceSpawnGroup
     public List<ResPath> Paths = new();
 
     /// <inheritdoc />
-    public float MinimumDistance { get; }
+    public float MinimumDistance { get; set; }
 
     /// <inheritdoc />
-    public float MaximumDistance { get; }
-    public List<LocId> NameLoc { get; } = new();
-    public ProtoId<LocalizedDatasetPrototype>? NameDataset { get; }
+    public float MaximumDistance { get; set; }
+    public List<LocId> NameLoc { get; set; } = new();
+    public ProtoId<LocalizedDatasetPrototype>? NameDataset { get; set; }
 
     /// <inheritdoc />
     public BluespaceDatasetNameType NameDatasetType { get; set; } = BluespaceDatasetNameType.FTL;

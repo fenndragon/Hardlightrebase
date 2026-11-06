@@ -4,7 +4,6 @@ using Content.Server.Spawners.Components;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems
@@ -89,14 +88,14 @@ namespace Content.Server.Spawners.EntitySystems
             }
 
             if (!Deleted(uid))
-                EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), Transform(uid).Coordinates);
+                Spawn(_robustRandom.Pick(component.Prototypes), Transform(uid).Coordinates);
         }
 
         private void Spawn(EntityUid uid, RandomSpawnerComponent component)
         {
             if (component.RarePrototypes.Count > 0 && (component.RareChance == 1.0f || _robustRandom.Prob(component.RareChance)))
             {
-                EntityManager.SpawnEntity(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
+                Spawn(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
                 return;
             }
 
@@ -118,7 +117,7 @@ namespace Content.Server.Spawners.EntitySystems
 
             var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
-            EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), coordinates);
+            Spawn(_robustRandom.Pick(component.Prototypes), coordinates);
         }
 
         private void Spawn(Entity<EntityTableSpawnerComponent> ent)
@@ -135,7 +134,7 @@ namespace Content.Server.Spawners.EntitySystems
                 var yOffset = _robustRandom.NextFloat(-ent.Comp.Offset, ent.Comp.Offset);
                 var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
 
-                Spawn(proto, trueCoords);
+                SpawnAtPosition(proto, trueCoords);
             }
         }
     }

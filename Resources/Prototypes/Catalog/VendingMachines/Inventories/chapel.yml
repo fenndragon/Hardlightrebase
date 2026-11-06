@@ -1,6 +1,8 @@
 - type: vendingMachineInventory
   id: PietyVendInventory
   startingInventory:
+    NFClothingBackpackDuffelChaplain: 2 # Frontier
+    ClothingBackpackMessengerChaplain: 2 # Frontier
     ClothingUniformJumpsuitChaplain: 3
     ClothingUniformJumpskirtChaplain: 3
     ClothingUniformJumpsuitMonasticRobeDark: 3
@@ -63,6 +65,10 @@
     GoldRing: 2 # Frontier
     ClothingNeckCrucifix: 3 # Frontier
     ClothingOuterEVASuitChaplain: 3 # Frontier
+    ClothingHandsChaplainWarmers: 3
+    ClothingUnderSocksChaplain: 3
+    ClothingUniformChaplainThong: 3
+    ClothingOuterEpiChaplainMantle: 3
   contrabandInventory:
     # FoodBakedBunHotX: 2 # Frontier
     DrinkWineBottleFull: 1

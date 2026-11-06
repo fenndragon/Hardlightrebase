@@ -1,0 +1,91 @@
+# HardLight change start: WallDirection<BaseWallDirectional; base for other directional wall types.
+- type: entity
+  id: BaseWallDirectional
+  abstract: true
+  parent: BaseStructure
+  name: base directional wall
+  description: A directional wall.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    drawdepth: Mobs
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,-0.28125"
+        density: 250 # 500<250; 1/4 of BaseWall
+        mask:
+        - FullTileMask
+        layer:
+        - DWallLayer # Hardlight : Mappers use shutters over this
+  - type: Repairable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: RCDDeconstructable
+    cost: 4
+    delay: 2
+    fx: EffectRCDDeconstruct2
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+  - type: Occluder
+    boundingBox: "-0.5,-0.5,0.5,-0.28125"
+  - type: RadiationBlocker
+    resistance: 1
+  - type: BlockWeather
+  - type: StaticPrice
+    price: 20 # HL: Price balancing
+  # HardLight change end
+
+- type: entity # HardLight
+  id: WallDirectionalSolid
+  parent: BaseWallDirectional
+  name: solid directional wall
+  description: Cheap and cheerful metal plating.
+  components:
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          MetalBulletImpact
+    soundTypes:
+      Heat:
+        collection:
+          MetalLaserImpact
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: MetalThud
+  - type: Sprite
+    sprite: _Goobstation/Structures/Walls/directional.rsi
+    state: directionalwallsolid
+  - type: Icon
+    sprite: _Goobstation/Structures/Walls/directional.rsi
+    state: directionalwallsolid
+  - type: Damageable
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400 # 150<400; 1/4 of a solid wall
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: WallDirectionalSolid
+    node: wallDirectionalSolid
+    deconstructionTarget: start

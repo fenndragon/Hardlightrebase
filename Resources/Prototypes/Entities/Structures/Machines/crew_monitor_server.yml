@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CrewMonitoringServer
   parent: BaseMachinePowered
   name: crew monitoring server
@@ -6,6 +6,7 @@
   components:
     - type: Sprite
       sprite: Structures/Machines/server.rsi
+      snapCardinals: true # Frontier
       layers:
         - state: server
         - state: variant-crew
@@ -28,8 +29,8 @@
       transmitFrequencyId: CrewMonitor
       receiveFrequencyId: SuitSensor
       autoConnect: false
-#    - type: WirelessNetworkConnection
-#      range: 500
+    - type: WirelessNetworkConnection
+      range: 25000
 #    - type: StationLimitedNetwork
     - type: ApcPowerReceiver
       powerLoad: 200

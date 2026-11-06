@@ -109,7 +109,14 @@
 #      - NFPosterContrabandFsbRubicon #Mono: Out-of-setting companies
 #      - NFPosterContrabandWyvernShipyards
       - NFPosterContrabandRatvarLives
-        # Frontier: Ending
+      - NFPosterContrabandFsbCaladrius
+      - NFPosterContrabandFsbNightlight
+      - NFPosterContrabandFsbRetort
+      - NFPosterContrabandFscLogo
+      - NFPosterContrabandFscSurveyor
+      - NFPosterContrabandFscCourier
+      - NFPosterContrabandFsbDruid
+      # End Frontier
     chance: 1
 
 - type: entity
@@ -165,7 +172,6 @@
       - PosterLegitJustAWeekAway
       - PosterLegitSecWatch
       - PosterLegitVacation
-      - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
       - PosterLegitSafetyMothDelam
@@ -175,7 +181,10 @@
       - PosterLegitSafetyMothHardhat
       - PosterLegitSafetyMothSSD
       - PosterLegitOppenhopper
-        # Frontier: Start
+      - PosterLegitTyrone
+      - PosterLegitHelio
+      - PosterLegitYesERP # Hardlight
+        # Frontier
       - NFPosterLegitMagnusWatching
       - NFPosterLegitGoblinTinkerer
       - NFPosterLegitBahamaMama
@@ -183,5 +192,6 @@
       - NFPosterLegitWantedClarpy
       - NFPosterLegitMothPlease
       - NFPosterLegitHaveYouSeenThisEgg
-        # Frontier: Ending
+      - NFPosterLegitGunTurnIn
+        # End Frontier
     chance: 1

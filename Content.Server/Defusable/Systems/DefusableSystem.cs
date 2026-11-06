@@ -1,5 +1,4 @@
 using Content.Server.Defusable.Components;
-using Content.Server.Explosion.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Wires;
@@ -14,7 +13,6 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Defusable.Systems;
@@ -168,7 +166,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
 
         RaiseLocalEvent(uid, new BombDetonatedEvent(uid));
 
-        _explosion.TriggerExplosive(uid, user:detonator);
+        _explosion.TriggerExplosive(uid, user: detonator);
         QueueDel(uid);
 
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);

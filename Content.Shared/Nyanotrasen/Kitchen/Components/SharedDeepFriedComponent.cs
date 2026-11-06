@@ -1,4 +1,3 @@
-using Content.Shared.Nyanotrasen.Kitchen.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 

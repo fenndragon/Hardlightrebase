@@ -1,0 +1,419 @@
+# Imagine if NFDevs made me do all these lockers and fills again because they have all those ships
+# I'm not crying you're crying
+
+
+# region - Hardlight locker fills
+
+- type: entityTable
+  id: HLLockerFillQuarterMaster
+  table: !type:AllSelector
+    children:
+    - id: BoxEncryptionKeyCargo
+    - id: BoxFolderQmClipboard
+    - id: CargoBountyComputerCircuitboard
+    - id: CargoRequestComputerCircuitboard
+    - id: CargoSaleComputerCircuitboard
+    - id: CargoShuttleComputerCircuitboard
+    - id: CargoShuttleConsoleCircuitboard
+    - id: SalvageMagnetMachineCircuitboard
+    - id: CigPackGreen
+      prob: 0.50
+    - id: ClothingHeadsetAltCargo
+    - id: DoorRemoteCargo
+    - id: RubberStampApproved
+    - id: RubberStampDenied
+    - id: RubberStampQm
+    - id: AstroNavCartridge
+    - id: MailTeleporterMachineCircuitboard
+    - id: ClothingBeltUtilityEngineering
+    - id: QuartermasterIDCard
+    - id: ClothingOuterHardsuitLuxmax
+
+- type: entity
+  id: HLLockerQuarterMasterFilled
+  suffix: Station, Filled
+  parent: HLLockerQuarterMaster
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillQuarterMaster
+
+# No laser table
+- type: entityTable
+  id: HLLockerFillCaptain
+  table: !type:AllSelector
+    children:
+    - id: StationCaptainIDCard
+    - id: CigarGoldCase
+      prob: 0.25
+    - id: ClothingBeltSheathFilled
+    - id: ClothingHeadsetAltCommand
+    - id: ClothingOuterArmorCaptainCarapace
+    - id: CommsComputerCircuitboard
+    - id: DoorRemoteCustom
+    - id: MedalCase
+    - id: NukeDisk
+    - id: PinpointerNuclear
+    - id: PlushieNuke
+      prob: 0.1
+    - id: RubberStampCaptain
+    - id: SpaceCash1000
+    - id: NFWeaponEnergyPistolDisabler
+    - id: ClothingEyesGlassesCommand
+    - id: PlushieXTalal
+
+# Hardsuit table, used for suit storage as well
+- type: entityTable
+  id: HLFillCaptainHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterHardsuitCap
+    - id: ClothingMaskGasCaptain
+    - id: JetpackCaptainFilled
+    - id: NFTankO2N2EqualFilled # Frontier
+    - id: ClothingShoesBootsMagCaptain # Hardlight
+
+# No laser locker, used when the antique laser is placed in the special display crate
+- type: entity
+  id: HLLockerCaptainFilledNoLaser
+  suffix: Station, Filled
+  parent: HLLockerCaptain
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillCaptain
+
+# Laser locker, used when the antique laser is not in a special display crate
+- type: entity
+  id: HLLockerCaptainFilledLaser
+  suffix: Station, Filled, Laser
+  parent: HLLockerCaptain
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillCaptain
+        - id: NFWeaponEnergyPistolLaserAntique
+
+# Hardsuit table, used for suit storage as well
+- type: entity
+  id: HLLockerCaptainFilledHardsuit
+  suffix: Station, Filled, Hardsuit
+  parent: HLLockerCaptain
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillCaptain
+        - !type:NestedSelector
+          tableId: HLFillCaptainHardsuit
+        - id: NFWeaponEnergyPistolLaserAntique
+
+- type: entityTable
+  id: HLLockerFillHeadOfPersonnel
+  table: !type:AllSelector
+    children:
+    - id: AccessConfigurator
+    - id: BoxEncryptionKeyPassenger
+    - id: BoxEncryptionKeyService
+    - id: BoxHeadset
+    - id: BoxID
+    - id: BoxPDA
+    - id: CigarGoldCase
+      prob: 0.25
+    - id: ClothingBackpackIan
+      prob: 0.5
+    - id: ClothingHeadsetCommand
+    - id: ClothingNeckGoldmedal
+    - id: DoorRemoteService
+    - id: HoPIDCard
+    - id: IDComputerCircuitboard
+    - id: FundingAllocationComputerCircuitboard
+    - id: CargoRequestServiceComputerCircuitboard
+    - id: RubberStampApproved
+    - id: RubberStampDenied
+    - id: RubberStampHop
+    - id: NFWeaponEnergyPistolDisabler
+    - id: ClothingEyesHudCommand
+    - id: PlushieRemiie
+
+- type: entity
+  id: HLLockerHeadOfPersonnelFilled
+  suffix: Station, Filled
+  parent: HLLockerHeadOfPersonnel
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillHeadOfPersonnel
+
+# No hardsuit table
+- type: entityTable
+  id: HLLockerFillChiefEngineerNoHardsuit
+  table: !type:AllSelector
+    children:
+    - id: AccessConfigurator
+    - id: BoxEncryptionKeyEngineering
+    - id: CigarCase
+      prob: 0.15
+    - id: ClothingBeltChiefEngineerFilled
+    - id: ClothingEyesGlassesMeson
+    - id: ClothingHandsGlovesColorYellow
+    - id: ClothingHeadsetAltEngineering
+    - id: DoorRemoteEngineering
+    - id: CargoRequestEngineeringComputerCircuitboard # Frontier
+    - id: RCD
+    - id: RCDAmmo
+    - id: RubberStampCE
+    - id: ShipyardRCD
+    - id: ShipyardRCDAmmo
+    - id: trayScanner
+    - id: CEIDCard
+    - id: BoxFolderEngiForms
+
+# Hardsuit table, used for suit storage as well
+- type: entityTable
+  id: HLFillChiefEngineerHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskGasAtmos
+    - id: ClothingOuterHardsuitEngineeringWhite
+    - id: ClothingShoesBootsMagAdv
+    - id: JetpackVoidFilled
+    - id: NFTankO2N2EqualFilled
+
+# No hardsuit locker
+- type: entity
+  id: HLLockerChiefEngineerFilled
+  suffix: Station, Filled
+  parent: HLLockerChiefEngineer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillChiefEngineerNoHardsuit
+
+# No hardsuit + hardsuit locker
+- type: entity
+  id: HLLockerChiefEngineerFilledHardsuit
+  suffix: Station, Filled, Hardsuit
+  parent: HLLockerChiefEngineer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillChiefEngineerNoHardsuit
+        - !type:NestedSelector
+          tableId: HLFillChiefEngineerHardsuit
+
+# No hardsuit table
+- type: entityTable
+  id: HLLockerFillChiefMedicalOfficerNoHardsuit
+  table: !type:AllSelector
+    children:
+    - id: BoxEncryptionKeyMedical
+    - id: ClothingBackpackDuffelSurgeryFilled
+    - id: ClothingCloakCmo
+    - id: ClothingEyesHudMedical
+    - id: ClothingHandsGlovesNitrile
+    - id: ClothingHeadHatBeretCmo
+    - id: ClothingHeadsetAltMedical
+    - id: DoorRemoteMedical
+    - id: HandheldCrewMonitor
+    - id: Hypospray
+    - id: MedicalTechFabCircuitboard
+    - id: CargoRequestMedicalComputerCircuitboard
+    - id: MedkitFilled
+    - id: RubberStampCMO
+    - id: MedTekCartridge
+    - id: ClothingBeltMedicalFilled
+    - id: RubberStampDoctor
+    - id: CMOIDCard
+    # Hardlight Shitmed :3
+    - id: MedicalBiofabMachineBoard
+    - id: BiomassReclaimerMachineCircuitboard
+
+# Hardsuit table, used for suit storage as well
+- type: entityTable
+  id: HLFillChiefMedicalOfficerHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreathMedical
+    - id: ClothingOuterHardsuitMedical
+    - id: NFTankO2N2EqualFilled
+    - id: JetpackMiniFilled
+
+# No hardsuit locker
+- type: entity
+  id: HLLockerChiefMedicalOfficerFilled
+  suffix: Station, Filled
+  parent: HLLockerChiefMedicalOfficer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillChiefMedicalOfficerNoHardsuit
+
+# No hardsuit + Hardsuit locker
+- type: entity
+  id: HLLockerChiefMedicalOfficerFilledHardsuit
+  suffix: Station, Filled, Hardsuit
+  parent: HLLockerChiefMedicalOfficer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillChiefMedicalOfficerNoHardsuit
+        - !type:NestedSelector
+          tableId: HLFillChiefMedicalOfficerHardsuit
+
+# No hardsuit table
+- type: entityTable
+  id: HLLockerFillResearchDirectorNoHardsuit
+  table: !type:AllSelector
+    children:
+    - id: Intellicard
+    - id: BoxEncryptionKeyScience
+    - id: CircuitImprinterMachineCircuitboard
+    - id: ClothingBeltUtilityEngineering
+    - id: ClothingHeadsetAltScience
+    - id: DoorRemoteResearch
+    - id: HandTeleporter
+    - id: ProtolatheMachineCircuitboard
+    - id: ResearchComputerCircuitboard
+    - id: CargoRequestScienceComputerCircuitboard
+    - id: RubberStampRd
+    - id: RDIDCard
+    - id: StationAiFixerCircuitboard
+    - id: ClothingNeckGovernorCollar
+    - id: PaperWrittenHLBorgLaws
+
+# Hardsuit table, used for suit storage as well
+- type: entityTable
+  id: HLFillResearchDirectorHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterHardsuitRd
+    - id: NFTankO2N2EqualFilled
+    - id: JetpackMiniFilled
+    - id: ClothingNeckGovernorCollar
+
+# No hardsuit locker
+- type: entity
+  id: HLLockerResearchDirectorFilled
+  suffix: Station, Filled
+  parent: HLLockerResearchDirector
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillResearchDirectorNoHardsuit
+
+# No hardsuit + Hardsuit locker
+- type: entity
+  id: HLLockerResearchDirectorFilledHardsuit
+  suffix: Station, Filled, Hardsuit
+  parent: HLLockerResearchDirector
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillResearchDirectorNoHardsuit
+        - !type:NestedSelector
+          tableId: HLFillResearchDirectorHardsuit
+
+# No hardsuit table
+- type: entityTable
+  id: HLLockerFillHeadOfSecurityNoHardsuit
+  table: !type:AllSelector
+    children:
+    - id: WeaponCaseLongESAR550
+    - id: HLBookSpaceLaw #HL
+    - id: BoxEncryptionKeySecurity
+    - id: CigarGoldCase
+      prob: 0.50
+    - id: WeaponEnergyGunMultiphase
+    - id: ClothingBeltSecurityFilled
+    - id: ClothingEyesGlassesSecurity
+    - id: ClothingHeadsetAltSecurity
+    - id: ClothingGaiterCharcoal
+    - id: ClothingOuterCoatHoSTrench
+    - id: ClothingShoesBootsJack
+    - id: DoorRemoteSecurity
+    - id: HoloprojectorSecurity
+    - id: RubberStampHos
+    - id: CargoRequestSecurityComputerCircuitboard
+    - id: NFWeaponEnergyPistolDisabler
+    - id: WantedListCartridge
+    - id: DrinkHosFlask
+    - id: ClothingUniformJumpskirtHoSAlt
+    - id: ClothingUniformJumpsuitHoSAlt
+    - id: ClothingHeadHatBeretHoS
+    - id: ClothingHeadHatHoshat
+    - id: ClothingUniformJumpskirtHosFormal
+    - id: ClothingUniformJumpsuitHosFormal
+    - id: ClothingNeckMantleHOS
+    - id: ClothingOuterWinterHoS
+    - id: ClothingShoesBootsWinterHoS
+    - id: Bola
+    - id: Demag
+    - id: HoSIDCard
+
+# Hardsuit table, used for suit storage as well
+- type: entityTable
+  id: HLFillHeadOfSecurityHardsuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskGasSwat
+    - id: ClothingOuterHardsuitSecurityRed
+    - id: ClothingShoesBootsMagSecurityFilled
+    - id: JetpackSecurityFilled
+    - id: NFTankO2N2EqualFilled
+
+# No hardsuit locker
+- type: entity
+  id: HLLockerHeadOfSecurityFilled
+  suffix: Station, Filled
+  parent: HLLockerHeadOfSecurity
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: HLLockerFillHeadOfSecurityNoHardsuit
+
+# No hardsuit + Hardsuit locker
+- type: entity
+  id: HLLockerHeadOfSecurityFilledHardsuit
+  suffix: Station, Filled, Hardsuit
+  parent: HLLockerHeadOfSecurity
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: HLLockerFillHeadOfSecurityNoHardsuit
+        - !type:NestedSelector
+          tableId: HLFillHeadOfSecurityHardsuit
+
+- type: entity
+  id: HLLockerFreezerVaultFilled
+  suffix: Station, Vault, Locked
+  parent: LockerFreezerVaultFilled
+  categories: []
+  components:
+  - type: AccessReader
+    access: [["Command"]]

@@ -1,0 +1,26 @@
+- type: loadout
+  id: SecurityGuardForcedClothingOuterEVASuitPrivateSec
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NFOuterSuitRequired
+  price: 0
+  equipment:
+    outerClothing: ClothingOuterHardsuitEVASec
+
+- type: loadout
+  id: SecurityGuardArmorVest
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: NFHeadwearCapable
+  price: 0
+  equipment:
+    outerClothing: ClothingOuterArmorBasic
+
+- type: loadout
+  id: SecurityGuardArmorVestSlim
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: NFHeadwearCapable
+  price: 0
+  equipment:
+    outerClothing: ClothingOuterArmorBasicSlim

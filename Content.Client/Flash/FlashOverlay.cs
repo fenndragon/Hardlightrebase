@@ -27,10 +27,12 @@ namespace Content.Client.Flash
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            _shader = _prototypeManager.Index(FlashedEffectShaderId).InstanceUnique();
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
         }
+
+        private static readonly ProtoId<ShaderPrototype> FlashedEffectShaderId = "FlashedEffect";
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -47,8 +49,8 @@ namespace Content.Client.Flash
                 return;
 
             var curTime = _timing.CurTime;
-            var lastsFor = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
+            var lastsFor = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
+            var timeDone = (float)(curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
         }

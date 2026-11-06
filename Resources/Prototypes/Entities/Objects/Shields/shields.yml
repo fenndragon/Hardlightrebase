@@ -12,6 +12,11 @@
       sprite: Objects/Weapons/Melee/shields.rsi
       size: Ginormous
       heldPrefix: riot
+    - type: Clothing
+      quickEquip: false
+      slots:
+      - Back
+      - SuitStorage
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -58,7 +63,7 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 50 # Frontier: 100<50 - TODO: material value rework
+      price: 100 # HL: Price balancing
 
 #Security Shields
 
@@ -180,16 +185,73 @@
     - type: StaticPrice
       price: 150
 
+#Starlight Changes Start
+
+- type: entity
+  name: cardboard shield
+  parent: BaseShield
+  id: CardShield
+  description: A shield made of cardboard. Won't protect you from much.
+  components:
+    - type: Sprite
+      state: cardshield-icon
+    - type: Item
+      heldPrefix: cardshield
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1
+          Slash: 2
+          Piercing: 0.6
+          Heat: 3
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.9
+          Slash: 1.8
+          Piercing: 0.5
+          Heat: 2.5
+        flatReductions:
+          Blunt: 0.5
+    - type: Construction
+      graph: CardShield
+      node: cardShield
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 10 #Very very weak shield
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Items/Toys/ToyFall2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard:
+              min: 2
+              max: 4
+    - type: StaticPrice
+      price: 20
+
 - type: entity
   name: makeshift shield
-  parent: BaseShield
+  parent: [ PaladinShield, BaseC3Contraband ]
   id: MakeshiftShield
   description: A rundown looking shield, not good for much.
   components:
     - type: Sprite
-      state: makeshift-icon
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
+      state: base
     - type: Item
-      heldPrefix: metal
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Weapons/Melee/makeshift_shield.rsi
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -208,6 +270,10 @@
           Slash: 0.5
           Piercing: 0.5
           Heat: 1
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
     - type: Construction
       graph: MakeshiftShield
       node: makeshiftShield
@@ -233,6 +299,8 @@
                 SheetSteel:
                   min: 1
                   max: 2
+
+#Starlight Changes End
 
 - type: entity
   name: web shield
@@ -363,8 +431,8 @@
             - !type:SpawnEntitiesBehavior
               spawn:
                 SheetGlass:
-                  min: 5
-                  max: 5
+                  min: 3
+                  max: 3 # HL: Decreased from 5/5 to 3/3 to match potential price of dropped items
 
 - type: entity
   name: energy shield

@@ -1,7 +1,5 @@
 #nullable enable
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Content.Client.Construction;
@@ -148,7 +146,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand. Deletes any currently held entity.
     /// </summary>
-    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
+    /// <param name="entity">The entity type &amp; quantity to spawn and place into the users hand</param>
     /// <param name="enableToggleable">Whether or not to automatically enable any toggleable items</param>
     protected async Task<NetEntity> PlaceInHands(EntitySpecifier entity, bool enableToggleable = true)
     {
@@ -272,7 +270,7 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Place an entity prototype into the players hand and interact with the given entity (or target position).
     /// </summary>
-    /// <param name="entity">The entity type & quantity to spawn and place into the users hand</param>
+    /// <param name="entity">The entity type &amp; quantity to spawn and place into the users hand</param>
     /// <param name="awaitDoAfters">Whether or not to wait for any do-afters to complete</param>
     protected async Task InteractUsing(EntitySpecifier entity, bool awaitDoAfters = true)
     {
@@ -581,7 +579,7 @@ public abstract partial class InteractionTest
                 tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
-        Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId));
+        Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId), $"Expected tile at NetCoordinates {coords}: {TileMan[targetTile.TypeId].Name}. But was: {TileMan[tile.TypeId].Name}");
     }
 
     protected void AssertGridCount(int value)
@@ -595,6 +593,20 @@ public abstract partial class InteractionTest
         }
 
         Assert.That(count, Is.EqualTo(value));
+    }
+
+    /// <summary>
+    /// Check that some entity is close to a certain coordinate location.
+    /// </summary>
+    /// <param name="target">The entity to check the location for. Defaults to Target</param>
+    /// <param name="coords">The coordinates the entity should be at.</param>
+    /// <param name="radius">The maximum allowed distance from the target coords</param>
+    protected void AssertLocation(NetEntity? target, NetCoordinates coords, float radius = 0.01f)
+    {
+        target ??= Target;
+        Assert.That(target, Is.Not.Null, "No target specified");
+        Assert.That(Position(target!.Value).TryDelta(SEntMan, Transform, ToServer(coords), out var delta), "Could not calculate distance between coordinates.");
+        Assert.That(delta.Length(), Is.LessThanOrEqualTo(radius), $"{SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} was not at the intended location. Distance: {delta}, allowed distance: {radius}");
     }
 
     #endregion
@@ -791,7 +803,7 @@ public abstract partial class InteractionTest
             gridUid = gridEnt;
             gridComp = gridEnt.Comp;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
-            Transform.SetWorldPosition(gridXform, pos.Position);
+            Transform.SetWorldPosition((gridUid, gridXform), pos.Position);
             MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
             if (!MapMan.TryFindGridAt(pos, out _, out _))
@@ -829,9 +841,9 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, EntityUid? _ = null)
+    protected async Task SendBui(Enum key, BoundUserInterfaceMessage msg, NetEntity? target = null)
     {
-        if (!TryGetBui(key, out var bui))
+        if (!TryGetBui(key, out var bui, target))
             return;
 
         await Client.WaitPost(() => bui.SendMessage(msg));
@@ -843,9 +855,9 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Sends a bui message using the given bui key.
     /// </summary>
-    protected async Task CloseBui(Enum key, EntityUid? _ = null)
+    protected async Task CloseBui(Enum key, NetEntity? target = null)
     {
-        if (!TryGetBui(key, out var bui))
+        if (!TryGetBui(key, out var bui, target))
             return;
 
         await Client.WaitPost(() => bui.Close());
@@ -1010,7 +1022,7 @@ public abstract partial class InteractionTest
         }
 
         Assert.That(control.GetType().IsAssignableTo(typeof(TControl)));
-        return (TControl) control;
+        return (TControl)control;
     }
 
     /// <summary>
@@ -1174,8 +1186,8 @@ public abstract partial class InteractionTest
         {
             var atmosSystem = SEntMan.System<AtmosphereSystem>();
             var moles = new float[Atmospherics.AdjustedNumberOfGases];
-            moles[(int) Gas.Oxygen] = 21.824779f;
-            moles[(int) Gas.Nitrogen] = 82.10312f;
+            moles[(int)Gas.Oxygen] = 21.824779f;
+            moles[(int)Gas.Nitrogen] = 82.10312f;
             atmosSystem.SetMapAtmosphere(target, false, new GasMixture(moles, Atmospherics.T20C));
         });
     }
@@ -1267,14 +1279,24 @@ public abstract partial class InteractionTest
     protected EntityUid? ToServer(NetEntity? nent) => SEntMan.GetEntity(nent);
     protected EntityUid? ToClient(NetEntity? nent) => CEntMan.GetEntity(nent);
     protected EntityUid ToServer(EntityUid cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
-    protected EntityUid ToClient(EntityUid cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid ToClient(EntityUid suid) => CEntMan.GetEntity(SEntMan.GetNetEntity(suid));
     protected EntityUid? ToServer(EntityUid? cuid) => SEntMan.GetEntity(CEntMan.GetNetEntity(cuid));
-    protected EntityUid? ToClient(EntityUid? cuid) => CEntMan.GetEntity(SEntMan.GetNetEntity(cuid));
+    protected EntityUid? ToClient(EntityUid? suid) => CEntMan.GetEntity(SEntMan.GetNetEntity(suid));
 
     protected EntityCoordinates ToServer(NetCoordinates coords) => SEntMan.GetCoordinates(coords);
     protected EntityCoordinates ToClient(NetCoordinates coords) => CEntMan.GetCoordinates(coords);
     protected EntityCoordinates? ToServer(NetCoordinates? coords) => SEntMan.GetCoordinates(coords);
     protected EntityCoordinates? ToClient(NetCoordinates? coords) => CEntMan.GetCoordinates(coords);
+
+    protected NetEntity FromServer(EntityUid suid) => SEntMan.GetNetEntity(suid);
+    protected NetEntity FromClient(EntityUid cuid) => CEntMan.GetNetEntity(cuid);
+    protected NetEntity? FromServer(EntityUid? suid) => SEntMan.GetNetEntity(suid);
+    protected NetEntity? FromClient(EntityUid? cuid) => CEntMan.GetNetEntity(cuid);
+
+    protected NetCoordinates FromServer(EntityCoordinates scoords) => SEntMan.GetNetCoordinates(scoords);
+    protected NetCoordinates FromClient(EntityCoordinates ccoords) => CEntMan.GetNetCoordinates(ccoords);
+    protected NetCoordinates? FromServer(EntityCoordinates? scoords) => SEntMan.GetNetCoordinates(scoords);
+    protected NetCoordinates? FromClient(EntityCoordinates? ccoords) => CEntMan.GetNetCoordinates(ccoords);
 
     #endregion
 

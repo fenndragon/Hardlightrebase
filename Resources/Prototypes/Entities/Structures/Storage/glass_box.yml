@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: [BaseStructureDynamic, BaseItemCabinetGlass]
   id: BaseGlassBox
   abstract: true
@@ -104,9 +104,10 @@
   id: GlassBoxLaser
   parent: GlassBox
   suffix: AntiqueLaser
+#  categories: [HideSpawnMenu] # Unhidden from Frontier
   components:
   - type: AccessReader
-    access: [["Captain"]]
+    access: [["StationCaptain"]] # HardLight
   - type: Construction
     graph: GlassBox
     node: glassBox
@@ -123,6 +124,7 @@
   id: GlassBoxLaserOpen
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Open
+  categories: [HideSpawnMenu] # Frontier
   components:
   - type: Openable
     opened: true
@@ -133,16 +135,18 @@
   id: GlassBoxLaserFilled
   parent: GlassBoxLaser
   suffix: AntiqueLaser, Filled
+  categories: [HideSpawnMenu] # Frontier
   components:
   - type: ContainerFill
     containers:
       ItemCabinet:
-      - WeaponAntiqueLaser
+      - NFWeaponEnergyPistolLaserAntique # Frontier: WeaponAntiqueLaser<NFWeaponEnergyPistolLaserAntique
 
 - type: entity
   parent: [GlassBoxLaserFilled, GlassBoxLaserOpen]
   id: GlassBoxLaserFilledOpen
   suffix: AntiqueLaser, Filled, Open
+  categories: [HideSpawnMenu] # Frontier
 
 - type: entity
   id: GlassBoxFrame

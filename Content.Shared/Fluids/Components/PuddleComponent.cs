@@ -15,13 +15,13 @@ namespace Content.Shared.Fluids.Components
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         [DataField]
-        public FixedPoint2 OverflowVolume = FixedPoint2.New(20);
+        public FixedPoint2 OverflowVolume = FixedPoint2.New(50); // Frontier: 20<50
 
         /// <summary>
         /// Mono - don't bother trying to spill if we're above overflow volume but below this
         /// </summary>
         [DataField]
-        public FixedPoint2 OverflowThreshold = FixedPoint2.New(25);
+        public FixedPoint2 OverflowThreshold = FixedPoint2.New(25); // WOLFGATE: retain one copy after merge
 
         /// <summary>
         /// Mono - don't bother waking up for transfers below this portion of our volume

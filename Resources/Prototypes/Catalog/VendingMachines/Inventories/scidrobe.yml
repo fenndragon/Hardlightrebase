@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: SciDrobeInventory
   startingInventory:
+    GlimmerMonitorCartridge: 3
     ClothingBackpackScience: 3
     ClothingBackpackSatchelScience: 3
     ClothingBackpackDuffelScience: 3
@@ -12,10 +13,12 @@
     ClothingOuterCoatRnd: 3
     ClothingShoesColorWhite: 3
     ClothingNeckTieSci: 3
-    ClothingHeadsetScience: 3
+    #ClothingHeadsetScience: 3
     ClothingMaskGas: 3
     ClothingOuterWinterSci: 2
+    ClothingOuterWindbreakerScience: 2 # Starlight
     ClothingNeckScarfStripedPurple: 3
+    ClothingNeckCollarEpi: 2 # Floofstation - Collar addition
     ClothingShoesBootsWinterSci: 2
     # Frontier
     ClothingHeadHatHoodBioScientist: 1
@@ -50,7 +53,7 @@
     ClothingHandsGlovesFingerless: 2
     ClothingHeadHatCorpsoft: 2
     ClothingHeadBandSkull: 2
-    ClothingHeadsetRobotics: 2
+    #ClothingHeadsetRobotics: 2
     ClothingOuterWinterRobo: 2
     ClothingShoesBootsWinterRobo: 2 #Delta V: Add departmental winter boots
 # Senior:
@@ -66,8 +69,18 @@
     ClothingNeckMantleRD: 1
     ClothingNeckCloakRd: 1
     ClothingHandsGlovesColorPurple: 1
-    ClothingHeadsetAltScience: 1
-    RubberStampRd: 1
+    #ClothingHeadsetAltScience: 1
+    #RubberStampRd: 1
+    ClothingHandsEpiWarmers: 3
+    ClothingUnderSocksEpi: 3
+    ClothingUniformEpiThong: 3
+    ClothingHandsEpiHeadWarmers: 3
+    ClothingUnderSocksEpiHead: 3
+    ClothingUniformEpiHeadThong: 3
+    ClothingHandsMantisEpiWarmers: 3
+    ClothingUnderSocksMantisEpi: 3
+    ClothingUniformMantisEpiThong: 3
     # End Frontier
+    ScienceVendBoosterPack: 2 # HL
   contrabandInventory:
     ToyFigurineResearchDirector: 1

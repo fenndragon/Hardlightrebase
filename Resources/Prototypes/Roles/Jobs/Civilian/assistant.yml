@@ -3,10 +3,12 @@
   name: job-name-passenger
   description: job-description-passenger
   playTimeTracker: JobPassengerOld
-  setPreference: false # Frontier
-  startingGear: PassengerGear
+  setPreference: true
+  # startingGear: PassengerGear # HardLight
   icon: "JobIconPassenger"
-#  supervisors: job-supervisors-everyone
+  # supervisors: job-supervisors-everyone
+  access:
+  - Maintenance
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
@@ -15,6 +17,6 @@
   equipment:
     id: PassengerPDA
     ears: ClothingHeadsetGrey
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

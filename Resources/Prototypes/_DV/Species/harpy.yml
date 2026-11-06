@@ -6,15 +6,22 @@
   sprites: MobHarpySprites
   markingLimits: MobHarpyMarkingLimits
   dollPrototype: MobHarpyDummy
-  skinColoration: HumanToned
+  skinColoration: AnyColour # Hardlight
 
 - type: speciesBaseSprites
   id: MobHarpySprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking
+    TailOversuit: MobHumanoidAnyMarking
     Head: MobHarpyHead
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
+    Genital: MobHumanoidAnyMarking
+    Penis: MobHumanoidAnyMarking
+    Breasts: MobHumanoidAnyMarking
     Chest: MobHarpyTorso
     UndergarmentTop: MobHumanoidAnyMarking # WOLFGATE(Genitals): underwear/genital layers ported from HardLight
     UndergarmentBottom: MobHumanoidAnyMarking # WOLFGATE(Genitals): underwear/genital layers ported from HardLight
@@ -55,6 +62,14 @@
       points: 1
       required: true
       defaultMarkings: [ HarpyEarsDefault ]
+    # Frontier: apparently these don't exist on Delta
+    UndergarmentTop:
+      points: 3
+      required: false
+    UndergarmentBottom:
+      points: 3
+      required: false
+    # End Frontier
     Chest:
       points: 4 # WOLFGATE(Species): was 1, more marking slots
       required: true

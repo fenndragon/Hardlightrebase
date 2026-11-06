@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -28,5 +28,5 @@ public sealed partial class CCVars
     ///     Max distance that radiation ray can travel in meters.
     /// </summary>
     public static readonly CVarDef<float> RadiationGridcastMaxDistance =
-        CVarDef.Create("radiation.gridcast.max_distance", 50f, CVar.SERVERONLY);
+        CVarDef.Create("radiation.gridcast.max_distance", 20f, CVar.SERVERONLY);
 }

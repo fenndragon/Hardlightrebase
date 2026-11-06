@@ -1,0 +1,64 @@
+- type: entity
+  parent: BaseItem
+  id: BaseHyperlinkBook
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+  - type: Tag
+    tags:
+    - Book
+  - type: StaticPrice
+    price: 35
+
+- type: entity
+  parent: BaseHyperlinkBook
+  id: NFHyperlinkBookSpaceLaw
+  name: space law
+  description: A big book of laws for space courts.
+  categories: [ HideSpawnMenu ] #HL: Hide
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/books.rsi
+    layers:
+    - state: law_space
+  - type: HyperlinkBook
+    url: https://docs.hardlight.space/en/security/crimes-and-punishments
+  - type: Tag
+    tags:
+    - Book
+    - BookSpaceLaw
+
+- type: entity
+  parent: BaseHyperlinkBook
+  id: HyperlinkBookNfsdSop
+  name: Colsec SOP manual
+  description: A book defining Colsec standard operating procedures.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/books.rsi
+    layers:
+    - state: nfsd_sop
+  - type: HyperlinkBook
+    url: https://docs.hardlight.space/space-law/security-overview.html
+  - type: Tag
+    tags:
+    - Book
+    - BookNfsdSop
+
+# HardLight Command SOP
+- type: entity
+  parent: BaseHyperlinkBook
+  id: NFHyperlinkBookCommandSOP
+  name: command SOP
+  description: A big book of standard command operating procedures.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/books.rsi
+    layers:
+    - state: command_sop
+  - type: HyperlinkBook
+    url: https://docs.hardlight.space/en/departments/command
+  - type: Tag
+    tags:
+    - Book

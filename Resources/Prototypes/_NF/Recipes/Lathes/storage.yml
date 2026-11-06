@@ -92,6 +92,11 @@
   result: WeaponCaseShortExplosives
   name: lathe-recipe-WeaponCaseShortExplosives-name
 
+- type: latheRecipe
+  id: WeaponCaseShortDocuments
+  parent: NFBaseToolboxRecipe
+  result: WeaponCaseShortDocuments
+  name: lathe-recipe-WeaponCaseShortDocuments-name
 # Cardboard boxes
 
 - type: latheRecipe
@@ -123,6 +128,9 @@
   parent: NFBaseBoxRecipe
   result: HappyHonkMcCargoEmpty
   name: lathe-recipe-NFHappyHonkMcCargoEmpty-name
+  categories:
+  - Brand
+  - StorageNF
 
 - type: latheRecipe
   id: NFHappyHonkCluwneEmpty

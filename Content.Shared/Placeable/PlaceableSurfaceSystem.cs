@@ -60,6 +60,9 @@ public sealed partial class PlaceableSurfaceSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
+        if (args.Used == uid)
+            return;
+
         if (!surface.IsPlaceable)
             return;
 
@@ -71,8 +74,14 @@ public sealed partial class PlaceableSurfaceSystem : EntitySystem
         if (!_handsSystem.TryDrop(args.User, args.Used))
             return;
 
-        _transformSystem.SetCoordinates(args.Used,
-            surface.PlaceCentered ? Transform(uid).Coordinates.Offset(surface.PositionOffset) : args.ClickLocation);
+        var targetCoordinates = surface.PlaceCentered
+            ? Transform(uid).Coordinates.Offset(surface.PositionOffset)
+            : args.ClickLocation;
+
+        if (targetCoordinates.EntityId == args.Used)
+            return;
+
+        _transformSystem.SetCoordinates(args.Used, targetCoordinates);
 
         args.Handled = true;
     }

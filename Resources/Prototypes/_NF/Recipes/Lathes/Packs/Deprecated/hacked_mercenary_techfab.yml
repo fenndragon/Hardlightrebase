@@ -41,7 +41,7 @@
   - AirTank
 # Mercenary techfab
 ## Clothing / Armor
-  - RiotShield
+  - NFRiotShield
   - ClothingHandsMercenaryGlovesCombat
   - ClothingHandsGlovesCombat
   - ClothingOuterArmorPunkRandomized
@@ -69,13 +69,13 @@
   - WeaponCaseShortAmmo
   - WeaponCaseShortExplosives
 ## Weapons
-  - WeaponLaserSvalinn # After the changes made to windows shouldn't be that much of an issue now if it's widely available
-  - WeaponLaserPistolNF
-  - WeaponPistolMk58NF
+  - NFWeaponEnergyPistolLaserSvalinn # After the changes made to windows shouldn't be that much of an issue now if it's widely available
+  - NFWeaponEnergyPistolLaser
+  - WeaponPistolMk58
   - WeaponRifleNovaliteC1
   - WeaponRifleGestio
   - BaseBallBatNF
-  - KatanaNF
+  - Katana
   - KukriKnifeNF
 
 - type: latheRecipePack
@@ -92,7 +92,7 @@
   - PowerCellMicroreactor
 # Mercenary techfab
 ## Armor
-  - TelescopicShield
+  - NFTelescopicShield
   - ClothingOuterArmorBulletproofNF
   - ClothingOuterCoatBHTrench
 ## EVA / Hardsuits
@@ -105,9 +105,9 @@
   - ClothingShoesBootsMagMercenary
 ## Utilities
   - PinpointerUniversalNF
-  - Handcuffs
+  - NFHandcuffs
   - SignalTrigger
-  - PortableRecharger
+  - NFPortableRecharger
   - TimerTrigger
   - VoiceTrigger
   - TurboItemRechargerCircuitboard
@@ -122,8 +122,3 @@
   - Stunbaton
   - BolaNF
   - ChemicalPayload
-  - WeaponShotgunKammererNF
-  - WeaponAdvancedLaser # After the changes made to windows shouldn't be that much of an issue now if it's widely available
-  - WeaponLaserCarbine
-  - WeaponDisabler
-  - WeaponLaserCannon

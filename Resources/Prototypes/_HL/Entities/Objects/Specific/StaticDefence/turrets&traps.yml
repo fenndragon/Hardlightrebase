@@ -1,0 +1,67 @@
+- type: entity # deployed turret
+  id: TrapShotgunStatic
+  name: static shotgun trap
+  description: eeeeee
+  parent:
+  - BaseC2ContrabandUnredeemable
+  - BaseWeaponTurret
+  components:
+  - type: Gun
+  - type: Sprite
+    sprite: _NF/Objects/Weapons/Guns/Turrets/magazinefed.rsi
+    drawdepth: Mobs
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Appearance
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun12_gauge
+    capacity: 2
+    proto: ShellShotgun12_gauge
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: NpcFactionMember
+    factions:
+    - HostileUniversally
+  - type: CombatMode
+    toggleMouseRotator: true
+  - type: MouseRotator
+    angleTolerance: 0
+    rotationSpeed: 0
+    simple4DirMode: false
+  - type: HTN
+    rootTask:
+      task: TurretCompound
+    blackboard:
+      RotateSpeed: !type:Single
+        0
+      SoundTargetInLOS: !type:SoundPathSpecifier
+        path: /Audio/_NF/Effects/silence.ogg
+  - type: StaticPrice # HL: Price balancing
+    price: 30
+
+- type: entity
+  parent: BaseItem
+  id: ShotgunBoxDeployable
+  name: stowed static shotgun
+  description: A toolbox used to conveniently a shotgun trap.
+  components:
+  - type: Flatpack
+    entity: TrapShotgunStatic
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+    size: Large
+  - type: Appearance
+  - type: StaticPrice
+    price: 500

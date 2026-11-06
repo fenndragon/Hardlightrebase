@@ -15,6 +15,11 @@ namespace Content.Server.Voting.Managers
         IEnumerable<IVoteHandle> ActiveVotes { get; }
 
         /// <summary>
+        /// Recently finished votes with immutable snapshots of who voted what.
+        /// </summary>
+        IEnumerable<VoteHistoryEntry> HistoricalVotes { get; }
+
+        /// <summary>
         /// Try to get a vote handle by integer ID.
         /// </summary>
         /// <remarks>
@@ -24,6 +29,14 @@ namespace Content.Server.Voting.Managers
         /// <param name="vote">The vote handle, if found.</param>
         /// <returns>True if the vote was found and it was returned, false otherwise.</returns>
         bool TryGetVote(int voteId, [NotNullWhen(true)] out IVoteHandle? vote);
+
+        /// <summary>
+        /// Try to get a historical vote snapshot by integer ID.
+        /// </summary>
+        /// <param name="voteId">The integer ID of the vote.</param>
+        /// <param name="vote">The immutable historical vote snapshot, if found.</param>
+        /// <returns>True if a historical snapshot exists and was returned.</returns>
+        bool TryGetHistoricalVote(int voteId, [NotNullWhen(true)] out VoteHistoryEntry? vote);
 
         /// <summary>
         /// Check if a player can initiate a vote right now. Optionally of a specified standard type.
@@ -46,11 +59,6 @@ namespace Content.Server.Voting.Managers
         /// <summary>
         /// Initiate a standard vote such as restart round, that can be initiated by players.
         /// </summary>
-        /// <param name="initiator">
-        /// The player that called the vote.
-        /// If null it is assumed to be an automatic vote by the server.
-        /// </param>
-        /// <param name="voteType">The type of standard vote to make.</param>
         void CreateStandardVote(ICommonSession? initiator, StandardVoteType voteType, string[]? args = null);
 
         /// <summary>

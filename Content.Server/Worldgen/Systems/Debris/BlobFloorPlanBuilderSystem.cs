@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Worldgen.Components.Debris;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -60,7 +59,7 @@ public sealed partial class BlobFloorPlanBuilderSystem : BaseWorldSystem
                 spawnPoints.Add(west);
 
             var tileDef = _tileDefinition[_random.Pick(comp.FloorTileset)];
-            taken.Add(point, new Tile(tileDef.TileId, 0, _tiles.PickVariant((ContentTileDefinition) tileDef)));
+            taken.Add(point, new Tile(tileDef.TileId, 0, _tiles.PickVariant((ContentTileDefinition)tileDef)));
         }
 
         PlaceTile(Vector2i.Zero);

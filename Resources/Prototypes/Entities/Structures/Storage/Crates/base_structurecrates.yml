@@ -81,19 +81,22 @@
       blacklist:
         tags:
         - Book
+        components: # Frontier
+        - Blueprint # Frontier
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: ItemSlots
   - type: StaticPrice
-    price: 50 # Frontier: 75<50 - TODO: material value rework
+    price: 75 # HL: Price balancing
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
     containers:
       - entity_storage
   - type: RequireProjectileTarget
+  - type: NFCrate # Frontier
 
 - type: entity
   parent: CrateGeneric
@@ -104,7 +107,7 @@
   - type: ResistLocker
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: [IdLockableBaseDisabled, CrateBaseWeldable] # Floof - added a default-disabled ID lock to all closets
   id: CrateBaseSecure
   suffix: Secure
   components:
@@ -154,3 +157,5 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: Paintable
+    group: CrateSecure

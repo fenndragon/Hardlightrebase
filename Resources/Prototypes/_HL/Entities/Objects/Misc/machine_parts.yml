@@ -1,0 +1,64 @@
+- type: entity
+  parent: BaseItem
+  id: PlumbingAssembly
+  name: plumbing assembly
+  description: A heavy array of various pipes and connectors for connecting a device to plumbing.
+  components:
+  - type: Item
+    size: Large
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+# Placeholder sprite, but has to be good enough in case it isn't replaced for a long time
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: PumpManualValve
+    rotation: 90 # Rotated 90 degrees to best match default rotation when stored.
+    layers:
+      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        state: pipeStraight
+      - state: pumpManualValve
+  - type: StaticPrice
+    price: 55
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+  - type: Tag
+    tags:
+    - PlumbingAssembly
+
+- type: Tag
+  id: PlumbingAssembly
+
+- type: Tag
+  id: HighPressureCasing
+
+- type: entity
+  parent: BaseItem
+  id: HighPressureCasing
+  name: high-pressure casing
+  description: A heavy casing for high-pressure atmospheric devices.
+  components:
+  - type: Item
+    size: Large
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpVolume
+    rotation: 90 # Rotated 90 degrees to best match default rotation when stored.
+    layers:
+      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        state: pipeStraight
+      - state: pumpVolume
+  - type: StaticPrice
+    price: 1200
+  - type: PhysicalComposition
+    materialComposition:
+      Plasteel: 750 # HL: Material balancing
+      Gold: 50
+      Silver: 50
+  - type: Tag
+    tags:
+    - HighPressureCasing

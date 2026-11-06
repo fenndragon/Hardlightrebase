@@ -1,0 +1,148 @@
+- type: entity
+  parent: IDCardStandard
+  id: NanotrasenIDCard
+  name: nanotrasen ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idnanotrasen
+  - type: Access
+    groups:
+    - NT
+    tags:
+    - Nanotrasen
+
+- type: entity
+  parent: IDCardStandard
+  id: NanotrasenOperativeIDCard
+  name: nanotrasen operative ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idnanotrasenoperative
+  - type: Access
+    groups:
+    - NT
+    tags:
+    - Nanotrasen
+    - NanotrasenOperative
+
+- type: entity
+  parent: IDCardStandard
+  id: ArcadiaIDCard
+  name: arcadia ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idarcadia
+  - type: Access
+    tags:
+    - Arcadia
+
+- type: entity
+  parent: [BaseC3SyndicateContraband, IDCardStandard]
+  id: CartelIDCard
+  name: cartel ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idcartel
+  - type: Access
+    tags:
+    - Cartel
+
+- type: entity
+  parent: [BaseC3SyndicateContraband, IDCardStandard]
+  id: CartelLieutenantIDCard
+  name: cartel lieutenant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: idcartellieutenant
+  - type: Access
+    tags:
+    - Cartel
+    - CartelLieutenant
+
+- type: entity
+  parent: IDCardStandard
+  id: InterdyneIDCard
+  name: interdyne doctor ID card
+  components:
+  - type: PresetIdCard
+    job: Interdyne
+  - type: Sprite
+    sprite: _HL/Objects/Devices/interdyne_id.rsi
+    layers:
+    - state: interdyne
+  - type: Item
+    sprite: _HL/Objects/Devices/interdyne_id.rsi
+    inhandVisuals:
+      left:
+      - state: interdyne-inhand-left
+      right:
+      - state: interdyne-inhand-right
+  - type: Access
+    tags:
+    - Maintenance
+    - Medical
+    - Chemistry
+    - Paramedic
+    - Interdyne
+
+- type: entity
+  parent: IDCardStandard
+  id: InterdyneHeadIDCard
+  name: interdyne head ID card
+  components:
+  - type: PresetIdCard
+    job: InterdyneHead
+  - type: Sprite
+    sprite: _HL/Objects/Devices/interdyne_id.rsi
+    layers:
+    - state: interdyne-head
+  - type: Item
+    sprite: _HL/Objects/Devices/interdyne_id.rsi
+    inhandVisuals:
+      left:
+      - state: interdyne-inhand-left
+      right:
+      - state: interdyne-inhand-right
+  - type: Access
+    tags:
+    - Maintenance
+    - Medical
+    - Chemistry
+    - Paramedic
+    - Interdyne
+    - InterdyneHead
+
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: DirectorateIDCard
+  name: Directorate ID Card
+  components:
+  - type: PresetIdCard
+    job: CentralCommandDirectorate
+  - type: Access
+    groups:
+    - AllAccess
+    tags:
+    - CentralCommand
+    - Directorate
+    - Naval
+
+- type: entity
+  parent: CentcomIDCardDeathsquad
+  id: NavalIDCard
+  name: Naval ID Card
+  components:
+  - type: PresetIdCard
+    job: ColonialNavyman
+  - type: Access
+    groups:
+    - AllAccess
+    tags:
+    - CentralCommand
+    - Naval

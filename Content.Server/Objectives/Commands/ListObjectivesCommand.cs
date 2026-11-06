@@ -1,10 +1,10 @@
-using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Commands
 {
@@ -18,8 +18,13 @@ namespace Content.Server.Objectives.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player;
-            if (player == null || !_players.TryGetSessionByUsername(args[0], out player))
+            ICommonSession? player;
+            if (args.Length > 0)
+                _players.TryGetSessionByUsername(args[0], out player);
+            else
+                player = shell.Player;
+
+            if (player == null)
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
@@ -50,7 +55,7 @@ namespace Content.Server.Objectives.Commands
                 else
                 {
 
-                    var progress = (int) (info.Value.Progress * 100f);
+                    var progress = (int)(info.Value.Progress * 100f);
                     shell.WriteLine($"- [{i}] {objectives[i]} ({info.Value.Title}) ({progress}%)");
                 }
             }

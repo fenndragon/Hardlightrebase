@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -77,6 +76,11 @@ public sealed partial class SpaceHeaterSystem : EntitySystem
             var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map);
             if (environment == null)
                 return;
+
+            // Frontier: functional cutoff
+            if (environment.Temperature >= spaceHeater.MaxFunctionalTemperature)
+                thermoMachine.Cp = 0;
+            // End Frontier
 
             if (environment.Temperature <= thermoMachine.TargetTemperature - (thermoMachine.TemperatureTolerance + spaceHeater.AutoModeSwitchThreshold))
             {

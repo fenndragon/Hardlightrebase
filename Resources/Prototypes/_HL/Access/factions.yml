@@ -1,0 +1,51 @@
+- type: accessLevel
+  id: Nanotrasen
+  name: id-card-access-level-nanotrasen
+
+- type: accessLevel
+  id: NanotrasenOperative
+  name: id-card-access-level-nanotrasen-operative
+
+- type: accessLevel
+  id: Arcadia
+  name: id-card-access-level-arcadia
+
+- type: accessLevel
+  id: Cartel
+  name: id-card-access-level-cartel
+
+- type: accessLevel
+  id: CartelLieutenant
+  name: id-card-access-level-cartel-lieutenant
+
+- type: accessLevel
+  id: NanotrasenGunny
+  name: id-card-access-level-nanotrasen-Gunny
+
+- type: accessLevel
+  id: NanotrasenLieutenant
+  name: id-card-access-level-nanotrasen-lieutenant
+
+- type: accessLevel
+  id: NanotrasenSeniorOfficer
+  name: id-card-access-level-nanotrasen-senior-officer
+
+- type: accessLevel
+  id: NanotrasenAdmiral
+  name: id-card-access-level-nanotrasen-admiral
+
+- type: accessLevel
+  id: Interdyne
+  name: id-card-access-level-interdyne
+
+- type: accessLevel
+  id: InterdyneHead
+  name: id-card-access-level-interdyne-head
+
+- type: accessLevel
+  id: Directorate
+  name: id-card-access-level-directorate
+
+- type: accessLevel
+  id: Naval
+  name: id-card-access-level-naval

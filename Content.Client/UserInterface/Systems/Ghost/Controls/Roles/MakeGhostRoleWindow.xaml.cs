@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using System.Numerics;
 using Content.Server.Ghost.Roles.Raffles;
 using Content.Shared.Ghost.Roles.Raffles;
@@ -140,9 +139,9 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             {
                 raffleSettings = new GhostRoleRaffleSettings()
                 {
-                    InitialDuration = (uint) RaffleInitialDuration.Value,
-                    JoinExtendsDurationBy = (uint) RaffleJoinExtendsDurationBy.Value,
-                    MaxDuration = (uint) RaffleMaxDuration.Value
+                    InitialDuration = (uint)RaffleInitialDuration.Value,
+                    JoinExtendsDurationBy = (uint)RaffleJoinExtendsDurationBy.Value,
+                    MaxDuration = (uint)RaffleMaxDuration.Value
                 };
             }
             else if (_raffleSettingId != RaffleDontRaffleId)

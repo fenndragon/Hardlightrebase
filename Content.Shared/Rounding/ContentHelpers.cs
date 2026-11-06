@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Rounding
+namespace Content.Shared.Rounding
 {
     public static class ContentHelpers
     {
@@ -12,7 +12,6 @@
         ///     Say you have a progress bar going from 0 -> 100 inclusive and you want to map this to 6 sprite states (0, 4 intermediates and full).
         ///     This method allows you to easily map this progress bar to the sprite states.
         /// </example>
-        /// <param name="levels">The amount of levels to subdivide into.</param>
         /// <returns>An integer from 0 to <paramref name="levels" />-1.</returns>
         /// <exception cref="ArgumentException">
         ///     Thrown if levels is less than 1.
@@ -35,7 +34,7 @@
             }
 
             var toOne = actual / max;
-            return (int) Math.Ceiling(toOne * (levels - 2));
+            return (int)Math.Ceiling(toOne * (levels - 2));
         }
 
         /// <summary>
@@ -73,7 +72,7 @@
                 return 0;
             }
 
-            return (int) Math.Round(actual / max * levels, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(actual / max * levels, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
@@ -110,7 +109,7 @@
                 return 0;
             }
 
-            return (int) Math.Round(actual / max * levels, MidpointRounding.ToZero);
+            return (int)Math.Round(actual / max * levels, MidpointRounding.ToZero);
         }
     }
 }

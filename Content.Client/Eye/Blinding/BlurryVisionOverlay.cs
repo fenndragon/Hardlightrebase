@@ -17,6 +17,8 @@ namespace Content.Client.Eye.Blinding
 
         public override bool RequestScreenTexture => true;
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        private static readonly ProtoId<ShaderPrototype> CataractsShaderId = "Cataracts";
+        private static readonly ProtoId<ShaderPrototype> CircleMaskShaderId = "CircleMask";
         private readonly ShaderInstance _cataractsShader;
         private readonly ShaderInstance _circleMaskShader;
         private float _magnitude;
@@ -33,8 +35,8 @@ namespace Content.Client.Eye.Blinding
         public BlurryVisionOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _cataractsShader = _prototypeManager.Index<ShaderPrototype>("Cataracts").InstanceUnique();
-            _circleMaskShader = _prototypeManager.Index<ShaderPrototype>("CircleMask").InstanceUnique();
+            _cataractsShader = _prototypeManager.Index(CataractsShaderId).InstanceUnique();
+            _circleMaskShader = _prototypeManager.Index(CircleMaskShaderId).InstanceUnique();
 
             _circleMaskShader.SetParameter("CircleMinDist", 0.0f);
             _circleMaskShader.SetParameter("CirclePow", NoMotion_Pow);
@@ -79,7 +81,7 @@ namespace Content.Client.Eye.Blinding
 
             var worldHandle = args.WorldHandle;
             var viewport = args.WorldBounds;
-            var strength = (float) Math.Pow(Math.Min(_magnitude / BlurryVisionComponent.MaxMagnitude, 1.0f), _correctionPower);
+            var strength = (float)Math.Pow(Math.Min(_magnitude / BlurryVisionComponent.MaxMagnitude, 1.0f), _correctionPower);
 
             var zoom = 1.0f;
             if (_entityManager.TryGetComponent<EyeComponent>(playerEntity, out var eyeComponent))
@@ -106,8 +108,8 @@ namespace Content.Client.Eye.Blinding
 
             _cataractsShader.SetParameter("Zoom", zoom);
 
-            _cataractsShader.SetParameter("DistortionScalar", (float) Math.Pow(strength, Distortion_Pow));
-            _cataractsShader.SetParameter("CloudinessScalar", (float) Math.Pow(strength, Cloudiness_Pow));
+            _cataractsShader.SetParameter("DistortionScalar", (float)Math.Pow(strength, Distortion_Pow));
+            _cataractsShader.SetParameter("CloudinessScalar", (float)Math.Pow(strength, Cloudiness_Pow));
 
             worldHandle.UseShader(_cataractsShader);
             worldHandle.DrawRect(viewport, Color.White);

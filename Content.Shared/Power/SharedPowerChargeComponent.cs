@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Power;
+namespace Content.Shared.Power;
 
 /// <summary>
 /// Component for a powered machine that slowly powers on and off over a period of time.
@@ -11,4 +11,11 @@ public abstract partial class SharedPowerChargeComponent : Component
     [DataField]
     public LocId WindowTitle { get; set; } = string.Empty;
 
+    // Frontier: actions
+    /// <summary>
+    /// Show a action button on UI
+    /// </summary>
+    [DataField]
+    public bool ActionUI { get; set; } = false;
+    // End Frontier: actions
 }

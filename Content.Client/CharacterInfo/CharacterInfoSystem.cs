@@ -1,4 +1,4 @@
-﻿using Content.Shared.CharacterInfo;
+using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.Player;
 using Robust.Shared.Network; // WOLFGATE: replays skip the character info request

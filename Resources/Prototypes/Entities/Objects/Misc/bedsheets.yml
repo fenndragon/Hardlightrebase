@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, RecyclableItemClothSmall] # Frontier: added RecyclableItemClothSmall
+  parent: [BaseItemHarmless, RecyclableItemClothSmall] # Frontier: added RecyclableItemClothSmall
   id: BedsheetBase
   name: BedsheetBase
   abstract: true
@@ -23,6 +23,7 @@
   - type: Tag
     tags:
     - Bedsheet
+  - type: HLPersistOnShipSave
 
 - type: entity
   id: BedsheetBlack
@@ -85,7 +86,7 @@
 - type: entity
   id: BedsheetCentcom
   parent: BedsheetBase
-  name: CentComm bedsheet
+  name: ColComm bedsheet
   description: Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials.
   components:
   - type: Sprite
@@ -314,7 +315,7 @@
 
 - type: entity
   id: BedsheetSyndie
-  parent: BedsheetBase
+  parent: [ BedsheetBase, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
   name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:

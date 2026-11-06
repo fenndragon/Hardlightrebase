@@ -14,7 +14,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Server;
-using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Console;
@@ -96,6 +95,8 @@ namespace Content.Server.GameTicking
 
         public void PostInitialize()
         {
+            _roundStartTime = _gameTiming.CurTime;
+
             DebugTools.Assert(_initialized);
             DebugTools.Assert(!_postInitialized);
 

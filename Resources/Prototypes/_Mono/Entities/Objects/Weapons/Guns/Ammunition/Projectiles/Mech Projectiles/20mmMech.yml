@@ -1,0 +1,18 @@
+- type: entity
+  id: Bullet20mm_ACPFMJ_Mech
+  name: 20mm shell
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 250
+  - type: ShipWeaponProjectile
+  - type: RadarBlip
+    scale: 0.5
+    visibleFromOtherGrids: true
+    requireNoGrid: true
+    shape: triangle
+  - type: TimedDespawn
+    lifetime: 1

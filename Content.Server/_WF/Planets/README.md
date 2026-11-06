@@ -775,7 +775,6 @@ cargo weight into lift and gravgen support. The flight panel shows a cargo row w
 - [`Content.Server/Explosion/EntitySystems/ExplosionSystem.Processing.cs`](../../Explosion/EntitySystems/ExplosionSystem.Processing.cs)
   - a blast leaves a planet's ground, not station plating, lattice or a hole under a player's floor.
   - silent flag, so a crash's storm of blasts makes one bang.
-- [`Content.Server/GameTicking/GameTicker.RoundFlow.cs`](../../GameTicking/GameTicker.RoundFlow.cs): round-start worlds still forming hold the start
 - [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs)
   - an atmospheric pack burns welding fuel from a solution, not gas from a tank.
   - a wearer carried below orbit on a hull never changes parent, so the pack is cut here.

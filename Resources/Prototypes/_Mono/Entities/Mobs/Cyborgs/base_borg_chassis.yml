@@ -75,26 +75,20 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
+    - Faction
     - Nfsd
     - Traffic
   - type: ActiveRadio
     channels:
     - Common
+    - Faction
     - Nfsd
     - Traffic
-  - type: LanguageKnowledge
-    speaks:
-    - TauCetiBasic
-    - RobotTalk
-    - SolCommon
-    understands:
-    - TauCetiBasic
-    - RobotTalk
-    - SolCommon
-  - type: CollectiveMind
-    channels:
-    - Binary
-    defaultChannel: Binary
+  # VRS: CollectiveMindComponent is a Triad/Starlight feature not present in VRS yet; commented out.
+#   - type: CollectiveMind
+#     channels:
+#     - Binary
+#     defaultChannel: Binary
   - type: ShowSyndicateIcons
   - type: MovementAlwaysTouching
   - type: Speech
@@ -132,26 +126,20 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
+    - Faction
     - Freelance
     - Traffic
   - type: ActiveRadio
     channels:
     - Common
+    - Faction
     - Freelance
     - Traffic
-  - type: LanguageKnowledge
-    speaks:
-    - TauCetiBasic
-    - RobotTalk
-    - Freespeak
-    understands:
-    - TauCetiBasic
-    - RobotTalk
-    - Freespeak
-  - type: CollectiveMind
-    channels:
-    - Binary
-    defaultChannel: Binary
+  # VRS: CollectiveMindComponent is a Triad/Starlight feature not present in VRS yet; commented out.
+#   - type: CollectiveMind
+#     channels:
+#     - Binary
+#     defaultChannel: Binary
   - type: ShowSyndicateIcons
   - type: MovementAlwaysTouching
   - type: Speech
@@ -166,139 +154,3 @@
   - type: ShowJobIcons
   - type: SiliconLawProvider
     laws: PDVLawset
-
-#Xenoborg Cyborgs
-- type: entity
-  parent: BaseBorgChassis
-  id: BaseFactionXenoBorgChassis
-  abstract: true
-  components:
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Critical
-      375: Dead
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      75: 0.7
-      150: 0.5
-  - type: Damageable
-    damageModifierSet: FactionBorgChassis
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Machines/warning_buzzer.ogg
-          params:
-            volume: 5
-    - trigger:
-        !type:DamageTrigger
-         damage: 400
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-        - borg_module
-        - cell_slot
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: ExplosionResistance
-    damageCoefficient: 0.6
-
-- type: entity
-  id: BaseBorgChassisXenoborg
-  parent: [ BaseFactionXenoBorgChassis, BaseXenoborgTransponder ]
-  abstract: true
-  components:
-  - type: NpcFactionMember
-    factions:
-    - Xenoborg
-  - type: Access
-    tags:
-    - Xenoborg
-  - type: AccessReader
-    access: [["Xenoborg"]]
-  - type: ShowElectrocutionHUD
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Traffic
-    - Xenoborg
-  - type: ActiveRadio
-    channels:
-    - Traffic
-    - Xenoborg
-    - Mothership
-  - type: LanguageKnowledge
-    speaks:
-    - TauCetiBasic
-    - RobotTalk
-    understands:
-    - TauCetiBasic
-    - RobotTalk
-  - type: CollectiveMind
-    channels:
-    - Binary
-    defaultChannel: Binary
-  - type: ShowSyndicateIcons
-  - type: MovementAlwaysTouching
-  - type: TypingIndicator
-    proto: xenoborg
-  - type: Speech
-    speechSounds: Xenoborg
-    allowedEmotes:
-    - Laugh
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 190
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
-          params:
-            volume: 5
-    - trigger:
-        !type:DamageTrigger
-        damage: 750
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PinpointerMothershipPiece: # drop a piece of core pinpointer upon being destructed (4 pieces to make a core pinpointer)
-            min: 1
-            max: 1
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-        - borg_module
-        - cell_slot
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IonStormTarget
-    chance: 0.1
-  - type: ShowJobIcons
-  - type: SiliconLawProvider
-    laws: XenoborgLawset
-  # WOLFGATE(Xenoborgs) START: wizden#45193, EMPs don't drain xenoborgs; CellHolderEmpResistanceSystem lends it to the cell
-  - type: EmpResistance
-    coefficient: 0
-  # WOLFGATE END
-  - type: FootstepModifier # it flies instead of walking
-    footstepSoundCollection:
-      path: /Audio/_Mono/Effects/Footsteps/borgwalk3.ogg

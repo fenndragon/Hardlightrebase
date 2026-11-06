@@ -168,6 +168,11 @@
   id: FootstepThud
   files:
   - /Audio/Effects/Footsteps/largethud.ogg
+  
+- type: soundCollection
+  id: FootstepSmallThud
+  files:
+  - /Audio/_HL/Effects/smallerthud.ogg
 
 - type: soundCollection
   id: FootstepSnake
@@ -213,9 +218,19 @@
   - /Audio/Effects/Footsteps/borgwalk1.ogg
 
 - type: soundCollection
+  id: FootstepXenoborg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk3.ogg
+
+- type: soundCollection
   id: FootstepHoverBorg
   files:
   - /Audio/Effects/Footsteps/borgwalk2.ogg
+
+- type: soundCollection
+  id: FootstepHoverXenoborg
+  files:
+  - /Audio/Effects/Footsteps/borgwalk4.ogg
 
 - type: soundCollection
   id: FootstepHighHeels

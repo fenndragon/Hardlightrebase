@@ -1,0 +1,56 @@
+<Document>
+# STASIS-CLASS MEDICAL RESPONSE SHUTTLE
+<Box>
+  <GuideEntityEmbed Entity="ComputerCrewMonitoring" Caption="Rescue"/>
+  <GuideEntityEmbed Entity="NFPosterContrabandFsbLogo" Caption="Research"/>
+  <GuideEntityEmbed Entity="SignCryogenics" Caption="Restore"/>
+</Box>
+<Box>
+  <GuideEntityEmbed Entity="ShuttleMapStasis" Caption=""/>
+</Box>
+
+  [color=#a4885c]Ship Size:[/color] Medium
+
+  [color=#a4885c]Recommended Crew:[/color] 1-4
+
+  [color=#a4885c]Power Gen Type:[/color] Bananium
+
+# Shuttle Brief
+
+"A cryogenic medical response cruiser. The Stasis is produced by the Far Star Corporation to act as a technically advanced shuttle designed to thrive in environments that cripple the crafts and crew they rescue."
+
+# Ship Functions
+
+<Box>
+  <GuideEntityEmbed Entity="ButtonFrameCautionSecurity" Caption="Bolt Exterior Airlocks"/>
+  <GuideEntityEmbed Entity="ButtonFrameCaution" Caption="Actuate Blast Doors"/>
+  <GuideEntityEmbed Entity="ButtonFrameGrey" Caption="Actuate Shutters"/>
+</Box>
+
+# Medical
+
+[textlink="Medicine" link="Medical Doctor"/]
+
+[textlink="Chemistry" link="Chemist"/]
+
+[textlink="Chemicals" link="Chemicals"/]
+
+[textlink="Cryogenics" link="Cryogenics"/]
+
+# Piloting
+
+[textlink="Piloting" link="Piloting"/]
+
+[textlink="Sector Topology" link="SectorTopology"/]
+
+# Hiring crew
+
+[textlink="Hiring" link="Hiring"/]
+
+As a Captain of a Nanotrasen vessel, you have the authority to hire, fire, demote, or promote crew members at will.
+
+# PREFLIGHT CHECKLIST
+
+[textlink="Preflight Checklist" link="PreflightChecklist"/]
+
+</Document>

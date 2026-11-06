@@ -2,7 +2,7 @@
   parent:
   - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodArcadia
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   name: arcadia coat hood
   components:
   - type: Sprite
@@ -30,3 +30,27 @@
   - type: HideLayerClothing
     slots:
     - Hair
+
+- type: entity
+  parent: [ClothingHeadBase, BaseC3WizardContraband ]
+  id: ClothingHoodAlchemist
+  name: alchemist hood
+  description: The lightly reinforced hood of an alchemist. Smells like science.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/alchemist-hood.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/alchemist-hood.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Caustic: 0.9

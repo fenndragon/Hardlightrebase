@@ -3,21 +3,31 @@
   name: job-name-lawyer
   description: job-description-lawyer
   playTimeTracker: JobLawyer
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 21600
+      time: 9000 # 2.5 hrs
+  weight: 10 # HardLight
   startingGear: LawyerGear
   icon: "JobIconLawyer"
-  supervisors: job-supervisors-hire
+  supervisors: job-supervisors-centcom
   canBeAntag: false
+  access:
+  - Service
+  - Security
+  # - Justice # Isn't this called Lawyer?
+  - Lawyer
+  - Maintenance
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
 - type: startingGear
   id: LawyerGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
+    # shoes: ClothingShoesBootsLaceup # HardLight: Add NF-style departmental loadouts
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
   inhand:

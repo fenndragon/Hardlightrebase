@@ -1,0 +1,69 @@
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Cybernetics
+{
+    public sealed class SharedBluespaceShuntSystem : EntitySystem
+    {
+
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+
+        private const float MaxTeleportDistance = 10f; // Maximum teleportation distance in tiles
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<BluespaceShuntComponent, BluespaceShuntEvent>(OnBluespaceShunt);
+        }
+
+
+
+        private void OnBluespaceShunt(Entity<BluespaceShuntComponent> ent, ref BluespaceShuntEvent args)
+        {
+            if (!_timing.IsFirstTimePredicted)
+                return;
+            var (uid, comp) = ent;
+            var user = args.Performer;
+
+            if (comp.OnCooldown)
+            {
+                _popup.PopupPredicted(Loc.GetString("shunt-cooldown"), user, user);
+                return;
+            }
+
+            var origin = _transform.GetMapCoordinates(user);
+            var target = _transform.ToMapCoordinates(args.Target);
+
+            // Check if target is within maximum teleport distance
+            var distance = (target.Position - origin.Position).Length();
+            if (distance > MaxTeleportDistance)
+            {
+                _popup.PopupClient(Loc.GetString("shunt-too-far"), user, user);
+                return;
+            }
+
+            if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
+            {
+                // can only dash if the destination is visible on screen
+                _popup.PopupClient(Loc.GetString("shunt-unseen"), user, user);
+                return;
+            }
+
+            var xform = Transform(user);
+            _transform.SetCoordinates(user, xform, args.Target);
+            _transform.AttachToGridOrMap(user, xform);
+            comp.OnCooldown = true;
+
+            var ev = new BluespaceShuntUsedEvent(comp);
+            RaiseLocalEvent(uid, ev);
+
+            args.Handled = true;
+        }
+    }
+}

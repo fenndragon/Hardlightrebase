@@ -1,0 +1,32 @@
+- type: vessel
+  id: Empress
+  parent: BaseVessel
+  name: NSF Empress
+  description: A large patrol vessel capable of carrying up to 4 smaller faster attack ships. The flagship vessel of the NFSD.
+  price: 326000 # HL: Rebalancing ship prices
+  category: Large
+  group: Security
+  access: Security
+  shuttlePath: /Maps/_NF/Shuttles/Nfsd/empress.yml
+  guidebookPage: Null
+  class:
+  - Capital
+  engine:
+  - AME
+
+- type: gameMap
+  id: Empress
+  mapName: 'NSF Empress'
+  mapPath: /Maps/_NF/Shuttles/Nfsd/empress.yml
+  minPlayers: 0
+  stations:
+    Empress:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Empress {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs: {} # Removed the chef since we dont have a real loadout for it

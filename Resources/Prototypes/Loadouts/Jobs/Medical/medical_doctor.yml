@@ -136,6 +136,11 @@
   equipment:
     outerClothing: ClothingOuterWinterMed
 
+- type: loadout # Starlight
+  id: WindbreakerMedical
+  equipment:
+    outerClothing: ClothingOuterWindbreakerMedical
+
 - type: loadout
   id: SeniorPhysicianLabCoat
   effects:
@@ -175,3 +180,47 @@
   id: SterileMask
   equipment:
     mask: ClothingMaskSterile
+
+#Eyewear
+- type: loadout
+  id: MedicalHud
+  equipment:
+    eyes: ClothingEyesHudMedical
+
+- type: loadout
+  id: MedicalEyePatchHud
+  equipment:
+    eyes: ClothingEyesEyepatchHudMedical
+
+# Injector choice
+- type: loadout
+  id: MedicalJetInjector
+  storage:
+    back:
+    - JetInjector
+
+- type: loadout
+  id: MedicalSyringe
+  storage:
+    back:
+    - Syringe
+
+- type: loadout # starlight start
+  id: CoronerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCoroner
+
+- type: loadout
+  id: CoronerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoroner
+
+- type: loadout
+  id: CoronerJumpsuitAlt
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCoronerAlt
+
+- type: loadout
+  id: NurseJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSuitNurse

@@ -16,7 +16,6 @@ entities:
       name: grid
     - type: Transform
       pos: 1.1562505,-0.5781255
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -347,7 +346,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,3.5
       parent: 2
-- proto: BoxFolderCentCom
+- proto: BoxFolderColCom
   entities:
   - uid: 144
     components:

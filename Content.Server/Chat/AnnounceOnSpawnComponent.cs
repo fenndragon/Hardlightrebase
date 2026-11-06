@@ -1,6 +1,5 @@
 using Content.Server.Chat.Systems;
 using Robust.Shared.Audio;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Chat;
 
@@ -17,7 +16,7 @@ public sealed partial class AnnounceOnSpawnComponent : Component
     public LocId Message = string.Empty;
 
     /// <summary>
-    /// Locale id of the announcement's sender, defaults to Central Command.
+    /// Locale id of the announcement's sender, defaults to Colonial Command.
     /// </summary>
     [DataField]
     public LocId? Sender;

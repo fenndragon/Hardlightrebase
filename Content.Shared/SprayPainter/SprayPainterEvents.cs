@@ -1,4 +1,6 @@
 using Content.Shared.DoAfter;
+using Content.Shared.SprayPainter.Prototypes; // WOLFGATE: import spray painter prototype types
+using Robust.Shared.Prototypes; // WOLFGATE: import typed prototype identifiers
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter;
@@ -71,3 +73,12 @@ public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+// WOLFGATE: retain the paint event used by Triad persistence
+/// <summary>Raised after an entity is spray painted.</summary>
+[ByRefEvent]
+public partial record struct EntityPaintedEvent(
+    EntityUid? User,
+    EntityUid Tool,
+    EntProtoId Prototype,
+    ProtoId<PaintableGroupPrototype> Group);

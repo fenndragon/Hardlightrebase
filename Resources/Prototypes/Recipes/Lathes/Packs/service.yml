@@ -4,6 +4,7 @@
   id: ServiceStatic
   recipes:
   - Bucket
+  - Ashtray
   - DrinkMug
   - DrinkMugMetal
   - DrinkGlass
@@ -19,9 +20,11 @@
   - FoodPlateMuffinTin
   - FoodKebabSkewer
   - SprayBottle
+  - LightReplacer
   - MopItem
   - Holoprojector
   - WetFloorSign
+  - WireBrush
 
 - type: latheRecipePack
   id: ServiceBoardsStatic
@@ -34,6 +37,7 @@
   # - ElectricGrillMachineCircuitboard # Frontier: dynamic
   # - BoozeDispenserMachineCircuitboard # Frontier: dynamic
   # - SodaDispenserMachineCircuitboard # Frontier: dynamic
+  - PersonalCircuitboardDesktop #Starlight
 
 ## Dynamic
 
@@ -51,6 +55,12 @@
   - SynthesizerInstrument
 
 - type: latheRecipePack
+  id: Hydroponics
+  recipes:
+  - SyntheticSwab
+  - SwabApplicator
+
+- type: latheRecipePack
   id: ServiceBoards
   recipes:
   - BiofabricatorMachineCircuitboard # Mono
@@ -61,3 +71,4 @@
   - ReagentGrinderIndustrialMachineCircuitboard
   - JukeboxCircuitBoard
   - DawInstrumentMachineCircuitboard
+  - SlopDispenserMachineCircuitboard # HardLight

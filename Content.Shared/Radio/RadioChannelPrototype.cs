@@ -42,6 +42,9 @@ public sealed partial class RadioChannelPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables]
     public bool ShowFrequency = false;
+
+    [DataField, ViewVariables]
+    public bool RestrictToSharedFaction = false;
     // End Frontier
     
     /// <summary>

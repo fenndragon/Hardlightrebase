@@ -1,10 +1,12 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
 using Content.Client.Mapping;
 using Content.Shared.Input;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Turrets;
 using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -75,6 +77,13 @@ namespace Content.Client.Verbs.UI
             Close();
         }
 
+        private bool CanOpenVerbMenuInCombat(EntityUid user)
+        {
+            return EntityManager.HasComponent<StationAiTurretComponent>(user)
+                   || EntityManager.HasComponent<BorgBrainComponent>(user)
+                   || EntityManager.HasComponent<StationAiHeldComponent>(user);
+        }
+
         /// <summary>
         ///     Open a verb menu and fill it with verbs applicable to the given target entity.
         /// </summary>
@@ -83,7 +92,7 @@ namespace Content.Client.Verbs.UI
         /// <param name="popup">
         ///     If this is not null, verbs will be placed into the given popup instead.
         /// </param>
-        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
+        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup = null)
         {
             DebugTools.Assert(target.IsValid());
             OpenVerbMenu(EntityManager.GetNetEntity(target), force, popup);
@@ -97,13 +106,13 @@ namespace Content.Client.Verbs.UI
         /// <param name="popup">
         ///     If this is not null, verbs will be placed into the given popup instead.
         /// </param>
-        public void OpenVerbMenu(NetEntity target, bool force = false, ContextMenuPopup? popup=null)
+        public void OpenVerbMenu(NetEntity target, bool force = false, ContextMenuPopup? popup = null)
         {
             DebugTools.Assert(target.IsValid());
-            if (_playerManager.LocalEntity is not {Valid: true} user)
+            if (_playerManager.LocalEntity is not { Valid: true } user)
                 return;
 
-            if (!force && _combatMode.IsInCombatMode(user))
+            if (!force && _combatMode.IsInCombatMode(user) && !CanOpenVerbMenuInCombat(user))
                 return;
 
             Close();

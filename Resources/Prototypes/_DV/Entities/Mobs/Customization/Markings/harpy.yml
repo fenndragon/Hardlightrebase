@@ -4,7 +4,7 @@
   id: HarpyEarsDefault
   bodyPart: Head
   markingCategory: HeadTop
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -20,7 +20,7 @@
   id: HarpyTailPhoenix
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -36,7 +36,7 @@
   id: HarpyTailRooster
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -59,7 +59,7 @@
   id: HarpyTailFinch
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -74,7 +74,7 @@
   id: HarpyChestDefault
   bodyPart: Chest
   markingCategory: Chest
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -92,7 +92,7 @@
   id: HarpyLegsDefault
   bodyPart: LLeg
   markingCategory: Legs
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       type: !type:CategoryColoring
@@ -108,7 +108,7 @@
   id: HarpyFeetDefault
   bodyPart: RFoot
   markingCategory: Legs
-  speciesRestriction: [Harpy]
+  speciesRestriction: [Skrell, Thaven,Dwarf, Diona, Human, SlimePerson, Felinid, Oni, Harpy, Reptilian, Vulpkanin, Rodentia, Goblin, Sheleg, IPC, Feroxi, Moth, Arachnid, Kitsune, Chitinid]
   coloring:
     default:
       fallbackTypes:

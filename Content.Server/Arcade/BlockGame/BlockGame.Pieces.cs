@@ -1,5 +1,4 @@
 using Content.Shared.Arcade;
-using System.Linq;
 
 namespace Content.Server.Arcade.BlockGame;
 
@@ -88,7 +87,7 @@ public sealed partial class BlockGame
         /// <param name="rotation">The rotation to be applied to the local position of the blocks in this piece.</param>
         private readonly Vector2i[] RotatedOffsets(BlockGamePieceRotation rotation)
         {
-            var rotatedOffsets = (Vector2i[]) Offsets.Clone();
+            var rotatedOffsets = (Vector2i[])Offsets.Clone();
             //until i find a better algo
             var amount = rotation switch
             {

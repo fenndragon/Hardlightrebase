@@ -1,6 +1,6 @@
 using Content.Server.StationEvents.Components;
 using Content.Server.AlertLevel;
-﻿using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -14,8 +14,8 @@ public sealed partial class AlertLevelInterceptionRule : StationEventSystem<Aler
 
         if (!TryGetRandomStation(out var chosenStation))
             return;
-        // Frontier - note: levels are globally set/gotten, regardless of arg
-        if (_alertLevelSystem.GetLevel(chosenStation.Value) != "green")
+
+        if (_alertLevelSystem.GetLevel(chosenStation.Value) != "green" && component.OverrideAlert == false) // Goobstation
             return;
 
         _alertLevelSystem.SetLevel(chosenStation.Value, component.AlertLevel, true, true, true, component.Locked); // Goobstation

@@ -130,8 +130,9 @@
     state: base
   - type: PointLight
     enabled: true
-  - type: PoweredLight
-    hasLampOnSpawn: LightTube
+  - type: ContainerFill # HardLight
+    containers:
+      light_bulb: [ LightTube ]
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
@@ -159,8 +160,9 @@
     energy: 1
     softness: 0.9
     color: "#EEEEFF"
-  - type: PoweredLight
-    hasLampOnSpawn: LedLightTube
+  - type: ContainerFill # HardLight
+    containers:
+      light_bulb: [ LedLightTube ]
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
@@ -172,3 +174,51 @@
       types:
         Heat: 1
     popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: Xenolight
+  name: alien light
+  description: "A gross bulb that glows."
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Xeno/lamp.rsi
+    state: XenoLampFloor
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: XenoLampFloor
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: XenoLampFloor_Glow
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    radius: 12
+    energy: 0.8
+    softness: 0.9
+    color: "#6FF527"
+  - type: Construction
+    graph: ResinStructures
+    node: Xenolight
+
+- type: entity
+  id: WallXenolight
+  name: alien light
+  description: "A gross bulb that glows."
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Xeno/lamp.rsi
+    state: XenoWallLamp
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: XenoWallLamp
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: XenoWallLamp_Glow
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    radius: 15
+    energy: 0.8
+    softness: 0.9
+    color: "#6FF527"
+  - type: Construction
+    graph: ResinStructures
+    node: WallXenolight

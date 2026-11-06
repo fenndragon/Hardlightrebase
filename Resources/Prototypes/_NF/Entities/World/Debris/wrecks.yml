@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: NFBaseWreckDebris
   parent: NFBaseDebris
   abstract: true
@@ -65,17 +65,17 @@
           prob: 0.03
         - id: SalvageCanisterSpawner
           prob: 0.2
-        - id: SalvageLockerSpawner
+        - id: NFSalvageLockerSpawner
           prob: 0.2
-        - id: SalvageGeneratorSpawner
+        - id: NFSalvageGeneratorSpawner
           prob: 0.1
-        - id: SalvageFurnitureSpawner
+        - id: NFSalvageFurnitureSpawner
           prob: 0.1
-        - id: SalvageSuitStorageSpawner
+        - id: NFSalvageSuitStorageSpawner
           prob: 0.1
         - id: RandomArtifactSpawner
           prob: 0.05
-        - id: SalvageTankSpawnerHighCapacity
+        - id: NFSalvageTankSpawnerHighCapacity
           prob: 0.0005
         # Medical
         - id: MedicalPodFilled # Medical bounties
@@ -140,7 +140,7 @@
         - id: SalvagePartsT4Spawner
           prob: 0.06 # Mono
         # Big loot
-        - id: SalvageBrassFurnitureSpawner
+        - id: NFSalvageBrassFurnitureSpawner
           prob: 0.03
         - id: AltarTechnology
           prob: 0.03
@@ -170,8 +170,8 @@
         - id: RipleyChassis # Build it yourself
           prob: 0.03
         # "Mobs"
-        - id: PlayerBorgDerelictGhostRole
-          prob: 0.005
+        # - id: PlayerBorgDerelictGhostRole
+          # prob: 0.005
         - id: PlushieRatvar # Yes
           prob: 0.005
         - id: SevastopolPlushie # Mono

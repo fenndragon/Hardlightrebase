@@ -35,6 +35,7 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 
 ### Shared
 
+- [`Content.Shared/_WF/EngineCompat/LegacyPullingTypes.cs`](../../../Content.Shared/_WF/EngineCompat/LegacyPullingTypes.cs)
 - [`Content.Shared/_WF/EngineCompat/PrototypeFlagsTypeSerializer.cs`](../../../Content.Shared/_WF/EngineCompat/PrototypeFlagsTypeSerializer.cs)
 - [`Content.Shared/_WF/EngineCompat/PrototypeIdSerializers.cs`](../../../Content.Shared/_WF/EngineCompat/PrototypeIdSerializers.cs)
 
@@ -178,7 +179,7 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Content.Server/_Mono/SpaceArtillery/Components/SpaceArtilleryComponent.cs`](../../_Mono/SpaceArtillery/Components/SpaceArtilleryComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Server/_Mono/Spawning/GridSpawnerSystem.cs`](../../_Mono/Spawning/GridSpawnerSystem.cs): since v283 the spent marker left on the map rides off on the first grid to move over it
 - [`Content.Server/_Mono/VendingMachine/VendingMachinePurchaseSystem.cs`](../../_Mono/VendingMachine/VendingMachinePurchaseSystem.cs): Engine v280 removed IMapManager; uses SharedMapSystem.
-- [`Content.Server/_NF/Cargo/Systems/CargoSystem.PirateBounty.cs`](../../_NF/Cargo/Systems/CargoSystem.PirateBounty.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
+- [`Content.Server/_NF/Cargo/Systems/NFCargoSystem.PirateBounty.cs`](../../_NF/Cargo/Systems/NFCargoSystem.PirateBounty.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
 - [`Content.Server/_NF/Construction/Components/ComputerTabletopBoardComponent.cs`](../../_NF/Construction/Components/ComputerTabletopBoardComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Server/_NF/Construction/Components/ComputerWallmountBoardComponent.cs`](../../_NF/Construction/Components/ComputerWallmountBoardComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Server/_NF/CrateMachine/CrateMachineSystem.cs`](../../_NF/CrateMachine/CrateMachineSystem.cs): Engine v280 removed IMapManager; uses SharedMapSystem.
@@ -454,6 +455,7 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Content.Shared/_NF/Bank/Components/BankATMComponent.cs`](../../../Content.Shared/_NF/Bank/Components/BankATMComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/_NF/Bank/Components/StationBankATMComponent.cs`](../../../Content.Shared/_NF/Bank/Components/StationBankATMComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/_NF/Contraband/Components/ContrabandPalletComponent.cs`](../../../Content.Shared/_NF/Contraband/Components/ContrabandPalletComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
+- [`Content.Shared/_NF/Digging/Components/EarthDiggingComponent.cs`](../../../Content.Shared/_NF/Digging/Components/EarthDiggingComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/_NF/Medical/Prototypes/MedicalBountyPrototype.cs`](../../../Content.Shared/_NF/Medical/Prototypes/MedicalBountyPrototype.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/_NF/Medical/SharedMedicalGuideDataSystem.cs`](../../../Content.Shared/_NF/Medical/SharedMedicalGuideDataSystem.cs): Engine v282 requires data definitions for [DataField] types.
 - [`Content.Shared/_NF/Pirate/Components/PirateBountyConsoleComponent.cs`](../../../Content.Shared/_NF/Pirate/Components/PirateBountyConsoleComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
@@ -526,6 +528,7 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Content.Shared/Fax/Components/FaxMachineComponent.cs`](../../../Content.Shared/Fax/Components/FaxMachineComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Fluids/Components/DrainComponent.cs`](../../../Content.Shared/Fluids/Components/DrainComponent.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
 - [`Content.Shared/GameTicking/SharedGameTicker.cs`](../../../Content.Shared/GameTicking/SharedGameTicker.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
+- [`Content.Shared/GlobalUsings.cs`](../../../Content.Shared/GlobalUsings.cs)
 - [`Content.Shared/Glue/GlueComponent.cs`](../../../Content.Shared/Glue/GlueComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Guidebook/GuideEntry.cs`](../../../Content.Shared/Guidebook/GuideEntry.cs): Engine v282 requires data definitions for [DataField] types.
 - [`Content.Shared/Humanoid/HairStyles.cs`](../../../Content.Shared/Humanoid/HairStyles.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
@@ -557,7 +560,6 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Content.Shared/NukeOps/NukeOperativeComponent.cs`](../../../Content.Shared/NukeOps/NukeOperativeComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Nutrition/EntitySystems/HungerSystem.cs`](../../../Content.Shared/Nutrition/EntitySystems/HungerSystem.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
 - [`Content.Shared/Nutrition/EntitySystems/ThirstSystem.cs`](../../../Content.Shared/Nutrition/EntitySystems/ThirstSystem.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
-- [`Content.Shared/Nyanotrasen/Digging/EarthDiggingComponent.cs`](../../../Content.Shared/Nyanotrasen/Digging/EarthDiggingComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Nyanotrasen/Item/PseudoItem/SharedPseudoItemSystem.cs`](../../../Content.Shared/Nyanotrasen/Item/PseudoItem/SharedPseudoItemSystem.cs): Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
 - [`Content.Shared/Nyanotrasen/Kitchen/Components/SharedDeepFriedComponent.cs`](../../../Content.Shared/Nyanotrasen/Kitchen/Components/SharedDeepFriedComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/PAI/PAIComponent.cs`](../../../Content.Shared/PAI/PAIComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
@@ -590,8 +592,8 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Content.Shared/Revenant/Components/RevenantOverloadedLightsComponent.cs`](../../../Content.Shared/Revenant/Components/RevenantOverloadedLightsComponent.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Roles/JobPrototype.cs`](../../../Content.Shared/Roles/JobPrototype.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageAirMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageAirMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
-- [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
-- [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
+- [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeModPrototype.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeModPrototype.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
+- [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonModPrototype.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonModPrototype.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageLightMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageLightMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageTemperatureMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageTemperatureMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
 - [`Content.Shared/Salvage/Expeditions/Modifiers/SalvageWeatherMod.cs`](../../../Content.Shared/Salvage/Expeditions/Modifiers/SalvageWeatherMod.cs): Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
@@ -654,6 +656,7 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Resources/Prototypes/_CE/Entities/Structures/Architecture/Ladders/base.yml`](../../../Resources/Prototypes/_CE/Entities/Structures/Architecture/Ladders/base.yml): Engine v286 Box2 rejects inverted bounds; fixture bounds normalized. Engine v287 occluders dropped boundingBox; the default polygon matches.
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/modsuit.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Head/softsuit-helmets.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/softsuit-helmets.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/Hardsuits/trauma.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/Hardsuits/trauma.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/nuke.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Devices/nuke.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Attachments/grips_erebus_railmount.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Attachments/grips_erebus_railmount.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
@@ -668,7 +671,6 @@ listed under `unmarked` in `Tools/_WF/Ci/modules.yml` with the engine change it 
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/nuke.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Machines/nuke.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_Mono/Entities/Structures/Storage/reagents.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Storage/reagents.yml): Engine v291 replaced Occluder boundingBox with a polygon.
 - [`Resources/Prototypes/_Mono/Entities/Structures/Wallmounts/addon_armor.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Wallmounts/addon_armor.yml): Engine v286 Box2 rejects inverted bounds; fixture bounds normalized.
-- [`Resources/Prototypes/_NF/Entities/Clothing/Head/softsuit-helmets.yml`](../../../Resources/Prototypes/_NF/Entities/Clothing/Head/softsuit-helmets.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_NF/Entities/Mobs/NPCs/mob_hostile_expeditions_explorers.yml`](../../../Resources/Prototypes/_NF/Entities/Mobs/NPCs/mob_hostile_expeditions_explorers.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.
 - [`Resources/Prototypes/_NF/Entities/Objects/Misc/paper.yml`](../../../Resources/Prototypes/_NF/Entities/Objects/Misc/paper.yml): Engine v286 Box2 rejects inverted bounds; paper margins are Thickness, values reordered.
 - [`Resources/Prototypes/_NF/Entities/Objects/Misc/subdermal_implants.yml`](../../../Resources/Prototypes/_NF/Entities/Objects/Misc/subdermal_implants.yml): Engine v291 replaced PointLight mask paths with lightMask prototypes.

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.NameModifier.Components;
 
@@ -30,6 +29,18 @@ public sealed partial class NameModifierSystem : EntitySystem
         // Set the base name to the new name
         entity.Comp.BaseName = name;
         Dirty(entity);
+    }
+
+    /// <summary>
+    /// Returns the base name of the entity, without any modifiers applied.
+    /// If the entity doesn't have a <see cref="NameModifierComponent"/>,
+    /// this returns the entity's metadata name.
+    /// </summary>
+    public string GetBaseName(Entity<NameModifierComponent?> entity)
+    {
+        if (Resolve(entity, ref entity.Comp, logMissing: false))
+            return entity.Comp.BaseName;
+        return Name(entity);
     }
 
     /// <summary>

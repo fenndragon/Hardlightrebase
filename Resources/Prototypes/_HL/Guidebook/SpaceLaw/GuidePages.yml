@@ -1,0 +1,61 @@
+- type: guideEntry
+  id: HLSpaceLaw
+  name: guide-entry-rules-hl-space-law
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/Overview.xml"
+  children:
+  - HLSpaceLawList
+  - HLSpaceLawWarrants
+
+- type: guideEntry
+  id: HLSpaceLawList
+  name: guide-entry-rules-hl-crimes-list
+  filterEnabled: True
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLaw.xml"
+  children:
+  - HLSpaceLawModifiers
+  - HLSpaceLawListInfraction
+  - HLSpaceLawListMinor
+  - HLSpaceLawListMisdemeanor
+  - HLSpaceLawListFelony
+  - HLSpaceLawListCapital
+
+- type: guideEntry
+  id: HLSpaceLawListInfraction
+  filterEnabled: True
+  name: guide-entry-rules-hl-space-law-infraction
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawInfraction.xml"
+
+- type: guideEntry
+  id: HLSpaceLawListMinor
+  filterEnabled: True
+  name: guide-entry-rules-hl-space-law-minor
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawMinor.xml"
+
+- type: guideEntry
+  id: HLSpaceLawListMisdemeanor
+  filterEnabled: True
+  name: guide-entry-rules-hl-space-law-misdemeanor
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawMisdemeanor.xml"
+
+- type: guideEntry
+  id: HLSpaceLawListFelony
+  filterEnabled: True
+  name: guide-entry-rules-hl-space-law-felony
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawFelony.xml"
+
+- type: guideEntry
+  id: HLSpaceLawListCapital
+  filterEnabled: True
+  name: guide-entry-rules-hl-space-law-capital
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawCapital.xml"
+
+- type: guideEntry
+  id: HLSpaceLawModifiers
+  name: guide-entry-rules-hl-space-law-modifiers
+  filterEnabled: True
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawModifiers.xml"
+
+- type: guideEntry
+  id: HLSpaceLawWarrants
+  name: guide-entry-rules-hl-warrants
+  text: "/ServerInfo/_HL/Guidebook/SpaceLaw/SpaceLawWarrants.xml"

@@ -1,0 +1,97 @@
+- type: reagent
+  id: Vodkizine
+  name: reagent-name-vodkizine
+  parent: BaseAlcohol
+  desc: reagent-desc-vodkizine
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodka
+  color: "#fcf7f955"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -4
+            Brute: -4
+
+- type: reagent
+  id: Amoxla
+  name: reagent-name-amoxla
+  group: Medicine
+  desc: reagent-desc-amoxla
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#51c38c"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        damage:
+          types:
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: HeartbreakerToxin
+        amount: -3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentThreshold
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: false
+        - !type:OrganType
+          type: Resomi
+          shouldHave: false
+        damage:
+          types:
+            Poison: 1.5 #Ammonia is toxic injected directly into bloodstream
+            Asphyxiation: 1
+            Bloodloss: 0.5
+      - !type:ModifyBloodLevel
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+        - !type:OrganType
+          type: Resomi
+          shouldHave: true
+        amount: 3

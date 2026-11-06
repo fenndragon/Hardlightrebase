@@ -5,7 +5,6 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Damage;
 using Content.Shared.Ghost.Roles.Components;
@@ -17,7 +16,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -83,7 +81,7 @@ namespace Content.Server.Bible
                 // Clean up the old body
                 if (summonableComp.Summon != null)
                 {
-                    EntityManager.DeleteEntity(summonableComp.Summon.Value);
+                    Del(summonableComp.Summon.Value);
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
@@ -267,7 +265,7 @@ namespace Content.Server.Bible
                 return;
 
             // Make this familiar the component's summon
-            var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
+            var familiar = Spawn(component.SpecialItemPrototype, position.Coordinates);
             component.Summon = familiar;
 
             // If this is going to use a ghost role mob spawner, attach it to the bible.
@@ -277,7 +275,7 @@ namespace Content.Server.Bible
                 _transform.SetParent(familiar, uid);
             }
             component.AlreadySummoned = true;
-            _actionsSystem.RemoveAction(user, component.SummonActionEntity);
+            _actionsSystem.RemoveAction(component.SummonActionEntity);
         }
     }
 }

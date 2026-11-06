@@ -1,0 +1,127 @@
+<Document># Silicon Roleplay Standards
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      This policy governs the roleplay expectations of Artificial Intelligences, Positronics, Cyborgs, Xenoborgs, and other silicon-based entities. IPCs, Synths, Protogens, and other Free-Thinking Sophont species are not subject to this policy beyond normal server rules and should be played as any other character.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Free-Thinking Sophonts[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Branded Silicons[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Possess free will
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Governed by active lawsets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Responsible for their own actions
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Expected to follow assigned laws
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Not subject to silicon laws
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Subject to silicon laws
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treated as independent individuals
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treated as organizational assets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Examples: Unbranded Cyborgs
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Examples: Station AI, Station Cyborgs
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Silicons are characters first and machines second. Your goal is to create interesting roleplay and interactions, not to use your mechanical nature as an excuse to avoid them.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+# General Expectations
+
+- Server rules apply to silicons exactly as they do to any other character.
+
+- Possessing laws, directives, or programming does not excuse rule violations.
+
+- Consistency is important. If you interpret a law, directive, or personal philosophy a certain way, you should generally remain consistent with that interpretation.
+
+- Silicons should not intentionally seek out conflict, self-antagonize, or create problems for the station without a legitimate in-character reason.
+
+- When multiple reasonable interpretations exist, choose one and remain consistent.
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#388c34" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Tip[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      A silicon following its laws in good faith will almost always create better roleplay than a silicon looking for loopholes.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+# Final Note
+
+Silicon roleplay works best when laws, directives, and synthetic nature are used to create interesting interactions rather than avoid them. Whether you are a Free-Thinking Sophont, a Branded Silicon, or something in between, your goal should be to contribute to the round, remain consistent, and create enjoyable roleplay for those around you.
+
+</Document>

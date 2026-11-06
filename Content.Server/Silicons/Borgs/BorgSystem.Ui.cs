@@ -1,7 +1,5 @@
-using System.Linq;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
-using Content.Shared.NameIdentifier;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
@@ -62,8 +60,6 @@ public sealed partial class BorgSystem
         }
 
         var name = args.Name.Trim();
-        if (TryComp<NameIdentifierComponent>(uid, out var identifier))
-            name = $"{name} {identifier.FullIdentifier}";
 
         var metaData = MetaData(uid);
 

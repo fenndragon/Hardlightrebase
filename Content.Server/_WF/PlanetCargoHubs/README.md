@@ -78,7 +78,7 @@ does not mark the berths.
 ## Non-modular edits
 
 - [`Content.IntegrationTests/PoolManager.Cvars.cs`](../../../Content.IntegrationTests/PoolManager.Cvars.cs): a hub would take the room other tests' sites expect
-- [`Content.Server/_NF/Cargo/Systems/CargoSystem.TradeCrates.cs`](../../_NF/Cargo/Systems/CargoSystem.TradeCrates.cs): a planetside depot names its world
+- [`Content.Server/_NF/Cargo/Systems/NFCargoSystem.TradeCrates.cs`](../../_NF/Cargo/Systems/NFCargoSystem.TradeCrates.cs): a planetside depot names its world
 - [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs): a depot built on a planet this round gets no space station
 
 <!-- WOLFGATE-GENERATED END -->

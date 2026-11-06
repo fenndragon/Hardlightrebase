@@ -89,3 +89,13 @@ signal-port-description-logic-memory-input = Signal to load into the memory cell
 
 signal-port-name-logic-enable = Enable
 signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.
+
+signal-port-name-fill-any-item = Fillbot Target
+signal-port-description-fill-any-item = Target port for Fillbot insertion.
+
+# Added missing receiver port localizations
+signal-port-name-material-silo-utilizer = Material Silo Utilizer
+signal-port-description-material-silo-utilizer = Accepts materials for the silo utilizer.
+
+signal-port-name-space-artillery-fire = Fire Armament
+signal-port-description-space-artillery-fire = Controls Space Artillery's firing mechanism.

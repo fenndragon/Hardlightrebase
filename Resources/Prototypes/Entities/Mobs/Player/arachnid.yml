@@ -11,3 +11,4 @@
     damageRecovery:
       types:
         Asphyxiation: -0.5 # Recovery will suck without chems
+  - type: PotentialPsionic #Nyano - Summary: makes potentially psionic. 

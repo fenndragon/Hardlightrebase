@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tools;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Content.Shared._WF.EngineCompat;
 
@@ -15,7 +15,7 @@ public sealed partial class PneumaticCannonComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public PneumaticCannonPower Power = PneumaticCannonPower.Medium;
 
-    [DataField("toolModifyPower", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    [DataField("toolModifyPower", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string ToolModifyPower = "Anchoring";
 
     /// <summary>

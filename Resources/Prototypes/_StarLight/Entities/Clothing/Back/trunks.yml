@@ -1,0 +1,66 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackTrunk
+  name: trunk
+  description: A large and heavy trunk for holding even more things.
+  abstract: true
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,11,3
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.85
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 9
+    soundHit:
+      collection: MetalThud
+  - type: HeldSpeedModifier
+
+- type: entity
+  parent: ClothingBackpackTrunk
+  id: ClothingBackpackTrunkMail
+  name: storage trunk # Hardlight: no mail.
+  description: A huge storage trunk designed for heavy duty carrying capacity. # Hardlight: no mail
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Trunks/mailtrunk.rsi
+
+- type: entity
+  parent: ClothingBackpackTrunk
+  id: ClothingBackpackTrunkSyndicate
+  name: syndicate storage trunk
+  description: Huge, metal, reflective, and stylish. All the other syndicates will want to get their hands on this trunk. Unfortunately, it's also heavier than other trunks.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Trunks/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Storage
+    grid:
+    - 0,0,13,5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 15
+    soundHit:
+      collection: MetalThud
+  - type: Reflect  # It's a metal trunk
+    reflectProb: 0.2
+    reflects:
+      - Energy
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+
+- type: entity
+  parent: ClothingBackpackTrunk
+  id: ClothingBackpackTrunkSpaceCourier
+  name: space courier trunk
+  description: A huge trunk themed after a legendary space courier.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Trunks/space_courier_trunk.rsi

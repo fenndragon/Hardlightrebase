@@ -44,7 +44,7 @@
   #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobBloodCultistPriest
   description: Enlightened by the whispers of The Void That Is, these individuals are initiated into secret rituals. They lead the blood harvest and perform rites, bringing the day when Nar'Sie rises ever closer.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     templateId: human
@@ -62,9 +62,11 @@
     startingCharge: 300
   - type: Gun
     showExamineText: false
-    fireRate: 4
-    minAngle: 1
-    maxAngle: 10
+    fireRate: 2
+    minAngle: 10
+    maxAngle: 20
+    angleIncrease: 2
+    angleDecay: 3
     soundGunshot:
       path: /Audio/Effects/Lightning/lightningshock.ogg
 
@@ -78,7 +80,7 @@
   #- MobLaserReflect # Added to prevent laser abuse from players
   id: MobBloodCultistJanitor
   description: The fate of blood cults on space stations hinges on the actions of a single individual - the station janitor. This humble worker serves as the primary line of defense against the presence of blood cults, but even the most resolute individuals can be swayed by corruption.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Inventory
     templateId: human
@@ -93,9 +95,11 @@
     count: 1
   - type: Gun
     showExamineText: false
-    fireRate: 4
-    minAngle: 1
-    maxAngle: 10
+    fireRate: 2
+    minAngle: 10
+    maxAngle: 20
+    angleIncrease: 2
+    angleDecay: 3
     selectedMode: SemiAuto
     soundGunshot:
       path: /Audio/Effects/Lightning/lightningshock.ogg
@@ -114,7 +118,7 @@
   id: MobBloodCultistAcolyte
   description: |-
    The acolyte - The most trusted cult follower and bodyguard of a priest, clad in the finest armor the cult has to offer and armed with the most vile weapons: eldrich blades and unholy halberds.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -128,7 +132,7 @@
   - MobHumanoidHostileAISimpleMelee
   id: MobBloodCultistZealotMelee
   description: Adorned in matching red robes symbolizing devotion to their dark deity, each member is eager to prove their loyalty in the most gruesome ways.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -143,7 +147,7 @@
   - MobHumanoidHostileAISimpleRanged
   id: MobBloodCultistZealotRanged
   description: Adorned in matching red robes symbolizing devotion to their dark deity, each member is eager to prove their loyalty in the most gruesome ways.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -158,8 +162,10 @@
   - type: Gun
     showExamineText: false
     fireRate: 0.5
-    minAngle: 1
-    maxAngle: 10
+    minAngle: 7
+    maxAngle: 16
+    angleIncrease: 2
+    angleDecay: 3
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -175,7 +181,7 @@
   - MobHumanoidHostileAISimpleRanged
   id: MobBloodCultistCaster
   description: Adorned in matching red robes symbolizing devotion to their dark deity, each member is eager to prove their loyalty in the most gruesome ways.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Loadout
     prototypes:
@@ -185,7 +191,11 @@
     capacity: 3
     count: 3
   - type: Gun
-    fireRate: 2
+    fireRate: 1.5
+    minAngle: 10
+    maxAngle: 20
+    angleIncrease: 2
+    angleDecay: 3
     soundGunshot:
       path: /Audio/Effects/demon_consume.ogg
   - type: RechargeBasicEntityAmmo
@@ -197,7 +207,7 @@
 # Blood Leech, melee, fast, has moderate health regen
 - type: entity
   name: blood leech
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent:
   - MobNonHumanHostileBase
   - MobPassiveRegen
@@ -228,10 +238,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Critical
-      130: Dead
+      60: Critical
+      120: Dead
   - type: Stamina
-    critThreshold: 100
+    critThreshold: 80
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
     baseSprintSpeed: 6
@@ -240,7 +250,7 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Slash: 10
+        Slash: 8
         Structural: 20
     animation: WeaponArcBite
 
@@ -248,7 +258,7 @@
 - type: entity
   name: ascended cultist
   description: Elevated above their mortal forms by Nar'Sie herself as a reward for their devotion.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent:
   - MobNonHumanHostileBase
   - MobHumanoidHostileAIComplex
@@ -300,10 +310,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Critical
-      400: Dead
+      240: Critical
+      320: Dead
   - type: Stamina
-    critThreshold: 400
+    critThreshold: 320
   - type: BasicEntityAmmoProvider
     proto: SpawnMobBloodCultistAscendedSummons # MobBloodCultDrainedOne
     capacity: 2
@@ -311,8 +321,10 @@
   - type: Gun
     showExamineText: false
     fireRate: 1
-    minAngle: 1
-    maxAngle: 10
+    minAngle: 10
+    maxAngle: 20
+    angleIncrease: 2
+    angleDecay: 3
     soundGunshot:
       path: /Audio/Effects/teleport_arrival.ogg
   - type: RechargeBasicEntityAmmo
@@ -324,7 +336,7 @@
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
-        Slash: 20
+        Slash: 16
         Structural: 20
     animation: WeaponArcClaw
   - type: PointLight
@@ -349,7 +361,7 @@
 # Drained One, melee
 - type: entity
   name: drained one
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent:
   - MobNonHumanHostileBase
   - FlyingMobBase
@@ -396,10 +408,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
-      130: Dead
+      80: Critical
+      100: Dead
   - type: Stamina
-    critThreshold: 400
+    critThreshold: 320
   - type: MeleeWeapon
     soundHit:
       collection: MetalThud
@@ -426,7 +438,7 @@
 
 - type: entity
   name: cultist shade
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent: MobBloodCultDrainedOne
   id: MobBloodCultShade
   description: A cultist's shade, brought back to reality through foul means to gather more blood.
@@ -467,7 +479,7 @@
 
 # Drained One (summonable by players), melee
 - type: entity
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent:
 # - BaseC3MobCreatureNoValue  # Mono: I don't think we need to have a big magenta sign TELLING ME that i'll probably get into deep shit if I keep a chimera alive. also what the fuck even is "class 3 contraband"
   - MobBloodCultDrainedOne
@@ -521,6 +533,10 @@
     - type: Gun
       showExamineText: false
       fireRate: 2
+      minAngle: 10
+      maxAngle: 20
+      angleIncrease: 2
+      angleDecay: 3
       selectedMode: FullAuto
       availableModes:
         - FullAuto
@@ -555,13 +571,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 600
+            damage: 480
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 300
+            damage: 240
           # TODO: Construction graph
           behaviors:
             - !type:DoActsBehavior

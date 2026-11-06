@@ -20,7 +20,7 @@ nukeops-cond-nukeexplodedonincorrectlocation = The nuclear bomb was detonated on
 nukeops-cond-nukeexplodedontsfstation = The nuclear bomb was detonated on the PDV station.
 nukeops-cond-nukeexplodedonpdvstation = The nuclear bomb was detonated on the TSF station.
 nukeops-cond-nukeactiveinstation = The nuclear bomb was left armed on-station.
-nukeops-cond-nukeactiveatcentcom = The nuclear bomb was delivered to Central Command!
+nukeops-cond-nukeactiveatcentcom = The nuclear bomb was delivered to Colonial Command!
 nukeops-cond-nukediskoncentcom = The crew escaped with the nuclear authentication disk.
 nukeops-cond-nukedisknotoncentcom = The crew left the nuclear authentication disk behind.
 nukeops-cond-nukiesabandoned = The nuclear operatives were abandoned.
@@ -35,5 +35,5 @@ nukeops-not-enough-ready-players = Not enough players readied up for the game! T
 nukeops-no-one-ready = No players readied up! Can't start Nukeops.
 
 nukeops-role-commander = Commander
-nukeops-role-agent = Agent
+nukeops-role-agent = Corpsman
 nukeops-role-operator = Operator

@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Prying.Components;
 using Content.Shared.Tools.Components;
@@ -12,6 +11,7 @@ public abstract partial class SharedToolSystem
         SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
         SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
         SubscribeLocalEvent<MultipleToolComponent, AfterAutoHandleStateEvent>(OnMultipleToolHandleState);
+        SubscribeLocalEvent<MultipleToolComponent, Interaction.Events.UseInHandEvent>(OnMultipleToolUseInHand); // HardLight - allow Z key to cycle modes
     }
 
     private void OnMultipleToolHandleState(EntityUid uid, MultipleToolComponent component, ref AfterAutoHandleStateEvent args)
@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (TryComp(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -33,6 +33,16 @@ public abstract partial class SharedToolSystem
 
         args.Handled = CycleMultipleTool(uid, multiple, args.User);
     }
+
+    // HardLight - allow Z key to cycle modes
+    private void OnMultipleToolUseInHand(EntityUid uid, MultipleToolComponent multiple, Interaction.Events.UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = CycleMultipleTool(uid, multiple, args.User);
+    }
+    // End HardLight
 
     public bool CycleMultipleTool(EntityUid uid, MultipleToolComponent? multiple = null, EntityUid? user = null)
     {

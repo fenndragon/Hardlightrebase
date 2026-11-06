@@ -1,0 +1,156 @@
+
+# Unique per character blood red suits for the hardlight syndicate cell
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSyndieWhiskey
+  name: agent whiskey's blood-red hardsuit
+  description: A modified blood-red hardsuit with mismatched arms. Property of Agent Whiskey, and if you aren't her then you shouldn't have this.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/whiskeyhardsuit.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/whiskeyhardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndie
+  - type: Tag
+    tags:
+    - Hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSyndieSedna
+  name: lieutenant sedna's blood-red hardsuit
+  description: A blood-red hardsuit usually worn underneath a formal coat. Property of Lieutenant Sedna, and if you aren't her then you shouldn't have this.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/romeohardsuit.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/romeohardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSedna
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags:
+    - Hardsuit
+
+# This isn't in a separate hardsuit helmet file because we're lazy and the suit it's for is literally right there
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndie
+  id: ClothingHeadHelmetHardsuitSedna
+  name: modified blood-red hardsuit helmet
+  description: A modified blood red helmet to accommodate Sedna's hood.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/romeohardsuithead.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/romeohardsuithead.rsi
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSyndieCaelid
+  name: agent aeon's blood-red hardsuit
+  description: A heavily modified blood-red hardsuit to suit an engineer's needs. Property of Agent Aeon, and if you aren't her then you shouldn't have this.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/caelidhardsuit.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/caelidhardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCaelid
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags:
+    - Hardsuit
+  - type: Storage
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,7,1
+    maxItemSize: Normal
+    whitelist:
+      tags:
+       - Powerdrill
+       - Wirecutter
+       - Crowbar
+       - Screwdriver
+       - Flashlight
+       - Wrench
+       - GeigerCounter
+       - Flare
+       - CableCoil
+       - Radio
+       - HolofanProjector
+       - Multitool
+       - AppraisalTool
+       - JawsOfLife
+       - GPS
+       - WeldingMask
+      components:
+       - StationMap
+       - SprayPainter
+       - NetworkConfigurator
+       - RCD
+       - RCDAmmo
+       - Welder
+       - PowerCell
+       - Geiger
+       - TrayScanner
+       - GasAnalyzer
+       - HandLabeler
+
+# Same reasoning as the Sedna hardsuit helmet
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieMedic
+  id: ClothingHeadHelmetHardsuitCaelid
+  name: blood-red hardsuit helmet
+  description: An advanced red hardsuit helmet adjusted for combat engineering.

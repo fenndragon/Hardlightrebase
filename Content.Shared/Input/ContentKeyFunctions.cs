@@ -90,6 +90,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction ZoomIn = "ZoomIn";
         public static readonly BoundKeyFunction ResetZoom = "ResetZoom";
         public static readonly BoundKeyFunction ToggleStanding = "ToggleStanding"; // WD EDIT
+        public static readonly BoundKeyFunction ToggleCrawlingUnder = "ToggleCrawlingUnder"; // WOLFGATE(EngineCompat): crawl under tables
+        public static readonly BoundKeyFunction OfferItem = "OfferItem"; // WOLFGATE(EngineCompat): offer item keybind
         public static readonly BoundKeyFunction ToggleFocus = "ToggleFocus"; // Mono
 
         // Shitmed Change Start

@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
@@ -27,22 +26,8 @@ public sealed partial class AdminLogsControl : Control
     {
         RobustXamlLoader.Load(this);
 
-        TypeSearch.OnTextChanged += TypeSearchChanged;
-        PlayerSearch.OnTextChanged += PlayerSearchChanged;
-        LogSearch.OnTextChanged += LogSearchChanged;
-
-        SelectAllTypesButton.OnPressed += SelectAllTypes;
-        SelectNoTypesButton.OnPressed += SelectNoTypes;
-
-        IncludeNonPlayersButton.OnPressed += IncludeNonPlayers;
-        SelectAllPlayersButton.OnPressed += SelectAllPlayers;
-        SelectNoPlayersButton.OnPressed += SelectNoPlayers;
-
         RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
-        RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
         RoundSpinBox.InitDefaultButtons();
-
-        ResetRoundButton.OnPressed += ResetRoundPressed;
 
         SetImpacts(Enum.GetValues<LogImpact>().OrderBy(impact => impact).ToArray());
         SetTypes(Enum.GetValues<LogType>());
@@ -300,7 +285,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void TypeButtonPressed(ButtonEventArgs args)
     {
-        var button = (AdminLogTypeButton) args.Button;
+        var button = (AdminLogTypeButton)args.Button;
         if (button.Pressed)
         {
             SelectedTypes.Add(button.Type);
@@ -315,7 +300,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void PlayerButtonPressed(ButtonEventArgs args)
     {
-        var button = (AdminLogPlayerButton) args.Button;
+        var button = (AdminLogPlayerButton)args.Button;
         if (button.Pressed)
         {
             SelectedPlayers.Add(button.Id);
@@ -330,7 +315,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void ImpactButtonPressed(ButtonEventArgs args)
     {
-        var button = (AdminLogImpactButton) args.Button;
+        var button = (AdminLogImpactButton)args.Button;
         if (button.Pressed)
         {
             SelectedImpacts.Add(button.Impact);
@@ -515,9 +500,29 @@ public sealed partial class AdminLogsControl : Control
         );
     }
 
-    protected override void Dispose(bool disposing)
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
     {
-        base.Dispose(disposing);
+        base.EnteredTree();
+        TypeSearch.OnTextChanged += TypeSearchChanged;
+        PlayerSearch.OnTextChanged += PlayerSearchChanged;
+        LogSearch.OnTextChanged += LogSearchChanged;
+
+        SelectAllTypesButton.OnPressed += SelectAllTypes;
+        SelectNoTypesButton.OnPressed += SelectNoTypes;
+
+        IncludeNonPlayersButton.OnPressed += IncludeNonPlayers;
+        SelectAllPlayersButton.OnPressed += SelectAllPlayers;
+        SelectNoPlayersButton.OnPressed += SelectNoPlayers;
+
+        RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
+        ResetRoundButton.OnPressed += ResetRoundPressed;
+    }
+    // HL END
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
 
         TypeSearch.OnTextChanged -= TypeSearchChanged;
         PlayerSearch.OnTextChanged -= PlayerSearchChanged;

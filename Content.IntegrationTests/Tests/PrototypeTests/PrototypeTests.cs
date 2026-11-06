@@ -1,5 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
@@ -133,7 +132,7 @@ public sealed class PrototypeTests
 
         try
         {
-            first = seriMan.WriteValue(kind, proto, alwaysWrite: true, context:ctx);
+            first = seriMan.WriteValue(kind, proto, alwaysWrite: true, context: ctx);
         }
         catch (Exception e)
         {
@@ -145,7 +144,7 @@ public sealed class PrototypeTests
         object? obj;
         try
         {
-            obj = seriMan.Read(kind, first, context:ctx);
+            obj = seriMan.Read(kind, first, context: ctx);
         }
         catch (Exception e)
         {
@@ -158,11 +157,11 @@ public sealed class PrototypeTests
         }
 
         Assert.That(obj?.GetType(), Is.EqualTo(proto.GetType()));
-        var deserialized = (IPrototype) obj!;
+        var deserialized = (IPrototype)obj!;
 
         try
         {
-            second = seriMan.WriteValue(kind, deserialized, alwaysWrite: true, context:ctx);
+            second = seriMan.WriteValue(kind, deserialized, alwaysWrite: true, context: ctx);
         }
         catch (Exception e)
         {

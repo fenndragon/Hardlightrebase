@@ -18,7 +18,6 @@ entities:
     - type: MetaData
       name: grid
     - type: Transform
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -351,6 +350,7 @@ entities:
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Comet
+    - type: InitRepairSnapshot
 - proto: AirAlarm
   entities:
   - uid: 544

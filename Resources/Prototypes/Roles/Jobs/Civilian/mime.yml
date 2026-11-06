@@ -3,13 +3,17 @@
   name: job-name-mime
   description: job-description-mime
   playTimeTracker: JobMime
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -50 # HardLight
   startingGear: MimeGear
   icon: "JobIconMime"
-  supervisors: job-supervisors-hire # Frontier
+  access:
+  - Theatre
+  - Maintenance
+  # - Mime # Isn't this called Theatre?
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -22,8 +26,8 @@
 - type: startingGear
   id: MimeGear
   equipment:
-    gloves: ClothingHandsGlovesColorWhite
-    shoes: ClothingShoesColorWhite
+    # gloves: ClothingHandsGlovesColorWhite # HardLight: Add NF-style departmental loadouts
+    # shoes: ClothingShoesColorWhite # HardLight: Add NF-style departmental loadouts
     id: MimePDA
     pocket1: CrayonMime
     ears: ClothingHeadsetService

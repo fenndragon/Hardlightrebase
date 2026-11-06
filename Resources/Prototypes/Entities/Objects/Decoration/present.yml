@@ -104,6 +104,8 @@
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool
+      - id: TennisBall
+        orGroup: GiftPool
       - id: ToyMouse
         orGroup: GiftPool
       - id: ToyAi
@@ -280,6 +282,8 @@
         orGroup: GiftPool
       - id: FoodBoxDonkpocketHonk
         orGroup: GiftPool
+      - id: FoodBoxDonkpocketMoth
+        orGroup: GiftPool
       - id: ClothingHandsGlovesColorPurple
         orGroup: GiftPool
       - id: ClothingHandsGlovesColorYellow
@@ -344,7 +348,7 @@
         orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
-      - id: RevolverCapGun
+      - id: NFRevolverCapGun # Frontier: RevolverCapGun<NFRevolverCapGun
         orGroup: GiftPool
       - id: Ash
         orGroup: GiftPool

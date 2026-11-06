@@ -1,0 +1,12 @@
+- type: latheRecipePack
+  id: ManawaRiteStatic
+  recipes:
+  - ClothingHeadFlowerManawaRite
+  - ClothingNeckPinManawaRite
+  - ClothingUniformDressManawaRite
+  - ClothingOuterRobeManawaRite
+  - ClothingOuterHoodieManawaRite
+  - ClothingOuterRobeManawaRiteAlt
+  - ClothingOuterHoodieManawaRiteAlt
+  - MaterialManaWoodPlank
+  - RingOfLesserTransmogrification

@@ -11,7 +11,7 @@ using Content.Shared.Power.Generator;
 using Robust.Server.GameObjects;
 using Content.Shared.Radiation.Components; // Frontier
 using Content.Shared.Audio; // Frontier
-using Content.Shared.Materials; // Frontier
+// Frontier
 using Content.Server._NF.Power.Components; // Frontier
 
 namespace Content.Server.Power.Generator;
@@ -169,7 +169,7 @@ public sealed partial class GeneratorSystem : SharedGeneratorSystem
             return 0;
 
         // worst (unrealistic) case: -5.5 -> -6.0 -> 6
-        var toRemove = -(int) MathF.Floor(fractional);
+        var toRemove = -(int)MathF.Floor(fractional);
         toRemove = Math.Min(availableQuantity, toRemove);
 
         fractional = Math.Max(0, fractional + toRemove);

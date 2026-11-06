@@ -1,16 +1,16 @@
-﻿using Content.Shared.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Reagent;
 
 /// <summary>
-/// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
+/// Simple struct for storing a <see cref="ReagentId"/> &amp; quantity tuple.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
 public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 {
-    [DataField("Quantity", required:true)]
+    [DataField("Quantity", required: true)]
     public FixedPoint2 Quantity { get; private set; }
 
     [IncludeDataField]

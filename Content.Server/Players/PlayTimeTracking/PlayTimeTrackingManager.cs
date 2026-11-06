@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
@@ -77,6 +75,7 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
     // List of pending DB save operations.
     // We must block server shutdown on these to avoid losing data.
     private readonly List<Task> _pendingSaveTasks = new();
+    private readonly SemaphoreSlim _saveSemaphore = new(1, 1);
 
     private readonly Dictionary<ICommonSession, PlayTimeData> _playTimeData = new();
 
@@ -210,6 +209,17 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
         return GetTrackerTimes(session);
     }
 
+    public bool TryGetPlayTimes(ICommonSession session, [NotNullWhen(true)] out IReadOnlyDictionary<string, TimeSpan>? playTimes)
+    {
+        playTimes = null;
+
+        if (!TryGetTrackerTimes(session, out var times))
+            return false;
+
+        playTimes = times;
+        return true;
+    }
+
     private void SendPlayTimes(ICommonSession pSession)
     {
         var roles = GetTrackerTimes(pSession);
@@ -243,7 +253,10 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
         // This causes all trackers to refresh, ah well.
         FlushAllTrackers();
 
-        TrackPending(DoSaveSessionAsync(session));
+        if (!_playTimeData.TryGetValue(session, out var data))
+            return;
+
+        TrackPending(SaveUpdatesAsync(DrainDirtyTrackers(session, data), session.Name));
     }
 
     /// <summary>
@@ -257,6 +270,10 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
         {
             await task;
         }
+        catch (Exception e) // VRS: surface playtime save failures instead of letting them become unhandled async-void exceptions.
+        {
+            Logger.GetSawmill("play_time").Error($"Play time save task failed: {e}");
+        }
         finally
         {
             _pendingSaveTasks.Remove(task);
@@ -269,30 +286,23 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
 
         foreach (var (player, data) in _playTimeData)
         {
-            foreach (var tracker in data.DbTrackersDirty)
-            {
-                log.Add(new PlayTimeUpdate(player.UserId, tracker, data.TrackerTimes[tracker]));
-            }
-
-            data.DbTrackersDirty.Clear();
+            log.AddRange(DrainDirtyTrackers(player, data));
         }
 
-        if (log.Count == 0)
-            return;
-
-        // NOTE: we do replace updates here, not incremental additions.
-        // This means that if you're playing on two servers at the same time, they'll step on each other's feet.
-        // This is considered fine.
-        await _db.UpdatePlayTimes(log);
-
-        _sawmill.Debug($"Saved {log.Count} trackers");
+        await SaveUpdatesAsync(log);
     }
 
     private async Task DoSaveSessionAsync(ICommonSession session)
     {
-        var log = new List<PlayTimeUpdate>();
+        if (!_playTimeData.TryGetValue(session, out var data))
+            return;
 
-        var data = _playTimeData[session];
+        await SaveUpdatesAsync(DrainDirtyTrackers(session, data), session.Name);
+    }
+
+    private List<PlayTimeUpdate> DrainDirtyTrackers(ICommonSession session, PlayTimeData data)
+    {
+        var log = new List<PlayTimeUpdate>(data.DbTrackersDirty.Count);
 
         foreach (var tracker in data.DbTrackersDirty)
         {
@@ -300,13 +310,32 @@ public sealed partial class PlayTimeTrackingManager : ISharedPlaytimeManager, IP
         }
 
         data.DbTrackersDirty.Clear();
+        return log;
+    }
 
-        // NOTE: we do replace updates here, not incremental additions.
-        // This means that if you're playing on two servers at the same time, they'll step on each other's feet.
-        // This is considered fine.
-        await _db.UpdatePlayTimes(log);
+    private async Task SaveUpdatesAsync(List<PlayTimeUpdate> log, string? sessionName = null)
+    {
+        if (log.Count == 0)
+            return;
 
-        _sawmill.Debug($"Saved {log.Count} trackers for {session.Name}");
+        await _saveSemaphore.WaitAsync();
+
+        try
+        {
+            // NOTE: we do replace updates here, not incremental additions.
+            // This means that if you're playing on two servers at the same time, they'll step on each other's feet.
+            // This is considered fine.
+            await _db.UpdatePlayTimes(log);
+        }
+        finally
+        {
+            _saveSemaphore.Release();
+        }
+
+        if (sessionName == null)
+            _sawmill.Debug($"Saved {log.Count} trackers");
+        else
+            _sawmill.Debug($"Saved {log.Count} trackers for {sessionName}");
     }
 
     public async Task LoadData(ICommonSession session, CancellationToken cancel)

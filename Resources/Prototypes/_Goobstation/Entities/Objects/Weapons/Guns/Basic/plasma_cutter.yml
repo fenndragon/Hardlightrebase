@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
+
+# HardLight-edit start
+- type: entity
+  name: Plasma Cutter
+  parent: [BaseWeaponBatterySmall, Welder]
+  id: WeaponPlasmaCutter
+  description: A compact cutter that fires bolts of ionized plasma capable of easily cutting through most surfaces, making it a versatile mining tool. Able to rip up hull platings beneath tiles.
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Cargo ]
+  - type: Sprite
+    sprite: _Goobstation/Objects/Weapons/Guns/Battery/cutter.rsi
+    scale: 0.8, 0.8
+    layers:
+    - state: icon
+    - state: plasma-cutter-activate-icon
+      visible: false
+      shader: unshaded
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: lightblue
+  - type: Item
+    sprite: _Goobstation/Objects/Weapons/Guns/Battery/cutter.rsi
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: ToggleableLightVisuals
+    spriteLayer: plasma-cutter-activate-icon
+    inhandVisuals:
+      left:
+      - state: cutter-glow-inhand-left
+        shader: unshaded
+      right:
+      - state: cutter-glow-inhand-right
+        shader: unshaded
+  - type: Gun
+    fireRate: 1.2
+    soundGunshot:
+      path: /Audio/_Goobstation/Weapons/Guns/Gunshots/plasma_cutter.ogg
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 75
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletPlasmaCutter
+    fireCost: 100
+  - type: Multishot
+    spreadMultiplier: 1.2
+  - type: Scalpel # Since in Dead Space 2 it's used as a scalpel. Kinda.
+    speed: 0.7
+  - type: SurgeryTool
+    startSound:
+      collection: Welder
+    endSound:
+      collection: WelderOff
+  - type: SolutionContainerManager # Stolen from the industrial welding tool. Completely.
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 200
+        maxVol: 200
+  - type: Tool # Might make it able to rip up tiles
+    qualities:
+      - Axing
+      - Welding
+  - type: ToolTileCompatible
+# HardLight-edit end

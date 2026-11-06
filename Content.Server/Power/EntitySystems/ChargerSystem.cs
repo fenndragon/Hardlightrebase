@@ -85,13 +85,10 @@ public sealed partial class ChargerSystem : SharedChargerSystem
     {
         bool charge = true;
 
-        if (HasComp<EmpDisabledComponent>(uid))
-            charge = false;
-        else
-        if (!TryComp<BatteryComponent>(target, out var battery))
-            charge = false;
-        else
-        if (Math.Abs(battery.MaxCharge - battery.CurrentCharge) < 0.01)
+        if (HasComp<EmpDisabledComponent>(uid) ||
+            !TryComp<BatteryComponent>(target,
+                out var battery) ||
+            Math.Abs(battery.MaxCharge - battery.CurrentCharge) < 0.01)
             charge = false;
 
         // wrap functionality in an if statement instead of returning...
@@ -141,11 +138,11 @@ public sealed partial class ChargerSystem : SharedChargerSystem
             // Frontier: we already have the battery separated (it is what charges)
             //           so we will charge the battery ourselves, instead of finding it
             //           again through TransferPower
-            _battery.TrySetCharge(uid, battery.CurrentCharge + charger.ChargeRate * frameTime, battery); // Frontier: Upstream - #28984
+            _battery.SetCharge(uid, battery.CurrentCharge + charger.ChargeRate * frameTime, battery); // Frontier: Upstream - #28984
             // Just so the sprite won't be set to 99.99999% visibility
             if (battery.MaxCharge - battery.CurrentCharge < 0.01)
             {
-                _battery.TrySetCharge(uid, battery.MaxCharge, battery); // Frontier: Upstream - #28984
+                _battery.SetCharge(uid, battery.MaxCharge, battery); // Frontier: Upstream - #28984
             }
 
             UpdateStatus(uid, charger);
@@ -324,13 +321,7 @@ public sealed partial class ChargerSystem : SharedChargerSystem
         if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))
             return;
 
-        _battery.TrySetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery); // Frontier: Upstream - #28984
-        // Just so the sprite won't be set to 99.99999% visibility
-        if (heldBattery.MaxCharge - heldBattery.CurrentCharge < 0.01)
-        {
-            _battery.TrySetCharge(batteryUid.Value, heldBattery.MaxCharge, heldBattery); // Frontier: Upstream - #28984
-        }
-
+        _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
         UpdateStatus(uid, component);
     }
 

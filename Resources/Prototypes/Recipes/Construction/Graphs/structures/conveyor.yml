@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: ConveyorGraph
   start: start
   graph:
@@ -10,7 +10,7 @@
               icon:
                 sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE(Resprites): Imp Sprite Ports
                 state: conveyor_loose
-              name: conveyor belt assembly
+              name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
     - node: item
       entity: ConveyorBeltAssembly

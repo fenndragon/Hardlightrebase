@@ -1,0 +1,32 @@
+# Section 11: Antagonist Guidelines
+
+- type: serverRule
+  id: ServerRule11_1
+  section: 11
+  code: 11.1
+  text: "Antagonists are held to a higher standard, similar to Command."
+
+- type: serverRule
+  id: ServerRule11_2
+  section: 11
+  code: 11.2
+  text: "Antagonists are expected to roleplay with others. This includes Security and Command."
+
+- type: serverRule
+  id: ServerRule11_3
+  section: 11
+  code: 11.3
+  text: "The damage that an antagonist is allowed to cause must be proportional to their objectives."
+
+- type: serverRule
+  id: ServerRule11_4
+  section: 11
+  code: 11.4
+  text: "Ghost roles have their own independent rules that must be followed."
+
+- type: serverRule
+  id: ServerRule11_5
+  section: 11
+  code: 11.5
+  hardlit: Hardlit
+  text: "Any antagonistic activity must cease on ColComm."

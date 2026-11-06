@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;
 
@@ -23,7 +23,7 @@ public sealed partial class RevenantOverloadedLightsComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float ZapRange = 4f;
 
-    [DataField("zapBeamEntityId",customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("zapBeamEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ZapBeamEntityId = "LightningRevenant";
 
     public float? OriginalEnergy;

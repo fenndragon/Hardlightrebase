@@ -78,8 +78,9 @@ public sealed partial class TechnologyPrototype : IPrototype
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
 
+    // WOLFGATE: escape the ampersand in XML documentation
     /// <summary>
-    /// Goobstation R&D console rework field
+    /// Goobstation R&amp;D console rework field
     /// Position of this tech in console menu
     /// </summary>
     [DataField(required: true)]

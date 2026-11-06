@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
@@ -137,6 +136,7 @@ public sealed partial class GameMapManager : IGameMapManager
     public void ClearSelectedMap()
     {
         _selectedMap = default!;
+        _configSelectedMap = default!;
     }
 
     public bool TrySelectMapIfEligible(string gameMap)

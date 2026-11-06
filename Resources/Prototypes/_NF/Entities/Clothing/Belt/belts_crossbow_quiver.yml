@@ -1,8 +1,8 @@
-﻿- type: entity
-  parent: NFClothingBeltStorageBase
+- type: entity
+  parent: ClothingBeltBase
   id: ClothingBeltQuiverCrossbow
-  name: quiver (bolts)
-  description: Can hold up to 25 bolts, and fits snug around your waist.
+  name: quiver (bolts, any)
+  description: Can hold up to 24 bolts, and fits snug around your waist or over a pocket.
   components:
   - type: Sprite
     sprite: _NF/Objects/Clothing/Belt/crossbow_quiver.rsi
@@ -11,10 +11,12 @@
     - map: [ "enum.StorageContainerVisualLayers.Fill" ]
       visible: false
   - type: Clothing
-  - type: Storage
-    maxItemSize: Small
-    grid:
-    - 0,0,4,4
+    slots: [ Belt, POCKET ]
+    equipSound:
+      path: /Audio/Weapons/soup.ogg
+  - type: BallisticAmmoProvider
+    capacity: 24
+    mayTransfer: true
     whitelist:
       tags:
       - CrossbowBolt
@@ -32,6 +34,7 @@
       - Bread
       - MailCapsule
       - WeaponMeleeStake
+      - CrossbowBoltShrapnel
   - type: Appearance
   - type: StorageContainerVisuals
     maxFillLevels: 5
@@ -44,29 +47,26 @@
 - type: entity
   parent: ClothingBeltQuiverCrossbow
   id: ClothingBeltQuiverCrossbowFilledBolt
+  name: quiver (bolts)
   suffix: Filled, Bolts
   components:
-  - type: StorageFill
-    contents:
-    - id: CrossbowBolt
-      amount: 15
+  - type: BallisticAmmoProvider
+    proto: CrossbowBolt
 
 - type: entity
   parent: ClothingBeltQuiverCrossbow
   id: ClothingBeltQuiverCrossbowFilledUranium
+  name: quiver (bolts, uranium)
   suffix: Filled, Uranium Tip
   components:
-  - type: StorageFill
-    contents:
-    - id: CrossbowBoltUraniumGlassShard
-      amount: 15
+  - type: BallisticAmmoProvider
+    proto: CrossbowBoltUraniumGlassShard
 
 - type: entity
   parent: ClothingBeltQuiverCrossbow
   id: ClothingBeltQuiverCrossbowFilledPlasma
+  name: quiver (bolts, plasma)
   suffix: Filled, Plasma Tip
   components:
-  - type: StorageFill
-    contents:
-    - id: CrossbowBoltPlasmaGlassShard
-      amount: 15
+  - type: BallisticAmmoProvider
+    proto: CrossbowBoltPlasmaGlassShard

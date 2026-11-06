@@ -20,17 +20,14 @@ public sealed partial class Ignite : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        if (!args.EntityManager.TryGetComponent(args.TargetEntity, out FlammableComponent? flammable))
-            return;
-
         var flamSys = args.EntityManager.System<FlammableSystem>();
         if (args is EntityEffectReagentArgs reagentArgs)
         {
-            flamSys.Ignite(reagentArgs.TargetEntity, reagentArgs.OrganEntity ?? reagentArgs.TargetEntity, flammable: flammable);
+            flamSys.Ignite(reagentArgs.TargetEntity, reagentArgs.OrganEntity ?? reagentArgs.TargetEntity);
         }
         else
         {
-            flamSys.Ignite(args.TargetEntity, args.TargetEntity, flammable: flammable);
+            flamSys.Ignite(args.TargetEntity, args.TargetEntity);
         }
     }
 }

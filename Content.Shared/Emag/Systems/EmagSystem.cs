@@ -150,6 +150,8 @@ public sealed partial class EmagSystem : EntitySystem
     }
     // End Frontier: demag
 
+    // WOLFGATE: add the missing XML summary tag
+    /// <summary>
     /// Checks whether an entity has the EmaggedComponent with a set flag.
     /// </summary>
     /// <param name="target">The target entity to check for the flag.</param>

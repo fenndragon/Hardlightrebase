@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Chat;
+namespace Content.Shared.Chat;
 
 public static class ChatChannelExtensions
 {
@@ -24,4 +24,8 @@ public static class ChatChannelExtensions
             _ => Color.LightGray
         };
     }
+
+    // Starlight
+    public static bool IsExemptFromLanguages(this ChatChannel channel) =>
+    channel is ChatChannel.LOOC or ChatChannel.Emotes or ChatChannel.Notifications or ChatChannel.Visual;
 }

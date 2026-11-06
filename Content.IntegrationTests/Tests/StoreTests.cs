@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
@@ -10,7 +6,6 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests;
@@ -103,6 +98,12 @@ public sealed class StoreTests
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
 
+            // The storeComponent returns discounted items with conditions randomly, so we remove these to sanitize the data.
+            foreach (var discountedItem in discountedListingItems)
+            {
+                discountedItem.Conditions = null;
+            }
+
             // Refund action requests re-generation of listing items so we will be re-acquiring items from component a lot of times.
             var itemIds = discountedListingItems.Select(x => x.ID);
             foreach (var itemId in itemIds)
@@ -122,7 +123,7 @@ public sealed class StoreTests
                     Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), "Expected discounted cost to be lower then prototype cost.");
 
 
-                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID){Actor = human};
+                    var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID) { Actor = human };
                     server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, buyMsg);
 
                     var newBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
@@ -140,6 +141,9 @@ public sealed class StoreTests
 
                     // get refreshed item after refund re-generated items
                     discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+
+                    // The storeComponent can give a discounted item a condition at random, so we remove it to sanitize the data.
+                    discountedListingItem.Conditions = null;
 
                     var afterRefundBalance = storeComponent.Balance[UplinkSystem.TelecrystalCurrencyPrototype];
                     Assert.That(afterRefundBalance.Value, Is.EqualTo(originalBalance.Value), "Expected refund to return all discounted cost value.");

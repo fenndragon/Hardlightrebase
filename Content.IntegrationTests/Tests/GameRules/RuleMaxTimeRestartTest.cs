@@ -11,6 +11,13 @@ namespace Content.IntegrationTests.Tests.GameRules
     [TestOf(typeof(MaxTimeRestartRuleSystem))]
     public sealed class RuleMaxTimeRestartTest
     {
+        private static void WriteProbe(string message)
+        {
+            var path = Path.Combine(AppContext.BaseDirectory, "rulemaxrestart.probe");
+            File.AppendAllText(path, message + "\n");
+            TestContext.Progress.WriteLine(message);
+        }
+
         [Test]
         public async Task RestartTest()
         {
@@ -27,9 +34,11 @@ namespace Content.IntegrationTests.Tests.GameRules
             MaxTimeRestartRuleComponent maxTime = null;
             await server.WaitPost(() =>
             {
-                sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
+                sGameTicker.StartGameRule("NFMaxTimeRestart", out var ruleEntity); // Frontier: use NF variant (upstream abstracted)
                 Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out maxTime));
             });
+
+            WriteProbe("RuleMaxTimeRestartTest: rule started");
 
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
             Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.EqualTo(1));
@@ -41,6 +50,8 @@ namespace Content.IntegrationTests.Tests.GameRules
                 sGameTicker.StartRound();
             });
 
+            WriteProbe("RuleMaxTimeRestartTest: start round requested");
+
             Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
             Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.EqualTo(1));
 
@@ -49,21 +60,31 @@ namespace Content.IntegrationTests.Tests.GameRules
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             });
 
-            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
+            WriteProbe("RuleMaxTimeRestartTest: reached in-round");
+
+            var ticks = sGameTiming.TickRate * (int)Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
             await pair.RunTicksSync(ticks);
+
+            WriteProbe("RuleMaxTimeRestartTest: completed max-time ticks");
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
             });
 
-            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
+            WriteProbe("RuleMaxTimeRestartTest: reached post-round");
+
+            ticks = sGameTiming.TickRate * (int)Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
             await pair.RunTicksSync(ticks);
+
+            WriteProbe("RuleMaxTimeRestartTest: completed restart-delay ticks");
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
+
+            WriteProbe("RuleMaxTimeRestartTest: returned to pre-round lobby");
 
             await pair.CleanReturnAsync();
         }

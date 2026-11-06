@@ -8,12 +8,15 @@
 - type: latheRecipePack
   id: PartsStatic
   recipes:
+  - WeaponCaseShortDocuments
   - Igniter
   - ModularReceiver
   - MicroManipulatorStockPart
   - MatterBinStockPart
   - CapacitorStockPart
   - ConveyorBeltAssembly
+  - InjectorCollar
+  - InjectorCollarCryo
 
 - type: latheRecipePack
   id: LightsStatic
@@ -54,3 +57,15 @@
   - HandHeldMassScanner
   - ClothingMaskWeldingGas
   - SignallerAdvanced
+  - BluespaceAirTank
+  - SmallBluespaceAirTank
+
+- type: latheRecipePack
+  id: SalvageSecurityBoards
+  recipes: [] # Frontier: empty list
+  # - ShuttleGunKineticCircuitboard # Frontier
+
+- type: latheRecipePack
+  id: SalvageSecurityWeapons
+  recipes: [] # Frontier: empty list
+  # - WeaponProtoKineticAccelerator # Frontier

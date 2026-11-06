@@ -1,10 +1,8 @@
 using Content.Client._WF.MappingTools; // WOLFGATE(MappingTools)
 using Content.Client.Actions;
-using Content.Client.Mapping;
 using Content.Client.Markers;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
@@ -25,7 +23,7 @@ internal sealed partial class MappingClientSideSetupCommand : LocalizedCommands
         {
             _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
             _lightManager.Enabled = false;
-            shell.ExecuteCommand("showsubfloorforever");
+            shell.ExecuteCommand("showsubfloor");
             _entitySystemManager.GetEntitySystem<ActionsSystem>().LoadActionAssignments("/mapping_actions.yml", false);
             _entitySystemManager.GetEntitySystem<MappingToolsSystem>().SetEnabled(true); // WOLFGATE(MappingTools): open the mapping tools window
         }

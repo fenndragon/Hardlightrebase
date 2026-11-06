@@ -37,6 +37,9 @@ public sealed partial class StencilOverlay : Overlay
     private readonly OverlayResourceCache<CachedResources> _resources = new();
 
     private readonly ShaderInstance _shader;
+    private static readonly ProtoId<ShaderPrototype> WorldGradientCircleId = "WorldGradientCircle";
+    private static readonly ProtoId<ShaderPrototype> StencilMaskId = "StencilMask";
+    private static readonly ProtoId<ShaderPrototype> StencilDrawId = "StencilDraw";
 
     public StencilOverlay(ParallaxSystem parallax, SharedTransformSystem transform, SharedMapSystem map, SpriteSystem sprite, WeatherSystem weather)
     {
@@ -47,7 +50,7 @@ public sealed partial class StencilOverlay : Overlay
         _sprite = sprite;
         _weather = weather;
         IoCManager.InjectDependencies(this);
-        _shader = _protoManager.Index<ShaderPrototype>("WorldGradientCircle").InstanceUnique();
+        _shader = _protoManager.Index(WorldGradientCircleId).InstanceUnique();
     }
 
     protected override void Draw(in OverlayDrawArgs args)

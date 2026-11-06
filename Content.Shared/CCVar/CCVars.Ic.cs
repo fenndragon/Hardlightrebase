@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -8,7 +8,7 @@ public sealed partial class CCVars
     ///     Restricts IC character names to alphanumeric chars.
     /// </summary>
     public static readonly CVarDef<bool> RestrictedNames =
-        CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.restricted_names", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Allows flavor text (character descriptions)
@@ -26,7 +26,7 @@ public sealed partial class CCVars
     ///     Enables automatically forcing IC name rules. Uppercases the first letter of the first and last words of the name
     /// </summary>
     public static readonly CVarDef<bool> ICNameCase =
-        CVarDef.Create("ic.name_case", true, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.name_case", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Whether or not players' characters are randomly generated rather than using their selected characters in the creator.
@@ -45,4 +45,17 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ICShowSSDIndicator =
         CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+
+    /// <summary>
+    ///     Forces SSD characters to sleep after ICSSDSleepTime seconds
+    /// </summary>
+    public static readonly CVarDef<bool> ICSSDSleep =
+        CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
+
+    /// <summary>
+    ///     Time between character getting SSD status and falling asleep
+    ///     Won't work without ICSSDSleep
+    /// </summary>
+    public static readonly CVarDef<float> ICSSDSleepTime =
+        CVarDef.Create("ic.ssd_sleep_time", 600f, CVar.SERVER);
 }

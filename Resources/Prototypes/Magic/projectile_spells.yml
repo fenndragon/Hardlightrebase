@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ActionFireball
   name: Fireball
   description: Fires an explosive fireball towards the clicked location.
@@ -30,8 +30,6 @@
   description: Fires a fireball, but faster!
   components:
   - type: WorldTargetAction
-    useDelay: 10
-    renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
     raiseOnUser: true
@@ -52,8 +50,6 @@
   description: The fastest fireball in the west!
   components:
     - type: WorldTargetAction
-      useDelay: 8
-      renewCharges: true
       itemIconStyle: BigAction
       checkCanAccess: false
       raiseOnUser: true
@@ -66,3 +62,25 @@
       event: !type:ProjectileSpellEvent
         prototype: ProjectileFireball
         speech: action-speech-spell-fireball
+
+# Used by the spell_pages entry for the fireball token spell.
+- type: entity
+  id: ActionFireballWeak
+  name: Fireball
+  description: Fires a weak explosive fireball towards the clicked location.
+  components:
+  - type: Magic
+  - type: WorldTargetAction
+    useDelay: 45
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    raiseOnUser: true
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFireballWeak
+      speech: nef pul vex!

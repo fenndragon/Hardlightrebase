@@ -17,7 +17,6 @@ using Robust.Shared.Timing;
 using System.Numerics;
 using JetBrains.Annotations;
 using Content.Shared.Atmos;
-using System.Linq;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;
@@ -128,11 +127,7 @@ public partial class NavMapControl : MapGridControl
 
         var topPanel = new PanelContainer()
         {
-            PanelOverride = new StyleBoxFlat()
-            {
-                BackgroundColor = StyleNano.ButtonColorContext.WithAlpha(1f),
-                BorderColor = StyleNano.PanelDark
-            },
+            StyleClasses = { StyleClass.PanelDark },
             VerticalExpand = false,
             HorizontalExpand = true,
             SetWidth = 650f,
@@ -385,6 +380,9 @@ public partial class NavMapControl : MapGridControl
         if (PostWallDrawingAction != null)
             PostWallDrawingAction.Invoke(handle);
 
+        // Draw safe zone ring at 5000m
+        DrawSafeZoneRing(handle, offset);
+
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -512,10 +510,10 @@ public partial class NavMapControl : MapGridControl
         _vertLines.Clear();
         _vertLinesReversed.Clear();
 
-        const int southMask = (int) AtmosDirection.South << (int) NavMapChunkType.Wall;
-        const int eastMask = (int) AtmosDirection.East << (int) NavMapChunkType.Wall;
-        const int westMask = (int) AtmosDirection.West << (int) NavMapChunkType.Wall;
-        const int northMask = (int) AtmosDirection.North << (int) NavMapChunkType.Wall;
+        const int southMask = (int)AtmosDirection.South << (int)NavMapChunkType.Wall;
+        const int eastMask = (int)AtmosDirection.East << (int)NavMapChunkType.Wall;
+        const int westMask = (int)AtmosDirection.West << (int)NavMapChunkType.Wall;
+        const int northMask = (int)AtmosDirection.North << (int)NavMapChunkType.Wall;
 
         foreach (var (chunkOrigin, chunk) in _navMap.Chunks)
         {
@@ -525,7 +523,7 @@ public partial class NavMapControl : MapGridControl
                 if (tileData == 0)
                     continue;
 
-                tileData >>= (int) NavMapChunkType.Wall;
+                tileData >>= (int)NavMapChunkType.Wall;
 
                 var relativeTile = SharedNavMapSystem.GetTileFromIndex(i);
                 var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relativeTile) * _grid.TileSize;
@@ -542,7 +540,7 @@ public partial class NavMapControl : MapGridControl
                 // North edge
                 var neighborData = 0;
                 if (relativeTile.Y != SharedNavMapSystem.ChunkSize - 1)
-                    neighborData = chunk.TileData[i+1];
+                    neighborData = chunk.TileData[i + 1];
                 else if (_navMap.Chunks.TryGetValue(chunkOrigin + Vector2i.Up, out neighborChunk))
                     neighborData = neighborChunk.TileData[i + 1 - SharedNavMapSystem.ChunkSize];
 
@@ -622,7 +620,7 @@ public partial class NavMapControl : MapGridControl
                 if (tileData == 0)
                     continue;
 
-                tileData >>= (int) NavMapChunkType.Airlock;
+                tileData >>= (int)NavMapChunkType.Airlock;
 
                 var relative = SharedNavMapSystem.GetTileFromIndex(i);
                 var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + relative) * _grid.TileSize;
@@ -659,7 +657,7 @@ public partial class NavMapControl : MapGridControl
 
             // TODO NAVMAP
             // Consider using faster rotation operations, given that these are always 90 degree increments
-            var angle = -((AtmosDirection) dirMask).ToAngle();
+            var angle = -((AtmosDirection)dirMask).ToAngle();
             TileRects.Add((angle.RotateVec(leftTop) + tilePosition, angle.RotateVec(rightBottom) + tilePosition));
         }
     }
@@ -678,7 +676,7 @@ public partial class NavMapControl : MapGridControl
                 continue;
 
             var tilePosition = new Vector2(tile.X + 0.5f, -tile.Y - 0.5f);
-            var angle = -((AtmosDirection) dirMask).ToAngle();
+            var angle = -((AtmosDirection)dirMask).ToAngle();
             TileRects.Add((angle.RotateVec(leftTop) + tilePosition, angle.RotateVec(rightBottom) + tilePosition));
             TileLines.Add((angle.RotateVec(centreTop) + tilePosition, angle.RotateVec(centreBottom) + tilePosition));
         }
@@ -736,6 +734,21 @@ public partial class NavMapControl : MapGridControl
     protected Vector2 GetOffset()
     {
         return Offset + (_physics?.LocalCenter ?? new Vector2());
+    }
+
+    private void DrawSafeZoneRing(DrawingHandleScreen handle, Vector2 offset)
+    {
+        const float safeZoneRadius = 5000f;
+        var safeZoneColor = Color.LimeGreen.WithAlpha(0.8f);
+
+        // Calculate the center position (inverted Y for screen coordinates)
+        var centerPos = ScalePosition(new Vector2(-offset.X, offset.Y));
+
+        // Scale the radius according to the minimap scale
+        var scaledRadius = safeZoneRadius * MinimapScale;
+
+        // Draw the ring
+        handle.DrawCircle(centerPos, scaledRadius, safeZoneColor, filled: false);
     }
 }
 

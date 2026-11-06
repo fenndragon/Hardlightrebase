@@ -1,23 +1,27 @@
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
+using Content.Server._HL.CD;
+using Content.Server._NF.PublicTransit.Components;
+using Content.Server._NF.RoundNotifications.Events; // Frontier
 using Content.Server.Announcements;
-using Content.Server.CrewManifest;
 using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
 using Content.Server.Roles;
-using Content.Server.Station.Systems;
-using Content.Server._NF.Bank;
-using Content.Server._NF.GameRule;
+using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Components;
+// Add this if missing
+// Hardlight
+using Content.Shared._NF.Shipyard.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Content.Shared.Maps;
+using Content.Shared.HL.CCVar; // HL
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
 using Prometheus;
 using Robust.Shared.Asynchronous;
@@ -25,27 +29,23 @@ using Robust.Shared.Audio;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-// Goob Station - End of Round Screen
-using Content.Shared._Goobstation.LastWords;
-using Content.Shared.Damage;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.FixedPoint;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
-        [Dependency] private DiscordWebhook _discord = default!;
-        [Dependency] private RoleSystem _role = default!;
-        [Dependency] private ITaskManager _taskManager = default!;
-        [Dependency] private CrewManifestSystem _crewManifest = default!;
-        [Dependency] private StationSystem _stationSystem = default!;
-        [Dependency] private BankSystem _bank = default!;
+        [Dependency] private readonly DiscordWebhook _discord = default!;
+        [Dependency] private readonly RoleSystem _role = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly ShuttleSystem _shuttleSystem = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!; // Hardlight
+        [Dependency] private readonly WindDownSystem _windDownSystem = default!; // HardLight: CD Shutdown
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -65,6 +65,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables]
         private GameRunLevel _runLevel;
+        private bool _endingRound; // guard to prevent duplicate EndRound execution
 
         private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
 
@@ -92,6 +93,8 @@ namespace Content.Server.GameTicking
         /// <returns></returns>
         public bool CanUpdateMap()
         {
+            // Allow map updates during the entire lobby phase, not just the early part
+            // The original constraint was too restrictive and prevented late votes from taking effect
             return RunLevel == GameRunLevel.PreRoundLobby &&
                    _roundStartTime - RoundPreloadTime > _gameTiming.CurTime;
         }
@@ -104,28 +107,21 @@ namespace Content.Server.GameTicking
         /// </remarks>
         private void LoadMaps()
         {
+            // Prevent loading maps if the default map already exists.
             if (_map.MapExists(DefaultMap))
-                return;
-
-            if (WFMappingBlocksRound(announce: false)) // WOLFGATE(MappingMode): mapping mode loads no game map or preset rule
                 return;
 
             AddGamePresetRules();
 
             var maps = new List<GameMapPrototype>();
 
-            // the map might have been force-set by something
-            // (i.e. votemap or forcemap)
             var mainStationMap = _gameMapManager.GetSelectedMap();
             if (mainStationMap == null)
             {
-                // otherwise set the map using the config rules
                 _gameMapManager.SelectMapByConfigRules();
                 mainStationMap = _gameMapManager.GetSelectedMap();
             }
 
-            // Small chance the above could return no map.
-            // ideally SelectMapByConfigRules will always find a valid map
             if (mainStationMap != null)
             {
                 maps.Add(mainStationMap);
@@ -135,34 +131,23 @@ namespace Content.Server.GameTicking
                 throw new Exception("invalid config; couldn't select a valid station map!");
             }
 
-            if (CurrentPreset?.MapPool != null &&
-                _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
-                !pool.Maps.Contains(mainStationMap.ID))
-            {
-                var msg = Loc.GetString("game-ticker-start-round-invalid-map",
-                    ("map", mainStationMap.MapName),
-                    ("mode", Loc.GetString(CurrentPreset.ModeTitle)));
-                Log.Debug(msg);
-                SendServerMessage(msg);
-            }
-
-            // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
 
             if (maps.Count == 0)
             {
                 _map.CreateMap(out var mapId, runMapInit: false);
-                DefaultMap = mapId;
+                DefaultMap = mapId; // Assign the new map as default
                 return;
             }
 
+            // Load the new map(s) and assign DefaultMap to the first one loaded
             for (var i = 0; i < maps.Count; i++)
             {
                 LoadGameMap(maps[i], out var mapId);
                 DebugTools.Assert(!_map.IsInitialized(mapId));
 
                 if (i == 0)
-                    DefaultMap = mapId;
+                    DefaultMap = mapId; // Always assign the first loaded map as DefaultMap
             }
         }
 
@@ -196,10 +181,6 @@ namespace Content.Server.GameTicking
         /// some <see cref="MapLoadOptions"/> using information in a prototype, and raise some events to allow content
         /// to modify the options and react to the map creation.
         /// </remarks>
-        /// <param name="proto">Game map prototype to load in.</param>
-        /// <param name="mapId">The id of the map that was loaded.</param>
-        /// <param name="options">Entity loading options, including whether the maps should be initialized.</param>
-        /// <param name="stationName">Name to assign to the loaded station.</param>
         /// <returns>All loaded entities and grids.</returns>
         public IReadOnlyList<EntityUid> LoadGameMap(
             GameMapPrototype proto,
@@ -375,12 +356,6 @@ namespace Content.Server.GameTicking
             if (DummyTicker || _startingRound)
                 return;
 
-            if (WFMappingBlocksRound(announce: true)) // WOLFGATE(MappingMode): mapping mode never starts a round
-                return;
-
-            if (WFRoundStartHeld(force)) // WOLFGATE(Planets): round-start worlds still forming hold the start
-                return;
-
             _startingRound = true;
 
             if (RoundId == 0)
@@ -422,7 +397,10 @@ namespace Content.Server.GameTicking
                 readyPlayerProfiles.Add(userId, profile);
             }
 
-            DebugTools.AssertEqual(readyPlayers.Count, ReadyPlayerCount());
+            // HardLight: ReadyPlayerCount() also counts players still in-game from a persisted round, so compare
+            // against lobby-ready players only.
+            DebugTools.AssertEqual(readyPlayers.Count, _playerGameStatuses.Count(x =>
+                (!LobbyEnabled || x.Value == PlayerGameStatus.ReadyToPlay) && _playerManager.TryGetSessionById(x.Key, out _)));
 
             // Just in case it hasn't been loaded previously we'll try loading it.
             LoadMaps();
@@ -460,13 +438,18 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
-            RaiseLocalEvent(new RoundStartedEvent(RoundId));
+            RaiseLocalEvent(new RoundStartedEvent(RoundId)); // Frontier
             SendRoundStartedDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
             {
+                if (DefaultMap != null)
+                {
+                    var defaultMapEntityUid = _mapManager.GetMapEntityId(DefaultMap);
+                    QueueDel(defaultMapEntityUid);
+                }
                 _roundStartFailCount++;
 
                 if (RoundStartFailShutdownCount > 0 && _roundStartFailCount >= RoundStartFailShutdownCount)
@@ -499,14 +482,165 @@ namespace Content.Server.GameTicking
 
         public void EndRound(string text = "")
         {
-            // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
                 return;
 
-            DebugTools.Assert(RunLevel == GameRunLevel.InRound);
+            // Prevent duplicate round end processing if multiple callers race
+            if (_endingRound)
+            {
+                _sawmill.Warning("EndRound called while already ending – ignoring duplicate call.");
+                return;
+            }
+
+            if (RunLevel != GameRunLevel.InRound)
+            {
+                _sawmill.Warning($"EndRound called when RunLevel={RunLevel}, expected InRound – ignoring.");
+                return;
+            }
+
+            _endingRound = true;
             _sawmill.Info("Ending round!");
 
             RunLevel = GameRunLevel.PostRound;
+
+            // HardLight start: Made edits to end-round FTL logic to better handle non-evac shuttles.
+            // FTL all non-evac shuttles to Colcomm without attempting docking.
+            // The emergency shuttle handles its own docked arrival separately.
+            EntityUid? colcommMap = null;
+            var colcommQuery = AllEntityQuery<StationColcommComponent>();
+            if (colcommQuery.MoveNext(out var colcommComp))
+            {
+                // Prefer explicit map entity, but fall back to the Colcomm grid's map if needed.
+                if (colcommComp.MapEntity != null && !Deleted(colcommComp.MapEntity.Value))
+                    colcommMap = colcommComp.MapEntity.Value;
+                else if (colcommComp.Entity != null)
+                {
+                    var colcommXform = Transform(colcommComp.Entity.Value);
+                    if (colcommXform.MapUid != null)
+                        colcommMap = colcommXform.MapUid.Value;
+                }
+            }
+
+            if (colcommMap != null)
+            {
+                const float colcommArrivalMinRadius = 220f;
+                const float colcommArrivalMinSpacing = 64f;
+                const float colcommArrivalSpacingBuffer = 24f;
+                var shuttlesToMove = new List<(EntityUid Uid, ShuttleComponent Shuttle, float Radius)>();
+
+                void QueueShuttle(EntityUid shuttleUid, ShuttleComponent shuttle, TransformComponent xform)
+                {
+                    // Only evacuate shuttles that are currently on the round's station map.
+                    if (xform.MapID != DefaultMap)
+                        return;
+
+                    HashSet<Entity<ShuttleConsoleComponent>> consoles = new();
+                    _lookup.GetChildEntities(shuttleUid, consoles);
+                    if (consoles.Any(entity => !entity.Comp.CanFTL))
+                    {
+                        return;
+                    }
+
+                    var shuttleRadius = 32f;
+                    if (TryComp<MapGridComponent>(shuttleUid, out var grid))
+                        shuttleRadius = MathF.Max(shuttleRadius, MathF.Max(grid.LocalAABB.Width, grid.LocalAABB.Height) * 0.5f);
+
+                    shuttlesToMove.Add((shuttleUid, shuttle, shuttleRadius));
+                }
+
+                // Queue each ShuttleDeed shuttle for deterministic Colcomm placement.
+                var shuttleQuery = EntityQueryEnumerator<ShuttleComponent, ShuttleDeedComponent, TransformComponent>();
+                while (shuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out _, out var xform))
+                {
+                    QueueShuttle(shuttleUid, shuttle, xform);
+                }
+
+                // Queue each TransitShuttle (but not ShuttleDeed) for deterministic Colcomm placement.
+                var transitShuttleQuery = EntityQueryEnumerator<ShuttleComponent, TransitShuttleComponent, TransformComponent>();
+                while (transitShuttleQuery.MoveNext(out var shuttleUid, out var shuttle, out _, out var xform))
+                {
+                    // Skip if it also has ShuttleDeedComponent (already handled above)
+                    if (HasComp<ShuttleDeedComponent>(shuttleUid))
+                        continue;
+
+                    QueueShuttle(shuttleUid, shuttle, xform);
+                }
+
+                shuttlesToMove.Sort((a, b) => b.Radius.CompareTo(a.Radius));
+
+                var shuttleIndex = 0;
+                float previousRingRadius = 0f;
+                float previousRingMaxRadius = 0f;
+
+                while (shuttleIndex < shuttlesToMove.Count)
+                {
+                    // Each ring uses spacing from its largest shuttle, so a single giant ship
+                    // does not force all smaller ships into very distant rings.
+                    var ringMaxRadius = shuttlesToMove[shuttleIndex].Radius;
+                    var inRingSpacing = MathF.Max(colcommArrivalMinSpacing, (ringMaxRadius * 2f) + colcommArrivalSpacingBuffer);
+
+                    float ringRadius;
+                    if (previousRingRadius <= 0f)
+                        ringRadius = MathF.Max(colcommArrivalMinRadius, inRingSpacing);
+                    else
+                        ringRadius = previousRingRadius + previousRingMaxRadius + ringMaxRadius + colcommArrivalSpacingBuffer;
+
+                    int slotsInRing;
+                    if (inRingSpacing >= ringRadius * 2f)
+                    {
+                        slotsInRing = 1;
+                    }
+                    else
+                    {
+                        // Use chord distance so neighboring slots are at least inRingSpacing apart.
+                        slotsInRing = Math.Max(1,
+                            (int)MathF.Floor(MathF.PI / MathF.Asin(inRingSpacing / (2f * ringRadius))));
+                    }
+
+                    var shipsInRing = Math.Min(slotsInRing, shuttlesToMove.Count - shuttleIndex);
+                    var angleStep = 360f / shipsInRing;
+
+                    for (var slot = 0; slot < shipsInRing; slot++)
+                    {
+                        var (shuttleUid, shuttle, _) = shuttlesToMove[shuttleIndex + slot];
+                        var angle = Angle.FromDegrees(angleStep * slot);
+                        var targetCoordinates = new EntityCoordinates(colcommMap.Value, angle.ToWorldVec() * ringRadius);
+
+                        // HardLight: End-round cleanup should always evacuate owned/transit shuttles,
+                        // even if they are currently in FTL cooldown.
+                        if (HasComp<FTLComponent>(shuttleUid))
+                            RemComp<FTLComponent>(shuttleUid);
+
+                        _shuttleSystem.FTLToCoordinates(shuttleUid, shuttle, targetCoordinates, angle);
+                    }
+
+                    shuttleIndex += shipsInRing;
+                    previousRingRadius = ringRadius;
+                    previousRingMaxRadius = ringMaxRadius;
+                }
+            }
+            // HardLight end
+            // --- End Corrected Colcomm logic ---
+
+            // Aggressively delete the default map after a 30 second delay
+            var defaultMapEntityUid = _map.GetMapOrInvalid(DefaultMap);
+            if (DefaultMap != MapId.Nullspace)
+            {
+                Timer.Spawn(TimeSpan.FromSeconds(30), () =>
+                {
+                    // Send all players on the default map to the lobby before deleting the map
+                    foreach (var session in _playerManager.Sessions)
+                    {
+                        var attachedEntity = session.AttachedEntity;
+                        if (attachedEntity != null && Transform(attachedEntity.Value).MapID == DefaultMap)
+                        {
+                            PlayerJoinLobby(session);
+                        }
+                    }
+
+                    QueueDel(defaultMapEntityUid);
+                });
+            }
 
             try
             {
@@ -524,15 +658,6 @@ namespace Content.Server.GameTicking
             catch (Exception e)
             {
                 Log.Error($"Error while sending round end Discord message: {e}");
-            }
-
-            try
-            {
-                SendCrewManifestDiscordMessage(_replayRoundPlayerInfo);
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Error while sending crew manifest Discord message: {e}");
             }
         }
 
@@ -595,26 +720,6 @@ namespace Content.Server.GameTicking
 
                 var roles = _roles.MindGetAllRoleInfo(mindId);
 
-                #region Goob Station
-
-                var lastWords = "";
-                var mobState = MobState.Invalid;
-                var damagePerGroup = new Dictionary<string, FixedPoint2>();
-                var lastMob = mind.LastMob;
-                if (TryComp<LastWordsComponent>(mindId, out var lastWordsComponent)
-                    && !TerminatingOrDeleted(lastMob))
-                {
-                    lastWords = lastWordsComponent.LastWords;
-
-                    if (TryComp<MobStateComponent>(lastMob, out var mobStateComp))
-                        mobState = mobStateComp.CurrentState;
-
-                    if (TryComp<DamageableComponent>(lastMob, out var damageableComp))
-                        damagePerGroup = damageableComp.DamagePerGroup;
-                }
-
-                #endregion
-
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
@@ -631,11 +736,7 @@ namespace Content.Server.GameTicking
                     JobPrototypes = roles.Where(role => !role.Antagonist).Select(role => role.Prototype).ToArray(),
                     AntagPrototypes = roles.Where(role => role.Antagonist).Select(role => role.Prototype).ToArray(),
                     Observer = observer,
-                    Connected = connected,
-                    // Goob Station - End of Round Screen
-                    LastWords = lastWords,
-                    EntMobState = mobState,
-                    DamagePerGroup = damagePerGroup
+                    Connected = connected
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
@@ -658,7 +759,6 @@ namespace Content.Server.GameTicking
 
             _replayRoundPlayerInfo = listOfPlayerInfoFinal;
             _replayRoundText = roundEndText;
-            RaiseLocalEvent(new RoundEndedEvent(RoundId, roundDuration));
         }
 
         private async void SendRoundEndDiscordMessage()
@@ -693,270 +793,6 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private async void SendCrewManifestDiscordMessage(RoundEndMessageEvent.RoundEndPlayerInfo[]? playerInfo)
-        {
-            try
-            {
-                // Discord limits
-                const int MaxEmbedCharacters = 6000;
-                const int MaxFieldsPerEmbed = 25;
-                const int MaxFieldValueLength = 1024;
-                const int MaxFieldNameLength = 256;
-
-                var webhookUrl = _cfg.GetCVar(CCVars.DiscordCrewManifestWebhook);
-                if (string.IsNullOrEmpty(webhookUrl))
-                    return;
-
-                var webhookData = await _discord.GetWebhook(webhookUrl);
-                if (webhookData == null)
-                    return;
-
-                var webhookIdentifier = webhookData.Value.ToIdentifier();
-
-                if (playerInfo == null || playerInfo.Length == 0)
-                    return;
-
-                var serverName = _baseServer.ServerName;
-
-                // Filter out observers and sort by antag status (antags first), then by player name
-                var sortedPlayers = playerInfo
-                    .Where(p => !p.Observer && !string.IsNullOrEmpty(p.PlayerICName))
-                    .OrderBy(p => !p.Antag)
-                    .ThenBy(p => p.PlayerOOCName)
-                    .ToList();
-
-                if (sortedPlayers.Count == 0)
-                    return;
-
-                // Create the manifest text in the same format as the round end summary
-                var profitData = new List<BankData>();
-
-                var manifestLines = new List<string>();
-                var profitLines = new List<string>();
-
-                // Get the NFAdventureRuleSystem to access profit data
-                var adventureSystem = EntityManager.System<NFAdventureRuleSystem>();
-
-                // Use HashSets to track unique entries to avoid duplicates
-                var seenManifestEntries = new HashSet<string>();
-                var seenProfitEntries = new HashSet<string>();
-
-                foreach (var player in sortedPlayers)
-                {
-                    // Use localization to get the proper job name instead of the key
-                    var roleName = Loc.GetString(player.Role);
-                    var playerLine = "- " + player.PlayerOOCName + " was " + player.PlayerICName + " playing role of " + roleName + ".";
-
-                    // Only add manifest line if we haven't seen this exact entry before
-                    if (seenManifestEntries.Add(playerLine))
-                    {
-                        manifestLines.Add(playerLine);
-                    }
-
-                    // Try to get profit information for this player
-                    if (player.PlayerGuid != null && !string.IsNullOrEmpty(player.PlayerICName))
-                    {
-                        var profitInfo = adventureSystem.GetBankDataInfo(player.PlayerGuid.Value, player.PlayerICName);
-
-                        if (profitInfo == null || profitData.Contains(profitInfo.Value))
-                        {
-                            continue;
-                        }
-
-                        profitData.Add(profitInfo.Value);
-                    }
-                }
-
-                var orderedData = profitData.OrderByDescending(p => p.Profit);
-
-                foreach (var data in orderedData)
-                {
-                    var dataString = adventureSystem.ConvertBankDataToString(data, true);
-
-                    if (seenProfitEntries.Add(dataString))
-                        profitLines.Add($"- {dataString}");
-                }
-
-                // Prepare base embed content
-                var title = "Round End Summary";
-                var description = "Round **" + RoundId + "** has ended with **" + manifestLines.Count + "** total characters involved.";
-                var footerText = serverName + " - Round " + RoundId;
-
-                // Calculate base embed character count (title + description + footer)
-                var baseCharacterCount = title.Length + description.Length + footerText.Length;
-
-                // Create embeds with proper limit handling
-                var embeds = new List<WebhookEmbed>();
-                var currentFields = new List<WebhookEmbedField>();
-                var currentEmbedCharacterCount = baseCharacterCount;
-                var embedCount = 0;
-
-                // Helper function to create and add an embed
-                void AddCurrentEmbed()
-                {
-                    if (currentFields.Count > 0)
-                    {
-                        embeds.Add(new WebhookEmbed
-                        {
-                            Title = embedCount == 0 ? title : title + " (continued)",
-                            Description = embedCount == 0 ? description : "",
-                            Color = 0x9999FF,
-                            Fields = new List<WebhookEmbedField>(currentFields),
-                            Footer = new WebhookEmbedFooter { Text = footerText }
-                        });
-                        embedCount++;
-                        currentFields.Clear();
-                        currentEmbedCharacterCount = baseCharacterCount;
-                    }
-                }
-
-                // Process manifest lines
-                var currentFieldLines = new List<string>();
-                var currentFieldLength = 0;
-                var manifestFieldCount = 0;
-
-                foreach (var line in manifestLines)
-                {
-                    // Check if adding this line would exceed field value limit
-                    if (currentFieldLength + line.Length + 1 > MaxFieldValueLength - 20 && currentFieldLines.Count > 0)
-                    {
-                        var fieldName = manifestFieldCount == 0 ? "Player Manifest" : "Player Manifest (continued)";
-                        var fieldValue = string.Join("\n", currentFieldLines);
-                        var fieldCharacterCount = fieldName.Length + fieldValue.Length;
-
-                        // Check if adding this field would exceed embed limits
-                        if (currentFields.Count >= MaxFieldsPerEmbed - 1 ||
-                            currentEmbedCharacterCount + fieldCharacterCount > MaxEmbedCharacters - 500)
-                        {
-                            AddCurrentEmbed();
-                        }
-
-                        currentFields.Add(new WebhookEmbedField
-                        {
-                            Name = fieldName,
-                            Value = fieldValue,
-                            Inline = false
-                        });
-                        currentEmbedCharacterCount += fieldCharacterCount;
-                        manifestFieldCount++;
-                        currentFieldLines.Clear();
-                        currentFieldLength = 0;
-                    }
-
-                    currentFieldLines.Add(line);
-                    currentFieldLength += line.Length + 1; // +1 for newline
-                }
-
-                // Add remaining manifest lines
-                if (currentFieldLines.Count > 0)
-                {
-                    var fieldName = manifestFieldCount == 0 ? "Player Manifest" : "Player Manifest (continued)";
-                    var fieldValue = string.Join("\n", currentFieldLines);
-                    var fieldCharacterCount = fieldName.Length + fieldValue.Length;
-
-                    // Check if adding this field would exceed embed limits
-                    if (currentFields.Count >= MaxFieldsPerEmbed - 1 ||
-                        currentEmbedCharacterCount + fieldCharacterCount > MaxEmbedCharacters - 500)
-                    {
-                        AddCurrentEmbed();
-                    }
-
-                    currentFields.Add(new WebhookEmbedField
-                    {
-                        Name = fieldName,
-                        Value = fieldValue,
-                        Inline = false
-                    });
-                    currentEmbedCharacterCount += fieldCharacterCount;
-                }
-
-                // Process profit lines if available
-                if (profitLines.Count > 0)
-                {
-                    var currentProfitLines = new List<string>();
-                    var currentProfitLength = 0;
-                    var profitFieldCount = 0;
-
-                    foreach (var line in profitLines)
-                    {
-                        // Check if adding this line would exceed field value limit
-                        if (currentProfitLength + line.Length + 1 > MaxFieldValueLength - 20 && currentProfitLines.Count > 0)
-                        {
-                            var fieldName = profitFieldCount == 0 ? "Colossus Central Bank" : "Colossus Central Bank (continued)";
-                            var fieldValue = string.Join("\n", currentProfitLines);
-                            var fieldCharacterCount = fieldName.Length + fieldValue.Length;
-
-                            // Check if adding this field would exceed embed limits
-                            if (currentFields.Count >= MaxFieldsPerEmbed - 1 ||
-                                currentEmbedCharacterCount + fieldCharacterCount > MaxEmbedCharacters - 500)
-                            {
-                                AddCurrentEmbed();
-                            }
-
-                            currentFields.Add(new WebhookEmbedField
-                            {
-                                Name = fieldName,
-                                Value = fieldValue,
-                                Inline = false
-                            });
-                            currentEmbedCharacterCount += fieldCharacterCount;
-                            profitFieldCount++;
-                            currentProfitLines.Clear();
-                            currentProfitLength = 0;
-                        }
-
-                        currentProfitLines.Add(line);
-                        currentProfitLength += line.Length + 1; // +1 for newline
-                    }
-
-                    // Add remaining profit lines
-                    if (currentProfitLines.Count > 0)
-                    {
-                        var fieldName = profitFieldCount == 0 ? "Colossus Central Bank" : "Colossus Central Bank (continued)";
-                        var fieldValue = string.Join("\n", currentProfitLines);
-                        var fieldCharacterCount = fieldName.Length + fieldValue.Length;
-
-                        // Check if adding this field would exceed embed limits
-                        if (currentFields.Count >= MaxFieldsPerEmbed - 1 ||
-                            currentEmbedCharacterCount + fieldCharacterCount > MaxEmbedCharacters - 500)
-                        {
-                            AddCurrentEmbed();
-                        }
-
-                        currentFields.Add(new WebhookEmbedField
-                        {
-                            Name = fieldName,
-                            Value = fieldValue,
-                            Inline = false
-                        });
-                        currentEmbedCharacterCount += fieldCharacterCount;
-                    }
-                }
-
-                // Add any remaining fields to the final embed
-                AddCurrentEmbed();
-
-                // Send embeds (split into multiple messages if needed)
-                foreach (var embed in embeds)
-                {
-                    var payload = new WebhookPayload
-                    {
-                        Embeds = new List<WebhookEmbed> { embed }
-                    };
-
-                    await _discord.CreateMessage(webhookIdentifier, payload);
-
-                    // Small delay between messages to avoid rate limiting
-                    if (embeds.Count > 1)
-                        await Task.Delay(100);
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Error while sending crew manifest discord message:\n{e}");
-            }
-        }
-
         public void RestartRound()
         {
             // If this game ticker is a dummy, do nothing!
@@ -980,6 +816,9 @@ namespace Content.Server.GameTicking
 
             PlayersJoinedRoundNormally = 0;
 
+            // Clear end-round guard for the next round
+            _endingRound = false;
+
             RunLevel = GameRunLevel.PreRoundLobby;
             RandomizeLobbyBackground();
             ResettingCleanup();
@@ -994,6 +833,8 @@ namespace Content.Server.GameTicking
             {
                 if (_playerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
+                else if (_windDownSystem.ShutdownScheduled)
+                    _windDownSystem.BeginShutDown(); // HardLight: CD Shutdown
                 else
                     _roundStartTime = _gameTiming.CurTime + LobbyDuration;
 
@@ -1023,6 +864,29 @@ namespace Content.Server.GameTicking
             }
         }
 
+        // Hardlight start
+        /// <summary>
+        ///     Goes through a list and deletes specified prototype entities.
+        /// </summary>
+        private void QueueDeleteEntities(params string[] prototypeIds)
+        {
+            var cleanupPrototypeIds = prototypeIds.ToHashSet();
+            var metaQuery = EntityQueryEnumerator<MetaDataComponent>();
+
+            while (metaQuery.MoveNext(out var entityUid, out var metadata))
+            {
+                var prototype = metadata.EntityPrototype;
+                if (prototype == null)
+                    continue;
+
+                if (cleanupPrototypeIds.Contains(prototype.ID))
+                {
+                    QueueDel(entityUid);
+                }
+            }
+        }
+        // Hardlight end
+
         /// <summary>
         ///     Cleanup that has to run to clear up anything from the previous round.
         ///     Stuff like wiping the previous map clean.
@@ -1030,23 +894,74 @@ namespace Content.Server.GameTicking
         private void ResettingCleanup()
         {
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.Sessions)
+            // HL: Only do this if we don't run persistant rounds...
+            if (!_cfg.GetCVar(HLCCVars.RoundPersistenceEnabled) && LobbyEnabled)
             {
-                PlayerJoinLobby(player);
+                foreach (var player in _playerManager.Sessions)
+                {
+                    PlayerJoinLobby(player);
+                }
             }
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
             RaiseLocalEvent(ev);
 
+            // Delete all stations at round cleanup
+            // HL START
+            // We've changed this to an Enumerator so we don't can avoid using .Owner as it's obsolete
+            // We're also storing the stations in a List before actually deleting so that the Enum doesn't change mid-run
+            // Changed the actual delete from DeleteStation to Del, as DeleteStation adds it to the queue, and we need it deleted NOW to avoid a race
+            var stationQuery = EntityQueryEnumerator<StationDataComponent>();
+            var stationsToDelete = new List<EntityUid>();
+
+            while (stationQuery.MoveNext(out var stationUid, out _))
+            {
+                stationsToDelete.Add(stationUid);
+            }
+            // HL: We use a List here so that we aren't destroying entities in the middle of the enumerator
+            foreach (var s in stationsToDelete)
+            {
+                Del(s);
+            }
+            // HL END
+
             // So clients' entity systems can clean up too...
-            RaiseNetworkEvent(ev);
+            // RaiseNetworkEvent(ev);
 
-            EntityManager.FlushEntities();
+            //            EntityManager.FlushEntities();
 
-            _banManager.Restart();
+            //            _mapManager.Restart();
+
+            //            _banManager.Restart();
+            if (_map.MapExists(DefaultMap))
+                _map.DeleteMap(DefaultMap);
 
             _gameMapManager.ClearSelectedMap();
+
+            // Hardlight - Delete specified entities before new map loads, items that have the potential to break round progression
+            QueueDeleteEntities(
+                "RescueBeacon",
+                "PinpointerNuclear", // todo: make old pinpointers have a defunct state instead of just deleting them for better rp.
+                "HandTeleporter",
+                "BoxFolderQmClipboard",
+                "DoorRemoteArmory",
+                "DoorRemoteCargo",
+                "DoorRemoteEngineering",
+                "DoorRemoteMedical",
+                "DoorRemoteResearch",
+                "DoorRemoteSecurity",
+                "DoorRemoteService",
+                "DoorRemoteCustom",
+                "DoorRemoteCommand",
+                "PinpointerMothership", // todo: same here as nuke pinpointer
+                "Demag",
+                "EncryptionKeySyndie", // The syndicate rotates their encryption! Your old ones won't work :3
+                "ShadowPortal", // Don't want shadow anomaly shenanigans on CC
+                "ShadowKudzu",
+                "ShadowKudzuWeak",
+                "ShadowTree"
+            );
 
             // Clear up any game rules.
             ClearGameRules();
@@ -1055,10 +970,33 @@ namespace Content.Server.GameTicking
             _allPreviousGameRules.Clear();
 
             DisallowLateJoin = false;
-            _playerGameStatuses.Clear();
-            foreach (var session in _playerManager.Sessions)
+            // _playerGameStatuses.Clear();
+            //foreach (var session in _playerManager.Sessions)
+            //{
+            //    _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+            //}
+            DefaultMap = MapId.Nullspace;
+            RoundId = 0;
+
+            // HL: We don't need to remove the jobs if persistence is disabled
+            if (!_cfg.GetCVar(HLCCVars.RoundPersistenceEnabled))
+                return;
+
+            //Remove all job slots from every station
+            stationQuery = EntityQueryEnumerator<StationDataComponent>();
+            while (stationQuery.MoveNext(out var stationUid, out _)) // HL: Moved to a Enumerator to avoid .Owner deprication
             {
-                _playerGameStatuses[session.UserId] = LobbyEnabled ? PlayerGameStatus.NotReadyToPlay : PlayerGameStatus.ReadyToPlay;
+                var jobs = _stationJobs.GetJobs(stationUid);
+                foreach (var job in jobs.Keys.ToList())
+                {
+                    //if (!_stationJobs.IsJobUnlimited(station.Owner, job))
+                    //{
+                    // Set slot count to zero if not already
+                    if (jobs[job] != 0)
+                        _stationJobs.TrySetJobSlot(stationUid, job, 0); // HL: Moved from .Owner to stationUid
+
+                    //}
+                }
             }
         }
 

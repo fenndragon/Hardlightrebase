@@ -21,13 +21,17 @@ public sealed partial class DogVisionOverlay : Overlay
     public DogVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _dogVisionShader = _prototypeManager.Index<ShaderPrototype>("DogVision").Instance().Duplicate();
+        _dogVisionShader = _prototypeManager.Index(DogVisionShaderId).Instance().Duplicate();
     }
+
+    private static readonly ProtoId<ShaderPrototype> DogVisionShaderId = "DogVision";
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (_playerManager.LocalEntity is not { Valid: true } player
-            || !_entityManager.HasComponent<DogVisionComponent>(player))
+            || (!
+                _entityManager.HasComponent<DogVisionComponent>(player)
+                && !_entityManager.HasComponent<DogVisionNoBypassComponent>(player)))
         {
             return false;
         }

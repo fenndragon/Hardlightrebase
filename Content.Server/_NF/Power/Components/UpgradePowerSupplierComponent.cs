@@ -1,4 +1,4 @@
-﻿using Content.Server.Construction.Components;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared._WF.EngineCompat;
 

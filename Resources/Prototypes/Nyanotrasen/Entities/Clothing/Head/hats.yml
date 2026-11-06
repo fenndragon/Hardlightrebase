@@ -12,31 +12,6 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHoodBrown
-  name: brown hood
-  description: Spooky.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Head/Hats/brownhood.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Head/Hats/brownhood.rsi
-  - type: HideLayerClothing # Frontier
-    slots: # Frontier
-    - Hair # Frontier
-
-- type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadAreopagite
-  name: areopagite hat
-  description: Intimidating.
-  components:
-  - type: Sprite
-    sprite: Nyanotrasen/Clothing/Head/Hats/areopagite.rsi
-  - type: Clothing
-    sprite: Nyanotrasen/Clothing/Head/Hats/areopagite.rsi
-
-- type: entity
-  parent: ClothingHeadBase
   id: ClothingHeadTinfoil
   name: tinfoil hat
   description: Protects you from all manner of intrusive thoughts.
@@ -45,11 +20,18 @@
     sprite: Nyanotrasen/Clothing/Head/Hats/tinfoil.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Head/Hats/tinfoil.rsi
+  - type: TinfoilHat
   - type: Armor
     coverage: [Head] # WOLFGATE(Wolfmed): P6, P3-D6: locational armour coverage
     modifiers:
       coefficients:
         Radiation: 0.95
+  - type: Construction
+    graph: TinfoilHat
+    node: tinfoilhat
+  - type: GuideHelp
+    guides:
+    - Psionics
 
 - type: entity
   parent: ClothingHeadBase
@@ -61,6 +43,47 @@
     sprite: Nyanotrasen/Clothing/Head/Hats/bellhop.rsi
   - type: Clothing
     sprite: Nyanotrasen/Clothing/Head/Hats/bellhop.rsi
+
+- type: entity
+  parent: ClothingHeadTinfoil
+  id: ClothingHeadCage
+  name: insulative headcage
+  description: Psionically insulates whoevers head is inside it. It takes time to resist out of.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
+  - type: HeadCage
+
+- type: entity
+  parent: ClothingHeadTinfoil
+  id: ClothingHeadHelmetInsulated
+  name: insulative skullcap
+  description: Psionically insulates whoevers head is inside it. It has some protection from physical damage.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.95
+        Radiation: 0.95
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFezMantis
+  name: psionic mantis' fez # DeltaV - Rename Forensic Mantis to Psionic Mantis
+  description: A fine red fez with a gold tassel.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Clothing/Head/Hats/mantis_fez.rsi
+  - type: Clothing
+    sprite: Nyanotrasen/Clothing/Head/Hats/mantis_fez.rsi
 
 - type: entity
   parent: ClothingHeadBase

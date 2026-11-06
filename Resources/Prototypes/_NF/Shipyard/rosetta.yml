@@ -1,0 +1,40 @@
+# Author Info
+# GitHub: The-Aisen
+# Discord: ich_bin_aisenberg
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Rosetta
+  parent: BaseVessel
+  name: NOV-Rosetta
+  description: The flagship model of NOV-Naonis and easily their most commercialized hull after her smaller sister, the Rosetta-class is the gold standard for deep space xenoarcheology. Built endlessly by the automated shipyard, she sacrifices crew amenities to employ most of her internal space in artifact research, with only the bridge being luxurious enough to be called a proper liveable space. Although her main mining bay has been retrograded to comply with the sector's shipbuilding regulations, once restored the Rosetta can either cut through asteroids, or serve as a modest battlestation with her additional hardpoints in the external hull.
+  price: 110000
+  category: Medium
+  group: Shipyard
+  shuttlePath: /Maps/_Mono/Shuttles/rosetta.yml
+  guidebookPage: Null
+  class:
+  - Science
+  engine:
+  - Plasma
+
+- type: gameMap
+  id: Rosetta
+  mapName: 'NOV-Rosetta'
+  mapPath: /Maps/_Mono/Shuttles/rosetta.yml
+  minPlayers: 0
+  stations:
+    Rosetta:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Rosetta {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]

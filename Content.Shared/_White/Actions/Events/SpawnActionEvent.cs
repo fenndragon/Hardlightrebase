@@ -78,7 +78,7 @@ public sealed partial class PlaceTileEntityEvent : WorldTargetActionEvent
 [Serializable, NetSerializable]
 public sealed partial class PlaceTileEntityDoAfterEvent : DoAfterEvent
 {
-    public NetCoordinates Target;
+    public new NetCoordinates Target; // WOLFGATE: distinguish the tile coordinates from the base entity target
 
     public EntProtoId? Entity;
 

@@ -3,22 +3,31 @@
   name: job-name-bartender
   description: job-description-bartender
   playTimeTracker: JobBartender
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 10800
+    - !type:DepartmentTimeRequirement
+      department: Service # Hardlight Civilian > Service
+      time: 1800 # 0.5 hrs
+  weight: 40 # HardLight
   startingGear: BartenderGear
   icon: "JobIconBartender"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-hop # Frontier
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  extendedAccess:
+  - Kitchen
+  - Hydroponics
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
 - type: startingGear
   id: BartenderGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    # shoes: ClothingShoesColorBlack # HardLight: Add NF-style departmental loadouts
     id: BartenderPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

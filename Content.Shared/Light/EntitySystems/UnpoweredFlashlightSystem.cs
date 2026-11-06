@@ -2,10 +2,10 @@ using Content.Shared.Actions;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Light.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Storage.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -35,6 +35,35 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         SubscribeLocalEvent<UnpoweredFlashlightComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<UnpoweredFlashlightComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<UnpoweredFlashlightComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<UnpoweredFlashlightComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<UnpoweredFlashlightComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnGetState(EntityUid uid, UnpoweredFlashlightComponent component, ref ComponentGetState args)
+    {
+        NetEntity? toggleAction = null;
+
+        if (component.ToggleActionEntity is { } toggleActionUid &&
+            // HardLight: We have to check for MetaDataComponent because the entity might be deleted,
+            // and we don't want to throw an exception trying to get the name of a deleted entity.
+            TryComp(toggleActionUid, out MetaDataComponent? meta) &&
+            meta.EntityLifeStage < EntityLifeStage.Terminating)
+        {
+            toggleAction = GetNetEntity(toggleActionUid, meta);
+        }
+
+        args.State = new UnpoweredFlashlightComponentState(component.LightOn, toggleAction);
+    }
+
+    private void OnHandleState(EntityUid uid, UnpoweredFlashlightComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not UnpoweredFlashlightComponentState state)
+            return;
+
+        component.LightOn = state.LightOn;
+        component.ToggleActionEntity = state.ToggleActionEntity is { } action && TryGetEntity(action, out var actionUid)
+            ? actionUid
+            : null;
     }
 
     private void OnMapInit(EntityUid uid, UnpoweredFlashlightComponent component, MapInitEvent args)
@@ -65,7 +94,7 @@ public sealed partial class UnpoweredFlashlightSystem : EntitySystem
         ActivationVerb verb = new()
         {
             Text = Loc.GetString("toggle-flashlight-verb-get-data-text"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
             Act = () => TryToggleLight((uid, component), args.User),
             Priority = -1 // For things like PDA's, Open-UI and other verbs that should be higher priority.
         };

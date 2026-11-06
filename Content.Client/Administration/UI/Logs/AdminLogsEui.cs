@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -93,7 +92,7 @@ public sealed partial class AdminLogsEui : BaseEui
         });
 
         LogsControl.Orphan();
-        LogsWindow.Dispose();
+        LogsWindow.Close();
         LogsWindow = null;
 
         ClydeWindow.RequestClosed += OnRequestClosed;
@@ -108,7 +107,7 @@ public sealed partial class AdminLogsEui : BaseEui
 
     public override void HandleState(EuiStateBase state)
     {
-        var s = (AdminLogsEuiState) state;
+        var s = (AdminLogsEuiState)state;
 
         if (s.IsLoading)
         {
@@ -175,9 +174,12 @@ public sealed partial class AdminLogsEui : BaseEui
             ClydeWindow.RequestClosed -= OnRequestClosed;
         }
 
-        LogsControl.Dispose();
-        LogsWindow?.Dispose();
-        Root?.Dispose();
-        ClydeWindow?.Dispose();
+        LogsControl.Orphan();
+        LogsWindow?.Close();
+        if (ClydeWindow != null)
+        {
+            _uiManager.DestroyWindowRoot(ClydeWindow);
+            ClydeWindow.Dispose();
+        }
     }
 }

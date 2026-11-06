@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
@@ -11,6 +10,16 @@ namespace Content.Shared.Chemistry
     {
         public const string OutputSlotName = "beakerSlot";
     }
+
+    // Starlight-start: Plumbing valve toggle
+    /// <summary>
+    ///     Message sent by the user interface to toggle the plumbing valve.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class ReagentDispenserToggleValveMessage : BoundUserInterfaceMessage
+    {
+    }
+    // Starlight-end
 
     [Serializable, NetSerializable]
     public sealed class ReagentDispenserSetDispenseAmountMessage : BoundUserInterfaceMessage
@@ -116,12 +125,15 @@ namespace Content.Shared.Chemistry
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public readonly bool ValveOpen; // Starlight-edit: Plumbing valve
+
+        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount, bool valveOpen) // Starlight
         {
             OutputContainer = outputContainer;
             OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;
+            ValveOpen = valveOpen; // Starlight
         }
     }
 

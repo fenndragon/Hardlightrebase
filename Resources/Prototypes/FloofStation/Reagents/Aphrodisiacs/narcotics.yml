@@ -1,0 +1,82 @@
+- type: reagent
+  id: Libidozenithizine
+  name: reagent-name-libidozenithizine
+  group: Narcotics
+  desc: reagent-desc-libidozenithizine
+  physicalDesc: reagent-physical-desc-milky
+  flavor: spooky
+  color: "#c90084"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.05
+      effects:
+      - !type:Aphrodisiac
+        aphrodisiacPower: 10
+        conditions:
+        - !type:ConsentCondition
+          consent: Aphrodisiacs
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        probability: 0.10
+        messages:
+        - reagent-effect-aphrodisiac-strong1
+        - reagent-effect-aphrodisiac-strong2
+        - reagent-effect-aphrodisiac-strong3
+        - reagent-effect-aphrodisiac-strong4
+        - reagent-effect-aphrodisiac-strong5
+        - reagent-effect-aphrodisiac-strong6
+        - reagent-effect-aphrodisiac-strong7
+        - reagent-effect-aphrodisiac-strong8
+        - reagent-effect-aphrodisiac-strong9
+        - reagent-effect-aphrodisiac-strong10
+        - reagent-effect-aphrodisiac-strong11
+        - reagent-effect-aphrodisiac-strong12
+        - reagent-effect-aphrodisiac-strong13
+        - reagent-effect-aphrodisiac-strong14
+        - reagent-effect-aphrodisiac-strong15
+        conditions:
+        - !type:ConsentCondition
+          consent: Aphrodisiacs
+        - !type:ReagentThreshold
+          max: 10.0
+      # - !type:HealthChange # Hardligh: Remove poison
+      #   conditions:
+      #   - !type:ReagentThreshold
+      #     min: 10.0
+      #   damage:
+      #     types:
+      #       Poison: 0.05
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        probability: 0.2
+        messages:
+        - reagent-effect-aphrodisiac-strongoverdose1
+        - reagent-effect-aphrodisiac-strongoverdose2
+        - reagent-effect-aphrodisiac-strongoverdose3
+        - reagent-effect-aphrodisiac-strongoverdose4
+        - reagent-effect-aphrodisiac-strongoverdose5
+        - reagent-effect-aphrodisiac-strongoverdose6
+        - reagent-effect-aphrodisiac-strongoverdose7
+        - reagent-effect-aphrodisiac-strongoverdose8
+        - reagent-effect-aphrodisiac-strongoverdose9
+        - reagent-effect-aphrodisiac-strongoverdose10
+        conditions:
+        - !type:ConsentCondition
+          consent: Aphrodisiacs
+        - !type:ReagentThreshold
+          min: 10.0
+      - !type:PopupMessage
+        type: Local
+        visualType: Small
+        probability: 0.2
+        messages:
+          - "reagent-effect-aphrodisiac-fade1" # A decent chance to notify the player when their meds run out, but could happen silently.
+          - "reagent-effect-aphrodisiac-fade2"
+          - "reagent-effect-aphrodisiac-fade3"
+        conditions:
+          - !type:ConsentCondition
+            consent: Aphrodisiacs
+          - !type:ReagentThreshold
+            max: 0.1

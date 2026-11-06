@@ -1,7 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Shared.Actions;
 using Content.Shared.Dragon;
 using Content.Shared.Maps;
@@ -98,11 +97,11 @@ public sealed partial class DragonSystem : EntitySystem
                 comp.RiftAccumulator += frameTime;
 
             // Delete it, naughty dragon!
-            if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
-            {
-                Roar(uid, comp);
-                QueueDel(uid);
-            }
+            //  if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
+            //   {
+            //     Roar(uid, comp);
+            //       QueueDel(uid);
+            //   }
         }
     }
 

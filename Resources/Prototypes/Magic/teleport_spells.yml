@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ActionBlink
   name: Blink
   description: Teleport to the clicked location.
@@ -41,3 +41,54 @@
       state: voidblink
     event: !type:VoidApplauseSpellEvent
       effect: EffectVoidBlink
+
+- type: entity
+  id: ActionVoidApplauseLR
+  name: Void Applause
+  description: Clap your hands and swap places with the target.
+  components:
+  - type: EntityTargetAction
+    useDelay: 120
+    range: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/Eldritch/voidblink.ogg
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    checkCanAccess: false
+    repeat: false
+    icon:
+      sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+      state: voidblink
+    event: !type:VoidApplauseSpellEvent
+      effect: EffectVoidBlink
+
+- type: entity
+  id: ActionVoidApplauseChap
+  name: The Space Between Stars
+  description: Clap your hands and swap places with the target, has multiple charges.
+  components:
+  - type: EntityTargetAction
+    range: 20
+#    sound: !type:SoundPathSpecifier
+#      path: /Audio/Magic/Eldritch/voidblink.ogg
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    checkCanAccess: false
+    repeat: false
+    icon:
+      sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+      state: voidblink
+    event: !type:VoidApplauseSpellEvent
+      effect: EffectVoidBlink
+  - type: LimitedCharges
+    maxCharges: 5
+  - type: AutoRecharge
+    rechargeDuration: 20

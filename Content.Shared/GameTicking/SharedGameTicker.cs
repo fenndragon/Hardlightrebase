@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -10,15 +9,13 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Content.Shared._NF.Shipyard.Prototypes; // Frontier
-using Content.Shared.FixedPoint; // Goob Station - Round End Screen
-using Content.Shared.Mobs; // Goob Station - Round End Screen
 
 namespace Content.Shared.GameTicking
 {
-    public abstract partial class SharedGameTicker : EntitySystem
+    public abstract class SharedGameTicker : EntitySystem
     {
-        [Dependency] private IReplayRecordingManager _replay = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IReplayRecordingManager _replay = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
@@ -147,13 +144,11 @@ namespace Content.Shared.GameTicking
     /// <summary>
     /// General job information for each station-like entity (both stations and shuttles)
     /// </summary>
-    /// <param name="stationName">The name of the station.</param>
-    /// <param name="jobsAvailable">A dictionary of job prototypes and the number of jobs positions available for it.</param>
-    /// <param name="isLateJoinStation">If true, this entity is a station, and not a player ship (displayed under the "Crew" tab).</param>
     [Serializable, NetSerializable]
     public sealed class StationJobInformation(
         string stationName,
         Dictionary<ProtoId<JobPrototype>, int?> jobsAvailable,
+        Dictionary<ProtoId<JobPrototype>, int?> maxAvailable, // Hardlight
         bool isLateJoinStation,
         StationDisplayInformation? stationDisplayInfo,
         VesselDisplayInformation? vesselDisplayInfo
@@ -161,6 +156,7 @@ namespace Content.Shared.GameTicking
     {
         public string StationName { get; } = stationName;
         public Dictionary<ProtoId<JobPrototype>, int?> JobsAvailable { get; } = jobsAvailable;
+        public Dictionary<ProtoId<JobPrototype>, int?> MaxAvailable { get; } = maxAvailable; // Hardlight
         public bool IsLateJoinStation { get; } = isLateJoinStation;
         public StationDisplayInformation? StationDisplayInfo { get; } = stationDisplayInfo;
         public VesselDisplayInformation? VesselDisplayInformation { get; } = vesselDisplayInfo;
@@ -169,23 +165,20 @@ namespace Content.Shared.GameTicking
     /// <summary>
     /// Additional optional station-specific fields.
     /// </summary>
-    /// <param name="stationSubtext">The subtext that is shown under the station name.</param>
-    /// <param name="stationDescription">A longer description of the station, describing what the player can
-    /// do there</param>
-    /// <param name="stationIcon">The icon that represents the station and is shown next to the name.</param>
-    /// <param name="lobbySortOrder">The order in which this station should be displayed in the station picker.</param>
     [Serializable, NetSerializable]
     public sealed class StationDisplayInformation(
         LocId? stationSubtext,
         LocId? stationDescription,
-        SpriteSpecifier? stationIcon,
-        int lobbySortOrder
+        ResPath? stationIcon,
+        int lobbySortOrder,
+        bool hiddenIfNoJobs
         )
     {
         public LocId? StationSubtext { get; } = stationSubtext;
         public LocId? StationDescription { get; } = stationDescription;
-        public SpriteSpecifier? StationIcon { get; } = stationIcon;
+        public ResPath? StationIcon { get; } = stationIcon;
         public int LobbySortOrder { get; } = lobbySortOrder;
+        public bool HiddenIfNoJobs { get; } = hiddenIfNoJobs;
     }
 
     /// <summary>
@@ -247,14 +240,6 @@ namespace Content.Shared.GameTicking
             public bool Observer;
 
             public bool Connected;
-
-            #region Goob Station
-            public string? LastWords;
-
-            public MobState EntMobState;
-
-            public Dictionary<string, FixedPoint2> DamagePerGroup;
-            #endregion
         }
 
         public string GamemodeTitle { get; }
@@ -295,27 +280,4 @@ namespace Content.Shared.GameTicking
         ReadyToPlay,
         JoinedGame,
     }
-
-    // BF14/Mono start
-    [Serializable, NetSerializable]
-    public sealed class TickerFactionCountEvent : EntityEventArgs
-    {
-        public bool IsRoundStarted { get; }
-        public int BluforReady { get; }
-        public int RedforReady { get; }
-        public int TotalReady { get; }
-        public int BluforAlive { get; }
-        public int RedforAlive { get; }
-
-        public TickerFactionCountEvent(bool isRoundStarted, int bluforReady, int redforReady, int totalReady, int bluforAlive, int redforAlive)
-        {
-            IsRoundStarted = isRoundStarted;
-            BluforReady = bluforReady;
-            RedforReady = redforReady;
-            TotalReady = totalReady;
-            BluforAlive = bluforAlive;
-            RedforAlive = redforAlive;
-        }
-    }
-    // BF14/Mono end
 }

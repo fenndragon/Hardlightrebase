@@ -1,177 +1,93 @@
-using Content.Server.Chat.Systems;
-using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Destructible;
-using Content.Shared.Pinpointer;
+using Content.Server.Antag;
+using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Xenoborgs.Components;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoborgs;
 
-public sealed class XenoborgCoreSystem : EntitySystem
+public sealed partial class XenoborgSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ExplosionSystem _explosion = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    private TimeSpan? _soundTime;
-    private TimeSpan? _wipeTime;
-    private TimeSpan? _pinpointerWarningTime;
-    private TimeSpan? _pinpointerWipeTime;
+    private static readonly Color XenoborgBriefingColor = Color.BlueViolet;
 
     public override void Initialize()
     {
         base.Initialize();
+        //SubscribeLocalEvent<XenoborgComponent, DestructionEventArgs>(OnXenoborgDestroyed);
+        //SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnCoreDestroyed);
 
-        SubscribeLocalEvent<MothershipCoreComponent, DestructionEventArgs>(OnCoreDestroyed);
+        SubscribeLocalEvent<XenoborgComponent, MindAddedMessage>(OnXenoborgMindAdded);
+        SubscribeLocalEvent<XenoborgComponent, MindRemovedMessage>(OnXenoborgMindRemoved);
     }
 
-    private void OnCoreDestroyed(EntityUid ent, MothershipCoreComponent comp, DestructionEventArgs args)
+    /* private void OnXenoborgDestroyed(EntityUid uid, XenoborgComponent component, DestructionEventArgs args)
     {
-        /// Announcement every time a core destruction
-        _chat.DispatchGlobalAnnouncement(
-            "A Mothership Core has been destroyed. Xenoborg systems destabilizing... Please discard any Mothership Pinpointers or Pieces before rapid disassembly in 15 seconds",
-            colorOverride: Color.OrangeRed);
-
-        /// Restart pinpointer collapse EVERY core destruction
-        StartPinpointerCollapse();
-
-        /// If this was the final core, trigger full Xenoborg collapse
-        if (IsLastCore())
-            TriggerCollapse();
-    }
-
-    private void StartPinpointerCollapse()
-    {
-        var now = _timing.CurTime;
-
-        _pinpointerWarningTime = now + TimeSpan.FromSeconds(10);
-        _pinpointerWipeTime = now + TimeSpan.FromSeconds(15);
-    }
-
-    private bool IsLastCore()
-    {
-        var query = AllEntityQuery<MothershipCoreComponent>();
-        var count = 0;
-
-        while (query.MoveNext(out _, out _))
+        // if a xenoborg is destroyed, it will check to see if it was the last one
+        var xenoborgQuery = AllEntityQuery<XenoborgComponent>(); // paused xenoborgs still count
+        while (xenoborgQuery.MoveNext(out var xenoborg, out _))
         {
-            count++;
-
-            if (count > 1)
-                return false;
+            if (xenoborg != uid)
+                return;
         }
 
-        return count == 1;
+        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
+        var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
+
+        var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
+        if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
+            _xenoborgsRule.SendXenoborgDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp), mothershipCoreAlive);
     }
 
-    private void CleanupPinpointerPieces()
+    private void OnCoreDestroyed(EntityUid ent, MothershipCoreComponent component, DestructionEventArgs args)
     {
-        var pieceQuery = EntityQueryEnumerator<MothershipPinpointerPieceComponent>();
-
-        while (pieceQuery.MoveNext(out var uid, out _))
+        // if a mothership core is destroyed, it will see if there are any others
+        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
+        while (mothershipCoreQuery.MoveNext(out var mothershipCoreEnt, out _))
         {
-            /// Small explosion?
-            _explosion.QueueExplosion(
-                uid,
-                "Default",
-                2f,
-                1f,
-                2f);
-
-            QueueDel(uid);
-        }
-    }
-
-    private void TriggerCollapse()
-    {
-        var now = _timing.CurTime;
-
-        _chat.DispatchGlobalAnnouncement(
-            "All Mothership Cores have been destroyed. Xenoborg systems destabilizing...",
-            colorOverride: Color.DarkRed);
-
-        _soundTime = now + TimeSpan.FromSeconds(10);
-        _wipeTime = now + TimeSpan.FromSeconds(15);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var now = _timing.CurTime;
-
-        /// FINAL XENOBORG COLLAPSE
-
-        /// Warning buzzer
-        if (_soundTime != null && now >= _soundTime)
-        {
-            _soundTime = null;
-
-            _audio.PlayGlobal(
-                "/Audio/Machines/warning_buzzer_xenoborg.ogg",
-                Filter.Broadcast(),
-                false);
+            // if it finds a mothership core that is different from the one just destroyed,
+            // it doesn't explode the xenoborgs
+            if (mothershipCoreEnt != ent)
+                return;
         }
 
-        /// Full Xenoborg wipe
-        if (_wipeTime != null && now >= _wipeTime)
+        var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
+        if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
+            _xenoborgsRule.SendMothershipDeathAnnouncement((xenoborgsRuleEnt, xenoborgsRuleComp));
+
+        // explode all xenoborgs
+        var xenoborgQuery = AllEntityQuery<XenoborgComponent, BorgTransponderComponent>(); // paused xenoborgs still explode
+        while (xenoborgQuery.MoveNext(out var xenoborgEnt, out _, out _))
         {
-            _wipeTime = null;
-
-            ExplodeAllXenoborgs();
-
-            _chat.DispatchGlobalAnnouncement(
-                "All Xenoborg and Motherships Cores have been destroyed, No further active Xenoborg presence detected in the sector.",
-                colorOverride: Color.DarkRed);
-
-            _chat.DispatchGlobalAnnouncement(
-                "Have a pleasant day.",
-                colorOverride: Color.LimeGreen);
-        }
-
-        /// PINPOINTER COLLAPSE
-
-        /// Warning buzzer
-        if (_pinpointerWarningTime != null && now >= _pinpointerWarningTime)
-        {
-            _pinpointerWarningTime = null;
-
-            _audio.PlayGlobal(
-                "/Audio/Machines/warning_buzzer_xenoborg.ogg",
-                Filter.Broadcast(),
-                false);
-        }
-
-        /// Destroy all Xenoborg pinpointer pieces
-        if (_pinpointerWipeTime != null && now >= _pinpointerWipeTime)
-        {
-            _pinpointerWipeTime = null;
-
-            CleanupPinpointerPieces();
-        }
-    }
-
-    private void ExplodeAllXenoborgs()
-    {
-        var query = AllEntityQuery<XenoborgComponent>();
-
-        while (query.MoveNext(out var uid, out _))
-        {
-            /// Don't explode mothership cores themselves failsafe incase new spawned
-            if (HasComp<MothershipCoreComponent>(uid))
+            if (HasComp<MothershipCoreComponent>(xenoborgEnt))
                 continue;
 
-            _explosion.QueueExplosion(
-                uid,
-                "Default",
-                50f,
-                5f,
-                20f);
-
-            QueueDel(uid);
+            // I got tired to trying to make this work via the device network.
+            // so brute force it is...
+            _borg.Destroy(xenoborgEnt);
         }
+    } */
+
+    private void OnXenoborgMindAdded(EntityUid ent, XenoborgComponent comp, MindAddedMessage args)
+    {
+        _roles.MindAddRole(args.Mind, comp.MindRole, silent: true);
+
+        if (!TryComp<ActorComponent>(ent, out var actorComp))
+            return;
+
+        _antag.SendBriefing(actorComp.PlayerSession,
+            Loc.GetString(comp.BriefingText),
+            XenoborgBriefingColor,
+            comp.BriefingSound
+        );
+    }
+
+    private void OnXenoborgMindRemoved(EntityUid ent, XenoborgComponent comp, MindRemovedMessage args)
+    {
+        // Remove the xenoborg-specific role component from the mind.
+        _roles.MindTryRemoveRole<XenoborgRoleComponent>(args.Mind.Owner);
     }
 }

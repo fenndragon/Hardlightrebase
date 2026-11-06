@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage;
+using Content.Shared.Storage;
 using Robust.Shared.Network;
 using Content.Shared._WF.EngineCompat;
 

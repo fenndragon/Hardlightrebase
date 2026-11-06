@@ -1,4 +1,5 @@
 using Content.Server.Gateway.Components;
+using Content.Shared.Gateway.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
@@ -6,11 +7,8 @@ using Content.Shared.Gateway;
 using Content.Shared.Popups;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -36,6 +34,7 @@ public sealed partial class GatewaySystem : EntitySystem
         SubscribeLocalEvent<GatewayComponent, ActivatableUIOpenAttemptEvent>(OnGatewayOpenAttempt);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
         SubscribeLocalEvent<GatewayComponent, GatewayOpenPortalMessage>(OnOpenPortal);
+        SubscribeLocalEvent<GatewayComponent, GatewaySpawnDockingArmMessage>(OnSpawnDockingArm);
     }
 
     public void SetEnabled(EntityUid uid, bool value, GatewayComponent? component = null)
@@ -76,6 +75,9 @@ public sealed partial class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp, TransformComponent? xform = null)
     {
+        if (TerminatingOrDeleted(uid))
+            return;
+
         if (!Resolve(uid, ref xform))
             return;
 
@@ -102,27 +104,56 @@ public sealed partial class GatewaySystem : EntitySystem
             if (!dest.Enabled || destUid == uid)
                 continue;
 
+            if (TerminatingOrDeleted(destUid) || !TryComp(destUid, out MetaDataComponent? destMeta))
+                continue;
+
             // Show destination if either no destination comp on the map or it's ours.
             TryComp<GatewayGeneratorDestinationComponent>(destXform.MapUid, out var gatewayDestination);
+            var isDockingArm = TryComp<DockingArmDestinationComponent>(destUid, out var dockingArmDestination);
+
+            if (isDockingArm)
+            {
+                if (!HasComp<DockingArmGeneratorComponent>(uid))
+                    continue;
+
+                if (dockingArmDestination!.Generator != null && dockingArmDestination.Generator != uid)
+                    continue;
+            }
+
+            Log.Debug($"Gateway {ToPrettyString(uid)} found destination {ToPrettyString(destUid)} - IsDockingArm: {isDockingArm}, HasDockingArmComp: {HasComp<DockingArmDestinationComponent>(destUid)}, DestName: {destMeta.EntityName}");
 
             destinations.Add(new GatewayDestinationData()
             {
                 Entity = GetNetEntity(destUid),
                 // Fallback to grid's ID if applicable.
-                Name = dest.Name.IsEmpty && destXform.GridUid != null ? FormattedMessage.FromUnformatted(MetaData(destXform.GridUid.Value).EntityName) : dest.Name ,
+                Name = dest.Name.IsEmpty && destXform.GridUid != null &&
+                       !TerminatingOrDeleted(destXform.GridUid.Value) &&
+                       TryComp(destXform.GridUid.Value, out MetaDataComponent? gridMeta)
+                    ? FormattedMessage.FromUnformatted(gridMeta.EntityName)
+                    : dest.Name,
                 Portal = HasComp<PortalComponent>(destUid),
                 // If NextUnlock < CurTime it's unlocked, however
                 // we'll always send the client if it's locked
                 // It can just infer unlock times locally and not have to worry about it here.
-                Locked = gatewayDestination != null && gatewayDestination.Locked
+                Locked = gatewayDestination != null && gatewayDestination.Locked,
+                IsDockingArm = isDockingArm
             });
         }
 
         _linkedEntity.GetLink(uid, out var current);
+        NetEntity? currentNet = null;
+
+        if (current is { } currentUid &&
+            !TerminatingOrDeleted(currentUid) &&
+            TryComp(currentUid, out MetaDataComponent? currentMeta) &&
+            currentMeta.EntityLifeStage < EntityLifeStage.Terminating)
+        {
+            currentNet = GetNetEntity(currentUid, currentMeta);
+        }
 
         var state = new GatewayBoundUserInterfaceState(
             destinations,
-            GetNetEntity(current),
+            currentNet,
             comp.NextReady,
             comp.Cooldown,
             nextUnlock,
@@ -164,6 +195,71 @@ public sealed partial class GatewaySystem : EntitySystem
         // TODO: admin log???
         ClosePortal(uid, comp, false);
         OpenPortal(uid, comp, desto, dest);
+    }
+
+    private void OnSpawnDockingArm(EntityUid uid, GatewayComponent comp, GatewaySpawnDockingArmMessage args)
+    {
+        if (GetNetEntity(uid) == args.Destination ||
+            !comp.Enabled || !comp.Interactable)
+        {
+            return;
+        }
+
+        // if the gateway has an access reader check it before allowing spawning
+        var user = args.Actor;
+        if (CheckAccess(user, uid, comp))
+            return;
+
+        var desto = GetEntity(args.Destination);
+
+        if (!HasComp<DockingArmGeneratorComponent>(uid))
+        {
+            _popup.PopupEntity(Loc.GetString("gateway-docking-arm-unavailable"), user, user);
+            return;
+        }
+
+        // Verify it's a valid docking arm destination
+        if (!TryComp<GatewayComponent>(desto, out var dest) ||
+            !dest.Enabled)
+        {
+            return;
+        }
+
+        // Check if it has a DockingArmDestinationComponent
+        if (!TryComp<DockingArmDestinationComponent>(desto, out var dockingArmDest))
+        {
+            Log.Warning($"Gateway spawn docking arm: {ToPrettyString(desto)} does not have DockingArmDestinationComponent");
+            return;
+        }
+
+        if (dockingArmDest.Generator != null && dockingArmDest.Generator != uid)
+        {
+            _popup.PopupEntity(Loc.GetString("gateway-docking-arm-unavailable"), user, user);
+            return;
+        }
+
+        // Check if already loaded
+        if (dockingArmDest.Loaded)
+        {
+            _popup.PopupEntity(Loc.GetString("gateway-docking-arm-already-spawned"), user, user);
+            return;
+        }
+
+        // Raise the gateway open event which will trigger the docking arm to spawn
+        var ev = new AttemptGatewayOpenEvent(uid, desto);
+        RaiseLocalEvent(desto, ref ev);
+
+        if (ev.Cancelled)
+        {
+            _popup.PopupEntity(Loc.GetString("gateway-docking-arm-spawn-failed"), user, user);
+            return;
+        }
+
+        var openEv = new GatewayOpenEvent(uid, desto);
+        RaiseLocalEvent(desto, ref openEv);
+
+        _popup.PopupEntity(Loc.GetString("gateway-docking-arm-spawned"), user, user);
+        UpdateAllGateways();
     }
 
     private void OpenPortal(EntityUid uid, GatewayComponent comp, EntityUid dest, GatewayComponent destComp, TransformComponent? destXform = null)

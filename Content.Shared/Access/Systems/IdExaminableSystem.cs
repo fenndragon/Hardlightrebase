@@ -30,7 +30,7 @@ public sealed partial class IdExaminableSystem : EntitySystem
         {
             Act = () =>
             {
-                var markup = FormattedMessage.FromMarkupOrThrow(info);
+                var markup = FormattedMessage.FromUnformatted(info);
 
                 _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
             },
@@ -54,13 +54,13 @@ public sealed partial class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) &&
+            if (TryComp(idUid, out PdaComponent? pda) &&
                 TryComp<IdCardComponent>(pda.ContainedId, out var id))
             {
                 return GetNameAndJob(id);
             }
             // ID Card
-            if (EntityManager.TryGetComponent(idUid, out id))
+            if (TryComp(idUid, out id))
             {
                 return GetNameAndJob(id);
             }
@@ -70,7 +70,8 @@ public sealed partial class IdExaminableSystem : EntitySystem
 
     private string GetNameAndJob(IdCardComponent id)
     {
-        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
+        var jobTitle = id.JobTitleText;
+        var jobSuffix = string.IsNullOrWhiteSpace(jobTitle) ? string.Empty : $" ({jobTitle})";
 
         // Get company information if available
         var companySuffix = string.Empty;

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Mobs;
 
@@ -10,7 +10,7 @@ public sealed partial class CritSuccumbEvent : InstantActionEvent
 }
 
 /// <summary>
-///     Only applies/has functionality to mobs in crit that have <see cref="DeathgaspComponent"/>
+///     Only applies/has functionality to mobs in crit that have DeathgaspComponent
 /// </summary>
 public sealed partial class CritFakeDeathEvent : InstantActionEvent
 {

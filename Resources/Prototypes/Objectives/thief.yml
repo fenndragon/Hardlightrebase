@@ -7,8 +7,12 @@
     issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - ThiefRole
+    - ThiefRole
+  - type: ObjectiveReward
+    # Reward for obtaining this objective
+    amount: 10000
+    popupMessage: "nice, $10000 paid."
+    onlyAtRoundEnd: true
 
 - type: entity
   abstract: true
@@ -107,6 +111,20 @@
     stealGroup: TechnologyDisk
     minCollectionSize: 5
     maxCollectionSize: 15
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: MailStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: Mail
+    minCollectionSize: 4
+    maxCollectionSize: 8
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.8
@@ -507,7 +525,7 @@
 - type: entity
   parent: [BaseThiefObjective, BaseLivingObjective]
   id: EscapeThiefShuttleObjective
-  name: Escape to centcomm alive and unrestrained.
+  name: Escape to Colcomm alive and unrestrained.
   description: You don't want your illegal activities to be discovered by anyone, do you?
   components:
   - type: Objective

@@ -16,14 +16,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 31
+        maxVol: 53
         reagents: #Most of these are this with slight variations, not worth changing until we have the rest of the reagents
         - ReagentId: Nutriment
-          Quantity: 11
+          Quantity: 24
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Flavorol
-          Quantity: 11
+          Quantity: 24
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
     trash:
     - FoodPlateTin
@@ -49,14 +49,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 18
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2.5
+          Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Flavorol
-          Quantity: 2
+          Quantity: 6
   - type: Tag
     tags:
     - Pie
@@ -581,12 +581,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 41
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 24
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Flavorol
+          Quantity: 24
         - ReagentId: Theobromine
           Quantity: 2
-        - ReagentId: Flavorol
-          Quantity: 15
 # Tastes like tart, dark chocolate.

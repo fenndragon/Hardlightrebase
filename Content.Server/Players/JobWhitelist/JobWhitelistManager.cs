@@ -1,10 +1,7 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost.Roles; // Frontier: Ghost Role handling
-using Content.Shared.Players; // DeltaV
+// DeltaV
 using Content.Shared.Players.JobWhitelist;
 using Content.Shared.Players.PlayTimeTracking; // Frontier: Global whitelist handling
 using Content.Shared.Roles;
@@ -85,17 +82,12 @@ public sealed partial class JobWhitelistManager : IPostInjectInit
             return true;
         }
 
-        // DeltaV: Blanket player whitelist allows all roles
-        if (session.ContentData()?.Whitelisted ?? false)
-            return true;
-
         return IsWhitelisted(session.UserId, job);
     }
 
     public bool IsWhitelisted(NetUserId player, ProtoId<JobPrototype> job)
     {
-        if (!_whitelists.TryGetValue(player, out var whitelists) || // Frontier: added globalWhitelist check
-        !_globalWhitelists.TryGetValue(player, out var globalWhitelist)) // Frontier
+        if (!_whitelists.TryGetValue(player, out var whitelists)) // Frontier
         {
             _sawmill.Error("Unable to check if player {Player} is whitelisted for {Job}. Stack trace:\\n{StackTrace}",
                 player,
@@ -104,7 +96,7 @@ public sealed partial class JobWhitelistManager : IPostInjectInit
             return false;
         }
 
-        return globalWhitelist || whitelists.Contains(job); // Frontier: added globalWhitelist
+        return whitelists.Contains(job);
     }
 
     public async void RemoveWhitelist(NetUserId player, ProtoId<JobPrototype> job)
@@ -154,8 +146,7 @@ public sealed partial class JobWhitelistManager : IPostInjectInit
 
     public bool IsWhitelisted(NetUserId player, ProtoId<GhostRolePrototype> ghostRole)
     {
-        if (!_whitelists.TryGetValue(player, out var whitelists) ||
-        !_globalWhitelists.TryGetValue(player, out var globalWhitelist))
+        if (!_whitelists.TryGetValue(player, out var whitelists))
         {
             _sawmill.Error("Unable to check if player {Player} is whitelisted for {GhostRole}. Stack trace:\\n{StackTrace}",
                 player,
@@ -164,7 +155,7 @@ public sealed partial class JobWhitelistManager : IPostInjectInit
             return false;
         }
 
-        return globalWhitelist || whitelists.Contains(ghostRole);
+        return whitelists.Contains(ghostRole);
     }
 
     public async void RemoveWhitelist(NetUserId player, ProtoId<GhostRolePrototype> ghostRole)

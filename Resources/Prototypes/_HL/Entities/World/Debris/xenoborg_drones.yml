@@ -1,0 +1,92 @@
+# Xenoborg autonomous combat drone spawners for deep space encounters
+# These spawn beyond 5K distance from world origin as rare hostile encounters
+
+- type: entity
+  id: XenoborgDroneBase
+  abstract: true
+  name: xenoborg drone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GridSpawner
+    nameGrid: true
+  - type: MinSpawnDistanceFromOrigin
+    distance: 5000
+  - type: IFF
+    color: "#ff4444" # Red for hostile
+  - type: SpaceDebris
+
+- type: entity
+  id: XenoborgDroneLbit
+  parent: XenoborgDroneBase
+  name: xenoborg drone (lbit)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/lbit.yml
+
+- type: entity
+  id: XenoborgDroneLbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (lbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/lbyte.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 15000
+
+- type: entity
+  id: XenoborgDroneLgbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (lgbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/lgbyte.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 15000
+
+- type: entity
+  id: XenoborgDroneMbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (mbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/mbyte.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 10000
+
+- type: entity
+  id: XenoborgDroneMgbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (mgbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/mgbyte.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 10000
+
+- type: entity
+  id: XenoborgDroneMtbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (mtbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/mtbyte.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 10000
+
+- type: entity
+  id: XenoborgDroneSgbyte
+  parent: XenoborgDroneBase
+  name: xenoborg drone (sgbyte)
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/sgbyte.yml
+    
+- type: entity
+  id: XenoborgTransistorHub
+  parent: XenoborgDroneBase
+  name: xenoborg transistor hub
+  components:
+  - type: GridSpawner
+    path: /Maps/_HL/drones/transistorhub.yml
+  - type: MinSpawnDistanceFromOrigin
+    distance: 15000

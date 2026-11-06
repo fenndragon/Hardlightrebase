@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Robust.Server.GameObjects;
@@ -37,7 +36,7 @@ public sealed class ActionPvsDetachTest
             var enumerator = server.Transform(ent).ChildEnumerator;
             while (enumerator.MoveNext(out var child))
             {
-                visSys.AddLayer(child, (int) VisibilityFlags.Ghost);
+                visSys.AddLayer(child, (int)VisibilityFlags.Ghost);
             }
         });
         await pair.RunTicksSync(5);
@@ -52,7 +51,7 @@ public sealed class ActionPvsDetachTest
             var enumerator = server.Transform(ent).ChildEnumerator;
             while (enumerator.MoveNext(out var child))
             {
-                visSys.RemoveLayer(child, (int) VisibilityFlags.Ghost);
+                visSys.RemoveLayer(child, (int)VisibilityFlags.Ghost);
             }
         });
         await pair.RunTicksSync(5);

@@ -1,4 +1,4 @@
-using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes; // WOLFGATE: keep one prototype namespace import after merge
 using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Drowsiness;

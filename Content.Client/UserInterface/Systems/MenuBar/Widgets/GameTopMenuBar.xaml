@@ -1,4 +1,4 @@
-﻿<widgets:GameTopMenuBar xmlns="https://spacestation14.io"
+<widgets:GameTopMenuBar xmlns="https://spacestation14.io"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:style="clr-namespace:Content.Client.Stylesheets"
            xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
@@ -21,7 +21,7 @@
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonOpenRight}"
         />
     <ui:MenuButton
         Name="GuidebookButton"
@@ -31,7 +31,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenGuidebook}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <!-- WOLFGATE(SectorControl) START: sector map button beside the guidebook; its icon is set in code from menu.rsi -->
     <ui:MenuButton
@@ -52,7 +52,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <!-- WOLFGATE(RoundSetup) START: open crew setup from the gameplay toolbar -->
     <ui:MenuButton
@@ -73,7 +73,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="CraftingButton"
@@ -83,7 +83,7 @@
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="ActionButton"
@@ -93,7 +93,29 @@
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
+        />
+    <!-- Starlight-start: Languages -->
+    <ui:MenuButton
+        Name="LanguageButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/_Starlight/Interface/language.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenLanguageMenu}"
+        ToolTip="Open the Language Menu"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
+        />
+    <!-- Starlight-end -->
+    <ui:MenuButton
+        Name="ConsentButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/VerbIcons/settings.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenConsentWindow}"
+        ToolTip="{Loc 'game-hud-open-consent-window-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="LanguageButton"
@@ -138,7 +160,7 @@
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <ui:MenuButton
         Name="SandboxButton"
@@ -148,7 +170,7 @@
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
         />
     <!-- WOLFGATE(Feedback) START: green bug report button beside ahelp -->
     <ui:MenuButton
@@ -170,6 +192,6 @@
         ToolTip="{Loc 'ui-options-function-open-a-help'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonOpenLeft}"
         />
 </widgets:GameTopMenuBar>

@@ -1,0 +1,37 @@
+<Document>
+### Evidence & Confiscated Material
+
+When items are seized during an arrest or search, their disposition depends on whether they constitute evidentiary material, contraband, or general personal property.
+
+[bold]Evidence of a Capital Crime[/bold]
+
+Key physical evidence relevant to proving innocence or guilt in a capital offense (400-level charge) must be retained within Security custody until the end of the shift. Preferred custodians are the [bold]Detective[/bold] (evidence locker) or the [bold]Warden[/bold] (armory), depending on the nature of the item. Evidence must not be destroyed, discarded, or returned to the subject while a capital case remains open.
+
+[bold]Class 3 Contraband[/bold]
+
+C3 contraband seized as evidence or incidental to an arrest may be:
+- Retained in the custody of the [bold]Detective[/bold] or [bold]Warden[/bold]; or
+- Processed through the [bold]contraband exchange computer[/bold]
+
+The handling officer should document which disposition was taken.
+
+[bold]General Confiscated Contraband[/bold]
+
+As a general rule, Security personnel may [bold]not[/bold] keep contraband removed from a citizen for personal use or possession. Confiscated items must be stored, processed, or disposed of through lawful channels. Retaining contraband for personal benefit may constitute [textlink="220 — Abuse of Authority" link="HLSpaceLawList"].
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Exigent circumstances may justify temporary personal custody of seized items (e.g., evidence lockers unavailable, active pursuit in progress). In such cases, the item must be transferred to proper custody at the earliest opportunity and the deviation documented.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

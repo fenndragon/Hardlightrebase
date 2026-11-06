@@ -1,6 +1,4 @@
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -95,7 +93,7 @@ public abstract partial class SharedEventHorizonSystem : EntitySystem
     }
 
     /// <summary>
-    /// Setter for <see cref="EventHorizonComponent.HorizonFixtureId"/>
+    /// Setter for EventHorizonComponent.HorizonFixtureId
     /// May also update the fixture associated with the event horizon.
     /// </summary>
     /// <param name="uid">The uid of the event horizon with the fixture ID to change.</param>
@@ -118,7 +116,7 @@ public abstract partial class SharedEventHorizonSystem : EntitySystem
     }
 
     /// <summary>
-    /// Setter for <see cref="EventHorizonComponent.HorizonFixtureId"/>
+    /// Setter for EventHorizonComponent.HorizonFixtureId
     /// May also update the fixture associated with the event horizon.
     /// </summary>
     /// <param name="uid">The uid of the event horizon with the fixture ID to change.</param>
@@ -172,7 +170,7 @@ public abstract partial class SharedEventHorizonSystem : EntitySystem
             _physics.SetHard(uid, collider, true, fixtures);
         }
 
-        EntityManager.Dirty(uid, fixtures);
+        Dirty(uid, fixtures);
     }
 
     #endregion Getters/Setters

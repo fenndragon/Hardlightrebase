@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.Contracts;
+using System.Diagnostics.Contracts;
 using System.Numerics;
 
 namespace Content.Server.Worldgen;
@@ -12,7 +12,7 @@ public static class WorldGen
     ///     The size of each chunk (isn't that self-explanatory.)
     ///     Be careful about how small you make this.
     /// </summary>
-    public const int ChunkSize = 128;
+    public const int ChunkSize = 256;
 
     /// <summary>
     ///     Converts world coordinates to chunk coordinates.

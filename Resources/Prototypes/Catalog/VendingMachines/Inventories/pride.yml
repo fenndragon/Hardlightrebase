@@ -5,14 +5,17 @@
     ClothingNeckAllyPin: 3
     ClothingNeckAromanticPin: 3
     ClothingNeckAsexualPin: 3
+    ClothingNeckAroacePin: 3
     ClothingNeckBisexualPin: 3
     ClothingNeckGayPin: 3
     ClothingNeckIntersexPin: 3
     ClothingNeckLesbianPin: 3
     ClothingNeckNonBinaryPin: 3
     ClothingNeckPansexualPin: 3
+    ClothingNeckPluralPin: 3
     ClothingNeckOmnisexualPin: 3
     ClothingNeckGenderqueerPin: 3
+    ClothingNeckGenderfluidPin: 3
     ClothingNeckTransPin: 3
     ClothingNeckAutismPin: 3
     ClothingNeckGoldAutismPin: 3
@@ -21,6 +24,7 @@
     PlushieSharkGrey: 2
     ClothingNeckScarfStripedAce: 2
     ClothingNeckScarfStripedAro: 2
+    ClothingNeckScarfStripedAroace: 2
     ClothingNeckScarfStripedBiSexual: 2
     ClothingNeckScarfStripedGay: 2
     ClothingNeckScarfStripedInter: 2
@@ -35,6 +39,44 @@
     ClothingHeadHatFlowerWreath: 2
     ClothingUniformColorRainbow: 2
     ClothingUnderSocksCoder: 2
+    ClothingHandsCoderWarmers: 2
+    ClothingUniformCoderThong: 2
     ClothingUnderSocksBee: 2
+    ClothingHandsBeeWarmers: 2
+    ClothingUniformBeeThong: 2
+    ClothingHandsPlainWarmers: 2
+    ClothingUnderSocksPlain: 2
+    ClothingUniformPlainThong: 2
+    ClothingHandsPlainWhiteWarmers: 2
+    ClothingUnderSocksPlainWhite: 2
+    ClothingUniformPlainWhiteThong: 2
+    ClothingHandsStripedPurpleWarmers: 2
+    ClothingUnderSocksStripedPurple: 2
+    ClothingUniformStripedPurpleThong: 2
+    ClothingHandsStripedRainbowWarmers: 2
+    ClothingUnderSocksStripedRainbow: 2
+    ClothingUniformStripedRainbowThong: 2
+    ClothingHandsStripedWhiteWarmers: 2
+    ClothingUnderSocksStripedWhite: 2
+    ClothingUniformStripedWhiteThong: 2
+    ClothingUnderSocksPrideAce: 3
+    ClothingUnderSocksPrideAro: 3
+    ClothingUnderSocksPrideBi: 3
+    ClothingUnderSocksPrideGay: 3
+    ClothingUnderSocksPrideInter: 3
+    ClothingUnderSocksPrideLesbian: 3
+    ClothingUnderSocksPrideNon: 3
+    ClothingUnderSocksPridePan: 3
+    ClothingUnderSocksPrideTrans: 3
+    ClothingHandsStripePurpleWarmers: 3
+    ClothingHandsPrideAce: 3
+    ClothingHandsPrideAro: 3
+    ClothingHandsPrideBi: 3
+    ClothingHandsPrideGay: 3
+    ClothingHandsPrideInter: 3
+    ClothingHandsPrideLesbian: 3
+    ClothingHandsPrideNon: 3
+    ClothingHandsPridePan: 3
+    ClothingHandsPrideTrans: 3
   contrabandInventory:
     ClothingNeckScarfStripedLesbianLong: 2

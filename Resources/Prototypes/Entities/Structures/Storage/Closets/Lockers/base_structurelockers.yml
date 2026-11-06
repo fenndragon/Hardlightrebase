@@ -1,7 +1,7 @@
 # WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: entity
   id: LockerBase
-  parent: ClosetBase
+  parent: [IdLockableBaseDisabled, ClosetBase] # Floof - added a default-disabled ID lock to all closets
   abstract: true
   components:
   - type: AccessReader
@@ -74,6 +74,8 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: Locker
 
 - type: entity
   id: LockerBaseSecure

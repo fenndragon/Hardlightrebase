@@ -32,6 +32,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Bark: # HardLight - JuiceThatMakesYouBark
+      collection: VulpkaninBarks
     Belch:
       collection: Belch
     Gasp:
@@ -76,6 +78,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Bark: # HardLight - JuiceThatMakesYouBark
+      collection: VulpkaninBarks
     Belch:
       collection: Belch
     Gasp:
@@ -86,6 +90,48 @@
       collection: GoblinMutterCollection
     GoblinThroatSinging:
       collection: GoblinThroatSingingCollection
+
+- type: emoteSounds
+  id: UnisexSheleg
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: ShelegScreams
+    Laugh:
+      collection: ShelegLaugh
+    Sneeze:
+      collection: ShelegSneezes
+    Cough:
+      collection: ShelegCoughs
+    Hiss:
+      collection: ShelegHiss
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    Yawn:
+      collection: ShelegYawn
+    Snore:
+      collection: ShelegSnores
+    Honk:
+      collection: CluwneHorn
+    Sigh:
+      collection: ShelegSigh
+    Crying:
+      collection: ShelegCry
+    Whistle:
+      collection: ShelegWhistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Bark: # HardLight - JuiceThatMakesYouBark
+      collection: VulpkaninBarks
+    Belch:
+      collection: Belch #ShelegBelch
+    Gasp:
+      collection: ShelegGasp
+    DefaultDeathgasp:
+      collection: ShelegDeathGasp
 
 - type: emoteSounds
   id: Cat

@@ -1,6 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
-using Content.Shared.NPC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -13,6 +10,7 @@ namespace Content.Server.NPC.Pathfinding;
 public abstract class PathRequest
 {
     public EntityCoordinates Start;
+    public readonly CancellationToken CancelToken;
 
     public Task<PathResult> Task => Tcs.Task;
     public readonly TaskCompletionSource<PathResult> Tcs;
@@ -44,7 +42,8 @@ public abstract class PathRequest
         Flags = flags;
         CollisionLayer = layer;
         CollisionMask = mask;
-        Tcs = new TaskCompletionSource<PathResult>(cancelToken);
+        CancelToken = cancelToken;
+        Tcs = new TaskCompletionSource<PathResult>();
     }
 }
 
@@ -91,10 +90,10 @@ public sealed class BFSPathRequest : PathRequest
         int layer,
         int mask,
         CancellationToken cancelToken) : base(start, flags, layer, mask, cancelToken)
-        {
-            ExpansionRange = expansionRange;
-            ExpansionLimit = expansionLimit;
-        }
+    {
+        ExpansionRange = expansionRange;
+        ExpansionLimit = expansionLimit;
+    }
 }
 
 /// <summary>

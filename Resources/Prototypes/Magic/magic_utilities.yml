@@ -1,0 +1,355 @@
+
+# This is just all the misc shit we can't be arsed to move elsewhere but needs to stay grouped under the Magic header and specifically chaplain's stuff - Usk
+
+#MARK: Implanters
+
+- type: entity
+  parent: [ BaseSubdermalImplant, StorePresetSpellbookFaith ]
+  id: UplinkImplantFaith
+  name: faith exchange
+  description: This implant lets the user access an exchange for the abilities of their particular faith at will.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionOpenUplinkImplantChap
+    permanent: true
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    refundAllowed: false
+    ownerOnly: true
+    balance:
+      MinorBlessing: 5
+
+- type: entity
+  id: ActionOpenUplinkImplantChap
+  name: Faith Exchange
+  description: Opens a minor link to your object of faith to gain abilities.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Devices/communication.rsi
+      state: old-radio
+    event: !type:OpenUplinkImplantEvent
+
+- type: entity
+  id: STextImplanter
+  name: implanter
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: UplinkImplantFaith
+
+#MARK: Mobs
+
+- type: entity
+  name: chaplain's shadow
+  parent:
+  - MobNonHumanHostileBase
+  - FlyingMobBase
+  - MobPassiveRegen
+  - MobHumanoidHostileAISimpleMelee
+  - NFMobTimedDespawn60
+  id: MobChaplainShadow
+  suffix: chaplain summon
+  description: It's you.
+  components:
+  - type: CanMoveInAir
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_NF/Effects/silence.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Objects/Magic/chaplainIcons.rsi
+    layers:
+      - state: Shadowform
+      - state: chapshadow
+        shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 10
+        mask:
+        - MobMask
+        layer:
+        - Opaque
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      120: Dead
+  - type: Stamina
+    critThreshold: 320
+  - type: MeleeWeapon
+    soundHit:
+      collection: MetalThud
+    damage:
+      types:
+        Slash: 25
+    animation: WeaponArcClaw
+  - type: PointLight
+    color: purple
+    radius: 1.4
+    energy: 1.2
+  - type: Bloodstream
+    bloodReagent: Iron
+    chemicalMaxVolume: 100
+  - type: Speech
+    speechVerb: Ghost
+  - type: Ammo
+    muzzleFlash: null
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 4.5
+  - type: NPCImprintingOnSpawnBehaviour
+    whitelist:
+      components:
+      - BibleUser
+  - type: HTN
+    rootTask:
+       task: KillerTomatoCompound
+    blackboard:
+      NavClimb: !type:Bool
+        false
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+
+- type: entity
+  name: queen
+  parent: MobXenoQueen
+  suffix: hallucination
+  id: MobXenoQueenHallucination
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 0
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      1: 1
+  - type: NpcFactionMember
+    factions:
+    - HostileUniversally
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: DeleteOnTrigger
+
+- type: entity
+  name: green slime
+  parent: MobAdultSlimesGreen
+  suffix: hallucination
+  id: MobSlimeHallucination
+  components:
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 0
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      1: 1
+  - type: NpcFactionMember
+    factions:
+    - HostileUniversally
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: DeleteOnTrigger
+
+- type: entity
+  name: dreamling
+  parent: SimpleSpaceMobBase
+  description: A faint creature of whimsy, idling around until its energy fades.
+  id: MobDreamling
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Magic/elementalBall.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: orb
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: orb
+      Dead:
+        Base: orb
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1: Dead
+  - type: MeleeWeapon
+    damage:
+     groups:
+       Brute: 0
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      1: 1
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: DeleteOnTrigger
+  - type: PointLight
+    radius: 1
+    softness: 5
+    autoRot: true
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: polymorph
+  id: ChapShadowmorph
+  configuration:
+    entity: MobChapShadowPolymorph
+    transferName: false
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+
+- type: entity
+  name: shadow
+  parent: [ MobElementalBase, MobCombat ]
+  id: MobChapShadowPolymorph
+  description: Did it just move?
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 0
+  - type: Accentless
+    removes:
+    - type: ReplacementAccent
+      accent: xeno
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 5
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Sprite
+    sprite: _HL/Objects/Magic/chaplainIcons.rsi
+    state: Shadowform
+  - type: Physics
+    bodyStatus: InAir
+  - type: NoSlip
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+
+#MARK: Tattoo stuff / DNU
+
+#- type: entity
+#  id: TattooBoxChaplain
+#  name: undetermined tattoo repertoire
+#  description: This is the culmination of your current magical tattoo knowledge. Try to remember which types you can imbue.
+#  categories: HideSpawnMenu
+#  parent: BaseItem
+#  components:
+#  - type: Sprite
+#    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+#    state: icon
+#  - type: ThiefUndeterminedBackpack
+#    possibleSets:
+#    - TestSet
+#    - CommunicatorSet
+#  - type: ActivatableUI
+#    key: enum.ThiefBackpackUIKey.Key
+#  - type: UserInterface
+#    interfaces:
+#      enum.ThiefBackpackUIKey.Key:
+#        type: ThiefBackpackBoundUserInterface
+
+- type: thiefBackpackSet
+  id: TestSet
+  name: thief-backpack-category-smuggler-name
+  description: thief-backpack-category-smuggler-description
+  sprite:
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - bullimplant
+  - wingimplant
+  - poisonimplant
+
+- type: entity
+  parent: BaseMagicAdder
+  id: inkrecipebull
+  name: memory of iron
+  description: The writing describes the exact procedure necessary to cleanse and ready the body to receive the blood and ink.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionTogging
+
+- type: entity
+  parent: BaseMagicAdder
+  id: inkrecipewings
+  name: memory of wings
+  description: The writing describes the exact procedure necessary to cleanse and ready the body to receive the blood and ink.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpeedImbue
+
+- type: entity
+  parent: BaseMagicAdder
+  id: inkrecipevines
+  name: memory of languidity
+  description: The writing describes the exact procedure necessary to cleanse and ready the body to receive the blood and ink.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionPoisonImbue
+
+- type: entity
+  id: bullimplant
+  name: Instructions for a tattoo
+  description: This parchment contains or contained directions for the ritual and marking process of a magic tattoo. Burn after reading.
+  parent: BaseMagicPage
+  components:
+    - type: Implanter
+      implant: inkrecipebull
+
+- type: entity
+  id: wingimplant
+  name: Instructions for a tattoo
+  description: This parchment contains or contained directions for the ritual and marking process of a magic tattoo. Burn after reading.
+  parent: BaseMagicPage
+  components:
+    - type: Implanter
+      implant: inkrecipewings
+
+- type: entity
+  id: poisonimplant
+  name: Instructions for a tattoo
+  description: This parchment contains or contained directions for the ritual and marking process of a magic tattoo. Burn after reading.
+  parent: BaseMagicPage
+  components:
+    - type: Implanter
+      implant: inkrecipevines

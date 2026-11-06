@@ -2,7 +2,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
@@ -17,8 +16,8 @@ namespace Content.Client.Chemistry.UI
 
         public TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-          _owner = owner;
-          _entManager = IoCManager.Resolve<IEntityManager>();
+            _owner = owner;
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()

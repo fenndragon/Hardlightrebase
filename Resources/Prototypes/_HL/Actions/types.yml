@@ -1,0 +1,74 @@
+- type: entity
+  id: ActionToggleDome
+  name: Toggle energy dome
+  description: Turn the energy barrier on or off.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
+    event: !type:ToggleActionEvent
+
+# Generic toggle for sprite-state swapping via SpriteStateToggleComponent
+- type: entity
+  id: ActionToggleSpriteState
+  name: Toggle Balls
+  description: Deploy if boy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    # Keep a short delay to avoid rapid spam while still feeling responsive
+    useDelay: 1
+    # Generic toggle icons; override per-item if you want custom art
+    icon: Interface/Actions/nuts/nuts.png
+    iconOn: Interface/Actions/nuts/nuts.png
+    event: !type:SpriteStateToggleActionEvent
+
+- type: entity
+  id: ActionLewdLayEgg
+  name: Lay your eggs
+  description: Kneel and push with all your might.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Consumable/Food/egg.rsi, state: icon }
+    useDelay: 5
+    checkCanInteract: false
+    event: !type:LewdEggLayingActionEvent
+
+- type: entity
+  id: ActionLayPrizeball
+  name: Lay your prizeball
+  description: Kneel and push with all your might.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: _NF/Objects/Fun/prizeticket.rsi, state: prizeball }
+    useDelay: 5
+    checkCanInteract: false
+    event: !type:PrizeballLayingActionEvent
+
+
+- type: entity
+  id: ActionResomiGravityJump
+  name: Leap
+  description: Use your short but agile legs to leap an equally short distance. Be careful not to bump into anything!
+  components:
+  - type: InstantAction
+    useDelay: 10
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+    event: !type:GravityJumpEvent {}
+
+- type: entity
+  id: ActionFabricatePaper
+  name: action-name-fabricate-paper
+  description: action-description-fabricate-paper
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Misc/bureaucracy.rsi, state: paper }
+    useDelay: 20
+    event:
+      !type:FabricateActionEvent
+      fabrication: Paper

@@ -1,0 +1,52 @@
+<Document>
+## Reasonable Suspicion
+
+A reasonable belief, based on observable facts, circumstances, or credible reports, that an individual [bold]may[/bold] be involved in criminal activity.
+
+Reasonable suspicion is the [bold]lowest threshold[/bold] for action. It allows security to investigate, but does not authorize arrest or full searches.
+
+### What Reasonable Suspicion Permits
+
+- Temporary detention for questioning
+- Requests for identification
+- Limited investigation (observation, follow-up questions)
+
+### What Reasonable Suspicion Does Not Authorize
+
+- Arrest or charging
+- Conviction
+- Issuing or executing search warrants
+- Full personal, vessel, or department searches (except where otherwise authorized by law or alert level)
+
+### How Reasonable Suspicion May Be Established
+
+- Matching a known suspect description
+- Presence at a crime scene under suspicious circumstances
+- Credible witness reports
+- Observed suspicious behavior (nervous demeanor, concealing items, fleeing without cause)
+- Security or command observations
+
+#### Totality of the Circumstances
+
+No single factor above needs to be sufficient on its own. Reasonable suspicion is assessed by evaluating [bold]all observable facts and circumstances together[/bold], as they would appear to a [bold]reasonable, trained security officer in the same situation[/bold]. Individual actions that seem innocent in isolation may — viewed collectively — establish reasonable suspicion that criminal activity [bold]has occurred, is occurring, or is about to occur[/bold].
+
+The standard is objective: [italic]would a reasonable, trained officer confronted with the same combination of facts conclude that criminal activity was afoot?[/italic] If yes, the threshold is met. An officer's personal hunch or subjective unease, untethered from articulable facts, is not sufficient.
+
+When writing your report, document each contributing factor individually and specifically. The strength of a reasonable suspicion determination is directly proportional to how clearly its component facts can be articulated.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Example[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+After receiving a heightened alert from an intercepted communication suggesting a possible threat to command, a Security officer observes a Scientist making repeated circuits around the bridge, loitering near the bridge access doors, and visibly carrying a handheld crew scanner. None of these behaviors are criminal on their own — a scientist may have a legitimate reason for any one of them in isolation. Viewed in totality, however — the timing of the alert, the specific location being circled, the repetitive movement pattern, and the possession of a scanning device outside any research context — a reasonable officer in the same situation would have grounds to believe criminal activity has occurred, is occurring, or is about to occur. This justifies approaching, requesting identification, and questioning the individual. It does [bold]not[/bold] yet authorize arrest or a full search without further evidence.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+</Document>

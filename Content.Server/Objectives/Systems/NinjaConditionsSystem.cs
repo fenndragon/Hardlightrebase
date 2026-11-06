@@ -1,9 +1,9 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Roles;
-using Content.Server.Warps;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Roles;
+using Content.Shared.Warps;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
@@ -42,7 +42,7 @@ public sealed partial class NinjaConditionsSystem : EntitySystem
         if (target == 0)
             return 1f;
 
-        return MathF.Min(comp.DoorsJacked / (float) target, 1f);
+        return MathF.Min(comp.DoorsJacked / (float)target, 1f);
     }
 
     // spider charge
@@ -98,6 +98,6 @@ public sealed partial class NinjaConditionsSystem : EntitySystem
         if (target == 0)
             return 1f;
 
-        return MathF.Min(comp.DownloadedNodes.Count / (float) target, 1f);
+        return MathF.Min(comp.DownloadedNodes.Count / (float)target, 1f);
     }
 }

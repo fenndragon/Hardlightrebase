@@ -1,3 +1,13 @@
+// SPDX-FileCopyrightText: 2023 DrSmugleaf
+// SPDX-FileCopyrightText: 2023 InsanityMoose
+// SPDX-FileCopyrightText: 2024 Dvir
+// SPDX-FileCopyrightText: 2024 Jake Huxell
+// SPDX-FileCopyrightText: 2024 Whatstone
+// SPDX-FileCopyrightText: 2024 metalgearsloth
+// SPDX-FileCopyrightText: 2025 Ilya246
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.GameStates;
 
@@ -19,6 +29,12 @@ public sealed partial class IFFComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public IFFFlags Flags = IFFFlags.None;
+
+    /// <summary>
+    /// Frontier: Shuttle service flags.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    public ServiceFlags ServiceFlags = ServiceFlags.None;
 
     /// <summary>
     /// Color for this to show up on IFF.
@@ -76,4 +92,16 @@ public enum IFFFlags : byte
     AlwaysShowColor = 16,
 
     // TODO: Need one that hides its outline, just replace it with a bunch of triangles or lines or something.
+}
+
+/// <summary>
+/// Frontier: Shuttle service flags.
+/// </summary>
+[Flags]
+public enum ServiceFlags : byte
+{
+    None = 0,
+    Services = 1,
+    Trade = 2,
+    Social = 4,
 }

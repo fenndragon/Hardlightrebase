@@ -62,6 +62,9 @@ public sealed partial class GraphicsTab : Control
         Control.AddOptionCheckBox(CCVars.ViewportScaleRender, ViewportLowResCheckBox, invert: true);
         Control.AddOptionCheckBox(CCVars.ParallaxLowQuality, ParallaxLowQualityCheckBox);
         Control.AddOptionCheckBox(CCVars.HudFpsCounterVisible, FpsCounterCheckBox);
+        Control.AddOptionCheckBox(CCVars.ShowStructureSmoothing, ShowStructureSmoothingCheckBox); // HardLight
+        Control.AddOptionCheckBox(CCVars.ShowCyborgSubtypeSprites, ShowCyborgSubtypesCheckBox); // HardLight
+        Control.AddOptionCheckBox(CCVars.ShowAphrodisiacEffects, ShowAphrodisiacEffectsCheckBox); // HardLight
 
         Control.AddOptionCheckBox(FHCCVars.RenderStarSystem, RenderStarSystemCheckBox); // Far Horizons
         WfAddWeatherQuality(); // WOLFGATE(WolfWeather)
@@ -192,8 +195,8 @@ public sealed partial class GraphicsTab : Control
 
         protected override int Value
         {
-            get => _checkBox.Pressed ? (int) WindowMode.Fullscreen : (int) WindowMode.Windowed;
-            set => _checkBox.Pressed = (value == (int) WindowMode.Fullscreen);
+            get => _checkBox.Pressed ? (int)WindowMode.Fullscreen : (int)WindowMode.Windowed;
+            set => _checkBox.Pressed = (value == (int)WindowMode.Fullscreen);
         }
 
         public OptionFullscreen(

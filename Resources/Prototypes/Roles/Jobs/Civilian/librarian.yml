@@ -3,20 +3,64 @@
   name: job-name-librarian
   description: job-description-librarian
   playTimeTracker: JobLibrarian
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -30 # HardLight
   startingGear: LibrarianGear
   icon: "JobIconLibrarian"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-hop
+  access:
+  - Maintenance
+  - Service
   accessGroups: # Frontier
   - GeneralAccess # Frontier
+  # Starlight start: Librarian starts with all crew languages
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: AdditionalLanguageKnowledge # If we just put in LanguageKnowledge, it'd overwrite your ability to e.g. understand mothroaches as a moth
+      speaks:
+      - GalacticCommon
+      - Scratch
+      - SolCommon
+      - Bubblish
+      - Canilunzt
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - Thaveyan
+      - VoxPidgin
+      - Sign
+      - Tradeband # HL
+      understands:
+      - GalacticCommon
+      - Scratch
+      - SolCommon
+      - Bubblish
+      - Canilunzt
+      - Chittin
+      - Draconic
+      - Marish
+      - Moffic
+      - Nekomimetic
+      - Sylvan
+      - Terrum
+      - Thaveyan
+      - VoxPidgin
+      - Sign
+      - Tradeband # HL
+  # Starlight end
 
 - type: startingGear
   id: LibrarianGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
+    # shoes: ClothingShoesBootsLaceup # HardLight: Add NF-style departmental loadouts
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d20Dice

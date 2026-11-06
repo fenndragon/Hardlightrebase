@@ -2,7 +2,6 @@ using Content.Shared.StationAi;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -22,6 +21,15 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     private SeedJob _seedJob;
     private ViewJob _job;
 
+    // The system reuses a lot of mutable scratch state (`_seeds`, `_opaque`, `_viewportTiles`,
+    // `_singleTiles`, the shared `_job` struct and its per-index lists, etc.) across calls to
+    // IsAccessible/GetView, and dispatches the heavy work onto worker threads via IParallelManager.
+    // Concurrent callers (e.g. BoundUserInterfaceCheckRangeEvent fired from a parallel job and
+    // InRangeOverrideEvent on the main thread) would otherwise race on these collections and
+    // produce "Operations that change non-concurrent collections must have exclusive access"
+    // exceptions deep inside the parallel ViewJob. Serialize entry points to prevent that.
+    private readonly object _stateLock = new();
+
     private readonly HashSet<Entity<OccluderComponent>> _occluders = new();
     private readonly HashSet<Entity<StationAiVisionComponent>> _seeds = new();
     private readonly HashSet<Vector2i> _viewportTiles = new();
@@ -38,7 +46,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Do we skip line of sight checks and just check vision ranges.
     /// </summary>
-    private bool FastPath;
+    private bool _fastPath;
 
     public override void Initialize()
     {
@@ -65,6 +73,14 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     /// </summary>
     public bool IsAccessible(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize = 8.5f, bool fastPath = false)
     {
+        lock (_stateLock)
+        {
+            return IsAccessibleCore(grid, tile, expansionSize, fastPath);
+        }
+    }
+
+    private bool IsAccessibleCore(Entity<BroadphaseComponent, MapGridComponent> grid, Vector2i tile, float expansionSize, bool fastPath)
+    {
         _viewportTiles.Clear();
         _opaque.Clear();
         _seeds.Clear();
@@ -76,7 +92,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
         _seedJob.ExpandedBounds = expandedBounds;
         _parallel.ProcessNow(_seedJob);
         _job.Data.Clear();
-        FastPath = fastPath;
+        _fastPath = fastPath;
 
         foreach (var seed in _seeds)
         {
@@ -142,8 +158,15 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     /// <summary>
     /// Gets a byond-equivalent for tiles in the specified worldAABB.
     /// </summary>
-    /// <param name="expansionSize">How much to expand the bounds before to find vision intersecting it. Makes this the largest vision size + 1 tile.</param>
     public void GetView(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize = 8.5f)
+    {
+        lock (_stateLock)
+        {
+            GetViewCore(grid, worldBounds, visibleTiles, expansionSize);
+        }
+    }
+
+    private void GetViewCore(Entity<BroadphaseComponent, MapGridComponent> grid, Box2Rotated worldBounds, HashSet<Vector2i> visibleTiles, float expansionSize)
     {
         _viewportTiles.Clear();
         _opaque.Clear();
@@ -157,7 +180,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
         _seedJob.ExpandedBounds = enlargedLocalAabb;
         _parallel.ProcessNow(_seedJob);
         _job.Data.Clear();
-        FastPath = false;
+        _fastPath = false;
 
         foreach (var seed in _seeds)
         {
@@ -316,7 +339,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
 
             // Fastpath just get tiles in range.
             // Either xray-vision or system is doing a quick-and-dirty check.
-            if (!seed.Comp.Occluded || System.FastPath)
+            if (!seed.Comp.Occluded || System._fastPath)
             {
                 var squircles = Maps.GetLocalTilesIntersecting(Grid.Owner,
                     Grid.Comp,

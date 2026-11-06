@@ -1,11 +1,8 @@
 using System.Globalization;
-using System.Linq;
 using System.Numerics;
-using Content.Server._Battlefield14.FactionTracking;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -24,20 +21,20 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server._Corvax.Respawn; // Frontier
-using Content.Shared._WF.Roles; // WOLFGATE(Roles)
+using Content.Shared._NF.Roles.Components; // Frontier
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
-        [Dependency] private IAdminManager _adminManager = default!;
-        [Dependency] private SharedJobSystem _jobs = default!;
-        [Dependency] private AdminSystem _admin = default!;
-        [Dependency] private RespawnSystem _respawn = default!; // Frontier
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly AdminSystem _admin = default!;
+        [Dependency] private readonly RespawnSystem _respawn = default!; // Frontier
 
-        public static readonly EntProtoId ObserverPrototypeName = "MobObserver";
+        public static readonly EntProtoId ObserverPrototypeName = new("MobObserver");
 
-        public const string AdminObserverPrototypeName = "AdminObserver";
+        public static readonly EntProtoId AdminObserverPrototypeName = new("AdminObserver");
 
         /// <summary>
         /// How many players have joined the round through normal methods.
@@ -54,12 +51,6 @@ namespace Content.Server.GameTicking
             var query = EntityQueryEnumerator<StationJobsComponent, StationSpawningComponent>();
             while (query.MoveNext(out var uid, out _, out _))
             {
-                // WOLFGATE(RoundSetup) START: ordinary joining excludes private scenario stations
-                // if (HasComp<Content.Server._WF.RoundSetup.WFCrashScenarioStationComponent>(uid) ||
-                //     HasComp<Content.Server._WF.RoundSetup.WFShipScenarioStationComponent>(uid))
-                if (!EntityManager.System<Content.Server._WF.RoundSetup.WFRoundSetupSystem>().IsStandardStation(uid))
-                    continue;
-                // WOLFGATE END
                 spawnableStations.Add(uid);
             }
 
@@ -96,11 +87,9 @@ namespace Content.Server.GameTicking
             }
 
             var spawnableStations = GetSpawnableStations();
-            // WOLFGATE(RoundSetup) START: explicit Normal choices share the regular job allocation
-            // var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
-            // _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
-            var assignedJobs = WFAssignRoundSetupJobs(profiles, spawnableStations, playerNetIds);
-            // WOLFGATE END
+            var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
+
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
 
             // Calculate extended access for stations.
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
@@ -109,6 +98,9 @@ namespace Content.Server.GameTicking
                 if (job == null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
+                    var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
+                    RaiseLocalEvent(evNoJobs);
+
                     _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
                 }
                 else
@@ -125,10 +117,7 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
-                // WOLFGATE(RoundSetup) START: authorize the assigned group member while preserving the saved profile
-                // SpawnPlayer(_playerManager.GetSessionById(player), profiles[player], station, job, false);
-                WFSpawnAssignedPlayer(_playerManager.GetSessionById(player), profiles[player], station, job);
-                // WOLFGATE END
+                SpawnPlayer(_playerManager.GetSessionById(player), profiles[player], station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -184,11 +173,6 @@ namespace Content.Server.GameTicking
                     station = stations[0];
             }
 
-            // WOLFGATE(RoundSetup) START: require authenticated scenario membership on every spawn path
-            if (!EntityManager.System<Content.Server._WF.RoundSetup.WFRoundSetupSystem>().CanSpawnOnStation(player, station))
-                return;
-            // WOLFGATE END
-
             if (lateJoin && DisallowLateJoin)
             {
                 JoinAsObserver(player);
@@ -228,6 +212,9 @@ namespace Content.Server.GameTicking
                     JoinAsObserver(player);
                 }
 
+                var evNoJobs = new NoJobsAvailableSpawningEvent(player); // Used by gamerules to wipe their antag slot, if they got one
+                RaiseLocalEvent(evNoJobs);
+
                 _chatManager.DispatchServerMessage(player,
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
@@ -260,10 +247,16 @@ namespace Content.Server.GameTicking
 
             _mind.TransferTo(newMind, mob);
 
-            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype:jobId);
+            // Frontier: ensure jobs are tracked
+            var jobComp = EnsureComp<JobTrackingComponent>(mob);
+            jobComp.Job = jobId;
+            jobComp.SpawnStation = station;
+            jobComp.Active = true;
+            Dirty(mob, jobComp);
+            // End Frontier
+
+            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
-            var customJobTitle = CustomJobTitleRules.GetTitle(character, jobId, _prototypeManager); // WOLFGATE(Roles)
-            customJobTitle = EntityManager.System<Content.Server._WF.Companies.WFCompanySystem>().RankTitleFor(player, character, jobId) ?? customJobTitle; // WOLFGATE(Companies): arrival announcement uses the rank, not Vagrant
             _admin.UpdatePlayerList(player);
 
             if (lateJoin && !silent)
@@ -274,7 +267,7 @@ namespace Content.Server.GameTicking
                         Loc.GetString("latejoin-arrival-announcement-special",
                             ("character", MetaData(mob).EntityName),
                             ("entity", mob),
-                            ("job", customJobTitle ?? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))), // WOLFGATE(Roles): custom title
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
                         Loc.GetString("latejoin-arrival-sender"),
                         playDefaultSound: false,
                         colorOverride: Color.Gold);
@@ -285,19 +278,17 @@ namespace Content.Server.GameTicking
                         Loc.GetString("latejoin-arrival-announcement",
                             ("character", MetaData(mob).EntityName),
                             ("entity", mob),
-                            ("job", customJobTitle ?? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))), // WOLFGATE(Roles): custom title
+                            ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))),
                         Loc.GetString("latejoin-arrival-sender"),
                         playDefaultSound: false);
                 }
             }
 
-            // WOLFGATE START: OwO accent removed
             // who tf is perma oWo
-            // if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
-            // {
-            //     EntityManager.AddComponent<OwOAccentComponent>(mob);
-            // }
-            // WOLFGATE END
+            if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
+            {
+                AddComp<OwOAccentComponent>(mob);
+            }
 
             _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
 
@@ -367,26 +358,7 @@ namespace Content.Server.GameTicking
 
             if (!_userDb.IsLoadComplete(player))
                 return;
-            // Mono/BF14 start
-            if (jobId != null)
-            {
-                var factionTracking = EntityManager.System<FactionTrackingSystem>();
-                if (CurrentPreset != null && CurrentPreset.AutobalancerEnabled && _jobs.TryGetDepartment(jobId, out var dept))
-                {
-                    string? faction = null;
-                    if (FactionTrackingSystem.BluforDepartments.Contains(dept.ID))
-                        faction = "blufor";
-                    else if (FactionTrackingSystem.RedforDepartments.Contains(dept.ID))
-                        faction = "redfor";
 
-                    if (faction != null && factionTracking.IsFactionOverpopulated(faction, this))
-                    {
-                        _chatManager.DispatchServerMessage(player, Loc.GetString("autobalance-team-full"));
-                        return;
-                    }
-                }
-            }
-            // Mono/BF14 end
             SpawnPlayer(player, station, jobId, silent: silent);
         }
 
@@ -437,7 +409,7 @@ namespace Content.Server.GameTicking
         public EntityCoordinates GetObserverSpawnPoint()
         {
             _possiblePositions.Clear();
-            var spawnPointQuery = EntityManager.EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+            var spawnPointQuery = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
             while (spawnPointQuery.MoveNext(out var uid, out var point, out var transform))
             {
                 if (point.SpawnType != SpawnPointType.Observer
@@ -476,7 +448,7 @@ namespace Content.Server.GameTicking
                 var spawn = _robustRandom.Pick(_possiblePositions);
                 var toMap = _transform.ToMapCoordinates(spawn);
 
-                if (_map.TryFindGridAt(toMap, out var gridUid, out _))
+                if (_mapManager.TryFindGridAt(toMap, out var gridUid, out _))
                 {
                     var gridXform = Transform(gridUid);
 

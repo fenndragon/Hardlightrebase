@@ -152,10 +152,10 @@ public sealed partial class ParticleAcceleratorSystem
         if (comp.StrengthLocked)
             return;
 
-        strength = (ParticleAcceleratorPowerState) MathHelper.Clamp(
-            (int) strength,
-            (int) ParticleAcceleratorPowerState.Standby,
-            (int) comp.MaxStrength
+        strength = (ParticleAcceleratorPowerState)MathHelper.Clamp(
+            (int)strength,
+            (int)ParticleAcceleratorPowerState.Standby,
+            (int)comp.MaxStrength
         );
 
         if (strength == comp.SelectedStrength)
@@ -187,7 +187,7 @@ public sealed partial class ParticleAcceleratorSystem
                         ("machine", ToPrettyString(uid)),
                         ("powerState", GetPANumericalLevel(strength)),
                         ("coordinates", pos.Coordinates)));
-                    _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
+                    _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Misc/adminlarm.ogg"),
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
                         AudioParams.Default.WithVolume(-8f));
@@ -239,7 +239,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         var powerDraw = comp.BasePowerDraw;
         if (comp.Enabled)
-            powerDraw += comp.LevelPowerDraw * (int) comp.SelectedStrength;
+            powerDraw += comp.LevelPowerDraw * (int)comp.SelectedStrength;
 
         powerConsumer.DrawRate = powerDraw;
     }
@@ -296,7 +296,7 @@ public sealed partial class ParticleAcceleratorSystem
             ParticleAcceleratorVisuals.VisualState,
             TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered
                 ? ParticleAcceleratorVisualState.Unpowered
-                : (ParticleAcceleratorVisualState) comp.SelectedStrength,
+                : (ParticleAcceleratorVisualState)comp.SelectedStrength,
             appearance
         );
     }
@@ -306,7 +306,12 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref controller))
             return;
 
-        var state = controller.Powered ? (ParticleAcceleratorVisualState) controller.SelectedStrength : ParticleAcceleratorVisualState.Unpowered;
+        var state = controller.Powered ? (ParticleAcceleratorVisualState)controller.SelectedStrength : ParticleAcceleratorVisualState.Unpowered;
+
+        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
+            return;
+
+        var machine = (uid, machineComp);
 
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;

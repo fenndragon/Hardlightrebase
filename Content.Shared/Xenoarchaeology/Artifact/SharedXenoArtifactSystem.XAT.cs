@@ -1,3 +1,4 @@
+using Content.Shared.Damage.Events; // WOLFGATE(Xenoarch): BeforeStaminaDamageEvent lives in Damage.Events
 using System.Linq;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;

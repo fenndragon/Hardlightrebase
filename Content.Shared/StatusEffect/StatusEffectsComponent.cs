@@ -15,11 +15,11 @@ namespace Content.Shared.StatusEffect
         ///     A list of status effect IDs to be allowed
         /// </summary>
         [DataField("allowed", required: true), Access(typeof(StatusEffectsSystem), Other = AccessPermissions.ReadExecute)]
-        public List<string> AllowedEffects = default!;
+        public List<string> AllowedEffects = new();
     }
 
     [RegisterComponent]
-    public sealed partial class ActiveStatusEffectsComponent : Component {}
+    public sealed partial class ActiveStatusEffectsComponent : Component { }
 
     /// <summary>
     ///     Holds information about an active status effect.
@@ -47,7 +47,7 @@ namespace Content.Shared.StatusEffect
         [ViewVariables]
         public string? RelevantComponent;
 
-        public StatusEffectState((TimeSpan, TimeSpan) cooldown, bool refresh, string? relevantComponent=null)
+        public StatusEffectState((TimeSpan, TimeSpan) cooldown, bool refresh, string? relevantComponent = null)
         {
             Cooldown = cooldown;
             CooldownRefresh = refresh;

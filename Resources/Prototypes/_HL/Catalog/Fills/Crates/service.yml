@@ -1,0 +1,87 @@
+- type: entity
+  id: CrateCondiments
+  parent: CrateGenericSteel
+  name: condiment dispenser refill
+  description: Contains one refill for a condiment dispenser.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DrinkAstrotameJug
+        amount: 1
+      - id: DrinkBbqSauceJug
+        amount: 1
+      - id: DrinkColdsauceJug
+        amount: 1
+      - id: DrinkHorseradishSauceJug
+        amount: 1
+      - id: DrinkHotsauceJug
+        amount: 1
+      - id: DrinkKetchupJug
+        amount: 1
+      - id: DrinkMustardJug
+        amount: 1
+      - id: DrinkSoysauceJug
+        amount: 1
+
+- type: entity
+  id: CrateVinylsNulb
+  name: vinyls crate "nulb"
+  parent: CrateGenericSteel
+  description: A crate containing eight vinyls. The artist tag on the side says "Nulb".
+  components:
+  - type: StorageFill
+    contents:
+      - id: VinylDiskNulbEmulator
+        amount: 1
+      - id: VinylDiskNulbEruption
+        amount: 1
+      - id: VinylDiskNulbEverpresence
+        amount: 1
+      - id: VinylDiskNulbHakonechloa
+        amount: 1
+      - id: VinylDiskNulbHyperacusis
+        amount: 1
+      - id: VinylDiskNulbImDown
+        amount: 1
+      - id: VinylDiskNulbRecalled
+        amount: 1
+      - id: VinylDiskNulbTakeYourTime
+        amount: 1
+
+- type: entity
+  id: CrateVinylsDeltarisk
+  name: vinyls crate "deltarisk"
+  parent: CrateGenericSteel
+  description: A crate containing eight vinyls. The artist tag on the side says "Deltarisk".
+  components:
+  - type: StorageFill
+    contents:
+      - id: VinylDiskNulbBallsfish
+        amount: 1
+      - id: VinylDiskNulbChronograph
+        amount: 1
+      - id: VinylDiskNulbCrueltyEngines
+        amount: 1
+      - id: VinylDiskNulbDueTime
+        amount: 1
+      - id: VinylDiskNulbInterloc
+        amount: 1
+      - id: VinylDiskNulbReRecalled
+        amount: 1
+      - id: VinylDiskNulbSeige
+        amount: 1
+      - id: VinylDiskNulbTimeout
+        amount: 1
+
+- type: entity
+  id: CrateVinylsTKJazz
+  name: vinyls crate "Tim Kulig - Jazz"
+  parent: CrateGenericSteel
+  description: A crate containing ten vinyls. The artist tag on the side says "Tim Kulig".
+  components:
+  - type: StorageFill
+    contents:
+      - id: VinylSleeveJazz
+        amount: 1
+      - id: VinylSleeveJazzAlt
+        amount: 1

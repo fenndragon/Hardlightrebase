@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.DoAfter;
 using Content.Server.Humanoid;
 using Content.Shared.DoAfter;
@@ -27,6 +26,8 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private TagSystem _tagSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
 
     private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
 
@@ -62,7 +63,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
             _popup.PopupEntity(
                 component.Target == message.Actor
                     ? Loc.GetString("magic-mirror-blocked-by-hat-self")
-                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target"),
+                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(message.Actor, EntityManager))),
                 message.Actor,
                 message.Actor,
                 PopupType.Medium);
@@ -98,7 +99,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -137,7 +138,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         if (component.Target is not { } target)
             return;
 
-                // Check if the target getting their hair altered has any clothes that hides their hair
+        // Check if the target getting their hair altered has any clothes that hides their hair
         if (CheckHeadSlotOrClothes(message.Actor, component.Target.Value))
         {
             _popup.PopupEntity(
@@ -178,7 +179,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -256,7 +257,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -334,7 +335,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -364,7 +365,7 @@ public sealed partial class MagicMirrorSystem : SharedMagicMirrorSystem
         if (string.IsNullOrEmpty(marking))
             return;
 
-        _humanoid.AddMarking(component.Target.Value, marking, Color.Black);
+        _humanoid.AddMarking(component.Target.Value, marking, false, Color.Black); //starlight, glowing
 
         UpdateInterface(uid, component.Target.Value, component);
 

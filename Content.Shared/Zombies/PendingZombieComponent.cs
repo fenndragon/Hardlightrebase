@@ -11,13 +11,20 @@ namespace Content.Shared.Zombies;
 public sealed partial class PendingZombieComponent : Component
 {
     /// <summary>
+    /// The zombie entity that most recently infected this target. Used for rewards on conversion.
+    /// </summary>
+    [DataField("infector")]
+    public EntityUid? Infector;
+
+    /// <summary>
     /// Damage dealt every second to infected individuals.
     /// </summary>
-    [DataField("damage")] public DamageSpecifier Damage = new()
+    [DataField("damage")]
+    public DamageSpecifier Damage = new()
     {
-        DamageDict = new ()
+        DamageDict = new()
         {
-            { "Poison", 0.2 },
+            { "Poison", 0.4 },
         }
     };
 
@@ -27,7 +34,7 @@ public sealed partial class PendingZombieComponent : Component
     [DataField("critDamageMultiplier")]
     public float CritDamageMultiplier = 10f;
 
-    [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField("nextTick", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
 
     /// <summary>

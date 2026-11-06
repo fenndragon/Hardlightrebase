@@ -123,14 +123,16 @@ public sealed partial class TurbineComponent : Component
     [ViewVariables]
     public bool Overspeed = false;
 
+    // WOLFGATE: escape comparison operators in XML documentation
     /// <summary>
-    /// Flag for gas tempurature being > MaxTemp - 500
+    /// Flag for gas temperature being &gt; MaxTemp - 500
     /// </summary>
     [ViewVariables]
     public bool Overtemp = false;
 
+    // WOLFGATE: escape comparison operators in XML documentation
     /// <summary>
-    /// Flag for gas tempurature being < MinTemp
+    /// Flag for gas temperature being &lt; MinTemp
     /// </summary>
     [ViewVariables]
     public bool Undertemp = false;

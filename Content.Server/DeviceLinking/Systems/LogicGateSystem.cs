@@ -1,5 +1,4 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
@@ -21,7 +20,7 @@ public sealed partial class LogicGateSystem : EntitySystem
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    private readonly int GateCount = Enum.GetValues(typeof(LogicGate)).Length;
+    private readonly int _gateCount = Enum.GetValues(typeof(LogicGate)).Length;
 
     public override void Initialize()
     {
@@ -78,9 +77,9 @@ public sealed partial class LogicGateSystem : EntitySystem
             return;
 
         // cycle through possible gates
-        var gate = (int) comp.Gate;
-        gate = ++gate % GateCount;
-        comp.Gate = (LogicGate) gate;
+        var gate = (int)comp.Gate;
+        gate = ++gate % _gateCount;
+        comp.Gate = (LogicGate)gate;
 
         // since gate changed the output probably has too, update it
         UpdateOutput(uid, comp);

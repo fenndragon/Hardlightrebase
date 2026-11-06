@@ -27,10 +27,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 42
+        maxVol: 56
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 48
         - ReagentId: CucumberWater
           Quantity: 3
   - type: SliceableFood
@@ -52,12 +52,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 8
         - ReagentId: CucumberWater
-          Quantity: .5
+          Quantity: 0.5
   - type: Item
     size: Tiny
 
@@ -80,10 +80,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 48
+        maxVol: 62
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 48
         - ReagentId: CarpoToxin
           Quantity: 6
         - ReagentId: CucumberWater
@@ -107,10 +107,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 11
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 8
         - ReagentId: CarpoToxin
           Quantity: 1
         - ReagentId: CucumberWater
@@ -137,10 +137,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 56
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 48
         - ReagentId: CucumberWater
           Quantity: 3
   - type: SliceableFood
@@ -162,12 +162,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 8
         - ReagentId: CucumberWater
-          Quantity: .5
+          Quantity: 0.5
   - type: Item
     size: Tiny
 

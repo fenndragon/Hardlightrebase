@@ -33,7 +33,10 @@
   color: "#262019"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/royrogers.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -111,6 +114,27 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0
+  # Floof region
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Cold: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 298.15 # Floof
+        amount: -1000
+  # Floof region end
 
 - type: reagent
   id: LemonLime
@@ -181,7 +205,10 @@
   color: "#ccb87e"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/sol_dry_glass.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: ShirleyTemple
@@ -193,7 +220,10 @@
   color: "#af2221"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/shirleytemple.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -247,6 +277,12 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: fourteenlokosoda
   color: "#deb928"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/fourteen_loko_glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:

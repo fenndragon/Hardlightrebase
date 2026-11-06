@@ -1,5 +1,4 @@
 #nullable enable
-using System.Linq;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
@@ -16,6 +15,7 @@ namespace Content.IntegrationTests.Tests
             var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
+            var spriteSys = client.System<SpriteSystem>(); // HL: Move to the proper usage of the SpriteSystem for getting sprites
 
             await client.WaitAssertion(() =>
             {
@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests
 
                     Assert.DoesNotThrow(() =>
                     {
-                        var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                        var _ = spriteSys.GetPrototypeTextures(proto).ToList(); // HL: Move to the proper usage of the SpriteSystem for getting sprites
                     }, "Prototype {0} threw an exception when getting its textures.",
                         proto.ID);
                 }

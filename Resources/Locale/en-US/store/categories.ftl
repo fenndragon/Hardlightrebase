@@ -24,3 +24,7 @@ store-caregory-spellbook-utility = Utility Spells
 store-caregory-spellbook-equipment = Wizard Equipment
 store-caregory-spellbook-events = Event Spells
 
+# Chaplain
+store-category-blessing-minor = Minor Miracles
+store-category-blessing-lesser = Lesser Miracles
+store-category-blessing-greater = Greater Miracles

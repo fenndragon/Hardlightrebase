@@ -1,6 +1,6 @@
 - type: cargoProduct
   id: LivestockBee
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/bee.rsi
     state: 0
@@ -11,7 +11,7 @@
 
 - type: cargoProduct
   id: LivestockButterfly
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/butterfly.rsi
     state: butterfly
@@ -31,19 +31,20 @@
   category: cargoproduct-category-name-livestock
   group: market
 
-# - type: cargoProduct # Frontier - replaced by poultry cube crate
-#   id: LivestockChicken
-#   icon:
-#     sprite: Mobs/Animals/chicken.rsi
-#     state: icon-1
-#   product: CrateNPCChicken
-#   cost: 4000
-#   category: cargoproduct-category-name-livestock
-#   group: market
+- type: cargoProduct # Frontier - replaced by poultry cube crate
+  id: LivestockChicken
+  # abstract: true # Frontier - replaced by poultry cube crate
+  icon:
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-1
+  product: CrateNPCChicken
+  cost: 4000
+  category: cargoproduct-category-name-livestock
+  group: market
 
 - type: cargoProduct
   id: LivestockCrab
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/crab.rsi
     state: crab
@@ -52,16 +53,16 @@
   category: cargoproduct-category-name-livestock
   group: market
 
-# - type: cargoProduct # Frontier - replaced by poultry cube crate
-#   id: LivestockDuck
-#   abstract: true # Frontier
-#   icon:
-#     sprite: Mobs/Animals/duck.rsi
-#     state: icon-0
-#   product: CrateNPCDuck
-#   cost: 4000
-#   category: cargoproduct-category-name-livestock
-#   group: market
+- type: cargoProduct
+  id: LivestockDuck
+  # abstract: true # Frontier - replaced by poultry cube crate
+  icon:
+    sprite: Mobs/Animals/duck.rsi
+    state: icon-0
+  product: CrateNPCDuck
+  cost: 4000
+  category: cargoproduct-category-name-livestock
+  group: market
 
 - type: cargoProduct
   id: LivestockCorgi
@@ -87,7 +88,7 @@
 
 - type: cargoProduct
   id: LivestockCow
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/cow.rsi
     state: cow
@@ -98,7 +99,7 @@
 
 - type: cargoProduct
   id: LivestockGoat
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/goat.rsi
     state: goat
@@ -109,7 +110,7 @@
 
 - type: cargoProduct
   id: LivestockGoose
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/goose.rsi
     state: goose
@@ -120,7 +121,7 @@
 
 - type: cargoProduct
   id: LivestockGorilla
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/gorilla.rsi
     state: icon
@@ -131,7 +132,7 @@
 
 - type: cargoProduct
   id: LivestockMonkeyCube
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Objects/Misc/monkeycube.rsi
     state: box
@@ -142,7 +143,7 @@
 
 - type: cargoProduct
   id: LivestockKoboldCube
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Objects/Misc/monkeycube.rsi
     state: box_kobold
@@ -153,7 +154,7 @@
 
 - type: cargoProduct
   id: LivestockMouse
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/mouse.rsi
     state: icon-0
@@ -164,7 +165,7 @@
 
 - type: cargoProduct
   id: LivestockParrot
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/parrot.rsi
     state: parrot
@@ -175,7 +176,7 @@
 
 - type: cargoProduct
   id: LivestockPenguin
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/penguin.rsi
     state: penguin
@@ -186,7 +187,7 @@
 
 - type: cargoProduct
   id: LivestockPig
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/pig.rsi
     state: pig
@@ -197,7 +198,7 @@
 
 - type: cargoProduct
   id: LivestockSnake
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/snake.rsi
     state: snake
@@ -219,7 +220,7 @@
 
 - type: cargoProduct
   id: LivestockLizard
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/lizard.rsi
     state: lizard
@@ -230,7 +231,7 @@
 
 - type: cargoProduct
   id: LivestockKangaroo
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/kangaroo.rsi
     state: kangaroo
@@ -241,7 +242,7 @@
 
 - type: cargoProduct
   id: LivestockMothroach
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Mobs/Animals/mothroach/mothroach.rsi
     state: mothroach

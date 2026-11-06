@@ -1,0 +1,47 @@
+# using the Parent for the recipe this is in the _NF folder
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleBureaucracy
+  result: BorgModuleBureaucracy
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleNFService
+  result: BorgModuleNFService
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleRCDShipyard
+  result: BorgModuleRCDShipyard
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleadvancedmeasures
+  result: BorgModuleadvancedmeasures
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleStorage
+  result: BorgModuleStorage
+ 
+- type: latheRecipe
+  id: OmniHandRight
+  result: CyberneticsOmnihandRight
+  completetime: 30
+  materials:
+    Steel: 3000
+    Plastic: 300
+    Plasma: 500
+    Gold: 100
+    
+- type: latheRecipe
+  id: OmniHandLeft
+  result: CyberneticsOmnihandLeft
+  completetime: 30
+  materials:
+    Steel: 3000
+    Plastic: 300
+    Plasma: 500
+    Gold: 100
+

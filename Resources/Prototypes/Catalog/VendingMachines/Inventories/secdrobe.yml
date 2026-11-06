@@ -7,8 +7,8 @@
     ClothingHeadHatBeretBrigmedic: 3
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
-    ClothingHeadBandRed: 3
-    ClothingMaskNeckGaiterRed: 3
+    ClothingHeadBandSecurity: 3 # Hardlight recolor for security
+    ClothingGaiterSecurity: 3 # Hardlight recolor for security
     ClothingHandsGlovesCombat: 3 # Frontier - Officers just walk around with yellow insulated gloves if you wont sell the combat gloves.
     # WOLFGATE(MeridianClothing) START: Meridian Rift clothing, written by Tools/_WF/MeridianClothing/port.py
     WFMeridianClothingAccessoryBadgeHoloWarden: 2
@@ -82,25 +82,36 @@
     ClothingUniformJumpsuitSecGrey: 3
     ClothingUniformJumpskirtSecGrey: 3
     ClothingUniformJumpsuitSecBlue: 3
-    ClothingHeadsetSecurityCommon: 3 # Frontier - Ask SR or Sheriff for keys
+    #ClothingHeadsetSecurityCommon: 3 # Frontier - Ask SR or Sheriff for keys
     ClothingMaskGasSecurity: 3
     ClothingUniformJumpsuitBrigmedic: 3
     ClothingUniformJumpskirtBrigmedic: 3
     ClothingOuterWinterSec: 2
+    ClothingOuterWindbreakerSecurity: 2 # Starlight
+    ClothingOuterEVASuitHLSec: 3 #HL - HLSec-colored EVA suit meant for Shelegs, accessible to all.
     ClothingHeadHelmetBasic: 2 # Frontier
     ClothingOuterArmorBasic: 2
-    ClothingNeckScarfStripedRed: 3
+    ClothingNeckScarfStripedSecurity: 3 # Hardlight recolor for security
     ClothingOuterArmorBasicSlim: 2
     ClothingOuterCoatAMG: 2
     ClothingMaskBreathMedicalSecurity: 3
     ClothingEyesBlindfold: 1
-    ClothingShoesBootsJack: 1 # Frontier - 3<1
-    ClothingShoesBootsCombat: 1
-    ClothingShoesBootsWinterSec: 2
+    ClothingNeckCollarSec: 2 # Floofstation - Collar addition
+    ClothingShoesBootsJack: 3 # Frontier - 3<1
+    ClothingShoesBootsCombat: 3 # HL - Changed to 3 to parity Jack
+    ClothingShoesBootsWinterSec: 3 # HL - Changed to 3 to parity Jack
     ClothingHeadHelmetJustice: 1
     ClothingShoesBootsCowboyBlack: 1 # Frontier
     ClothingHeadHatCowboyBlack: 1 # Frontier
     ClothingShoesBootsMagSecurity: 1 # Frontier
+    ClothingHandsSecurityWarmers: 3
+    ClothingUnderSocksSecurity: 3
+    ClothingUniformSecurityThong: 3
+    ClothingOuterSecurityFullCoat: 3
+    ClothingHandsHeadSecurityWarmers: 3
+    ClothingUnderSocksHeadSecurity: 3
+    ClothingUniformHeadSecurityThong: 3
+    ClothingOuterHoSFullCoat: 3
   contrabandInventory:
     ClothingUniformJumpskirtOfLife: 1 # Frontier
     ClothingMaskClownSecurity: 1

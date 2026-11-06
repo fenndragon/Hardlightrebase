@@ -25,6 +25,7 @@
   icon: "JobIconPublicAffairsLiaison"
   supervisors: job-supervisors-cadet
   canBeAntag: false
+  setPreference: false # Frontier
   weight: 105
   displayWeight: 16
   assignedCompany: TSF
@@ -53,7 +54,7 @@
 - type: startingGear
   id: PublicAffairGear
   equipment:
-    pocket1: HyperlinkBookSpaceLaw
+    pocket1: HLBookSpaceLaw #HL
     pocket2: BoxFolderClipboardPal
   storage:
     back:

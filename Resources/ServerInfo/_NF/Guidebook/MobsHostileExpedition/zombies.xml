@@ -1,0 +1,114 @@
+<Document>
+  # Zombies
+
+  Ever wondered what happens to an ill prepared station when a rapidly spreading infection takes hold? This. Fortunately for you, your employers bluespace a short lived vaccine directly into your veins in transit. What the cause is or was isn’t of concern to you, all you need to worry about is clearing the place out before its unfortunate occupants mutate any further or somehow infect more facilities. And don’t worry, most of them won’t resurrect behind you.
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # Known Variants
+  # "Taken"
+
+  Whether through natural decay, malignant mutation or injuries sustained from ex-survivors, these infected are much slower than their disease-kin, being little more than animated corpses.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZTaken"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 100 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (1.5 m/s)[bold][color=#a4885c]*[/color][/bold]
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color], 4 [color=green]Poison[/color]
+  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] Doesn't slow down with damage.
+
+  [bold][color=#a4885c]*[/color][/bold] - [italic]an average human can run at 4.5 m/s and walk at 2.5 m/s.[/italic]
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # "Vasophage"
+
+  A crab-like clump of decayed flesh with limbs covered in wet, needle-like fibers, best not let it grab you, vaccine or no.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZVasophage"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 56 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4.3 m/s (2.3 m/s)
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=red]Pierce[/color], 8 [color=green]Poison[/color]
+  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] none
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # "Headless"
+
+  Evidently the old wisdom of destroying the brain hasn’t worked here, try cutting its limbs off next.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZHeadless"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 80 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4 m/s (2 m/s)
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color], 4 [color=green]Poison[/color]
+  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] Faster than a normal Taken. Doesn't slow down with damage.
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # "Carrier"
+
+  This unfortunate soul has had their flesh mutated into the perfect environment for Vasophages to grow, and will happily throw these at you should you get too close.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZCarrier"/>
+  <GuideEntityEmbed Entity="MobZVasophage"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 140 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.5 m/s (1.5 m/s)
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 8 [color=red]Blunt[/color], 4 [color=green]Poison[/color]
+  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] Throws Vasophages every 15 seconds.
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # "Bloated"
+
+  Rolls of rotten flesh drip down like melting wax with every lumbering step towards you, though its arms seem almost vestigial, and with the head protected under layers of rot and fat, how could it possibly hurt you?
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZBloated"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 200 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 3.6 m/s (2.5 m/s)
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=red]Blunt[/color]
+  - [bold][color=#a4885c]Damage resistances:[/color][/bold] none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] Boomer!
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # "Patient Zero"
+
+  Whether fortune or misfortune, this individual exhibited no symptoms of the disease they carried until it was far too late. Their natural resistance only gave the virus more time to mutate. They're barely human, now.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobZP0"/>
+  </Box>
+  - [bold][color=#a4885c]Health thresholds:[/color][/bold] 180 (death)
+  - [bold][color=#a4885c]Run (walk) speed:[/color][/bold] 4.8 m/s
+  - [bold][color=#a4885c]Damage (type):[/color][/bold] 6 [color=red]Blunt[/color], 6 [color=red]Slash[/color], 8 [color=green]Poison[/color]
+  - [bold][color=#a4885c]Damage resistances: none
+  - [bold][color=#a4885c]Special abilities:[/color][/bold] Remains idle until it takes damage.
+
+  [bold][color=#a4885c]________________________________________________________________________[/color]
+
+  # Mission Objectives
+  ## Elimination
+  <Box>
+  <GuideEntityEmbed Entity="MobZP0"/>
+  </Box>
+  Eliminate a dangerous creature - [color=#a4885c]Patient Zero[/color] within given time constraints to earn a monetary reward. Be warned: they may have a [color=#a4885c]twin[/color].
+
+  ## Destruction
+  <Box>
+  <GuideEntityEmbed Entity="MobZBloated"/>
+  </Box>
+  Destroy a certain number of [color=#a4885c]bloated[/color] within given time constraints to earn a monetary reward.
+</Document>

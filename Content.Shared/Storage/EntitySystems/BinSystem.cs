@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -96,7 +95,7 @@ public sealed partial class BinSystem : EntitySystem
         if (args.Using != null)
         {
             var canReach = args.CanAccess && args.CanInteract;
-            InsertIntoBin(args.User, args.Target, (EntityUid) args.Using, component, false, canReach);
+            InsertIntoBin(args.User, args.Target, (EntityUid)args.Using, component, false, canReach);
         }
     }
 

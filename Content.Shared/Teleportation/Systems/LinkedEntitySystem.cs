@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Teleportation.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -18,7 +18,39 @@ public sealed partial class LinkedEntitySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<LinkedEntityComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<LinkedEntityComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<LinkedEntityComponent, ComponentShutdown>(OnLinkShutdown);
+    }
+
+    private void OnGetState(EntityUid uid, LinkedEntityComponent component, ref ComponentGetState args)
+    {
+        var linkedEntities = new HashSet<NetEntity>();
+
+        foreach (var linked in component.LinkedEntities)
+        {
+            if (TerminatingOrDeleted(linked) || !HasComp<MetaDataComponent>(linked))
+                continue;
+
+            linkedEntities.Add(GetNetEntity(linked));
+        }
+
+        args.State = new LinkedEntityComponentState(linkedEntities);
+    }
+
+    private void OnHandleState(EntityUid uid, LinkedEntityComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not LinkedEntityComponentState state)
+            return;
+
+        component.LinkedEntities.Clear();
+        foreach (var linked in state.LinkedEntities)
+        {
+            if (!TryGetEntity(linked, out var linkedUid) || TerminatingOrDeleted(linkedUid))
+                continue;
+
+            component.LinkedEntities.Add(linkedUid.Value);
+        }
     }
 
     private void OnLinkShutdown(EntityUid uid, LinkedEntityComponent component, ComponentShutdown args)
@@ -43,7 +75,7 @@ public sealed partial class LinkedEntitySystem : EntitySystem
     /// <param name="second">The second entity to link</param>
     /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
     /// <returns>Whether linking was successful (e.g. they weren't already linked)</returns>
-    public bool TryLink(EntityUid first, EntityUid second, bool deleteOnEmptyLinks=false)
+    public bool TryLink(EntityUid first, EntityUid second, bool deleteOnEmptyLinks = false)
     {
         var firstLink = EnsureComp<LinkedEntityComponent>(first);
         var secondLink = EnsureComp<LinkedEntityComponent>(second);
@@ -64,8 +96,7 @@ public sealed partial class LinkedEntitySystem : EntitySystem
     /// <summary>
     /// Does a one-way link from source to target.
     /// </summary>
-    /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
-    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks=false)
+    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks = false)
     {
         var firstLink = EnsureComp<LinkedEntityComponent>(source);
         firstLink.DeleteOnEmptyLinks = deleteOnEmptyLinks;
@@ -89,26 +120,37 @@ public sealed partial class LinkedEntitySystem : EntitySystem
     public bool TryUnlink(EntityUid first, EntityUid second,
         LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
     {
-        if (!Resolve(first, ref firstLink))
+        var resolvedFirst = Resolve(first, ref firstLink, false);
+        var resolvedSecond = Resolve(second, ref secondLink, false);
+
+        if (!resolvedFirst && !resolvedSecond)
             return false;
 
-        if (!Resolve(second, ref secondLink))
-            return false;
+        var success = false;
 
-        var success = firstLink.LinkedEntities.Remove(second)
-                      && secondLink.LinkedEntities.Remove(first);
+        if (resolvedFirst)
+        {
+            var firstComponent = firstLink!;
+            success |= firstComponent.LinkedEntities.Remove(second);
 
-        _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstLink.LinkedEntities.Any());
-        _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondLink.LinkedEntities.Any());
+            _appearance.SetData(first, LinkedEntityVisuals.HasAnyLinks, firstComponent.LinkedEntities.Any());
+            Dirty(first, firstComponent);
 
-        Dirty(first, firstLink);
-        Dirty(second, secondLink);
+            if (firstComponent.LinkedEntities.Count == 0 && firstComponent.DeleteOnEmptyLinks)
+                QueueDel(first);
+        }
 
-        if (firstLink.LinkedEntities.Count == 0 && firstLink.DeleteOnEmptyLinks)
-            QueueDel(first);
+        if (resolvedSecond)
+        {
+            var secondComponent = secondLink!;
+            success |= secondComponent.LinkedEntities.Remove(first);
 
-        if (secondLink.LinkedEntities.Count == 0 && secondLink.DeleteOnEmptyLinks)
-            QueueDel(second);
+            _appearance.SetData(second, LinkedEntityVisuals.HasAnyLinks, secondComponent.LinkedEntities.Any());
+            Dirty(second, secondComponent);
+
+            if (secondComponent.LinkedEntities.Count == 0 && secondComponent.DeleteOnEmptyLinks)
+                QueueDel(second);
+        }
 
         return success;
     }

@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Linq;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -33,7 +32,7 @@ namespace Content.Shared.FixedPoint
 
         private readonly double ShiftDown()
         {
-            return Value / (double) ShiftConstant;
+            return Value / (double)ShiftConstant;
         }
 
         private FixedPoint2(int value)
@@ -52,7 +51,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(float value)
         {
-            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
+            return new((int)ApplyFloatEpsilon(value * ShiftConstant));
         }
 
         private static float ApplyFloatEpsilon(float value)
@@ -70,12 +69,12 @@ namespace Content.Shared.FixedPoint
         /// </summary>
         public static FixedPoint2 NewCeiling(float value)
         {
-            return new((int) MathF.Ceiling(value * ShiftConstant));
+            return new((int)MathF.Ceiling(value * ShiftConstant));
         }
 
         public static FixedPoint2 New(double value)
         {
-            return new((int) ApplyFloatEpsilon(value * ShiftConstant));
+            return new((int)ApplyFloatEpsilon(value * ShiftConstant));
         }
 
         public static FixedPoint2 New(string value)
@@ -100,12 +99,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
-            return new((int) ApplyFloatEpsilon(a.Value * b));
+            return new((int)ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            return new((int) ApplyFloatEpsilon(a.Value * b));
+            return new((int)ApplyFloatEpsilon(a.Value * b));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
@@ -115,12 +114,12 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            return new((int) (ShiftConstant * (long) a.Value / b.Value));
+            return new((int)(ShiftConstant * (long)a.Value / b.Value));
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
         {
-            return new((int) ApplyFloatEpsilon(a.Value / b));
+            return new((int)ApplyFloatEpsilon(a.Value / b));
         }
 
         public static bool operator <=(FixedPoint2 a, int b)
@@ -185,7 +184,7 @@ namespace Content.Shared.FixedPoint
 
         public readonly float Float()
         {
-            return (float) ShiftDown();
+            return (float)ShiftDown();
         }
 
         public readonly double Double()
@@ -274,9 +273,22 @@ namespace Content.Shared.FixedPoint
             // TODO implement "lossless" serializer.
             // I.e., dont use floats.
             if (value == "MaxValue")
+            {
                 Value = int.MaxValue;
-            else
-                this = New(Parse.Double(value));
+                return;
+            }
+
+            this = value switch
+            {
+                _ when Parse.TryDouble(value, out var res) => res,
+
+                // HL: If we failed, try checking the last char and dropping, sometimes garbage has been making it through for SOME REASON
+                // We're trying the usual method first because I don't want a performance hit for every valid string
+                _ when value.Length > 0 && !char.IsAsciiDigit(value[^1])
+                                        && Parse.TryDouble(value.AsSpan()[..^1], out var res) => res,
+
+                _ => Parse.Double(value) // We can't actually raise an exception here so let the parser do it for us
+            };
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";

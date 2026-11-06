@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Guidebook.Controls;
 using Pidgin;
 using Robust.Client.UserInterface;
@@ -32,6 +31,12 @@ public sealed partial class DocumentParsingManager
 
     private static readonly Parser<char, Unit> SkipNewline = Whitespace.SkipUntil(Char('\n'));
 
+    // XML comment parser, skips <!-- ... --> comments
+    private static readonly Parser<char, Unit> TrySkipComment =
+        Try(String("<!--"))
+            .Then(AnyCharExcept('\0').SkipUntil(Try(String("-->"))))
+            .Then(SkipWhitespaces);
+
     private static readonly Parser<char, char> TrySingleNewlineToSpace =
         Try(SkipNewline).Then(SkipWhitespaces).ThenReturn(' ');
 
@@ -54,8 +59,9 @@ public sealed partial class DocumentParsingManager
     private static readonly Parser<char, Unit> TryStartParagraph =
         Try(SkipNewline.Then(SkipNewline)).Then(SkipWhitespaces);
 
+    // Added Try to make sure we don't miss <!-- comments
     private static readonly Parser<char, Unit> TryLookTextEnd =
-        Lookahead(OneOf(TryStartTag, TryStartList, TryStartParagraph, Try(Whitespace.SkipUntil(End))));
+        Lookahead(OneOf(TryStartTag, TryStartList, TryStartParagraph, Try(Whitespace.SkipUntil(End)), Try(String("<!--").Then(Return(Unit.Value)))));
 
     private static readonly Parser<char, string> TextParser =
         TextChar.AtLeastOnceUntil(TryLookTextEnd).Select(string.Concat);
@@ -92,30 +98,30 @@ public sealed partial class DocumentParsingManager
 
     private static readonly Parser<char, Control> HeaderControlParser = Try(Char('#'))
         .Then(SkipWhitespaces.Then(Map(text => new Label
-                {
-                    Text = text,
-                    StyleClasses = { "LabelHeadingBigger" }
-                },
+        {
+            Text = text,
+            StyleClasses = { "LabelHeadingBigger" }
+        },
                 AnyCharExcept('\n').AtLeastOnceString())
             .Cast<Control>()))
         .Labelled("header");
 
     private static readonly Parser<char, Control> SubHeaderControlParser = Try(String("##"))
         .Then(SkipWhitespaces.Then(Map(text => new Label
-                {
-                    Text = text,
-                    StyleClasses = { "LabelHeading" }
-                },
+        {
+            Text = text,
+            StyleClasses = { "LabelHeading" }
+        },
                 AnyCharExcept('\n').AtLeastOnceString())
             .Cast<Control>()))
         .Labelled("subheader");
 
     private static readonly Parser<char, Control> TertiaryHeaderControlParser = Try(String("###"))
         .Then(SkipWhitespaces.Then(Map(text => new Label
-                {
-                    Text = text,
-                    StyleClasses = { "LabelKeyText" }
-                },
+        {
+            Text = text,
+            StyleClasses = { "LabelKeyText" }
+        },
                 AnyCharExcept('\n').AtLeastOnceString())
             .Cast<Control>()))
         .Labelled("tertiaryheader");
@@ -199,6 +205,7 @@ public sealed partial class DocumentParsingManager
     // parser for an opening tag.
     private static readonly Parser<char, string> TryOpeningTag =
         Try(Char('<'))
+            .Then(Not(String("!--"))) // Don't match if this is a comment
             .Then(SkipWhitespaces)
             .Then(TextChar.Until(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd)))
             .Select(string.Concat)

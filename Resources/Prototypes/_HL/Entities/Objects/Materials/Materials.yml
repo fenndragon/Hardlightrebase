@@ -1,0 +1,900 @@
+- type: entity
+  parent: MaterialBase
+  id: MaterialResin
+  name: Resin
+  description: A sticky material.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: PhysicalComposition
+    materialComposition:
+      Resin: 100
+  - type: Sprite
+    sprite: _HL/Objects/Materials/resin.rsi
+    state: icon
+  - type: Stack
+    count: 50
+    stackType: Resin
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+  - type: Item
+    sprite: _HL/Objects/Materials/resin.rsi
+    heldPrefix: resin
+
+- type: entity
+  parent: MaterialResin
+  id: MaterialResin25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
+  parent: MaterialResin
+  id: MaterialResin1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialRoyalResin
+  name: Royal Resin
+  description: A dark sticky material.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: PhysicalComposition
+    materialComposition:
+      Resin: 100
+  - type: Sprite
+    sprite: _HL/Objects/Materials/royalresin.rsi
+    state: icon
+  - type: Stack
+    count: 50
+    stackType: RoyalResin
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+  - type: Item
+    sprite: _HL/Objects/Materials/royalresin.rsi
+    heldPrefix: royalresin
+
+- type: entity
+  parent: MaterialRoyalResin
+  id: MaterialRoyalResin25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
+  parent: MaterialRoyalResin
+  id: MaterialRoyalResin1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #light frame
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialLightShipWeaponFrame
+  name: light ship frame
+  description: A machine frame for a light ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: frame_0
+  - type: Stack
+    count: 10
+    stackType: LightShipWeaponFrame
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: LightShipWeaponFrame
+
+- type: entity
+  parent:  MaterialLightShipWeaponFrame
+  id:  MaterialLightShipWeaponFrame2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialLightShipWeaponFrame
+  id:  MaterialLightShipWeaponFrame1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #light servo
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialLightShipWeaponServo
+  name: light ship servo
+  description: A machine servo for a light ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: servo-light
+  - type: Stack
+    count: 10
+    stackType: LightShipWeaponServo
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: LightShipWeaponServo
+
+- type: entity
+  parent:  MaterialLightShipWeaponServo
+  id:  MaterialLightShipWeaponServo2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialLightShipWeaponServo
+  id:  MaterialLightShipWeaponServo1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #light internals
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialLightShipWeaponInternal
+  name: light ship circuit
+  description: A machine circuit for a light ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    layers:
+    - state: processor-light
+    - state: processor-light-unshaded
+      shader: unshaded
+  - type: Stack
+    count: 10
+    stackType: LightShipWeaponInternal
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: LightShipWeaponInternal
+
+- type: entity
+  parent:  MaterialLightShipWeaponInternal
+  id:  MaterialLightShipWeaponInternal2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialLightShipWeaponInternal
+  id:  MaterialLightShipWeaponInternal1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #medium frame
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialMediumShipWeaponFrame
+  name: medium ship frame
+  description: A machine frame for a medium ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: frame_1
+  - type: Stack
+    count: 10
+    stackType: MediumShipWeaponFrame
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: MediumShipWeaponFrame
+
+- type: entity
+  parent:  MaterialMediumShipWeaponFrame
+  id:  MaterialMediumShipWeaponFrame2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
+  parent:  MaterialMediumShipWeaponFrame
+  id:  MaterialMediumShipWeaponFrame1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Medium servo
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialMediumShipWeaponServo
+  name: medium ship servo
+  description: A machine servo for a medium ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: servo-medium
+  - type: Stack
+    count: 10
+    stackType: MediumShipWeaponServo
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: MediumShipWeaponServo
+
+- type: entity
+  parent:  MaterialMediumShipWeaponServo
+  id:  MaterialMediumShipWeaponServo2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialMediumShipWeaponServo
+  id:  MaterialMediumShipWeaponServo1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Medium internals
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialMediumShipWeaponInternal
+  name: medium ship circuit
+  description: A machine circuit for a medium ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    layers:
+    - state: processor-medium
+    - state: processor-medium-unshaded
+      shader: unshaded
+  - type: Stack
+    count: 10
+    stackType: MediumShipWeaponInternal
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: MediumShipWeaponInternal
+
+- type: entity
+  parent:  MaterialMediumShipWeaponInternal
+  id:  MaterialMediumShipWeaponInternal2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialMediumShipWeaponInternal
+  id:  MaterialMediumShipWeaponInternal1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Heavy frame
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialHeavyShipWeaponFrame
+  name: heavy ship frame
+  description: A machine frame for a heavy ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: frame_2
+  - type: Stack
+    count: 10
+    stackType: HeavyShipWeaponFrame
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: HeavyShipWeaponFrame
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponFrame
+  id:  MaterialHeavyShipWeaponFrame2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponFrame
+  id:  MaterialHeavyShipWeaponFrame1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Heavy servo
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialHeavyShipWeaponServo
+  name: heavy ship servo
+  description: A machine servo for a heavy ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: servo-heavy
+  - type: Stack
+    count: 10
+    stackType: HeavyShipWeaponServo
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: HeavyShipWeaponServo
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponServo
+  id:  MaterialHeavyShipWeaponServo2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponServo
+  id:  MaterialHeavyShipWeaponServo1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Heavy internals
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialHeavyShipWeaponInternal
+  name: heavy ship circuit
+  description: A machine circuit for a heavy ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    layers:
+    - state: processor-heavy
+    - state: processor-heavy-unshaded
+      shader: unshaded
+  - type: Stack
+    count: 10
+    stackType: HeavyShipWeaponInternal
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: HeavyShipWeaponInternal
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponInternal
+  id:  MaterialHeavyShipWeaponInternal2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialHeavyShipWeaponInternal
+  id:  MaterialHeavyShipWeaponInternal1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Capital frame
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialCapitalShipWeaponFrame
+  name: capital ship frame
+  description: A machine frame for a capital ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: frame_3
+  - type: Stack
+    count: 10
+    stackType: CapitalShipWeaponFrame
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: CapitalShipWeaponFrame
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponFrame
+  id:  MaterialCapitalShipWeaponFrame2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponFrame
+  id:  MaterialCapitalShipWeaponFrame1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Capital servo
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialCapitalShipWeaponServo
+  name: capital ship servo
+  description: A machine servo for a capital ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    state: servo-capital
+  - type: Stack
+    count: 10
+    stackType: CapitalShipWeaponServo
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: CapitalShipWeaponServo
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponServo
+  id:  MaterialCapitalShipWeaponServo2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponServo
+  id:  MaterialCapitalShipWeaponServo1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+    #Capital internals
+- type: entity
+  parent: [MaterialBase, BaseC2Contraband]
+  id: MaterialCapitalShipWeaponInternal
+  name: capital ship circuit
+  description: A machine circuit for a capital ship structure.
+  suffix: Full
+  components:
+  - type: ConstructionMaterials # Frontier
+  - type: Sprite
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    layers:
+    - state: processor-capital
+    - state: processor-capital-unshaded
+      shader: unshaded
+  - type: Stack
+    count: 10
+    stackType: CapitalShipWeaponInternal
+  - type: Item
+    sprite: _HL/Objects/Devices/ship_parts.rsi
+    heldPrefix: CapitalShipWeaponInternal
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponInternal
+  id:  MaterialCapitalShipWeaponInternal2
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent:  MaterialCapitalShipWeaponInternal
+  id:  MaterialCapitalShipWeaponInternal1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHiPowerGunpowder
+  suffix: Full
+  name: triple-base gunpowder
+  description: An explosive compound.  More difficult to synthesize and handle, but more powerful.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: HiPowerGunpowder
+    count: 60
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+  - type: PhysicalComposition
+    materialComposition:
+      Gunpowder: 100
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialHiPowerGunpowder
+  id: MaterialHiPowerGunpowder10
+  name: triple-base gunpowder
+  suffix: 10
+  components:
+  - type: Stack
+    stackType: HiPowerGunpowder
+    count: 10
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+
+- type: entity
+  parent: MaterialHiPowerGunpowder
+  id: MaterialHiPowerGunpowder1
+  name: triple-base gunpowder
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: HiPowerGunpowder
+    count: 1
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletTip
+  name: bullet tip
+  description: A standard metal bullet tip, for those who like to hand-pack their bullets.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletTip
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: tip
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing9x19mm
+  name: brass casing (9x19mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 9x19mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing9x19mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing45_ACP
+  name: brass casing (45 ACP)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 45 ACP.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing45_ACP
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing46x30mm
+  name: brass casing (46x30mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 46x30mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing46x30mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 5
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing45_magnum
+  name: brass casing (45 magnum)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 45 magnum.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing45_magnum
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 15 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing556x45mm
+  name: brass casing (556x45mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 556x45mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing556x45mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing57x28mm
+  name: brass casing (57x28mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 57x28mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing57x28mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing762x39mm
+  name: brass casing (762x39mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 762x39mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing762x39mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 10 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing762x51mm
+  name: brass casing (762x51mm)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 762x51mm.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing762x51mm
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 10 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing762x54mmR
+  name: brass casing (762x54mmR)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 762x54mmR.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing762x54mmR
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 15 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing8x65mmSKR
+  name: brass casing (8x65mm SKR)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 8x65mmSKR.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing8x65mmSKR
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: base-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 15 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing23x75mm
+  name: brass casing (4 gauge)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 4 gauge.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing23x75mm
+    count: 1
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Casings/4_gauge_shell.rsi
+    state: blank-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 50 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletCasing12_gauge
+  name: brass casing (12 gauge)
+  description: A high-quality brass bullet casing, for those who like to hand-pack their bullets.  This one is 12 gauge.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletCasing12_gauge
+    count: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: blank-spent
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 25 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialBulletFlechette
+  name: flechette
+  description: A plasteel dart used to replace a bullet tip.  Questionably legal.  Armor-piercing.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: BulletFlechette
+    count: 1
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Plasteel: 5 # HL: Material balancing
+  - type: Item
+    size: Tiny
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialArgocytePlateHeavy
+  name: heavy argocyte plate
+  description: A large dark plate gathered from a heavy argocyte.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: ArgocytePlateHeavy
+    count: 1
+  - type: Sprite
+    sprite: Objects/Materials/Shards/piece.rsi
+    state: piecelarge
+    color: "#4A5056"
+  - type: Item
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialArgocytePlateLight
+  name: light argocyte plate
+  description: A large dark plate gathered from a light argocyte.
+  components:
+  - type: Material
+  - type: Stack
+    stackType: ArgocytePlateLight
+    count: 1
+  - type: Sprite
+    sprite: Objects/Materials/Shards/piece.rsi
+    state: piecemedium
+    color: "#D4D8A0"
+  - type: Item

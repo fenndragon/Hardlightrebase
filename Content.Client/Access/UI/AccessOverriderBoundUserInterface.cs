@@ -41,7 +41,7 @@ namespace Content.Client.Access.UI
             RefreshAccess();
 
             if (State != null)
-                _window?.UpdateState(_prototypeManager, (AccessOverriderBoundUserInterfaceState) State);
+                _window?.UpdateState(_prototypeManager, (AccessOverriderBoundUserInterfaceState)State);
         }
 
         private void RefreshAccess()
@@ -51,7 +51,7 @@ namespace Content.Client.Access.UI
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
                 accessLevels = accessOverrider.AccessLevels;
-                accessLevels.Sort();
+                // accessLevels.Sort(); // Frontier: use order specified in YAML
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Content.Client.Access.UI
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            var castState = (AccessOverriderBoundUserInterfaceState) state;
+            var castState = (AccessOverriderBoundUserInterfaceState)state;
             _window?.UpdateState(_prototypeManager, castState);
         }
 

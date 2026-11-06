@@ -5,7 +5,7 @@
   - node: start
     entity: CyborgEndoskeleton
     edges:
-    - to: finish 
+    - to: cyborg
       steps:
       - assemblyId: generic
         guideString: borg-construction-guide-string
@@ -16,158 +16,201 @@
         store: part-container
 
       - component: Flash
-        name: flash
+        name: construction-graph-component-flash
         store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - component: Flash
-        name: second flash
+        name: construction-graph-component-second-flash
         store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
-  - node: finish # _Mono: Split into two phases to allow for PDV/TSF faction crafting
-    edges:
-    - to: cyborg
-      steps:
-      - tool: Screwing
-        doAfter: 0.5
-    - to: pdvcyborg
-      steps:
-      - tag: BorgIFFPDV
-        name: PDV Cyborg Intrinsics
-        icon:
-          sprite: Objects/Specific/Mech/mecha_equipment.rsi
-          state: tesla
-        doAfter: 1
-      - tool: Screwing
-        doAfter: 0.5
-    - to: tsfcyborg
-      steps:
-      - tag: BorgIFFTSF
-        name: TSF Cyborg Intrinsics
-        icon:
-          sprite: Objects/Specific/Mech/mecha_equipment.rsi
-          state: tesla
-        doAfter: 1
       - tool: Screwing
         doAfter: 0.5
 
+    - to: Quadborg
+      steps:
+      - assemblyId: quadborg
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: Quadsec
+      steps:
+      - assemblyId: quadsec
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: Quadsalv
+      steps:
+      - assemblyId: quadsalv
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: Quadserv
+      steps:
+      - assemblyId: quadserv
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: Quadmed
+      steps:
+      - assemblyId: quadmed
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: Quadengi
+      steps:
+      - assemblyId: quadengi
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: Quadborg
+    entity: BorgChassisQuad
+
+  - node: Quadsec
+    entity: BorgChassisQuadSec
+
+  - node: Quadengi
+    entity: BorgChassisQuadEngineer
+
+  - node: Quadsalv
+    entity: BorgChassisQuadsalv
+
+  - node: Quadserv
+    entity: BorgChassisQuadserv
+
+  - node: Quadmed
+    entity: BorgChassisQuadmed
+
   - node: cyborg
     entity: BorgChassisSelectable
-  
-  - node: derelictcyborg
-    entity: BorgChassisDerelict
-  
-  - node: pdvcyborg # _Mono
-    entity: BorgChassisSelectablePDV
-  
-  - node: tsfcyborg # _Mono
-    entity: BorgChassisSelectableTSF
-    
-- type: constructionGraph
-  id: AiVessel
-  start: start
-  graph:
-  - node: start
-    edges:
-    - to: plasteelCore
-      completed:
-      - !type:SetAnchor
-        value: false
-      steps:
-      - material: Plasteel
-        amount: 5
-        doAfter: 4
-        
-  - node: plasteelCore
-    actions:
-    - !type:AppearanceChange
-    entity: PlasteelCore
-    edges:
-      - to: boardLoaded
-        conditions:
-          - !type:EntityAnchored {}
-        steps:
-         - tag: AICoreElectronics
-           name: ai core electronics board
-           icon:
-             sprite: Objects/Misc/module.rsi
-             state: blank_mod
-           
-  - node: boardLoaded
-    actions:
-    - !type:AppearanceChange
-    edges:
-     - to: wired
-       conditions:
-         - !type:EntityAnchored {}
-       steps:
-        - material: Cable
-          amount: 5
-          doAfter: 2
-          
-     - to: plasteelCore
-       steps:
-        - tool: Cutting
-          doAfter: 0.5
-          
-  - node: wired
-    actions:
-    - !type:AppearanceChange
-    edges:
-     - to: brainLoaded
-       conditions:
-        - !type:EntityAnchored {}
-       steps:
-       - tag: Posibrain
-         name: postrionic brain
-         icon:
-           sprite: Objects/Specific/Robotics/mmi.rsi
-           state: posibrain
-           
-     - to: boardLoaded
-       steps:
-        - tool: Cutting
-          doAfter: 1
-          
-  - node: brainLoaded
-    actions:
-    - !type:AppearanceChange
-    edges:
-     - to: glassAttatched
-       conditions:
-        - !type:EntityAnchored {}
-       steps:
-       - material: Glass
-         amount: 2
-         doAfter: 2
-        
-     - to: wired
-       steps:
-        - tool: Prying
-          doAfter: 6
-          
-  - node: glassAttatched
-    actions:
-    - !type:AppearanceChange
-    edges:
-     - to: end
-       conditions:
-        - !type:EntityAnchored {}
-       steps:
-       - tool: Screwing
-         doAfter: 0.5
-         
-     - to: brainLoaded
-       steps:
-         - tool: Prying
-           doAfter: 6
-      
-  - node: end
-    actions:
-    - !type:AppearanceChange
-    entity: PlayerStationAiVessel

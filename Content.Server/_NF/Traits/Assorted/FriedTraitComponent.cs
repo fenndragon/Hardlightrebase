@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Nyanotrasen.Kitchen.Prototypes;
 using Content.Shared._WF.EngineCompat;
 

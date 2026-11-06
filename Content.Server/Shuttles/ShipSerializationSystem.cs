@@ -1,0 +1,3791 @@
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using System.Globalization;
+using System.Numerics;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+using Content.Shared.Shuttles.Save;
+using Robust.Shared.Network;
+using Content.Shared.FixedPoint;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
+using Content.Shared.Atmos;
+using Robust.Shared.Timing;
+using Robust.Shared.Console;
+using Content.Shared.Decals;
+using Content.Server.Decals;
+using static Content.Shared.Decals.DecalGridComponent;
+using Robust.Shared.Configuration;
+using Content.Server._DV.Body.Systems; // HardLight edit - feather colors
+using Content.Shared._DV.Body.Components; // HardLight edit - feather colors
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Paper;
+using Content.Shared.Stacks;
+using Robust.Shared.Serialization.Markdown;
+using Content.Shared.VendingMachines;
+using Content.Shared.Actions;
+using Robust.Shared.EntitySerialization.Systems; // Added for MapLoaderSystem
+using Robust.Shared.EntitySerialization;
+using Content.Shared.Access.Components; // AccessReaderComponent for access retention
+using Robust.Shared.Map.Events; // For BeforeEntityReadEvent
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
+using Content.Shared.SprayPainter.Components;
+using Content.Shared.SprayPainter.Prototypes;
+using Content.Shared.Materials;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Paint;
+using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
+using Content.Shared.NameModifier.Components;
+using Content.Shared.Sprite;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Server.Clothing.Systems;
+using Content.Server.Paint;
+using static Content.Shared.Paper.PaperComponent;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
+using Content.Server._CD.Engraving;
+using Timer = Robust.Shared.Timing.Timer;
+
+namespace Content.Server.Shuttles.Save
+{
+    public sealed class ShipSerializationSystem : EntitySystem
+    {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISerializationManager _serializationManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+        [Dependency] private readonly MapSystem _map = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private readonly DecalSystem _decalSystem = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly IGameTiming _gameManager = default!;
+        [Dependency] private readonly MapLoaderSystem _mapLoader = default!; // For refactored serializer path
+        [Dependency] private readonly IDependencyCollection _dependencyCollection = default!; // Use same dependency collection as MapLoaderSystem
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+        [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
+        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
+        [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
+        [Dependency] private readonly LabelSystem _labelSystem = default!;
+        [Dependency] private readonly ChameleonClothingSystem _chameleonSystem = default!;
+        [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayersSystem = default!;
+        [Dependency] private readonly ToggleableClothingSystem _toggleableClothingSystem = default!;
+        [Dependency] private readonly PaintSystem _paintSystem = default!;
+        [Dependency] private readonly PaperSystem _paperSystem = default!;
+        [Dependency] private readonly EngraveableSystem _engraveableSystem = default!;
+        // Note: For EntityDeserializer we use IoCManager.Instance directly to avoid extra injected fields.
+
+        private ISawmill _sawmill = default!;
+
+        private ISerializer _serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+
+        private IDeserializer _deserializer = new DeserializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+
+        // Alternate deserializer for legacy saves that used underscored field names (format_version, original_grid_id, grid_id, etc.)
+        private IDeserializer _deserializerUnderscore = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _sawmill = Logger.GetSawmill("ship-serialization");
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            // Process any pending asynchronous ship load jobs in small batches per tick
+            if (_shipLoadJobs.Count == 0)
+                return;
+
+            // Read CVars once per tick
+            var enableAsync = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadAsync);
+            if (!enableAsync)
+                return;
+
+            var batchNonContained = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadBatchNonContained);
+            var batchContained = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadBatchContained);
+            var timeBudgetMs = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadTimeBudgetMs);
+            var logProgress = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadLogProgress);
+
+            var now = _gameManager.CurTime;
+
+            // Copy to avoid modification during iteration
+            for (var i = _shipLoadJobs.Count - 1; i >= 0; i--)
+            {
+                var job = _shipLoadJobs[i];
+                if (job.Complete || !_entityManager.EntityExists(job.GridOwner))
+                {
+                    _shipLoadJobs.RemoveAt(i);
+                    continue;
+                }
+
+                var start = _gameManager.CurTime;
+                var processed = 0;
+
+                // Phase 1: non-contained entities
+                if (job.NonContained.Count > 0)
+                {
+                    var toProcess = Math.Max(1, batchNonContained);
+                    while (toProcess-- > 0 && job.NonContained.Count > 0)
+                    {
+                        var entityData = job.NonContained.Dequeue();
+                        try
+                        {
+                            var coordinates = new EntityCoordinates(job.GridOwner, entityData.Position);
+                            job.ContainersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                            var newEntity = SpawnEntityWithComponents(entityData, coordinates, job.ClearDefaultsForContainers, containerSlotsToClear);
+                            if (newEntity != null)
+                            {
+                                job.IdMap[entityData.EntityId] = newEntity.Value;
+                                job.SpawnedNonContained++;
+                            }
+                            else
+                            {
+                                job.FailedNonContained++;
+                            }
+                        }
+                        catch
+                        {
+                            job.FailedNonContained++;
+                        }
+
+                        processed++;
+                        if ((_gameManager.CurTime - start).TotalMilliseconds >= timeBudgetMs)
+                            break;
+                    }
+                }
+
+                // Phase 2: contained entities (after phase 1 completes)
+                if (job.NonContained.Count == 0 && job.Contained.Count > 0 && (_gameManager.CurTime - start).TotalMilliseconds < timeBudgetMs)
+                {
+                    var toProcess = Math.Max(1, batchContained);
+                    while (toProcess-- > 0 && job.Contained.Count > 0)
+                    {
+                        var entityData = job.Contained.Dequeue();
+                        try
+                        {
+                            var tempCoordinates = new EntityCoordinates(job.GridOwner, Vector2.Zero);
+                            job.ContainersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                            var containedEntity = SpawnEntityWithComponents(entityData, tempCoordinates, job.ClearDefaultsForContainers, containerSlotsToClear);
+
+                            if (containedEntity != null)
+                            {
+                                job.IdMap[entityData.EntityId] = containedEntity.Value;
+
+                                if (!string.IsNullOrEmpty(entityData.ParentContainerEntity) &&
+                                    !string.IsNullOrEmpty(entityData.ContainerSlot) &&
+                                    job.IdMap.TryGetValue(entityData.ParentContainerEntity, out var parentContainer))
+                                {
+                                    if (InsertIntoContainer(containedEntity.Value, parentContainer, entityData.ContainerSlot))
+                                        job.SpawnedContained++;
+                                    else
+                                    {
+                                        _entityManager.DeleteEntity(containedEntity.Value);
+                                        job.IdMap.Remove(entityData.EntityId);
+                                        job.FailedContained++;
+                                    }
+                                }
+                                else
+                                {
+                                    _entityManager.DeleteEntity(containedEntity.Value);
+                                    job.IdMap.Remove(entityData.EntityId);
+                                    job.FailedContained++;
+                                }
+                            }
+                            else
+                            {
+                                job.FailedContained++;
+                            }
+                        }
+                        catch
+                        {
+                            job.FailedContained++;
+                        }
+
+                        processed++;
+                        if ((_gameManager.CurTime - start).TotalMilliseconds >= timeBudgetMs)
+                            break;
+                    }
+                }
+
+                // If all entity work is done, optionally restore decals now
+                if (job.NonContained.Count == 0 && job.Contained.Count == 0 && !job.Complete)
+                {
+                    if (job.DecalsPending && job.DecalChunkCollection != null)
+                    {
+                        var decalsRestored = 0;
+                        foreach (var (chunkPos, chunk) in job.DecalChunkCollection.ChunkCollection)
+                        {
+                            foreach (var (decalId, decal) in chunk.Decals)
+                            {
+                                var decalCoords = new EntityCoordinates(job.GridOwner, decal.Coordinates);
+                                if (_decalSystem.TryAddDecal(decal.Id, decalCoords, out _, decal.Color, decal.Angle, decal.ZIndex, decal.Cleanable))
+                                    decalsRestored++;
+                            }
+                        }
+                        if (logProgress)
+                            _sawmill.Info($"[ShipLoad] Restored {decalsRestored} decals to grid {job.GridOwner}");
+                    }
+
+                    job.Complete = true;
+                    if (logProgress)
+                    {
+                        _sawmill.Info($"[ShipLoad] Completed async ship load on grid {job.GridOwner}: non-contained {job.SpawnedNonContained}/{job.SpawnedNonContained + job.FailedNonContained}, contained {job.SpawnedContained}/{job.SpawnedContained + job.FailedContained}");
+                    }
+                }
+                else if (logProgress && processed > 0)
+                {
+                    _sawmill.Debug($"[ShipLoad] Progress grid {job.GridOwner}: remaining(non-contained={job.NonContained.Count}, contained={job.Contained.Count})");
+                }
+            }
+        }
+
+        // Async ship load job tracking
+        private sealed class ShipLoadJob
+        {
+            public EntityUid GridOwner;
+            public Queue<EntityData> NonContained = new();
+            public Queue<EntityData> Contained = new();
+            public Dictionary<string, EntityUid> IdMap = new();
+            public Dictionary<string, HashSet<string>> ContainersToClear = new(StringComparer.Ordinal);
+            public bool DecalsPending;
+            public DecalGridChunkCollection? DecalChunkCollection;
+            public int SpawnedNonContained;
+            public int FailedNonContained;
+            public int SpawnedContained;
+            public int FailedContained;
+            public bool Complete;
+            // If true, when spawning container owners we clear their default contents
+            // so we can reinsert saved contents. For legacy saves (no container data),
+            // this must be false to preserve prototype defaults like electronics.
+            public bool ClearDefaultsForContainers = true;
+        }
+
+        private readonly List<ShipLoadJob> _shipLoadJobs = new();
+
+        private static readonly HashSet<string> ActionEntityComponentTypes = new(StringComparer.Ordinal)
+        {
+            nameof(InstantActionComponent),
+            nameof(EntityTargetActionComponent),
+            nameof(WorldTargetActionComponent),
+            nameof(EntityWorldTargetActionComponent),
+        };
+
+        public ShipGridData SerializeShip(EntityUid gridId, NetUserId playerId, string shipName)
+        {
+            // Feature flag: allow fallback to legacy path (currently the same method acts as legacy until refactor complete)
+            var useLegacy = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardUseLegacySerializer);
+            if (!useLegacy)
+            {
+                return SerializeShipRefactored(gridId, playerId, shipName);
+            }
+
+            // Verbose flag for legacy path debug output
+            var verbose = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveVerbose);
+            var excludeVending = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ExcludeVendingInShipSave);
+
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
+            {
+                throw new ArgumentException($"Grid with ID {gridId} not found.");
+            }
+
+            // Validate grid isn't being deleted
+            if (!_entityManager.EntityExists(gridId) || _entityManager.IsQueuedForDeletion(gridId))
+            {
+                throw new ArgumentException($"Grid with ID {gridId} is being deleted or doesn't exist.");
+            }
+
+            // Get grid transform to normalize rotation during save
+            var gridTransform = _entityManager.GetComponent<TransformComponent>(gridId);
+            var originalGridRotation = gridTransform.LocalRotation;
+
+            try
+            {
+                // Temporarily set grid rotation to 0° for serialization
+                if (originalGridRotation != Angle.Zero)
+                {
+                    // Downgraded from Info to Debug to avoid log spam during saves
+                    if (verbose)
+                        _sawmill.Debug($"Normalizing grid rotation from {originalGridRotation.Degrees:F2}° to 0° for save");
+                    _transform.SetLocalRotation(gridId, Angle.Zero, gridTransform);
+                }
+
+                var shipGridData = new ShipGridData
+                {
+                    Metadata = new ShipMetadata
+                    {
+                        OriginalGridId = gridId.ToString(),
+                        PlayerId = playerId.ToString(),
+                        ShipName = shipName,
+                        Timestamp = DateTime.UtcNow
+                    }
+                };
+
+                var gridData = new GridData
+                {
+                    GridId = gridId.ToString()
+                };
+
+                // Proper tile serialization
+                var tiles = _map.GetAllTiles(gridId, grid);
+                foreach (var tile in tiles)
+                {
+                    var tileDef = _tileDefManager[tile.Tile.TypeId];
+                    if (tileDef.ID == "Space") // Skip space tiles
+                        continue;
+
+                    gridData.Tiles.Add(new TileData
+                    {
+                        X = tile.GridIndices.X,
+                        Y = tile.GridIndices.Y,
+                        TileType = tileDef.ID
+                    });
+                }
+
+                // Tiles serialized
+
+
+                // Skip atmosphere serialization (TileAtmosphere non-serializable); fixgridatmos handles on load
+                if (_entityManager.TryGetComponent<DecalGridComponent>(gridId, out var decalComponent))
+                {
+                    try
+                    {
+                        gridData.DecalData = SerializeDecalData(decalComponent.ChunkCollection);
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Error($"Failed to serialize decal data: {ex.Message}");
+                    }
+                }
+
+                // Optimized entity serialization - uses faster grid child enumeration
+                var serializedEntities = new HashSet<EntityUid>();
+
+                // Use grid's child enumerator instead of global entity query for better performance
+                var childEnumerator = gridTransform.ChildEnumerator;
+
+                while (childEnumerator.MoveNext(out var childUid))
+                {
+                    // Validate entity exists and isn't deleted
+                    if (!_entityManager.EntityExists(childUid) || _entityManager.IsQueuedForDeletion(childUid))
+                        continue;
+
+                    if (!_entityManager.TryGetComponent<TransformComponent>(childUid, out var childTransform))
+                        continue;
+
+                    // Anchored-only: skip loose/unanchored entities on the floor
+                    if (!childTransform.Anchored)
+                        continue;
+
+                    var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(childUid);
+                    var proto = meta?.EntityPrototype?.ID ?? string.Empty;
+
+                    // Skip entities with empty or invalid prototypes
+                    if (string.IsNullOrEmpty(proto))
+                        continue;
+
+                    // Serialize all entities with normalized grid rotation (0°)
+                    // Skip vending machines to avoid lag (delete them during save) when enabled
+                    if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(childUid))
+                    {
+                        // High-frequency per-entity log downgraded from Info to Debug
+                        if (verbose)
+                            _sawmill.Debug($"Skipping vending machine {proto} during serialization");
+                        continue; // Skip vending machines entirely (effectively deletes them from save)
+                    }
+
+                    var entityData = SerializeEntity(childUid, childTransform, proto, gridId);
+                    if (entityData != null)
+                    {
+                        gridData.Entities.Add(entityData);
+                        serializedEntities.Add(childUid);
+                    }
+                }
+
+                // Also serialize entities that are contained but might not be in the grid query
+                SerializeContainedEntities(gridId, gridData, serializedEntities);
+
+                // Validate container relationships before finalizing
+                ValidateContainerRelationships(gridData);
+
+                shipGridData.Grids.Add(gridData);
+
+                // Check for overlapping entities at same coordinates AFTER serialization
+                var positionGroups = gridData.Entities.GroupBy(e => new { e.Position.X, e.Position.Y }).Where(g => g.Count() > 1);
+                if (positionGroups.Any())
+                {
+                    _sawmill.Warning($"Found {positionGroups.Count()} positions with overlapping entities during serialization:");
+                    foreach (var group in positionGroups)
+                    {
+                        _sawmill.Warning($"  Position ({group.Key.X}, {group.Key.Y}): {string.Join(", ", group.Select(e => e.Prototype))}");
+                    }
+                }
+
+                // Consolidated summary log (previously just a generic success line)
+                _sawmill.Info($"Ship serialized successfully: {gridData.Entities.Count} entities, {gridData.Tiles.Count} tiles, decals={(gridData.DecalData != null)}");
+
+                return shipGridData;
+            }
+            finally
+            {
+                // Always restore original grid rotation, even if serialization fails
+                if (originalGridRotation != Angle.Zero)
+                {
+                    try
+                    {
+                        _transform.SetLocalRotation(gridId, originalGridRotation, gridTransform);
+                        // Downgraded from Info to Debug to reduce routine save noise
+                        if (verbose)
+                            _sawmill.Debug($"Restored grid rotation to {originalGridRotation.Degrees:F2}°");
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Error($"Failed to restore grid rotation: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        public ShipGridData SerializeShipArea(EntityUid gridId, NetUserId playerId, string shipName, Box2 bounds, HashSet<EntityUid>? excludeEntities = null, bool includeVendors = false)
+        {
+            var verbose = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveVerbose);
+            var excludeVending = !includeVendors && _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ExcludeVendingInShipSave);
+
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
+                throw new ArgumentException($"Grid with ID {gridId} not found.");
+
+            if (!_entityManager.EntityExists(gridId) || _entityManager.IsQueuedForDeletion(gridId))
+                throw new ArgumentException($"Grid with ID {gridId} is being deleted or doesn't exist.");
+
+            var gridTransform = _entityManager.GetComponent<TransformComponent>(gridId);
+            var originalGridRotation = gridTransform.LocalRotation;
+
+            try
+            {
+                if (originalGridRotation != Angle.Zero)
+                {
+                    if (verbose)
+                        _sawmill.Debug($"Normalizing grid rotation from {originalGridRotation.Degrees:F2}° to 0° for room save");
+                    _transform.SetLocalRotation(gridId, Angle.Zero, gridTransform);
+                }
+
+                var shipGridData = new ShipGridData
+                {
+                    Metadata = new ShipMetadata
+                    {
+                        OriginalGridId = gridId.ToString(),
+                        PlayerId = playerId.ToString(),
+                        ShipName = shipName,
+                        Timestamp = DateTime.UtcNow
+                    }
+                };
+
+                var gridData = new GridData
+                {
+                    GridId = gridId.ToString(),
+                    AtmosphereData = null,
+                    DecalData = SerializeDecalsInBounds(gridId, bounds)
+                };
+
+                var tiles = _map.GetAllTiles(gridId, grid);
+                foreach (var tile in tiles)
+                {
+                    var tileDef = _tileDefManager[tile.Tile.TypeId];
+                    if (tileDef.ID == "Space")
+                        continue;
+
+                    var pos = new Vector2(tile.GridIndices.X + 0.5f, tile.GridIndices.Y + 0.5f);
+                    if (!bounds.Contains(pos))
+                        continue;
+
+                    gridData.Tiles.Add(new TileData
+                    {
+                        X = tile.GridIndices.X,
+                        Y = tile.GridIndices.Y,
+                        TileType = tileDef.ID
+                    });
+                }
+
+                var serializedEntities = new HashSet<EntityUid>();
+                var childEnumerator = gridTransform.ChildEnumerator;
+                while (childEnumerator.MoveNext(out var childUid))
+                {
+                    if (excludeEntities != null && excludeEntities.Contains(childUid))
+                        continue;
+
+                    if (!_entityManager.EntityExists(childUid) || _entityManager.IsQueuedForDeletion(childUid))
+                        continue;
+
+                    if (!_entityManager.TryGetComponent<TransformComponent>(childUid, out var childTransform))
+                        continue;
+
+                    if (!childTransform.Anchored)
+                        continue;
+
+                    if (!bounds.Contains(childTransform.LocalPosition))
+                        continue;
+
+                    // Skip mobs and player-minded entities
+                    if (_entityManager.HasComponent<Content.Shared.Mobs.Components.MobStateComponent>(childUid))
+                        continue;
+                    if (_entityManager.HasComponent<Content.Shared.Mind.Components.MindContainerComponent>(childUid))
+                        continue;
+
+                    var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(childUid);
+                    var proto = meta?.EntityPrototype?.ID ?? string.Empty;
+                    if (string.IsNullOrEmpty(proto))
+                        continue;
+
+                    if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(childUid))
+                        continue;
+
+                    var entityData = SerializeEntity(childUid, childTransform, proto, gridId, roomMode: true);
+                    if (entityData != null)
+                    {
+                        gridData.Entities.Add(entityData);
+                        serializedEntities.Add(childUid);
+                    }
+                }
+
+                // Second pass: preserve loose top-level room contents. The room loader now
+                // restores their anchored state explicitly, so movable furniture and dropped
+                // items can round-trip without being deleted or welded to the floor.
+                var childEnumerator2 = gridTransform.ChildEnumerator;
+                while (childEnumerator2.MoveNext(out var childUid2))
+                {
+                    if (excludeEntities != null && excludeEntities.Contains(childUid2))
+                        continue;
+
+                    if (serializedEntities.Contains(childUid2))
+                        continue;
+
+                    if (!_entityManager.EntityExists(childUid2) || _entityManager.IsQueuedForDeletion(childUid2))
+                        continue;
+
+                    if (!_entityManager.TryGetComponent<TransformComponent>(childUid2, out var childTransform2))
+                        continue;
+
+                    // Only grab unanchored items; anchored ones already handled above
+                    if (childTransform2.Anchored)
+                        continue;
+
+                    if (!bounds.Contains(childTransform2.LocalPosition))
+                        continue;
+
+                    // Skip mobs and player-minded entities
+                    if (_entityManager.HasComponent<Content.Shared.Mobs.Components.MobStateComponent>(childUid2))
+                        continue;
+                    if (_entityManager.HasComponent<Content.Shared.Mind.Components.MindContainerComponent>(childUid2))
+                        continue;
+
+                    // Skip entities that are inside a container (SerializeContainedEntities covers them)
+                    var xform2 = _entityManager.GetComponent<TransformComponent>(childUid2);
+                    if (_containerSystem.IsEntityInContainer(childUid2))
+                        continue;
+
+                    var meta2 = _entityManager.GetComponentOrNull<MetaDataComponent>(childUid2);
+                    var proto2 = meta2?.EntityPrototype?.ID ?? string.Empty;
+                    if (string.IsNullOrEmpty(proto2))
+                        continue;
+
+                    if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(childUid2))
+                        continue;
+
+                    var entityData2 = SerializeEntity(childUid2, childTransform2, proto2, gridId, roomMode: true);
+                    if (entityData2 != null)
+                    {
+                        gridData.Entities.Add(entityData2);
+                        serializedEntities.Add(childUid2);
+                        if (verbose)
+                            _sawmill.Debug($"Serialized unanchored room item {childUid2} ({proto2})");
+                    }
+                }
+
+                SerializeContainedEntities(gridId, gridData, serializedEntities, includeVendors, roomMode: true);
+                ValidateContainerRelationships(gridData);
+
+                // Room-specific: append Properties-based component data for types the generic
+                // DataNode path can't round-trip (spray paint, material silos, storage positions).
+                foreach (var entityData in gridData.Entities)
+                {
+                    if (EntityUid.TryParse(entityData.EntityId, out var entityUid))
+                        AddRoomComponentData(entityUid, entityData);
+                }
+
+                // Drop component entries with empty Properties — these came from the generic
+                // SerializeComponent path which writes bloated DataNode YAML (unusable on load).
+                // Room restores use Properties-based paths only; empty-Properties entries are no-ops.
+                // Effect: ~4 MB room save shrinks to ~50 KB.
+                foreach (var entityData in gridData.Entities)
+                    entityData.Components.RemoveAll(c => !c.Properties.Any());
+
+                shipGridData.Grids.Add(gridData);
+
+                if (verbose)
+                    _sawmill.Debug($"Room serialized: {gridData.Entities.Count} entities, {gridData.Tiles.Count} tiles");
+
+                return shipGridData;
+            }
+            finally
+            {
+                if (originalGridRotation != Angle.Zero)
+                {
+                    try
+                    {
+                        _transform.SetLocalRotation(gridId, originalGridRotation, gridTransform);
+                        if (verbose)
+                            _sawmill.Debug($"Restored grid rotation to {originalGridRotation.Degrees:F2}° after room save");
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Error($"Failed to restore grid rotation after room save: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private ShipGridData SerializeShipRefactored(EntityUid gridId, NetUserId playerId, string shipName)
+        {
+            if (!_entityManager.TryGetComponent<MapGridComponent>(gridId, out var grid))
+                throw new ArgumentException($"Grid with ID {gridId} not found.");
+
+            if (!_entityManager.EntityExists(gridId) || _entityManager.IsQueuedForDeletion(gridId))
+                throw new ArgumentException($"Grid with ID {gridId} is being deleted or doesn't exist.");
+
+            // CVar flags
+            var verbose = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveVerbose);
+            var excludeVending = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ExcludeVendingInShipSave);
+            var progressInterval = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveProgressInterval);
+            if (progressInterval < 0) progressInterval = 0;
+
+            var gridTransform = _entityManager.GetComponent<TransformComponent>(gridId);
+            var originalGridRotation = gridTransform.LocalRotation; // Preserve rotation; don't zero it out here.
+            var skippedVending = 0;
+
+            // Temporary filter hook: veto vending machines before serializer touches them.
+            EntitySerializer.IsSerializableDelegate? veto = (Entity<MetaDataComponent> ent, ref bool serializable) =>
+            {
+                if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(ent))
+                {
+                    skippedVending++;
+                    serializable = false;
+                }
+                // serializable remains true by default for other entities
+            };
+
+            MappingDataNode? entityDataNode = null;
+            FileCategory category = FileCategory.Unknown;
+
+            try
+            {
+                // Unlike legacy path we no longer forcibly normalize rotation here; we retain original so docking can align.
+                if (verbose)
+                    _sawmill.Debug($"[Refactored] Preserving grid rotation {originalGridRotation.Degrees:F2}° during serialization");
+
+                // Attach filter
+                _mapLoader.OnIsSerializable += veto;
+                (entityDataNode, category) = _mapLoader.SerializeEntitiesRecursive(new HashSet<EntityUid> { gridId });
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Refactored serialization failed: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                _mapLoader.OnIsSerializable -= veto;
+                // No rotation mutation occurred; nothing to restore.
+            }
+
+            if (category != FileCategory.Grid || entityDataNode == null)
+                throw new InvalidOperationException("Serializer did not return a grid category node");
+
+            // Build ShipGridData wrapper
+            var shipGridData = new ShipGridData
+            {
+                Metadata = new ShipMetadata
+                {
+                    OriginalGridId = gridId.ToString(),
+                    PlayerId = playerId.ToString(),
+                    ShipName = shipName,
+                    Timestamp = DateTime.UtcNow,
+                    OriginalGridRotation = (float)Math.Round(originalGridRotation.Theta, 3)
+                }
+            };
+
+            var gridData = new GridData { GridId = gridId.ToString() };
+
+            // Tiles (retain existing tile extraction logic for compatibility)
+            var tiles = _map.GetAllTiles(gridId, grid);
+            foreach (var tile in tiles)
+            {
+                var tileDef = _tileDefManager[tile.Tile.TypeId];
+                if (tileDef.ID == "Space")
+                    continue;
+                gridData.Tiles.Add(new TileData
+                {
+                    X = tile.GridIndices.X,
+                    Y = tile.GridIndices.Y,
+                    TileType = tileDef.ID
+                });
+            }
+
+            // Decals (unchanged)
+            if (_entityManager.TryGetComponent<DecalGridComponent>(gridId, out var decalComponent))
+            {
+                try
+                {
+                    gridData.DecalData = SerializeDecalData(decalComponent.ChunkCollection);
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to serialize decal data (refactored): {ex.Message}");
+                }
+            }
+
+            // Extract entities from engine recursive serializer output.
+            // Format (MapFormat v6+) groups entities by prototype:
+            // entities:
+            // - proto: "PrototypeId"
+            //   entities:
+            //     - uid: 1
+            //       components: [ { type: Transform, pos: X,Y, rot: <float> rad, parent: <uid|invalid> }, ... ]
+            // We only need prototype, position, rotation. Component state intentionally omitted.
+            // Refactored path: enumerate live grid children to capture full component and container data,
+            // while preserving original grid rotation. Apply anchored-only filtering and recurse into containers.
+            var serializedEntities = new HashSet<EntityUid>();
+            var childEnumerator = gridTransform.ChildEnumerator;
+            while (childEnumerator.MoveNext(out var childUid))
+            {
+                if (!_entityManager.EntityExists(childUid) || _entityManager.IsQueuedForDeletion(childUid))
+                    continue;
+                if (!_entityManager.TryGetComponent<TransformComponent>(childUid, out var childTransform))
+                    continue;
+                // Anchored-only root entities
+                if (!childTransform.Anchored)
+                    continue;
+
+                var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(childUid);
+                var proto = meta?.EntityPrototype?.ID ?? string.Empty;
+                if (string.IsNullOrEmpty(proto))
+                    continue;
+                if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(childUid))
+                {
+                    skippedVending++;
+                    continue;
+                }
+
+                var entityData = SerializeEntity(childUid, childTransform, proto, gridId);
+                if (entityData != null)
+                {
+                    gridData.Entities.Add(entityData);
+                    serializedEntities.Add(childUid);
+                }
+            }
+
+            // Include contained entities recursively
+            SerializeContainedEntities(gridId, gridData, serializedEntities);
+
+            // Validate container relationships
+            ValidateContainerRelationships(gridData);
+
+            shipGridData.Grids.Add(gridData);
+            _sawmill.Info($"[Refactored] Ship serialized: {gridData.Entities.Count} entities, {gridData.Tiles.Count} tiles, decals={(gridData.DecalData != null)}, skippedVend={skippedVending}");
+            return shipGridData;
+        }
+
+        public string SerializeShipGridDataToYaml(ShipGridData data)
+        {
+            return _serializer.Serialize(data);
+        }
+
+        public ShipGridData DeserializeShipGridDataFromYaml(string yamlString, Guid loadingPlayerId)
+        {
+            return DeserializeShipGridDataFromYaml(yamlString, loadingPlayerId, out _);
+        }
+
+        public ShipGridData DeserializeShipGridDataFromYaml(string yamlString, Guid loadingPlayerId, out bool wasLegacyConverted)
+        {
+            _sawmill.Info($"Deserializing ship YAML for player {loadingPlayerId}");
+            wasLegacyConverted = false;
+            ShipGridData data;
+            try
+            {
+                // Preprocess legacy root key 'meta' -> 'metadata' if present at top level.
+                // We only rewrite if we find 'meta:' before any non-whitespace / comment content for safety.
+                var span = yamlString.AsSpan();
+                // Quick heuristic: look for a line starting with 'meta:' (ignoring leading spaces) and also containing 'grids:' later.
+                // Avoid false positives if 'metadata:' already exists.
+                var hasMetadata = yamlString.Contains("metadata:");
+                // Detect 'meta:' even if it's the very first line (no leading newline) or later.
+                var hasLegacyMetaToken = !hasMetadata && (yamlString.StartsWith("meta:") || yamlString.Contains("\nmeta:"));
+                if (hasLegacyMetaToken)
+                {
+                    // Replace only the first occurrence of a standalone 'meta:' at line start.
+                    var lines = yamlString.Split('\n');
+                    for (var i = 0; i < lines.Length; i++)
+                    {
+                        var trimmed = lines[i].TrimStart();
+                        if (trimmed.StartsWith("meta:") && !trimmed.StartsWith("metadata:"))
+                        {
+                            var leading = lines[i].Substring(0, lines[i].Length - trimmed.Length);
+                            lines[i] = leading + trimmed.Replace("meta:", "metadata:");
+                            wasLegacyConverted = true;
+                            break;
+                        }
+                        // Stop searching if we reach another root key that would precede metadata logically.
+                        if (trimmed.StartsWith("grids:"))
+                            break;
+                    }
+                    if (wasLegacyConverted)
+                        yamlString = string.Join('\n', lines);
+                }
+
+                // Additional legacy: some early saves used 'format:' instead of 'format_version:' inside metadata.
+                // Perform a simple line-based replacement only within the metadata block if present.
+                if (yamlString.Contains("format:") && !yamlString.Contains("format_version:"))
+                {
+                    // Very naive block scan: find line with 'metadata:' then replace first 'format:' encountered before 'grids:' root.
+                    var lines = yamlString.Split('\n');
+                    var inMetadata = false;
+                    for (var i = 0; i < lines.Length; i++)
+                    {
+                        var raw = lines[i];
+                        var trimmed = raw.TrimStart();
+                        if (!inMetadata)
+                        {
+                            if (trimmed.StartsWith("metadata:"))
+                                inMetadata = true;
+                        }
+                        else
+                        {
+                            // End metadata block heuristically if we hit a root-level key (no indent) like 'grids:'
+                            if (!char.IsWhiteSpace(raw, 0) && trimmed.StartsWith("grids:"))
+                                break;
+                            if (trimmed.StartsWith("format:") && !trimmed.StartsWith("format_version:"))
+                            {
+                                var leading = raw.Substring(0, raw.Length - trimmed.Length);
+                                lines[i] = leading + trimmed.Replace("format:", "format_version:");
+                                wasLegacyConverted = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (wasLegacyConverted)
+                        yamlString = string.Join('\n', lines);
+                }
+
+                // Heuristic detection: legacy underscore style (old Robust serialization) vs new camelCase style (YamlDotNet default in this system)
+                // If we see common underscored keys we attempt the underscore deserializer first.
+                var looksUnderscore = yamlString.Contains("format_version:") ||
+                                      yamlString.Contains("original_grid_id:") ||
+                                      yamlString.Contains("grid_id:") ||
+                                      yamlString.Contains("tile_type:") ||
+                                      yamlString.Contains("entity_id:");
+
+                Exception? firstEx = null;
+                if (looksUnderscore)
+                {
+                    try
+                    {
+                        data = _deserializerUnderscore.Deserialize<ShipGridData>(yamlString);
+                        _sawmill.Debug("[ShipLoad] Parsed YAML using underscore naming convention.");
+                        return data;
+                    }
+                    catch (Exception exUnderscore)
+                    {
+                        firstEx = exUnderscore;
+                        _sawmill.Debug($"[ShipLoad] Underscore deserializer failed ({exUnderscore.Message}); attempting camelCase fallback.");
+                    }
+                }
+
+                // Fallback / primary path: camelCase
+                try
+                {
+                    data = _deserializer.Deserialize<ShipGridData>(yamlString);
+                }
+                catch (Exception exCamel)
+                {
+                    // If we already tried underscore and it failed, surface original + camel errors for context.
+                    if (firstEx != null)
+                    {
+                        _sawmill.Error($"YAML deserialization failed with both underscore ({firstEx.Message}) and camelCase ({exCamel.Message}) attempts.");
+                    }
+                    throw; // Original catch below will log again in unified format.
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"YAML deserialization failed: {ex.Message}");
+                throw;
+            }
+
+            // Player ID check removed - anyone can load any ship file
+
+            return data;
+        }
+
+        /// <summary>
+        /// Fast-path loader for standard MapGrid YAML (engine-native). Returns the new grid UID or null on failure.
+        /// </summary>
+        public EntityUid? TryLoadStandardGridYaml(string yamlData, MapId map, System.Numerics.Vector2 offset)
+        {
+            try
+            {
+                using var textReader = new System.IO.StringReader(yamlData);
+                var documents = DataNodeParser.ParseYamlStream(textReader).ToArray();
+                if (documents.Length != 1)
+                {
+                    _sawmill.Error("Grid YAML should contain exactly one document.");
+                    return null;
+                }
+                var data = (MappingDataNode)documents[0].Root;
+                var opts = new MapLoadOptions
+                {
+                    MergeMap = map,
+                    Offset = offset,
+                    Rotation = Angle.Zero,
+                    DeserializationOptions = DeserializationOptions.Default,
+                    ExpectedCategory = FileCategory.Grid
+                };
+
+                var ev = new BeforeEntityReadEvent();
+                RaiseLocalEvent(ev);
+                opts.DeserializationOptions.AssignMapIds = opts.ForceMapId == null;
+                if (opts.MergeMap is { } mergeTarget && !_map.MapExists(mergeTarget))
+                    throw new Exception($"Target map {mergeTarget} does not exist");
+
+                // Use injected dependency collection (mirrors MapLoaderSystem) instead of IoCManager.Instance to avoid missing registrations during map load.
+                var deps = _dependencyCollection;
+                if (deps == null)
+                {
+                    _sawmill.Error("Dependency collection was unexpectedly null during ship grid load.");
+                    return null;
+                }
+                // Ensure MapSystem (server implementation of SharedMapSystem) is initialized; some early calls may occur
+                // before normal system initialization ordering if invoked very early in round startup or test harness.
+                if (!EntityManager.EntitySysManager.TryGetEntitySystem(typeof(MapSystem), out _))
+                {
+                    try
+                    {
+                        // Force creation - this mirrors how systems are normally lazily constructed.
+                        EntityManager.EntitySysManager.GetEntitySystem<MapSystem>();
+                        _sawmill.Debug("[ShipLoad] Lazily initialized MapSystem prior to EntityDeserializer creation.");
+                    }
+                    catch (Exception initEx)
+                    {
+                        _sawmill.Debug($"[ShipLoad] Failed to initialize MapSystem early: {initEx.Message}");
+                    }
+                }
+
+                EntityDeserializer deserializer;
+                var triedMapInit = false;
+                while (true)
+                {
+                    try
+                    {
+                        deserializer = new EntityDeserializer(
+                            deps!,
+                            data,
+                            opts.DeserializationOptions,
+                            ev.RenamedPrototypes,
+                            ev.DeletedPrototypes);
+                        break; // success
+                    }
+                    catch (Robust.Shared.IoC.Exceptions.UnregisteredDependencyException ude)
+                    {
+                        // Specifically handle missing SharedMapSystem / MapSystem once.
+                        if (!triedMapInit && ude.Message.Contains("SharedMapSystem"))
+                        {
+                            triedMapInit = true;
+                            _sawmill.Debug("[ShipLoad] Retrying deserializer after attempting MapSystem init due to missing SharedMapSystem.");
+                            try
+                            {
+                                EntityManager.EntitySysManager.GetEntitySystem<MapSystem>();
+                            }
+                            catch (Exception retryEx)
+                            {
+                                _sawmill.Debug($"[ShipLoad] MapSystem retry init failed: {retryEx.Message}");
+                                return null;
+                            }
+                            continue; // retry loop
+                        }
+                        _sawmill.Debug($"Standard grid path aborted due to unregistered dependency: {ude.Message}");
+                        return null;
+                    }
+                }
+
+                if (!deserializer.TryProcessData())
+                {
+                    _sawmill.Error("Failed to process grid YAML data");
+                    return null;
+                }
+
+                deserializer.CreateEntities();
+                if (opts.ExpectedCategory is { } exp && exp != deserializer.Result.Category)
+                {
+                    _sawmill.Error($"YAML does not contain expected category {exp}");
+                    _mapLoader.Delete(deserializer.Result);
+                    return null;
+                }
+
+                var merged = new HashSet<EntityUid>();
+                if (opts.MergeMap is { } targetId)
+                {
+                    // Get the map entity (MapSystem provides this)
+                    if (!_map.TryGetMap(targetId, out var targetMapEnt))
+                        throw new Exception($"Target map {targetId} does not exist (TryGetMap failed)");
+                    deserializer.Result.Category = FileCategory.Unknown;
+                    var rotation = opts.Rotation;
+                    var matrix = Matrix3Helpers.CreateTransform(opts.Offset, rotation);
+                    var target = new Entity<TransformComponent>(targetMapEnt!.Value, Transform(targetMapEnt.Value)); // targetMapEnt guaranteed non-null here
+
+                    HashSet<EntityUid> maps = new();
+                    HashSet<EntityUid> logged = new();
+                    foreach (var uid in deserializer.Result.Entities)
+                    {
+                        var xform = Transform(uid);
+                        var parent = xform.ParentUid;
+                        if (parent == EntityUid.Invalid)
+                            continue;
+                        if (!HasComp<MapComponent>(parent))
+                            continue;
+                        if (HasComp<MapGridComponent>(parent) && logged.Add(parent))
+                        {
+                            _sawmill.Error("[ShipLoad] Standard YAML: merging a grid-map onto another map is not supported");
+                            continue;
+                        }
+                        maps.Add(parent);
+                        MergeEntityForStandardLoad(merged, uid, target, matrix, rotation);
+                    }
+
+                    deserializer.ToDelete.UnionWith(maps);
+                    deserializer.Result.Maps.RemoveWhere(x => maps.Contains(x.Owner));
+
+                    foreach (var orphan in deserializer.Result.Orphans)
+                    {
+                        MergeEntityForStandardLoad(merged, orphan, target, matrix, rotation);
+                    }
+                    deserializer.Result.Orphans.Clear();
+                }
+                else
+                {
+                    // Apply transform matrix to entities parented to map roots (non-merge path)
+                    if (opts.Offset != System.Numerics.Vector2.Zero || opts.Rotation != Angle.Zero)
+                    {
+                        var matrix = Matrix3Helpers.CreateTransform(opts.Offset, opts.Rotation);
+                        foreach (var uid in deserializer.Result.Entities)
+                        {
+                            var xform = Transform(uid);
+                            var parent = xform.ParentUid; // EntityUid (non-nullable)
+                            if (!parent.IsValid())
+                                continue; // No parent
+
+                            // Only adjust if parent is a map root (map entity without grid component)
+                            if (!HasComp<MapComponent>(parent) || HasComp<MapGridComponent>(parent))
+                                continue;
+
+                            var rot = xform.LocalRotation + opts.Rotation;
+                            var pos = System.Numerics.Vector2.Transform(xform.LocalPosition, matrix);
+                            _transform.SetLocalPositionRotation(uid, pos, rot, xform);
+                        }
+                    }
+                }
+
+                deserializer.StartEntities();
+
+                // Reconciliation: ensure all entities that reference the produced grid are parented properly
+                if (deserializer.Result.Grids.Count == 1)
+                {
+                    var gridEnt = deserializer.Result.Grids.Single().Owner;
+                    ReconcileChildParenting(gridEnt);
+                    return gridEnt;
+                }
+
+                _mapLoader.Delete(deserializer.Result);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"TryLoadStandardGridYaml failed: {ex}");
+                return null;
+            }
+        }
+
+        private void MergeEntityForStandardLoad(HashSet<EntityUid> merged, EntityUid uid, Entity<TransformComponent> target, in Matrix3x2 matrix, Angle rotation)
+        {
+            merged.Add(uid);
+            var xform = Transform(uid);
+            var angle = xform.LocalRotation + rotation;
+            var pos = System.Numerics.Vector2.Transform(xform.LocalPosition, matrix);
+            var coords = new EntityCoordinates(target.Owner, pos);
+            _transform.SetCoordinates((uid, xform, MetaData(uid)), coords, rotation: angle, newParent: target.Comp);
+        }
+
+        private void ReconcileChildParenting(EntityUid gridUid)
+        {
+            try
+            {
+                if (!TryComp<MapGridComponent>(gridUid, out _))
+                    return;
+                var fixedCount = 0;
+                foreach (var uid in EntityManager.GetEntities())
+                {
+                    if (uid == gridUid) continue;
+                    if (!TryComp(uid, out TransformComponent? xform)) continue;
+                    if (xform.GridUid == gridUid && xform.ParentUid != gridUid)
+                    {
+                        // Reparent to grid root to ensure motion / FTL docking carries them.
+                        var coords = new EntityCoordinates(gridUid, xform.LocalPosition);
+                        _transform.SetCoordinates((uid, xform, MetaData(uid)), coords, newParent: Transform(gridUid));
+                        fixedCount++;
+                    }
+                }
+                if (fixedCount > 0)
+                    _sawmill.Info($"[ShipLoad] Reconciled {fixedCount} entities to parent grid {gridUid}");
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Warning($"[ShipLoad] ReconcileChildParenting exception: {ex.Message}");
+            }
+        }
+
+        public EntityUid ReconstructShipOnMap(ShipGridData shipGridData, MapId targetMap, System.Numerics.Vector2 offset)
+        {
+            _sawmill.Info($"Reconstructing ship: {shipGridData.Grids.Count} grids, {shipGridData.Grids[0].Entities.Count} entities");
+            if (shipGridData.Grids.Count == 0)
+            {
+                throw new ArgumentException("No grid data to reconstruct.");
+            }
+
+            var primaryGridData = shipGridData.Grids[0];
+            // Primary grid entities
+            // Primary grid tiles
+
+            var newGrid = _mapManager.CreateGridEntity(targetMap);
+            // Ensure the reconstructed grid participates in physics so docking can create an actual joint.
+            // Without a PhysicsComponent on the grid, DockingSystem.Dock will set DockedWith but skip joint creation.
+            // Ensure a PhysicsComponent exists so DockingSystem can create a weld joint between grids.
+            _entityManager.EnsureComponent<Robust.Shared.Physics.Components.PhysicsComponent>(newGrid);
+            // Created new grid
+
+            // Note: Grid splitting prevention would require internal access
+            // TODO: Investigate alternative approaches to prevent grid splitting
+
+            // Move grid to the specified offset position
+            var gridXform = Transform(newGrid);
+            _transform.SetWorldPosition((newGrid, gridXform), offset);
+            // Apply original saved rotation (if any) before spawning entities/tiles so local positions remain valid.
+            var savedRot = Angle.Zero;
+            if (shipGridData.Metadata != null && Math.Abs(shipGridData.Metadata.OriginalGridRotation) > 0.0001f)
+            {
+                savedRot = new Angle(shipGridData.Metadata.OriginalGridRotation);
+                gridXform.LocalRotation = savedRot;
+                _sawmill.Info($"Applied saved grid rotation {savedRot.Degrees:F2}° to reconstructed ship prior to docking");
+            }
+
+            // Reconstruct tiles in connectivity order to prevent grid splitting
+            var tilesToPlace = new List<(Vector2i coords, Tile tile)>();
+            foreach (var tileData in primaryGridData.Tiles)
+            {
+                if (string.IsNullOrEmpty(tileData.TileType) || tileData.TileType == "Space")
+                    continue;
+
+                try
+                {
+                    var tileDef = _tileDefManager[tileData.TileType];
+                    var tile = new Tile(tileDef.TileId);
+                    var tileCoords = new Vector2i(tileData.X, tileData.Y);
+                    tilesToPlace.Add((tileCoords, tile));
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to prepare tile {tileData.TileType} at ({tileData.X}, {tileData.Y}): {ex.Message}");
+                }
+            }
+
+            // Sort tiles by connectivity using flood-fill to prevent grid splitting
+            if (tilesToPlace.Any())
+            {
+                tilesToPlace = SortTilesForConnectivity(tilesToPlace);
+            }
+
+            // Place tiles maintaining connectivity
+            foreach (var (coords, tile) in tilesToPlace)
+            {
+                _map.SetTile(newGrid.Owner, newGrid, coords, tile);
+            }
+            // Placed tiles
+
+            // Apply fixgridatmos-style atmosphere to all loaded ships
+            // Applying atmosphere
+            ApplyFixGridAtmosphereToGrid(newGrid.Owner);
+
+            // Restore decal data (optional via CVar)
+            var loadDecals = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadDecals);
+            if (loadDecals && !string.IsNullOrEmpty(primaryGridData.DecalData))
+            {
+                try
+                {
+                    var decalChunkCollection = DeserializeDecalData(primaryGridData.DecalData);
+                    if (decalChunkCollection == null)
+                        throw new InvalidOperationException("Saved decal data was empty or could not be parsed.");
+                    // Ensure the grid has a DecalGridComponent
+                    _entityManager.EnsureComponent<DecalGridComponent>(newGrid.Owner);
+
+                    // If async loading enabled, defer decals to the end of entity spawn phases to reduce spikes
+                    if (_configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadAsync))
+                    {
+                        _shipLoadJobs.Add(new ShipLoadJob
+                        {
+                            GridOwner = newGrid.Owner,
+                            NonContained = new Queue<EntityData>(), // filled later below
+                            Contained = new Queue<EntityData>(),
+                            IdMap = new Dictionary<string, EntityUid>(),
+                            DecalsPending = true,
+                            DecalChunkCollection = decalChunkCollection
+                        });
+                        // We'll merge entity queues into this job below.
+                    }
+                    else
+                    {
+                        var decalsRestored = 0;
+                        var decalsFailed = 0;
+                        foreach (var (chunkPos, chunk) in decalChunkCollection.ChunkCollection)
+                        {
+                            foreach (var (decalId, decal) in chunk.Decals)
+                            {
+                                var decalCoords = new EntityCoordinates(newGrid.Owner, decal.Coordinates);
+                                if (_decalSystem.TryAddDecal(decal.Id, decalCoords, out _, decal.Color, decal.Angle, decal.ZIndex, decal.Cleanable))
+                                    decalsRestored++;
+                                else
+                                    decalsFailed++;
+                            }
+                        }
+                        _sawmill.Info($"Restored {decalsRestored} decals from {decalChunkCollection.ChunkCollection.Count} chunks");
+                        if (decalsFailed > 0)
+                            _sawmill.Warning($"Failed to restore {decalsFailed} decals");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to restore decal data: {ex.Message}");
+                }
+            }
+            else
+            {
+                // No decal data found
+            }
+
+            // Two-phase entity reconstruction to handle containers properly
+            // Starting two-phase entity reconstruction
+
+            var entityIdMapping = new Dictionary<string, EntityUid>();
+            var spawnedEntities = new List<(EntityUid entity, string prototype, Vector2 position)>();
+
+            // Check if this is a legacy save without container data
+            var hasContainerData = primaryGridData.Entities.Any(e => e.IsContainer || e.IsContained);
+            if (!hasContainerData)
+            {
+                var enableAsync = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadAsync);
+                _sawmill.Info("Legacy save detected - no container data found");
+                if (enableAsync)
+                {
+                    var job = new ShipLoadJob { GridOwner = newGrid.Owner, ClearDefaultsForContainers = false };
+                    foreach (var entity in primaryGridData.Entities)
+                    {
+                        if (string.IsNullOrEmpty(entity.Prototype))
+                            continue;
+
+                        if (IsSerializedActionEntity(entity))
+                            continue;
+
+                        job.NonContained.Enqueue(entity);
+                    }
+                    // If there was a decal job created above for this grid, merge into it instead
+                    var existing = _shipLoadJobs.Find(j => j.GridOwner == newGrid.Owner);
+                    if (existing != null)
+                    {
+                        while (job.NonContained.Count > 0)
+                            existing.NonContained.Enqueue(job.NonContained.Dequeue());
+                    }
+                    else
+                    {
+                        _shipLoadJobs.Add(job);
+                    }
+                    _sawmill.Info($"[ShipLoad] Queued async legacy ship load on grid {newGrid.Owner} with {job.NonContained.Count} entities");
+                    return newGrid.Owner;
+                }
+                else
+                {
+                    // In legacy mode we must not clear container defaults (electronics/boards)
+                    ReconstructEntitiesLegacyMode(primaryGridData, newGrid, entityIdMapping, clearDefaults: false);
+                    return newGrid.Owner;
+                }
+            }
+
+            // Phase 1: Spawn all non-contained entities (containers, infrastructure, furniture)
+            // Pre-filter entities into separate lists in a single pass
+            var nonContainedEntities = new List<EntityData>();
+            var containedEntitiesList = new List<EntityData>();
+            var containersToClear = BuildSavedContainerSlotMap(primaryGridData.Entities);
+
+            foreach (var entity in primaryGridData.Entities)
+            {
+                if (string.IsNullOrEmpty(entity.Prototype))
+                    continue;
+
+                if (IsSerializedActionEntity(entity))
+                    continue;
+
+                if (entity.IsContained)
+                    containedEntitiesList.Add(entity);
+                else
+                    nonContainedEntities.Add(entity);
+            }
+
+            var asyncEnabled = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ShipLoadAsync);
+            if (asyncEnabled)
+            {
+                // Queue async job for phased entity spawning
+                var job = _shipLoadJobs.Find(j => j.GridOwner == newGrid.Owner);
+                if (job == null)
+                {
+                    job = new ShipLoadJob { GridOwner = newGrid.Owner, ClearDefaultsForContainers = true };
+                    _shipLoadJobs.Add(job);
+                }
+                job.ContainersToClear = containersToClear;
+                foreach (var e in nonContainedEntities)
+                {
+                    job.NonContained.Enqueue(e);
+                }
+            }
+            else
+            {
+                foreach (var entityData in nonContainedEntities)
+                {
+                    try
+                    {
+                        var coordinates = new EntityCoordinates(newGrid.Owner, entityData.Position);
+                        // In standard sync load we clear defaults so saved container contents can be re-inserted
+                        containersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                        var newEntity = SpawnEntityWithComponents(entityData, coordinates, clearDefaultsForContainers: true, containerSlotsToClear: containerSlotsToClear);
+                        if (newEntity != null)
+                        {
+                            entityIdMapping[entityData.EntityId] = newEntity.Value;
+                            spawnedEntities.Add((newEntity.Value, entityData.Prototype, entityData.Position));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Error($"Failed to spawn entity {entityData.Prototype}: {ex.Message}");
+                    }
+                }
+            }
+
+            // Phase 1 complete
+
+            // Phase 2: Spawn contained entities and insert them into containers
+            // Phase 2: Spawning contained entities
+            var containedSpawned = 0;
+            var containedFailed = 0;
+
+            if (asyncEnabled)
+            {
+                var job = _shipLoadJobs.Find(j => j.GridOwner == newGrid.Owner)!;
+                foreach (var e in containedEntitiesList)
+                    job.Contained.Enqueue(e);
+            }
+            else
+            {
+                foreach (var entityData in containedEntitiesList)
+                {
+                    try
+                    {
+                        var tempCoordinates = new EntityCoordinates(newGrid.Owner, Vector2.Zero);
+                        // In standard sync load we clear defaults for containers; legacy path handles false separately
+                        containersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                        var containedEntity = SpawnEntityWithComponents(entityData, tempCoordinates, clearDefaultsForContainers: true, containerSlotsToClear: containerSlotsToClear);
+                        if (containedEntity != null)
+                        {
+                            entityIdMapping[entityData.EntityId] = containedEntity.Value;
+                            if (!string.IsNullOrEmpty(entityData.ParentContainerEntity) &&
+                                !string.IsNullOrEmpty(entityData.ContainerSlot) &&
+                                entityIdMapping.TryGetValue(entityData.ParentContainerEntity, out var parentContainer))
+                            {
+                                if (InsertIntoContainer(containedEntity.Value, parentContainer, entityData.ContainerSlot))
+                                    containedSpawned++;
+                                else
+                                {
+                                    _entityManager.DeleteEntity(containedEntity.Value);
+                                    entityIdMapping.Remove(entityData.EntityId);
+                                    containedFailed++;
+                                }
+                            }
+                            else
+                            {
+                                _entityManager.DeleteEntity(containedEntity.Value);
+                                entityIdMapping.Remove(entityData.EntityId);
+                                containedFailed++;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Error($"Phase 2: Failed to spawn contained entity {entityData.Prototype}: {ex.Message}");
+                        containedFailed++;
+                    }
+                }
+            }
+
+            // Phase 2 complete (sync path). For async we already returned after queuing.
+
+            if (!asyncEnabled)
+            {
+                if (containedFailed > 0)
+                    _sawmill.Warning($"{containedFailed} contained entities could not be properly placed");
+                return newGrid.Owner;
+            }
+
+            return newGrid.Owner;
+        }
+
+        public void ReconstructShipOnExistingGrid(ShipGridData shipGridData, EntityUid targetGrid, System.Numerics.Vector2 offset)
+        {
+            if (shipGridData.Grids.Count == 0)
+                throw new ArgumentException("No grid data to reconstruct.");
+
+            if (!_entityManager.TryGetComponent<MapGridComponent>(targetGrid, out var gridComp))
+                throw new ArgumentException($"Target grid {targetGrid} not found.");
+
+            var primaryGridData = shipGridData.Grids[0];
+            var tileOffset = new Vector2i((int)MathF.Round(offset.X), (int)MathF.Round(offset.Y));
+
+            foreach (var tileData in primaryGridData.Tiles)
+            {
+                if (string.IsNullOrEmpty(tileData.TileType) || tileData.TileType == "Space")
+                    continue;
+
+                try
+                {
+                    var tileDef = _tileDefManager[tileData.TileType];
+                    var tile = new Tile(tileDef.TileId);
+                    var tileCoords = new Vector2i(tileData.X + tileOffset.X, tileData.Y + tileOffset.Y);
+                    _map.SetTile(targetGrid, gridComp, tileCoords, tile);
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to place tile {tileData.TileType} at ({tileData.X}, {tileData.Y}): {ex.Message}");
+                }
+            }
+
+            var entityIdMapping = new Dictionary<string, EntityUid>();
+            var hasContainerData = primaryGridData.Entities.Any(e => e.IsContainer || e.IsContained);
+            var containersToClear = BuildSavedContainerSlotMap(primaryGridData.Entities);
+
+            if (!hasContainerData)
+            {
+                foreach (var entityData in primaryGridData.Entities)
+                {
+                    if (string.IsNullOrEmpty(entityData.Prototype))
+                        continue;
+
+                    if (IsSerializedActionEntity(entityData))
+                        continue;
+
+                    var coords = new EntityCoordinates(targetGrid, entityData.Position + offset);
+                    var newEntity = SpawnEntityWithComponents(entityData, coords, clearDefaultsForContainers: false);
+                    if (newEntity != null)
+                    {
+                        RestoreRoomComponents(newEntity.Value, entityData);
+                        entityIdMapping[entityData.EntityId] = newEntity.Value;
+                        RestoreRoomAnchorState(newEntity.Value, entityData.Anchored);
+                    }
+                }
+
+                RestoreStorageLocations(primaryGridData.Entities, entityIdMapping);
+                RefreshRoomMachines(primaryGridData.Entities, entityIdMapping);
+                RestoreGridDecals(targetGrid, primaryGridData.DecalData);
+                return;
+            }
+
+            var nonContained = new List<EntityData>();
+            var contained = new List<EntityData>();
+
+            foreach (var entityData in primaryGridData.Entities)
+            {
+                if (string.IsNullOrEmpty(entityData.Prototype))
+                    continue;
+
+                if (IsSerializedActionEntity(entityData))
+                    continue;
+
+                if (entityData.IsContained)
+                    contained.Add(entityData);
+                else
+                    nonContained.Add(entityData);
+            }
+
+            foreach (var entityData in nonContained)
+            {
+                var coords = new EntityCoordinates(targetGrid, entityData.Position + offset);
+                containersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                var newEntity = SpawnEntityWithComponents(entityData, coords, clearDefaultsForContainers: true, containerSlotsToClear: containerSlotsToClear);
+                if (newEntity != null)
+                {
+                    RestoreRoomComponents(newEntity.Value, entityData);
+                    entityIdMapping[entityData.EntityId] = newEntity.Value;
+                    RestoreRoomAnchorState(newEntity.Value, entityData.Anchored);
+                }
+            }
+
+            foreach (var entityData in contained)
+            {
+                var tempCoords = new EntityCoordinates(targetGrid, Vector2.Zero);
+                containersToClear.TryGetValue(entityData.EntityId, out var containerSlotsToClear);
+                var containedEntity = SpawnEntityWithComponents(entityData, tempCoords, clearDefaultsForContainers: true, containerSlotsToClear: containerSlotsToClear);
+                if (containedEntity == null)
+                    continue;
+
+                RestoreRoomComponents(containedEntity.Value, entityData);
+                entityIdMapping[entityData.EntityId] = containedEntity.Value;
+
+                if (!string.IsNullOrEmpty(entityData.ParentContainerEntity) &&
+                    !string.IsNullOrEmpty(entityData.ContainerSlot) &&
+                    entityIdMapping.TryGetValue(entityData.ParentContainerEntity, out var parentContainer))
+                {
+                    if (!InsertIntoContainer(containedEntity.Value, parentContainer, entityData.ContainerSlot))
+                    {
+                        _entityManager.DeleteEntity(containedEntity.Value);
+                        entityIdMapping.Remove(entityData.EntityId);
+                    }
+                }
+                else
+                {
+                    _entityManager.DeleteEntity(containedEntity.Value);
+                    entityIdMapping.Remove(entityData.EntityId);
+                }
+            }
+
+            RestoreStorageLocations(primaryGridData.Entities, entityIdMapping);
+            RefreshRoomMachines(primaryGridData.Entities, entityIdMapping);
+            RestoreGridDecals(targetGrid, primaryGridData.DecalData);
+        }
+
+        public EntityUid ReconstructShip(ShipGridData shipGridData)
+        {
+            _sawmill.Info($"Reconstructing ship with {shipGridData.Grids.Count} grids");
+            if (shipGridData.Grids.Count == 0)
+            {
+                throw new ArgumentException("No grid data to reconstruct.");
+            }
+
+            var primaryGridData = shipGridData.Grids[0];
+            // Primary grid entities
+
+            // Note: Grid splitting prevention would require internal access
+            // TODO: Investigate alternative approaches to prevent grid splitting
+
+            // Create a new map for the ship instead of using MapId.Nullspace
+            _map.CreateMap(out var mapId);
+            _sawmill.Info($"Created new map {mapId}");
+
+            // Create grid entity and get its MapGridComponent without using the obsolete Component.Owner
+            var newGridEntity = _mapManager.CreateGridEntity(mapId);
+            var newGrid = _entityManager.GetComponent<MapGridComponent>(newGridEntity);
+            // Ensure the new grid has physics so any subsequent docking attaches a weld joint properly.
+            _entityManager.EnsureComponent<Robust.Shared.Physics.Components.PhysicsComponent>(newGridEntity);
+            _sawmill.Info($"Created new grid {newGridEntity} on map {mapId}");
+
+            // Reconstruct tiles in connectivity order to prevent grid splitting
+            var tilesToPlace = new List<(Vector2i coords, Tile tile)>();
+            foreach (var tileData in primaryGridData.Tiles)
+            {
+                if (string.IsNullOrEmpty(tileData.TileType) || tileData.TileType == "Space")
+                    continue;
+
+                try
+                {
+                    var tileDef = _tileDefManager[tileData.TileType];
+                    var tile = new Tile(tileDef.TileId);
+                    var tileCoords = new Vector2i(tileData.X, tileData.Y);
+                    tilesToPlace.Add((tileCoords, tile));
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to prepare tile {tileData.TileType} at ({tileData.X}, {tileData.Y}): {ex.Message}");
+                }
+            }
+
+            // Sort tiles by connectivity using flood-fill to prevent grid splitting
+            if (tilesToPlace.Any())
+            {
+                tilesToPlace = SortTilesForConnectivity(tilesToPlace);
+            }
+
+            // Place tiles maintaining connectivity
+            foreach (var (coords, tile) in tilesToPlace)
+            {
+                _map.SetTile(newGridEntity, newGrid, coords, tile);
+            }
+            // Placed tiles
+
+            // Apply fixgridatmos-style atmosphere to all loaded ships
+            // Applying atmosphere
+            ApplyFixGridAtmosphereToGrid(newGridEntity);
+
+            // Restore decal data using proper DecalSystem API
+            if (!string.IsNullOrEmpty(primaryGridData.DecalData))
+            {
+                try
+                {
+                    var decalChunkCollection = DeserializeDecalData(primaryGridData.DecalData);
+                    if (decalChunkCollection == null)
+                        throw new InvalidOperationException("Saved decal data was empty or could not be parsed.");
+                    var decalsRestored = 0;
+                    var decalsFailed = 0;
+
+                    // Ensure the grid has a DecalGridComponent
+                    _entityManager.EnsureComponent<DecalGridComponent>(newGridEntity);
+
+                    foreach (var (chunkPos, chunk) in decalChunkCollection.ChunkCollection)
+                    {
+                        foreach (var (decalId, decal) in chunk.Decals)
+                        {
+                            // Convert the decal coordinates to EntityCoordinates on the new grid
+                            var decalCoords = new EntityCoordinates(newGridEntity, decal.Coordinates);
+
+                            // Use the DecalSystem to properly add the decal
+                            if (_decalSystem.TryAddDecal(decal.Id, decalCoords, out _, decal.Color, decal.Angle, decal.ZIndex, decal.Cleanable))
+                            {
+                                decalsRestored++;
+                            }
+                            else
+                            {
+                                decalsFailed++;
+                                _sawmill.Warning($"Failed to restore decal {decal.Id} at {decal.Coordinates}");
+                            }
+                        }
+                    }
+
+                    _sawmill.Info($"Restored {decalsRestored} decals from {decalChunkCollection.ChunkCollection.Count} chunks");
+                    if (decalsFailed > 0)
+                    {
+                        _sawmill.Warning($"Failed to restore {decalsFailed} decals");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to restore decal data: {ex.Message}");
+                }
+            }
+            else
+            {
+                // No decal data found
+            }
+
+            // Reconstruct entities with component restoration
+            foreach (var entityData in primaryGridData.Entities)
+            {
+                // Skip entities with empty or null prototypes
+                if (string.IsNullOrEmpty(entityData.Prototype))
+                {
+                    _sawmill.Debug($"Skipping entity with empty prototype at {entityData.Position}");
+                    continue;
+                }
+
+                if (IsSerializedActionEntity(entityData))
+                    continue;
+
+                try
+                {
+                    var coordinates = new EntityCoordinates(newGridEntity, entityData.Position);
+                    var newEntity = _entityManager.SpawnEntity(entityData.Prototype, coordinates);
+
+                    // Apply rotation if it exists
+                    if (Math.Abs(entityData.Rotation) > 0.001f)
+                    {
+                        var transform = _entityManager.GetComponent<TransformComponent>(newEntity);
+                        transform.LocalRotation = new Angle(entityData.Rotation);
+                    }
+
+
+                    _sawmill.Debug($"Spawned entity {newEntity} ({entityData.Prototype}) at {entityData.Position}");
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to spawn entity {entityData.Prototype}: {ex.Message}");
+                    throw;
+                }
+            }
+
+            return newGridEntity;
+        }
+
+        private bool IsEntityContained(EntityUid entityUid, EntityUid gridId)
+        {
+            // Check if this entity is contained within another entity (not directly on the grid)
+            if (_entityManager.TryGetComponent<TransformComponent>(entityUid, out var transformComp))
+            {
+                var parent = transformComp.ParentUid;
+
+                // Direct grid children should always be included (pipes, cables, fixtures, etc.)
+                if (parent == gridId)
+                {
+                    return false;
+                }
+
+                while (parent.IsValid() && parent != gridId)
+                {
+                    // Get the entity prototype to make smarter containment decisions
+                    var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(parent);
+                    var parentProto = meta?.EntityPrototype?.ID ?? string.Empty;
+
+                    // Allow infrastructure entities even if they have complex hierarchies
+                    if (parentProto.Contains("Pipe") || parentProto.Contains("Cable") ||
+                        parentProto.Contains("Conduit") || parentProto.Contains("Atmos") ||
+                        parentProto.Contains("Wire") || parentProto.Contains("Junction"))
+                    {
+                        return false;
+                    }
+
+                    // If we find a parent that has a ContainerManagerComponent, this entity is contained
+                    // BUT exclude certain infrastructure containers that should be serialized
+                    if (_entityManager.HasComponent<ContainerManagerComponent>(parent))
+                    {
+                        // Allow entities in certain "infrastructure" containers
+                        if (parentProto.Contains("Pipe") || parentProto.Contains("Machine") ||
+                            parentProto.Contains("Console") || parentProto.Contains("Computer"))
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    // Move up the hierarchy
+                    if (_entityManager.TryGetComponent<TransformComponent>(parent, out var parentTransform))
+                        parent = parentTransform.ParentUid;
+                    else
+                        break;
+                }
+            }
+            return false;
+        }
+
+        private void ApplyFixGridAtmosphereToGrid(EntityUid gridUid)
+        {
+            // Execute fixgridatmos console command after a short delay to allow atmosphere system to initialize
+            Timer.Spawn(TimeSpan.FromMilliseconds(100), () =>
+            {
+                if (!_entityManager.EntityExists(gridUid))
+                {
+                    _sawmill.Debug($"Skipping fixgridatmos for deleted grid {gridUid}");
+                    return;
+                }
+
+                var netEntity = _entityManager.GetNetEntity(gridUid);
+                var commandArgs = $"fixgridatmos {netEntity}";
+                _sawmill.Info($"Running fixgridatmos command: {commandArgs}");
+
+                try
+                {
+                    _consoleHost.ExecuteCommand(null, commandArgs);
+                    _sawmill.Info($"Successfully executed fixgridatmos for grid {gridUid}");
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Failed to execute fixgridatmos command: {ex.Message}");
+                }
+            });
+        }
+
+        public string GetConvertedLegacyShipYaml(ShipGridData shipData, string playerName, string originalYamlString)
+        {
+            try
+            {
+                _sawmill.Info($"Generating converted YAML for legacy ship file for player {playerName}");
+
+                // Serialize the updated ship data
+                var convertedYamlString = SerializeShipGridDataToYaml(shipData);
+
+                _sawmill.Info($"Ship '{shipData.Metadata.ShipName}' converted successfully");
+
+                return convertedYamlString;
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to generate converted ship YAML for player {playerName}: {ex.Message}");
+                return string.Empty;
+            }
+        }
+
+        private List<ComponentData> SerializeEntityComponents(EntityUid entityUid, bool roomMode = false)
+        {
+            var componentDataList = new List<ComponentData>();
+
+            try
+            {
+                // Get all components on the entity
+                var metaData = _entityManager.GetComponent<MetaDataComponent>(entityUid);
+                foreach (var component in _entityManager.GetComponents(entityUid))
+                {
+                    // Skip certain components that shouldn't be serialized
+                    var componentType = component.GetType();
+                    if (ShouldSkipComponent(componentType))
+                        continue;
+
+                    try
+                    {
+                        ComponentData? componentData;
+                        if (component is SolutionContainerManagerComponent solutionManager)
+                        {
+                            componentData = SerializeSolutionComponent(entityUid, solutionManager);
+                        }
+                        else if (roomMode)
+                        {
+                            // Room saves: skip the generic write path entirely. It calls
+                            // _serializationManager.WriteValue ~8000 times per save and produces
+                            // DataNode YAML that can't round-trip. AddRoomComponentData handles
+                            // every component type rooms actually need to restore.
+                            continue;
+                        }
+                        else if (component is SolutionComponent solutionComp
+                                 && !float.IsFinite(solutionComp.Solution.Temperature))
+                        {
+                            // Issue #1511: SolutionComponent child entities carry their Temperature directly,
+                            // and the Robust YAML serializer will write "temperature: NaNK" for NaN values.
+                            // The SolutionContainerManagerComponent path already guards against this, but the
+                            // SolutionComponent entity itself must be sanitized before the standard write path.
+                            _sawmill.Warning($"SolutionComponent on entity {entityUid} had non-finite temperature " +
+                                             $"{solutionComp.Solution.Temperature}; resetting to room temperature before serializing.");
+                            solutionComp.Solution.Temperature = Atmospherics.T20C;
+                            componentData = SerializeComponent(component);
+                        }
+                        else
+                        {
+                            componentData = SerializeComponent(component);
+                        }
+
+                        if (componentData != null)
+                            componentDataList.Add(componentData);
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Warning($"Failed to serialize component {componentType.Name} on entity {entityUid}: {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to serialize components for entity {entityUid}: {ex.Message}");
+            }
+
+            return componentDataList;
+        }
+
+        private ComponentData? SerializeComponent(IComponent component)
+        {
+            try
+            {
+                var componentType = component.GetType();
+                var typeName = componentType.Name;
+
+                // Filter out problematic component types that shouldn't be serialized
+                if (IsProblematicComponent(componentType))
+                {
+                    // Skipping problematic component
+                    return null;
+                }
+
+                // Use RobustToolbox's serialization system to serialize the component
+                var node = _serializationManager.WriteValue(componentType, component, notNullableOverride: true);
+                var yamlData = _serializer.Serialize(ScrubRuntimeActionReferences(node));
+
+                var componentData = new ComponentData
+                {
+                    Type = typeName,
+                    YamlData = yamlData,
+                    NetId = 0 // NetID not available in this context
+                };
+
+                // Log important component preservation
+                if (IsImportantComponent(componentType))
+                {
+                    // Preserved important component
+                }
+
+                return componentData;
+            }
+            catch (Exception ex)
+            {
+                var componentType = component.GetType();
+
+                // Don't log warnings for expected problematic components
+                if (IsProblematicComponent(componentType))
+                {
+                    // Reduce noise - only log at debug level for expected failures
+                    // Expected serialization failure
+                }
+                else if (IsImportantComponent(componentType))
+                {
+                    // Only warn for important components that fail
+                    _sawmill.Warning($"Failed to serialize important component {componentType.Name}: {ex.Message}");
+                }
+                else
+                {
+                    // Less important components - just debug
+                    // Failed to serialize component
+                }
+                return null;
+            }
+        }
+
+        private bool IsProblematicComponent(Type componentType)
+        {
+            var typeName = componentType.Name;
+
+            // Network/client-side components that cause serialization issues
+            if (typeName.Contains("Network") || typeName.Contains("Client") || typeName.Contains("Ui"))
+                return true;
+
+            // Timing/temporary components that shouldn't be preserved
+            if (typeName.Contains("Timer") || typeName.Contains("Temporary") || typeName.Contains("Transient"))
+                return true;
+
+            // Event/notification components
+            if (typeName.Contains("Event") || typeName.Contains("Alert") || typeName.Contains("Notification"))
+                return true;
+
+            // Runtime/generated components
+            if (typeName.Contains("Runtime") || typeName.Contains("Generated") || typeName.Contains("Dynamic"))
+                return true;
+
+            // Known problematic component types from logs
+            var problematicTypes = new[]
+            {
+                // Client / mind / player / UI heavy
+                "ActionsComponent", "ItemSlotsComponent", "InventoryComponent", "SlotManagerComponent",
+                "HandsComponent", "BodyComponent", "PlayerInputMoverComponent", "GhostComponent",
+                "MindComponent", "MovementSpeedModifierComponent", "InputMoverComponent",
+                "ActorComponent", "StatusEffectsComponent", "BloodstreamComponent",
+                // Physics fixtures get rebuilt
+                "FixtureComponent",
+                // Low-value visuals or radio UI-only bits
+                "RadioComponent", "InteractionOutlineComponent",
+                // Scan-only
+                "SolutionScannerComponent",
+                // Runtime-only: mirrored from ShipSaveYamlSanitizer.FilteredTypes
+                "JointComponent", "NavMapComponent", "DockingComponent", "ActionGrantComponent",
+                "ForensicsComponent", "ContainmentFieldGeneratorComponent",
+                "LinkedLifecycleGridParentComponent", "ShuttleDeedComponent", "IFFComponent",
+                "StationMemberComponent", "BlockingComponent", "TurnstileComponent",
+                "SubdermalImplantComponent", "ProjectileComponent", "ItemToggleActiveSoundComponent",
+            };
+
+            return problematicTypes.Contains(typeName);
+        }
+
+        private static bool IsRuntimeActionReferenceKey(string key)
+        {
+            return key.EndsWith("ActionEntity", StringComparison.OrdinalIgnoreCase)
+                || key.EndsWith("ActionEntities", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static DataNode ScrubRuntimeActionReferences(DataNode node)
+        {
+            switch (node)
+            {
+                case MappingDataNode mapping:
+                    var cleanedMapping = new MappingDataNode(mapping.Count)
+                    {
+                        Tag = mapping.Tag,
+                        Start = mapping.Start,
+                        End = mapping.End,
+                    };
+
+                    foreach (var (key, value) in mapping)
+                    {
+                        if (IsRuntimeActionReferenceKey(key))
+                            continue;
+
+                        cleanedMapping.Add(key, ScrubRuntimeActionReferences(value));
+                    }
+
+                    return cleanedMapping;
+
+                case SequenceDataNode sequence:
+                    var cleanedSequence = new SequenceDataNode(sequence.Count)
+                    {
+                        Tag = sequence.Tag,
+                        Start = sequence.Start,
+                        End = sequence.End,
+                    };
+
+                    foreach (var child in sequence)
+                    {
+                        cleanedSequence.Add(ScrubRuntimeActionReferences(child));
+                    }
+
+                    return cleanedSequence;
+
+                default:
+                    return node.Copy();
+            }
+        }
+
+        private bool IsLiveActionEntity(EntityUid uid)
+        {
+            return _entityManager.GetComponents(uid).Any(component => component is BaseActionComponent);
+        }
+
+        private static bool IsSerializedActionEntity(EntityData entityData)
+        {
+            return entityData.Components.Any(component => ActionEntityComponentTypes.Contains(component.Type));
+        }
+
+        private ComponentData? SerializeSolutionComponent(EntityUid entityUid, SolutionContainerManagerComponent solutionManager)
+        {
+            try
+            {
+                // Create a simplified representation of the solution data for better preservation
+                var solutionData = new Dictionary<string, object>();
+
+                foreach (var (solutionName, solutionEntity) in _solutionContainerSystem.EnumerateSolutions((entityUid, solutionManager), includeSelf: false))
+                {
+                    if (solutionName == null)
+                        continue;
+
+                    var solution = solutionEntity.Comp.Solution;
+                    // Issue #1332: NaN/Infinity temperatures (from in-round bugs)
+                    // would otherwise be persisted into the ship save and spread on load.
+                    var safeTemperature = float.IsFinite(solution.Temperature)
+                        ? solution.Temperature
+                        : Atmospherics.T20C;
+                    var solutionInfo = new Dictionary<string, object>
+                    {
+                        ["Volume"] = solution.Volume.Double(),
+                        ["MaxVolume"] = solution.MaxVolume.Double(),
+                        ["Temperature"] = safeTemperature,
+                        ["Reagents"] = solution.Contents?.ToDictionary(
+                            reagent => reagent.Reagent.Prototype,
+                            reagent => (object)reagent.Quantity.Double()
+                        ) ?? new Dictionary<string, object>()
+                    };
+                    solutionData[solutionName] = solutionInfo;
+                }
+
+                var componentData = new ComponentData
+                {
+                    Type = "SolutionContainerManagerComponent",
+                    Properties = solutionData,
+                    NetId = 0 // NetID not available in this context
+                };
+
+                // Preserved solution component
+                return componentData;
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Warning($"Failed to serialize solution component: {ex.Message}");
+                return null;
+            }
+        }
+
+
+        private void AddRoomComponentData(EntityUid uid, EntityData entityData)
+        {
+            if (_entityManager.TryGetComponent<SprayPaintedComponent>(uid, out var sprayPainted))
+            {
+                var d = SerializeSprayPaintedComponent(sprayPainted);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<FeatherComponent>(uid, out var feather)) // HardLight edit - feather colors
+            {
+                var d = SerializeFeatherComponent(feather);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<MaterialStorageComponent>(uid, out var materialStorage))
+            {
+                var d = SerializeMaterialStorageComponent(materialStorage);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<StorageComponent>(uid, out var storageComp))
+            {
+                var d = SerializeStorageLocationsComponent(uid, storageComp);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<StackComponent>(uid, out var stack))
+            {
+                var d = SerializeStackComponent(stack);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<PaintedComponent>(uid, out var painted))
+            {
+                var d = SerializePaintedComponent(painted);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<LabelComponent>(uid, out var label))
+            {
+                var d = SerializeLabelComponent(label);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<PaperComponent>(uid, out var paper))
+            {
+                var d = SerializePaperComponent(paper);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<RandomSpriteComponent>(uid, out var randomSprite))
+            {
+                var d = SerializeRandomSpriteComponent(randomSprite);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<ChameleonClothingComponent>(uid, out var chameleon))
+            {
+                var d = SerializeChameleonClothingComponent(chameleon);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<AtmosPipeLayersComponent>(uid, out var layer))
+            {
+                var d = SerializeAtmosPipeLayersComponent(layer);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<EngraveableComponent>(uid, out var engraveable))
+            {
+                var d = SerializeEngraveableComponent(engraveable);
+                if (d != null) entityData.Components.Add(d);
+            }
+            if (_entityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
+            {
+                var d = SerializeMetaDataComponent(metadata);
+                if (d != null) entityData.Components.Add(d);
+            }
+        }
+
+        private void RestoreRoomComponents(EntityUid uid, EntityData entityData)
+        {
+            foreach (var componentData in entityData.Components)
+            {
+                if (componentData.Type == "SprayPaintedComponent" && componentData.Properties.Any())
+                    RestoreSprayPaintedComponent(uid, componentData);
+                else if (componentData.Type == "FeatherComponent" && componentData.Properties.Any()) // HardLight edit - feather colors
+                    RestoreFeatherComponent(uid, componentData);
+                else if (componentData.Type == "MaterialStorageComponent" && componentData.Properties.Any())
+                    RestoreMaterialStorageComponent(uid, componentData);
+                else if (componentData.Type == "StackComponent" && componentData.Properties.Any())
+                    RestoreStackComponent(uid, componentData);
+                else if (componentData.Type == "PaintedComponent" && componentData.Properties.Any())
+                    RestorePaintedComponent(uid, componentData);
+                else if (componentData.Type == "LabelComponent" && componentData.Properties.Any())
+                    RestoreLabelComponent(uid, componentData);
+                else if (componentData.Type == "PaperComponent" && componentData.Properties.Any())
+                    RestorePaperComponent(uid, componentData);
+                else if (componentData.Type == "RandomSpriteComponent" && componentData.Properties.Any())
+                    RestoreRandomSpriteComponent(uid, componentData);
+                else if (componentData.Type == "ChameleonClothingComponent" && componentData.Properties.Any())
+                    RestoreChameleonClothingComponent(uid, componentData);
+                else if (componentData.Type == "AtmosPipeLayersComponent" && componentData.Properties.Any())
+                    RestoreAtmosPipeLayersComponent(uid, componentData);
+                else if (componentData.Type == "EngraveableComponent" && componentData.Properties.Any())
+                    RestoreEngraveableComponent(uid, componentData);
+                else if (componentData.Type == "MetaDataComponent" && componentData.Properties.Any())
+                    RestoreMetaDataComponent(uid, componentData);
+                // StorageComponent locations handled in RestoreStorageLocations post-pass
+            }
+        }
+
+        private ComponentData? SerializeSprayPaintedComponent(SprayPaintedComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.PaintedPrototype))
+                return null;
+            return new ComponentData
+            {
+                Type = "SprayPaintedComponent",
+                Properties = new Dictionary<string, object> { ["PaintedPrototype"] = comp.PaintedPrototype },
+            };
+        }
+
+        private void RestoreSprayPaintedComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("PaintedPrototype", out var protoObj))
+                return;
+            var proto = protoObj?.ToString();
+            if (string.IsNullOrEmpty(proto))
+                return;
+            var comp = EnsureComp<SprayPaintedComponent>(entityUid);
+            comp.PaintedPrototype = proto;
+            Dirty(entityUid, comp);
+            // ComponentStartup already fired when the entity was spawned; re-apply appearance manually.
+            _appearance.SetData(entityUid, PaintableVisuals.Prototype, proto);
+        }
+
+        // HardLight edit start - persist feathers like paint
+        private ComponentData? SerializeFeatherComponent(FeatherComponent comp)
+        {
+            if (comp.FeatherColor == null && comp.BloodColor == null)
+                return null;
+            var props = new Dictionary<string, object>();
+            if (comp.FeatherColor is { } featherColor)
+                props["FeatherColor"] = featherColor.ToHex();
+            if (comp.BloodColor is { } bloodColor)
+                props["BloodColor"] = bloodColor.ToHex();
+            return new ComponentData
+            {
+                Type = "FeatherComponent",
+                Properties = props,
+            };
+        }
+
+        private void RestoreFeatherComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            var comp = EnsureComp<FeatherComponent>(entityUid);
+            if (componentData.Properties.TryGetValue("FeatherColor", out var featherObj) && featherObj is string featherHex && !string.IsNullOrEmpty(featherHex))
+                comp.FeatherColor = Color.FromHex(featherHex);
+            if (componentData.Properties.TryGetValue("BloodColor", out var bloodObj) && bloodObj is string bloodHex && !string.IsNullOrEmpty(bloodHex))
+                comp.BloodColor = Color.FromHex(bloodHex);
+            Dirty(entityUid, comp);
+            EntityManager.EntitySysManager.GetEntitySystem<PreenableSystem>().ApplyFeatherColors((entityUid, comp));
+        }
+        // HardLight edit end
+
+        private ComponentData? SerializeMaterialStorageComponent(MaterialStorageComponent comp)
+        {
+            if (comp.Storage.Count == 0)
+                return null;
+            var materials = comp.Storage.ToDictionary(
+                kv => kv.Key.Id,
+                kv => (object)kv.Value);
+            return new ComponentData
+            {
+                Type = "MaterialStorageComponent",
+                Properties = new Dictionary<string, object> { ["Materials"] = materials },
+            };
+        }
+
+        private void RestoreMaterialStorageComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("Materials", out var materialsObj))
+                return;
+            var materials = CoerceToDictStringObj(materialsObj);
+            if (materials == null)
+                return;
+            foreach (var (matId, amountObj) in materials)
+            {
+                if (!int.TryParse(amountObj?.ToString(), out var amount) || amount <= 0)
+                    continue;
+                _materialStorage.TrySetMaterialAmount(entityUid, matId, amount);
+            }
+        }
+
+        private void RefreshRoomMachines(List<EntityData> entityDataList, Dictionary<string, EntityUid> idMap)
+        {
+            foreach (var entityData in entityDataList)
+            {
+                if (entityData.IsContained)
+                    continue;
+                if (!idMap.TryGetValue(entityData.EntityId, out var uid))
+                    continue;
+                if (!_entityManager.TryGetComponent<MachineComponent>(uid, out var machine))
+                    continue;
+                _constructionSystem.RefreshParts(uid, machine);
+            }
+        }
+
+        private void RestoreGridDecals(EntityUid gridUid, string? decalData)
+        {
+            if (string.IsNullOrWhiteSpace(decalData))
+                return;
+
+            try
+            {
+                var decalChunkCollection = DeserializeDecalData(decalData);
+                if (decalChunkCollection == null)
+                    return;
+                _entityManager.EnsureComponent<DecalGridComponent>(gridUid);
+
+                foreach (var (_, chunk) in decalChunkCollection.ChunkCollection)
+                {
+                    foreach (var (_, decal) in chunk.Decals)
+                    {
+                        var decalCoords = new EntityCoordinates(gridUid, decal.Coordinates);
+                        _decalSystem.TryAddDecal(decal.Id, decalCoords, out _, decal.Color, decal.Angle, decal.ZIndex, decal.Cleanable);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to restore decal data on existing grid: {ex.Message}");
+            }
+        }
+
+        internal string? TransformSerializedDecalData(string? decalData, Func<Decal, Decal> transform, Func<Decal, bool>? predicate = null)
+        {
+            if (string.IsNullOrWhiteSpace(decalData))
+                return null;
+
+            var collection = DeserializeDecalData(decalData);
+            if (collection == null)
+                return null;
+
+            var chunkCollection = new Dictionary<Vector2i, DecalChunk>();
+
+            foreach (var (_, chunk) in collection.ChunkCollection)
+            {
+                foreach (var (decalId, decal) in chunk.Decals)
+                {
+                    if (predicate != null && !predicate(decal))
+                        continue;
+
+                    var transformed = transform(decal);
+                    var chunkIndices = SharedDecalSystem.GetChunkIndices(transformed.Coordinates);
+                    if (!chunkCollection.TryGetValue(chunkIndices, out var targetChunk))
+                    {
+                        targetChunk = new DecalChunk();
+                        chunkCollection[chunkIndices] = targetChunk;
+                    }
+
+                    targetChunk.Decals[decalId] = transformed;
+                }
+            }
+
+            if (chunkCollection.Count == 0)
+                return null;
+
+            var transformedCollection = new DecalGridChunkCollection(chunkCollection)
+            {
+                NextDecalId = collection.NextDecalId
+            };
+
+            return SerializeDecalData(transformedCollection);
+        }
+
+
+        private ComponentData? SerializeStackComponent(StackComponent stack)
+        {
+            return new ComponentData
+            {
+                Type = "StackComponent",
+                Properties = new Dictionary<string, object> { ["Count"] = stack.Count },
+            };
+        }
+
+        private void RestoreStackComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            if (!TryGetIntProperty(componentData, "Count", out var count) || count <= 0)
+                return;
+            _stackSystem.SetCount(entityUid, count);
+        }
+
+        private ComponentData? SerializePaintedComponent(PaintedComponent comp)
+        {
+            if (!comp.Enabled)
+                return null;
+            return new ComponentData
+            {
+                Type = "PaintedComponent",
+                Properties = new Dictionary<string, object>
+                {
+                    ["Color"] = comp.Color.ToHex(),
+                    ["Enabled"] = (object)comp.Enabled,
+                    ["ShaderName"] = comp.ShaderName,
+                },
+            };
+        }
+
+        private void RestorePaintedComponent(EntityUid uid, ComponentData componentData)
+        {
+            var comp = EnsureComp<PaintedComponent>(uid);
+            EnsureComp<AppearanceComponent>(uid);
+
+            if (componentData.Properties.TryGetValue("Color", out var colorObj) && colorObj is string hex)
+                comp.Color = Color.FromHex(hex);
+            if (componentData.Properties.TryGetValue("Enabled", out var enabledObj)
+                && bool.TryParse(enabledObj?.ToString(), out var enabled))
+                comp.Enabled = enabled;
+            if (componentData.Properties.TryGetValue("ShaderName", out var shaderObj) && shaderObj is string shader)
+                comp.ShaderName = shader;
+
+            Dirty(uid, comp);
+            _paintSystem.UpdateAppearance(uid, comp);
+        }
+
+        private ComponentData? SerializeLabelComponent(LabelComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.CurrentLabel))
+                return null;
+            return new ComponentData
+            {
+                Type = "LabelComponent",
+                Properties = new Dictionary<string, object> { ["CurrentLabel"] = comp.CurrentLabel },
+            };
+        }
+
+        private void RestoreLabelComponent(EntityUid uid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("CurrentLabel", out var labelObj))
+                return;
+            var text = labelObj?.ToString();
+            if (!string.IsNullOrEmpty(text))
+                _labelSystem.Label(uid, text);
+        }
+
+        private ComponentData? SerializePaperComponent(PaperComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.Content) && comp.StampedBy.Count == 0 && comp.StampState == null && !comp.EditingDisabled)
+                return null;
+            var props = new Dictionary<string, object>();
+            if (!string.IsNullOrEmpty(comp.Content))
+                props["Content"] = comp.Content;
+            if (comp.StampState != null)
+                props["StampState"] = comp.StampState;
+            if (comp.EditingDisabled)
+                props["EditingDisabled"] = (object)true;
+            if (comp.StampedBy.Count > 0)
+            {
+                props["Stamps"] = comp.StampedBy
+                    .Select(s => (object)new Dictionary<string, object>
+                    {
+                        ["Name"] = s.StampedName,
+                        ["Color"] = s.StampedColor.ToHex(),
+                        ["Type"] = s.Type.ToString(),
+                        ["Reapply"] = (object)s.Reapply,
+                    })
+                    .ToList();
+            }
+            return props.Count == 0 ? null : new ComponentData { Type = "PaperComponent", Properties = props };
+        }
+
+        private void RestorePaperComponent(EntityUid uid, ComponentData componentData)
+        {
+            var comp = EnsureComp<PaperComponent>(uid);
+            var appearance = EnsureComp<AppearanceComponent>(uid);
+
+            var content = componentData.Properties.TryGetValue("Content", out var contentObj)
+                ? contentObj?.ToString() ?? string.Empty
+                : string.Empty;
+
+            if (componentData.Properties.TryGetValue("StampState", out var stateObj))
+                comp.StampState = stateObj?.ToString();
+            if (componentData.Properties.TryGetValue("EditingDisabled", out var disabledObj)
+                && bool.TryParse(disabledObj?.ToString(), out var disabled))
+                comp.EditingDisabled = disabled;
+
+            comp.StampedBy = new List<StampDisplayInfo>();
+            if (componentData.Properties.TryGetValue("Stamps", out var stampsObj) && stampsObj is List<object> stampsList)
+            {
+                foreach (var item in stampsList)
+                {
+                    var dict = CoerceToDictStringObj(item);
+                    if (dict == null)
+                        continue;
+                    var info = new StampDisplayInfo
+                    {
+                        StampedName = dict.GetValueOrDefault("Name")?.ToString() ?? string.Empty,
+                        StampedColor = dict.TryGetValue("Color", out var cObj) && cObj is string ch
+                            ? Color.FromHex(ch)
+                            : Color.Red,
+                        Type = Enum.TryParse<StampType>(dict.GetValueOrDefault("Type")?.ToString(), out var st)
+                            ? st
+                            : StampType.RubberStamp,
+                        Reapply = bool.TryParse(dict.GetValueOrDefault("Reapply")?.ToString(), out var rp) && rp,
+                    };
+                    comp.StampedBy.Add(info);
+                }
+            }
+
+            _paperSystem.SetContent((uid, comp), content);
+            _appearance.SetData(uid, PaperVisuals.Stamp, comp.StampState ?? string.Empty, appearance);
+        }
+
+        private ComponentData? SerializeRandomSpriteComponent(RandomSpriteComponent comp)
+        {
+            if (comp.Selected.Count == 0)
+                return null;
+            var selected = comp.Selected.ToDictionary(
+                kv => kv.Key,
+                kv => (object)new Dictionary<string, object?>
+                {
+                    ["State"] = kv.Value.State,
+                    ["Color"] = kv.Value.Color.HasValue ? (object?)kv.Value.Color.Value.ToHex() : null,
+                });
+            return new ComponentData
+            {
+                Type = "RandomSpriteComponent",
+                Properties = new Dictionary<string, object> { ["Selected"] = selected },
+            };
+        }
+
+        private void RestoreRandomSpriteComponent(EntityUid uid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("Selected", out var selectedObj))
+                return;
+            var selectedDict = CoerceToDictStringObj(selectedObj);
+            if (selectedDict == null)
+                return;
+            var comp = EnsureComp<RandomSpriteComponent>(uid);
+            comp.Selected.Clear();
+            foreach (var (layer, entryObj) in selectedDict)
+            {
+                var entry = CoerceToDictStringObj(entryObj);
+                if (entry == null)
+                    continue;
+                var state = entry.GetValueOrDefault("State")?.ToString() ?? string.Empty;
+                Color? color = null;
+                if (entry.TryGetValue("Color", out var colorObj) && colorObj is string colorHex && !string.IsNullOrEmpty(colorHex))
+                    color = Color.FromHex(colorHex);
+                comp.Selected[layer] = (state, color);
+            }
+            Dirty(uid, comp);
+        }
+
+        private ComponentData? SerializeChameleonClothingComponent(ChameleonClothingComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.Default))
+                return null;
+            return new ComponentData
+            {
+                Type = "ChameleonClothingComponent",
+                Properties = new Dictionary<string, object> { ["Default"] = comp.Default }
+            };
+        }
+
+        private void RestoreChameleonClothingComponent(EntityUid uid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("Default", out var protoObj))
+                return;
+            var protoId = ((Dictionary<object, object>?)protoObj)?["id"].ToString();
+            if (!string.IsNullOrEmpty(protoId))
+                _chameleonSystem.SetSelectedPrototype(uid, protoId, forceUpdate: true);
+        }
+
+        private ComponentData? SerializeAtmosPipeLayersComponent(AtmosPipeLayersComponent comp)
+        {
+            if (comp.CurrentPipeLayer == AtmosPipeLayer.Primary)
+                return null;
+
+            return new ComponentData
+            {
+                Type = "AtmosPipeLayersComponent",
+                Properties = new Dictionary<string, object> { ["CurrentPipeLayer"] = comp.CurrentPipeLayer }
+            };
+        }
+
+        private void RestoreAtmosPipeLayersComponent(EntityUid uid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("CurrentPipeLayer", out var currentPipeLayerObj))
+                return;
+            var layer = Enum.TryParse((string)currentPipeLayerObj, out AtmosPipeLayer result) ? result : AtmosPipeLayer.Primary;
+            var comp = EnsureComp<AtmosPipeLayersComponent>(uid);
+            Entity<AtmosPipeLayersComponent> ent = (uid, comp);
+            _pipeLayersSystem.SetPipeLayer(ent, layer);
+        }
+
+        private ComponentData? SerializeEngraveableComponent(EngraveableComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.EngravedMessage))
+                return null;
+            return new ComponentData
+            {
+                Type = "EngraveableComponent",
+                Properties = new Dictionary<string, object> { ["EngravedMessage"] = comp.EngravedMessage }
+            };
+        }
+
+        private void RestoreEngraveableComponent(EntityUid uid, ComponentData componentData)
+        {
+            if (!componentData.Properties.TryGetValue("EngravedMessage", out var rawEngravedMessage))
+                return;
+            var engravedMessage = rawEngravedMessage.ToString();
+            if (!string.IsNullOrEmpty(engravedMessage))
+                _engraveableSystem.SetEngravedMessage(uid, engravedMessage);
+        }
+
+        private ComponentData? SerializeMetaDataComponent(MetaDataComponent comp)
+        {
+            if (string.IsNullOrEmpty(comp.EntityName) && string.IsNullOrEmpty(comp.EntityDescription))
+                return null;
+            var props = new Dictionary<string, object>();
+            if (!string.IsNullOrEmpty(comp.EntityName) && comp.EntityPrototype?.Name != comp.EntityName)
+                props["EntityName"] = comp.EntityName;
+            if (!string.IsNullOrEmpty(comp.EntityDescription) && comp.EntityPrototype?.Description != comp.EntityDescription)
+                props["EntityDescription"] = comp.EntityDescription;
+            if (props.Count == 0)
+                return null;
+            return new ComponentData
+            {
+                Type = "MetaDataComponent",
+                Properties = props
+            };
+        }
+
+        private void RestoreMetaDataComponent(EntityUid uid, ComponentData componentData)
+        {
+            var comp = EnsureComp<MetaDataComponent>(uid);
+            if (componentData.Properties.TryGetValue("EntityName", out var nameObj))
+                _metaData.SetEntityName(uid, nameObj?.ToString() ?? comp.EntityPrototype?.Name ?? string.Empty);
+            if (componentData.Properties.TryGetValue("EntityDescription", out var descObj))
+                _metaData.SetEntityDescription(uid, descObj?.ToString() ?? comp.EntityPrototype?.Description ?? string.Empty);
+        }
+
+        private ComponentData? SerializeStorageLocationsComponent(EntityUid entityUid, StorageComponent storage)
+        {
+            if (storage.StoredItems.Count == 0)
+                return null;
+            var locations = new Dictionary<string, object>();
+            foreach (var (item, loc) in storage.StoredItems)
+            {
+                locations[item.ToString()] = new Dictionary<string, object>
+                {
+                    ["X"] = loc.Position.X,
+                    ["Y"] = loc.Position.Y,
+                    ["Rotation"] = (int)loc.Direction,
+                };
+            }
+            return new ComponentData
+            {
+                Type = "StorageComponent",
+                Properties = new Dictionary<string, object> { ["Locations"] = locations },
+            };
+        }
+
+        private void RestoreStorageLocations(List<EntityData> entityDataList, Dictionary<string, EntityUid> idMap)
+        {
+            foreach (var entityData in entityDataList)
+            {
+                if (!idMap.TryGetValue(entityData.EntityId, out var storageUid))
+                    continue;
+
+                var storageComponentData = entityData.Components
+                    .FirstOrDefault(c => c.Type == "StorageComponent" && c.Properties.ContainsKey("Locations"));
+                if (storageComponentData == null)
+                    continue;
+
+                if (!_entityManager.TryGetComponent<StorageComponent>(storageUid, out var storageComp))
+                    continue;
+
+                var locationsRaw = CoerceToDictStringObj(storageComponentData.Properties["Locations"]);
+                if (locationsRaw == null)
+                    continue;
+
+                var anySet = false;
+                foreach (var (oldItemIdStr, locObj) in locationsRaw)
+                {
+                    if (!idMap.TryGetValue(oldItemIdStr, out var newItemUid))
+                        continue;
+
+                    // Only restore position for items actually inside this storage.
+                    if (!storageComp.Container.ContainedEntities.Contains(newItemUid))
+                        continue;
+
+                    var locDict = CoerceToDictStringObj(locObj);
+                    if (locDict == null)
+                        continue;
+
+                    if (!int.TryParse(locDict.GetValueOrDefault("X")?.ToString(), out var x))
+                        continue;
+                    if (!int.TryParse(locDict.GetValueOrDefault("Y")?.ToString(), out var y))
+                        continue;
+                    if (!int.TryParse(locDict.GetValueOrDefault("Rotation")?.ToString(), out var rot))
+                        rot = 0;
+
+                    // Assign directly to StoredItems, bypassing ItemFitsInGridLocation.
+                    // We are restoring a layout that was valid at save time, so the positions
+                    // are known-good. Using TrySetItemStorageLocation would fail for items whose
+                    // saved position is currently occupied by another item that hasn't been moved
+                    // yet (ordering issue), corrupting the layout.
+                    storageComp.StoredItems[newItemUid] = new ItemStorageLocation(Angle.Zero, new Vector2i(x, y))
+                    {
+                        Direction = (Direction)rot
+                    };
+                    anySet = true;
+                }
+
+                if (anySet)
+                {
+                    _storageSystem.UpdateUI((storageUid, storageComp));
+                    Dirty(storageUid, storageComp);
+                }
+            }
+        }
+
+        private static readonly Dictionary<Type, bool> ComponentSkipCache = new();
+
+        private bool ShouldSkipComponent(Type componentType)
+        {
+            if (ComponentSkipCache.TryGetValue(componentType, out var cached))
+                return cached;
+
+            var typeName = componentType.Name;
+
+            var shouldSkip = false;
+
+            // Skip transform components (position handled separately)
+            if (typeName == "TransformComponent")
+                shouldSkip = true;
+
+            // Skip metadata components (handled separately)
+            else if (typeName == "MetaDataComponent")
+                shouldSkip = true;
+
+            // Skip physics components (usually regenerated)
+            else if (typeName.Contains("Physics"))
+                shouldSkip = true;
+
+            // Skip client-side sprite components (not present server-side)
+            else if (typeName.Contains("Sprite"))
+                shouldSkip = true;
+
+            // Skip network/client-side components
+            else if (typeName.Contains("Eye") || typeName.Contains("Input") || typeName.Contains("UserInterface"))
+                shouldSkip = true;
+
+            ComponentSkipCache[componentType] = shouldSkip;
+            return shouldSkip;
+        }
+
+        private bool IsImportantComponent(Type componentType)
+        {
+            var typeName = componentType.Name;
+
+            // Chemical/solution components - high priority for preservation
+            if (typeName.Contains("Solution") || typeName.Contains("Chemical"))
+                return true;
+
+            // Book and text components (paper no longer preserved)
+            if (typeName.Contains("Book") || typeName.Contains("SignComponent"))
+                return true;
+
+            // Storage and container components
+            if (typeName.Contains("Storage") || typeName.Contains("Container"))
+                return true;
+
+            // Seed and plant components (GMO preservation)
+            if (typeName.Contains("Seed") || typeName.Contains("Plant") || typeName.Contains("Produce"))
+                return true;
+
+            // Stack and quantity components
+            if (typeName.Contains("Stack") || typeName.Contains("Quantity"))
+                return true;
+
+            // Power and battery components
+            if (typeName.Contains("Battery") || typeName.Contains("PowerCell"))
+                return true;
+
+            // Generator and fuel components (PACMAN, AME, etc.)
+            if (typeName.Contains("Generator") || typeName.Contains("Fuel") || typeName.Contains("AME") ||
+                typeName.Contains("PACMAN") || typeName.Contains("Reactor") || typeName.Contains("Engine"))
+                return true;
+
+            // Power/energy storage and distribution
+            if (typeName.Contains("Power") || typeName.Contains("Energy") || typeName.Contains("Charge"))
+                return true;
+
+            // Machine state components
+            if (typeName.Contains("Machine") || typeName.Contains("Processor") || typeName.Contains("Fabricator"))
+                return true;
+
+            // Atmospheric components (for atmospheric engines, scrubbers, etc.)
+            if (typeName.Contains("Atmospheric") || typeName.Contains("Gas") || typeName.Contains("Atmos"))
+                return true;
+
+            // IFF and ship identification components
+            if (typeName.Contains("IFF") || typeName.Contains("Identification") || typeName.Contains("Identity"))
+                return true;
+
+            // Access control: doors, airlocks, consoles using AccessReader must retain configuration.
+            if (typeName.Contains("AccessReader"))
+                return true;
+
+            return false;
+        }
+
+        private void RestoreEntityComponents(EntityUid entityUid, List<ComponentData> componentDataList)
+        {
+            var restored = 0;
+            var failed = 0;
+            var skipped = 0;
+
+            foreach (var componentData in componentDataList)
+            {
+                try
+                {
+                    var componentTypes = _entityManager.ComponentFactory.GetAllRefTypes()
+                        .Select(idx => _entityManager.ComponentFactory.GetRegistration(idx).Type)
+                        .Where(t => t.Name == componentData.Type || t.Name.EndsWith($".{componentData.Type}"))
+                        .FirstOrDefault();
+
+                    if (componentTypes != null && IsProblematicComponent(componentTypes))
+                    {
+                        skipped++;
+                        continue;
+                    }
+
+                    RestoreComponent(entityUid, componentData);
+                    restored++;
+                }
+                catch (Exception ex)
+                {
+                    failed++;
+                    // Reduce noise - only warn for important components
+                    var componentTypes = _entityManager.ComponentFactory.GetAllRefTypes()
+                        .Select(idx => _entityManager.ComponentFactory.GetRegistration(idx).Type)
+                        .Where(t => t.Name == componentData.Type || t.Name.EndsWith($".{componentData.Type}"))
+                        .FirstOrDefault();
+
+                    if (componentTypes != null && (IsImportantComponent(componentTypes) && !IsProblematicComponent(componentTypes)))
+                    {
+                        _sawmill.Warning($"Failed to restore important component {componentData.Type} on entity {entityUid}: {ex.Message}");
+                    }
+                    else
+                    {
+                        // Failed to restore component
+                    }
+                }
+            }
+
+            if (restored > 0 || failed > 0 || skipped > 0)
+            {
+                // Entity component restoration completed
+                if (failed > 10) // Only warn if excessive failures
+                {
+                    _sawmill.Warning($"Entity {entityUid} had {failed} component restoration failures - entity may be incomplete");
+                }
+            }
+        }
+
+        private void RestoreComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            try
+            {
+                // Special handling for solution components
+                if (componentData.Type == "SolutionContainerManagerComponent")
+                {
+                    if (componentData.Properties.Any())
+                    {
+                        RestoreSolutionComponent(entityUid, componentData);
+                    }
+                    else
+                    {
+                        // Solution component has no data - skipping
+                    }
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(componentData.YamlData))
+                    return;
+
+                // Filter out components that shouldn't be restored
+                var componentTypes = _entityManager.ComponentFactory.GetAllRefTypes()
+                    .Select(idx => _entityManager.ComponentFactory.GetRegistration(idx).Type)
+                    .Where(t => t.Name == componentData.Type || t.Name.EndsWith($".{componentData.Type}"))
+                    .ToList();
+
+                if (!componentTypes.Any())
+                {
+                    // Component type not found - version mismatch
+                    return;
+                }
+
+                var componentType = componentTypes.First();
+
+                // Skip problematic components during restoration too
+                if (IsProblematicComponent(componentType))
+                {
+                    // Skipping problematic component
+                    return;
+                }
+
+                // Deserialize the component data
+                var node = ScrubRuntimeActionReferences(_deserializer.Deserialize<DataNode>(componentData.YamlData));
+
+                // Ensure the entity has this component
+                if (!_entityManager.HasComponent(entityUid, componentType))
+                {
+                    try
+                    {
+                        var newComponent = (Component)Activator.CreateInstance(componentType)!;
+                        _entityManager.AddComponent(entityUid, newComponent);
+                    }
+                    catch (Exception)
+                    {
+                        // Failed to create component - continuing
+                        return;
+                    }
+                }
+
+                // Get the existing component and populate it with saved data
+                var existingComponent = _entityManager.GetComponent(entityUid, componentType);
+
+                try
+                {
+                    object? temp = existingComponent;
+                    _serializationManager.CopyTo(node, ref temp);
+                    // Component restored
+                }
+                catch (Exception ex)
+                {
+                    // Only warn for important components
+                    if (IsImportantComponent(componentType) && !IsProblematicComponent(componentType))
+                    {
+                        _sawmill.Warning($"Failed to populate important component {componentData.Type} data: {ex.Message}");
+                    }
+                    else
+                    {
+                        // Failed to populate component data
+                    }
+                    // Continue execution - partial restoration is better than none
+                }
+            }
+            catch (Exception)
+            {
+                // Failed to restore component - continuing
+                // Don't throw - continue with other components
+            }
+        }
+
+        /// <summary>
+        /// YamlDotNet deserializes nested YAML mappings into Dictionary&lt;object, object&gt;
+        /// when the declared target type is Dictionary&lt;string, object&gt;.
+        /// This helper normalises both forms so callers don't need to branch on the runtime type.
+        /// </summary>
+        private static Dictionary<string, object>? CoerceToDictStringObj(object? value)
+        {
+            return value switch
+            {
+                Dictionary<string, object> d => d,
+                Dictionary<object, object> od => od.ToDictionary(
+                    kv => kv.Key?.ToString() ?? string.Empty,
+                    kv => kv.Value),
+                _ => null
+            };
+        }
+
+        private static bool TryGetPropertyValue(ComponentData componentData, string key, out object? value)
+        {
+            if (componentData.Properties.TryGetValue(key, out value))
+                return true;
+
+            foreach (var (candidateKey, candidateValue) in componentData.Properties)
+            {
+                if (!string.Equals(candidateKey, key, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                value = candidateValue;
+                return true;
+            }
+
+            value = null;
+            return false;
+        }
+
+        private static bool TryGetIntProperty(ComponentData componentData, string key, out int value)
+        {
+            value = 0;
+
+            if (!TryGetPropertyValue(componentData, key, out var rawValue) || rawValue == null)
+                return false;
+
+            switch (rawValue)
+            {
+                case int intValue:
+                    value = intValue;
+                    return true;
+                case long longValue when longValue is >= int.MinValue and <= int.MaxValue:
+                    value = (int)longValue;
+                    return true;
+                case double doubleValue when double.IsFinite(doubleValue)
+                                              && doubleValue >= int.MinValue
+                                              && doubleValue <= int.MaxValue:
+                    value = (int)Math.Round(doubleValue);
+                    return true;
+                case float floatValue when float.IsFinite(floatValue)
+                                            && floatValue >= int.MinValue
+                                            && floatValue <= int.MaxValue:
+                    value = (int)MathF.Round(floatValue);
+                    return true;
+                default:
+                    return int.TryParse(rawValue.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out value);
+            }
+        }
+
+        private void RestoreSolutionComponent(EntityUid entityUid, ComponentData componentData)
+        {
+            try
+            {
+                if (!_entityManager.TryGetComponent<SolutionContainerManagerComponent>(entityUid, out var solutionManager))
+                {
+                    _sawmill.Warning($"Entity {entityUid} does not have SolutionContainerManagerComponent to restore");
+                    return;
+                }
+
+                var restoredSolutions = 0;
+                foreach (var (solutionName, solutionDataObj) in componentData.Properties)
+                {
+                    var solutionInfo = CoerceToDictStringObj(solutionDataObj);
+                    if (solutionInfo == null)
+                        continue;
+
+                    try
+                    {
+                        var maxVolume = FixedPoint2.Zero;
+                        if (solutionInfo.TryGetValue("MaxVolume", out var maxVolObj)
+                            && TryConvertToDouble(maxVolObj, out var maxVolumeValue))
+                        {
+                            maxVolume = FixedPoint2.New(maxVolumeValue);
+                        }
+
+                        Entity<SolutionComponent>? solutionEntity = null;
+                        if (!_solutionContainerSystem.EnsureSolutionEntity((entityUid, solutionManager), solutionName, out _, out solutionEntity, maxVolume)
+                            || solutionEntity is not { } restoredSolutionEntity)
+                        {
+                            _sawmill.Warning($"Solution '{solutionName}' not found on entity {entityUid}");
+                            continue;
+                        }
+
+                        var solution = restoredSolutionEntity.Comp.Solution;
+
+                        // Clear existing contents
+                        solution.RemoveAllSolution();
+
+                        if (maxVolume > FixedPoint2.Zero)
+                            solution.MaxVolume = maxVolume;
+
+                        // Restore solution properties.
+                        // Issue #1332: guard against NaN/Infinity sneaking in from
+                        // older ship saves and contaminating other containers.
+                        if (solutionInfo.TryGetValue("Temperature", out var tempObj)
+                            && TryConvertToDouble(tempObj, out var temperature))
+                        {
+                            var temperatureFloat = (float)temperature;
+                            if (!float.IsFinite(temperatureFloat))
+                            {
+                                _sawmill.Warning($"Solution '{solutionName}' on entity {entityUid} had non-finite temperature {temperatureFloat}; resetting to room temperature.");
+                                temperatureFloat = Atmospherics.T20C;
+                            }
+                            solution.Temperature = temperatureFloat;
+                        }
+
+                        // Restore reagents
+                        if (solutionInfo.TryGetValue("Reagents", out var reagentsObj))
+                        {
+                            var reagents = CoerceToDictStringObj(reagentsObj);
+                            if (reagents != null)
+                            {
+                                foreach (var (reagentId, quantityObj) in reagents)
+                                {
+                                    if (TryConvertToDouble(quantityObj, out var quantity) && quantity > 0)
+                                    {
+                                        // Add the reagent back to the solution
+                                        solution?.AddReagent(reagentId, (float)quantity);
+                                    }
+                                }
+                            }
+                        }
+
+                        _solutionContainerSystem.UpdateChemicals(restoredSolutionEntity, false);
+
+                        restoredSolutions++;
+                        var reagentCount = solutionInfo.TryGetValue("Reagents", out var reagentRaw)
+                                          ? (CoerceToDictStringObj(reagentRaw)?.Count ?? 0)
+                                          : 0;
+                        _sawmill.Debug($"Restored solution '{solutionName}' with {reagentCount} reagents");
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Warning($"Failed to restore solution '{solutionName}': {ex.Message}");
+                    }
+                }
+
+                if (restoredSolutions > 0)
+                {
+                    // Restored chemical solutions
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to restore solution component on entity {entityUid}: {ex.Message}");
+            }
+        }
+
+        private static bool TryConvertToDouble(object? value, out double result)
+        {
+            switch (value)
+            {
+                case null:
+                    result = default;
+                    return false;
+                case double doubleValue:
+                    result = doubleValue;
+                    return true;
+                case float floatValue:
+                    result = floatValue;
+                    return true;
+                case int intValue:
+                    result = intValue;
+                    return true;
+                case long longValue:
+                    result = longValue;
+                    return true;
+                case decimal decimalValue:
+                    result = (double)decimalValue;
+                    return true;
+                case FixedPoint2 fixedPointValue:
+                    result = fixedPointValue.Double();
+                    return true;
+                case string stringValue when double.TryParse(stringValue, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed):
+                    result = parsed;
+                    return true;
+                default:
+                    result = default;
+                    return false;
+            }
+        }
+
+
+        private (string? parentContainerEntity, string? containerSlot) GetContainerInfo(EntityUid entityUid)
+        {
+            try
+            {
+                if (!_entityManager.TryGetComponent<TransformComponent>(entityUid, out var transform))
+                    return (null, null);
+
+                var parent = transform.ParentUid;
+                if (!parent.IsValid())
+                    return (null, null);
+
+                // Check if the parent has a container manager
+                if (!_entityManager.TryGetComponent<ContainerManagerComponent>(parent, out var containerManager))
+                    return (null, null);
+
+                // Find which container this entity is in
+                foreach (var container in containerManager.Containers.Values)
+                {
+                    if (container.Contains(entityUid))
+                    {
+                        return (parent.ToString(), container.ID);
+                    }
+                }
+
+                return (null, null);
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Warning($"Failed to get container info for entity {entityUid}: {ex.Message}");
+                return (null, null);
+            }
+        }
+
+        private bool HasContainers(EntityUid entityUid)
+        {
+            return _entityManager.HasComponent<ContainerManagerComponent>(entityUid);
+        }
+
+        private EntityData? SerializeEntity(EntityUid uid, TransformComponent transform, string prototype, EntityUid gridId, bool roomMode = false)
+        {
+            try
+            {
+                // Validate entity still exists and isn't being deleted
+                if (!_entityManager.EntityExists(uid) || _entityManager.IsQueuedForDeletion(uid))
+                {
+                    _sawmill.Warning($"Attempted to serialize deleted/invalid entity {uid}");
+                    return null;
+                }
+
+                // Additional validation for entity state
+                var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(uid);
+                if (meta == null || meta.EntityLifeStage >= EntityLifeStage.Terminating)
+                {
+                    _sawmill.Warning($"Attempted to serialize terminating entity {uid}");
+                    return null;
+                }
+
+                if (IsLiveActionEntity(uid))
+                    return null;
+
+                // Get container relationship information
+                var (parentContainer, containerSlot) = GetContainerInfo(uid);
+                var isContained = parentContainer != null;
+                var isContainer = HasContainers(uid);
+
+                // Serialize component states
+                var components = SerializeEntityComponents(uid, roomMode);
+
+                // Use entity's current position and rotation (grid is already normalized to 0°)
+                var position = transform.LocalPosition;
+                var rotation = transform.LocalRotation;
+
+                // Capture custom entity name if it differs from the prototype default
+                string? customName = null;
+                if (meta != null)
+                {
+                    var baseName = meta.EntityName;
+                    if (_entityManager.TryGetComponent<NameModifierComponent>(uid, out var nameModifier)
+                        && !string.IsNullOrWhiteSpace(nameModifier.BaseName))
+                    {
+                        baseName = nameModifier.BaseName;
+                    }
+
+                    var protoName = meta.EntityPrototype?.Name;
+                    if (!string.IsNullOrEmpty(baseName) && baseName != protoName)
+                        customName = baseName;
+                }
+
+                var entityData = new EntityData
+                {
+                    EntityId = uid.ToString(),
+                    Prototype = prototype,
+                    Position = new Vector2((float)Math.Round(position.X, 3), (float)Math.Round(position.Y, 3)),
+                    Rotation = (float)Math.Round(rotation.Theta, 3),
+                    Anchored = transform.Anchored,
+                    Components = components,
+                    ParentContainerEntity = parentContainer,
+                    ContainerSlot = containerSlot,
+                    IsContainer = isContainer,
+                    IsContained = isContained,
+                    EntityName = customName
+                };
+
+                return entityData;
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to serialize entity {uid}: {ex.Message}");
+                return null;
+            }
+        }
+
+        private void SerializeContainedEntities(EntityUid gridId, GridData gridData, HashSet<EntityUid> alreadySerialized, bool includeVendors = false, bool roomMode = false)
+        {
+            var verbose = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveVerbose);
+            var excludeVending = !includeVendors && _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ExcludeVendingInShipSave);
+            // Find all entities that might be contained within grid entities but not directly on the grid
+            var containersToCheck = new Queue<EntityUid>();
+
+            // Start with all container entities on the grid
+            foreach (var entityData in gridData.Entities.Where(e => e.IsContainer))
+            {
+                if (EntityUid.TryParse(entityData.EntityId, out var containerUid))
+                {
+                    containersToCheck.Enqueue(containerUid);
+                }
+            }
+
+            // Process containers recursively
+            while (containersToCheck.Count > 0)
+            {
+                var containerUid = containersToCheck.Dequeue();
+
+                // Validate container still exists
+                if (!_entityManager.EntityExists(containerUid) || _entityManager.IsQueuedForDeletion(containerUid))
+                    continue;
+
+                if (!_entityManager.TryGetComponent<ContainerManagerComponent>(containerUid, out var containerManager))
+                    continue;
+
+                foreach (var container in containerManager.Containers.Values)
+                {
+                    foreach (var containedEntity in container.ContainedEntities)
+                    {
+                        if (alreadySerialized.Contains(containedEntity))
+                            continue;
+
+                        // Validate contained entity exists
+                        if (!_entityManager.EntityExists(containedEntity) || _entityManager.IsQueuedForDeletion(containedEntity))
+                            continue;
+
+                        try
+                        {
+                            var transform = _entityManager.GetComponent<TransformComponent>(containedEntity);
+                            var meta = _entityManager.GetComponentOrNull<MetaDataComponent>(containedEntity);
+                            var proto = meta?.EntityPrototype?.ID ?? string.Empty;
+
+                            // Skip entities with invalid prototypes
+                            if (string.IsNullOrEmpty(proto))
+                                continue;
+
+                            // Skip vending machines in containers to avoid lag
+                            if (excludeVending && _entityManager.HasComponent<VendingMachineComponent>(containedEntity))
+                            {
+                                // Downgraded from Info to Debug
+                                if (verbose)
+                                    _sawmill.Debug($"Skipping contained vending machine {proto} during serialization");
+                                continue; // Skip contained vending machines
+                            }
+
+                            var entityData = SerializeEntity(containedEntity, transform, proto, gridId, roomMode);
+                            if (entityData != null)
+                            {
+                                gridData.Entities.Add(entityData);
+                                alreadySerialized.Add(containedEntity);
+                                if (verbose)
+                                    _sawmill.Debug($"Serialized contained entity {containedEntity} ({proto}) in container {containerUid}");
+
+                                // If this contained entity is also a container, check its contents
+                                if (entityData.IsContainer)
+                                {
+                                    containersToCheck.Enqueue(containedEntity);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _sawmill.Warning($"Failed to serialize contained entity {containedEntity}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Applies the serialized top-level anchored state for a room entity.
+        /// Room loads intentionally skip TransformComponent round-tripping, so the
+        /// load path restores the anchored flag explicitly after spawn.
+        /// </summary>
+        private void RestoreRoomAnchorState(EntityUid uid, bool shouldBeAnchored)
+        {
+            if (!_entityManager.EntityExists(uid))
+                return;
+            if (!_entityManager.TryGetComponent<TransformComponent>(uid, out var xform))
+                return;
+            if (xform.GridUid == null)
+                return;
+
+            try
+            {
+                if (shouldBeAnchored)
+                {
+                    if (!xform.Anchored)
+                        _transform.AnchorEntity((uid, xform));
+                    return;
+                }
+
+                if (xform.Anchored)
+                    _transform.Unanchor(uid, xform);
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Debug($"Could not restore room anchor state for entity {uid}: {ex.Message}");
+            }
+        }
+
+        private string? SerializeDecalsInBounds(EntityUid gridId, Box2 bounds)
+        {
+            if (!_entityManager.TryGetComponent<DecalGridComponent>(gridId, out var decalComponent))
+                return null;
+
+            var decals = _decalSystem.GetDecalsIntersecting(gridId, bounds, decalComponent);
+            if (decals.Count == 0)
+                return null;
+
+            var chunkCollection = new Dictionary<Vector2i, DecalChunk>();
+            foreach (var (decalId, decal) in decals)
+            {
+                var chunkIndices = SharedDecalSystem.GetChunkIndices(decal.Coordinates);
+                if (!chunkCollection.TryGetValue(chunkIndices, out var chunk))
+                {
+                    chunk = new DecalChunk();
+                    chunkCollection[chunkIndices] = chunk;
+                }
+
+                chunk.Decals[decalId] = decal;
+            }
+
+            var collection = new DecalGridChunkCollection(chunkCollection)
+            {
+                NextDecalId = decalComponent.ChunkCollection.NextDecalId
+            };
+
+            return SerializeDecalData(collection);
+        }
+
+        private DecalGridChunkCollection? DeserializeDecalData(string? decalData)
+        {
+            if (string.IsNullOrWhiteSpace(decalData))
+                return null;
+
+            try
+            {
+                using var textReader = new System.IO.StringReader(decalData);
+                var documents = DataNodeParser.ParseYamlStream(textReader).ToArray();
+
+                if (documents.Length == 1 && documents[0].Root is MappingDataNode mapping)
+                    return (DecalGridChunkCollection?)_serializationManager.Read(typeof(DecalGridChunkCollection), mapping, null, false, true);
+
+                _sawmill.Warning($"Failed to deserialize decal data: expected one YAML document, got {documents.Length}");
+                return null;
+            }
+            catch (Exception robustEx)
+            {
+                try
+                {
+                    return _deserializer.Deserialize<DecalGridChunkCollection>(decalData);
+                }
+                catch (Exception yamlEx)
+                {
+                    _sawmill.Warning($"Failed to deserialize decal data using both YAML paths: {robustEx.Message}; {yamlEx.Message}");
+                    return null;
+                }
+            }
+        }
+
+        private string SerializeDecalData(DecalGridChunkCollection collection)
+        {
+            var node = _serializationManager.WriteValue(collection, notNullableOverride: true);
+            return node.ToString();
+        }
+
+        private EntityUid? SpawnEntityWithComponents(EntityData entityData, EntityCoordinates coordinates, bool clearDefaultsForContainers = true, HashSet<string>? containerSlotsToClear = null)
+        {
+            try
+            {
+                if (IsSerializedActionEntity(entityData))
+                    return null;
+
+                // Spawn the basic entity
+                var newEntity = _entityManager.SpawnEntity(entityData.Prototype, coordinates);
+
+                // Apply rotation if it exists
+                if (Math.Abs(entityData.Rotation) > 0.001f)
+                {
+                    var transform = _entityManager.GetComponent<TransformComponent>(newEntity);
+                    transform.LocalRotation = new Angle(entityData.Rotation);
+                }
+
+                // Clear any default container contents to prevent duplicates
+                // This ensures saved containers don't get refilled with prototype defaults
+                if (clearDefaultsForContainers && entityData.IsContainer && _entityManager.TryGetComponent<ContainerManagerComponent>(newEntity, out var containerManager))
+                {
+                    // If this entity uses an AccessReader that pulls requirements from a specific container,
+                    // don't clear that container or we may wipe its configured access provider board.
+                    AccessReaderComponent? accessReaderOnOwner = null;
+                    _entityManager.TryGetComponent(newEntity, out accessReaderOnOwner);
+
+                    foreach (var container in containerManager.Containers.Values)
+                    {
+                        var containerId = container.ID;
+
+                        // Only clear slots the save data will refill. Preserving untouched
+                        // prototype defaults avoids breaking entities with internal startup
+                        // parts that the room/ship save format does not round-trip.
+                        if (containerSlotsToClear != null && !containerSlotsToClear.Contains(containerId))
+                            continue;
+
+                        if (accessReaderOnOwner != null && accessReaderOnOwner.ContainerAccessProvider == containerId)
+                            continue;
+                        // Preserve runtime-generated action containers; MapInit repopulates them for the spawned entity.
+                        if (containerId == ActionsContainerComponent.ContainerId)
+                            continue;
+                        // Preserve chemistry solution slots; restore logic repopulates the existing contained solution entities.
+                        if (containerId.StartsWith("solution@", StringComparison.Ordinal))
+                            continue;
+                        // Do not clear powered light bulb containers; ships would spawn dark.
+                        if (containerId == Content.Server.Light.EntitySystems.PoweredLightSystem.LightBulbContainer)
+                            continue;
+                        // Clear default spawned items - we'll restore saved contents later.
+                        // Disconnect AttachedClothingComponent first so that deleting an
+                        // auto-spawned helmet doesn't trigger OnRemoveAttached, which would
+                        // strip ToggleableClothingComponent off the parent suit.
+                        var defaultItems = container.ContainedEntities.ToList();
+                        foreach (var defaultItem in defaultItems)
+                        {
+                            if (_entityManager.TryGetComponent<AttachedClothingComponent>(defaultItem, out var attached))
+                                _toggleableClothingSystem.DisconnectAttachedClothing(attached);
+                            _containerSystem.Remove(defaultItem, container);
+                            _entityManager.DeleteEntity(defaultItem);
+                        }
+                    }
+                    //_sawmill.Debug($"Cleared default contents from container {newEntity} - will restore saved contents");
+                }
+
+                // Restore component states
+                if (entityData.Components.Any())
+                {
+                    RestoreEntityComponents(newEntity, entityData.Components);
+                }
+
+                // HL START: Re-Attach or re-create toggleable clothing components
+                if (_entityManager.TryGetComponent<ToggleableClothingComponent>(newEntity, out var toggleComp))
+                {
+                    _toggleableClothingSystem.RestoreAttachedEntity(newEntity, toggleComp);
+                }
+                // HL END
+
+                // Restore custom entity name
+                if (!string.IsNullOrEmpty(entityData.EntityName))
+                {
+                    _metaData.SetEntityName(newEntity, entityData.EntityName);
+                }
+
+                return newEntity;
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to spawn entity with components {entityData.Prototype}: {ex.Message}");
+                return null;
+            }
+        }
+
+        private static Dictionary<string, HashSet<string>> BuildSavedContainerSlotMap(IEnumerable<EntityData> entities)
+        {
+            var result = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+
+            foreach (var entity in entities)
+            {
+                if (string.IsNullOrEmpty(entity.ParentContainerEntity) || string.IsNullOrEmpty(entity.ContainerSlot))
+                    continue;
+
+                if (!result.TryGetValue(entity.ParentContainerEntity, out var slots))
+                {
+                    slots = new HashSet<string>(StringComparer.Ordinal);
+                    result[entity.ParentContainerEntity] = slots;
+                }
+
+                slots.Add(entity.ContainerSlot);
+            }
+
+            return result;
+        }
+
+        private bool InsertIntoContainer(EntityUid entityToInsert, EntityUid containerEntity, string containerSlot)
+        {
+            try
+            {
+                if (!_entityManager.TryGetComponent<ContainerManagerComponent>(containerEntity, out var containerManager))
+                {
+                    _sawmill.Warning($"Container entity {containerEntity} does not have ContainerManagerComponent");
+                    return false;
+                }
+
+                if (!_containerSystem.TryGetContainer(containerEntity, containerSlot, out var container, containerManager))
+                {
+                    _sawmill.Warning($"Container slot '{containerSlot}' not found on entity {containerEntity}");
+                    return false;
+                }
+
+                // Use the container system to properly insert the entity
+                if (_containerSystem.Insert(entityToInsert, container))
+                {
+                    //_sawmill.Debug($"Successfully inserted entity {entityToInsert} into container {containerEntity} slot '{containerSlot}'");
+                    return true;
+                }
+                else
+                {
+                    //_sawmill.Warning($"Failed to insert entity {entityToInsert} into container {containerEntity} slot '{containerSlot}' - container may be full");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Error inserting entity {entityToInsert} into container {containerEntity}: {ex.Message}");
+                return false;
+            }
+        }
+
+        private List<(Vector2i coords, Tile tile)> SortTilesForConnectivity(List<(Vector2i coords, Tile tile)> tilesToPlace)
+        {
+            if (!tilesToPlace.Any()) return tilesToPlace;
+
+            var result = new List<(Vector2i coords, Tile tile)>();
+            var remaining = new HashSet<Vector2i>(tilesToPlace.Select(t => t.coords));
+            var tileDict = tilesToPlace.ToDictionary(t => t.coords, t => t.tile);
+
+            // Start with any tile (preferably near center)
+            var startCoord = tilesToPlace.OrderBy(t => t.coords.X * t.coords.X + t.coords.Y * t.coords.Y).First().coords;
+            var queue = new Queue<Vector2i>();
+            queue.Enqueue(startCoord);
+            remaining.Remove(startCoord);
+
+            // Flood-fill from start position
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                result.Add((current, tileDict[current]));
+
+                // Check adjacent positions (4-directional)
+                var adjacent = new[]
+                {
+                    new Vector2i(current.X + 1, current.Y),
+                    new Vector2i(current.X - 1, current.Y),
+                    new Vector2i(current.X, current.Y + 1),
+                    new Vector2i(current.X, current.Y - 1)
+                };
+
+                foreach (var adj in adjacent)
+                {
+                    if (remaining.Contains(adj))
+                    {
+                        queue.Enqueue(adj);
+                        remaining.Remove(adj);
+                    }
+                }
+            }
+
+            // Add any remaining disconnected tiles (these will create separate grids)
+            foreach (var remainingCoord in remaining)
+            {
+                result.Add((remainingCoord, tileDict[remainingCoord]));
+                _sawmill.Warning($"GRID SPLIT: Disconnected tile at {remainingCoord} will create separate grid");
+            }
+
+            return result;
+        }
+
+        private System.Numerics.Vector2 FindNearbyPosition(EntityUid gridEntity, System.Numerics.Vector2 originalPosition)
+        {
+            // Try to find a nearby unoccupied position
+            var searchPositions = new[]
+            {
+                originalPosition,
+                originalPosition + new Vector2(1, 0),
+                originalPosition + new Vector2(-1, 0),
+                originalPosition + new Vector2(0, 1),
+                originalPosition + new Vector2(0, -1),
+                originalPosition + new Vector2(1, 1),
+                originalPosition + new Vector2(-1, -1),
+                originalPosition + new Vector2(1, -1),
+                originalPosition + new Vector2(-1, 1)
+            };
+
+            foreach (var testPos in searchPositions)
+            {
+                var coords = new EntityCoordinates(gridEntity, testPos);
+
+                // Check if position is occupied (basic check)
+                var lookup = _entityManager.System<EntityLookupSystem>();
+                var mapCoords = _transform.ToMapCoordinates(coords);
+                var entitiesAtPos = lookup.GetEntitiesIntersecting(mapCoords.MapId, new Box2(testPos - Vector2.One * 0.1f, testPos + Vector2.One * 0.1f));
+                if (!entitiesAtPos.Any())
+                {
+                    return testPos;
+                }
+            }
+
+            // If all nearby positions are occupied, just use the original position
+            return originalPosition;
+        }
+
+        private void ValidateContainerRelationships(GridData gridData)
+        {
+            try
+            {
+                var containerEntities = gridData.Entities.Where(e => e.IsContainer).ToList();
+                var containedEntities = gridData.Entities.Where(e => e.IsContained).ToList();
+                var entityIds = gridData.Entities.Select(e => e.EntityId).ToHashSet();
+
+                // Validating container relationships
+
+                var orphanedEntities = 0;
+                var invalidContainers = 0;
+
+                foreach (var containedEntity in containedEntities)
+                {
+                    // Check if parent container exists
+                    if (string.IsNullOrEmpty(containedEntity.ParentContainerEntity))
+                    {
+                        _sawmill.Warning($"Contained entity {containedEntity.EntityId} has no parent container specified");
+                        orphanedEntities++;
+                        continue;
+                    }
+
+                    if (!entityIds.Contains(containedEntity.ParentContainerEntity))
+                    {
+                        _sawmill.Warning($"Contained entity {containedEntity.EntityId} references non-existent parent container {containedEntity.ParentContainerEntity}");
+                        orphanedEntities++;
+                        continue;
+                    }
+
+                    // Check if parent is actually marked as a container
+                    var parentEntity = gridData.Entities.FirstOrDefault(e => e.EntityId == containedEntity.ParentContainerEntity);
+                    if (parentEntity != null && !parentEntity.IsContainer)
+                    {
+                        _sawmill.Warning($"Entity {containedEntity.EntityId} is contained in {containedEntity.ParentContainerEntity}, but parent is not marked as container");
+                        invalidContainers++;
+                    }
+
+                    // Check if container slot is specified
+                    if (string.IsNullOrEmpty(containedEntity.ContainerSlot))
+                    {
+                        _sawmill.Warning($"Contained entity {containedEntity.EntityId} has no container slot specified");
+                    }
+                }
+
+                if (orphanedEntities > 0 || invalidContainers > 0)
+                {
+                    _sawmill.Warning($"Container validation found issues: {orphanedEntities} orphaned entities, {invalidContainers} invalid containers");
+                }
+                else
+                {
+                    // Container relationship validation passed
+                }
+            }
+            catch (Exception ex)
+            {
+                _sawmill.Error($"Failed to validate container relationships: {ex.Message}");
+            }
+        }
+
+        private void ReconstructEntitiesLegacyMode(GridData gridData, Entity<MapGridComponent> newGrid, Dictionary<string, EntityUid> entityIdMapping, bool clearDefaults = false)
+        {
+            _sawmill.Info("Using legacy reconstruction mode for backward compatibility");
+
+            var spawnedCount = 0;
+            var failedCount = 0;
+
+            foreach (var entityData in gridData.Entities)
+            {
+                if (string.IsNullOrEmpty(entityData.Prototype))
+                {
+                    _sawmill.Debug($"Skipping entity with empty prototype at {entityData.Position}");
+                    continue;
+                }
+
+                if (IsSerializedActionEntity(entityData))
+                    continue;
+
+                try
+                {
+                    var coordinates = new EntityCoordinates(newGrid.Owner, entityData.Position);
+                    var newEntity = SpawnEntityWithComponents(entityData, coordinates, clearDefaultsForContainers: clearDefaults);
+
+                    if (newEntity != null)
+                    {
+                        entityIdMapping[entityData.EntityId] = newEntity.Value;
+                        spawnedCount++;
+                        _sawmill.Debug($"Legacy: Spawned entity {newEntity} ({entityData.Prototype}) at {entityData.Position}");
+                    }
+                    else
+                    {
+                        failedCount++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Error($"Legacy: Failed to spawn entity {entityData.Prototype} at {entityData.Position}: {ex.Message}");
+                    failedCount++;
+                }
+            }
+
+            // Legacy reconstruction complete
+        }
+
+    }
+}

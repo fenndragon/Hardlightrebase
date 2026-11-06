@@ -1,4 +1,4 @@
-using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes; // WOLFGATE: keep one prototype namespace import after merge
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Armor;
 using Content.Shared.Body.Components;
@@ -100,7 +100,7 @@ public abstract partial class InventorySystem
         // unequip the item.
         if (itemUid != null)
         {
-            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory, checkDoafter: true))
+            if (!TryUnequip(actor, ev.Slot, out var item, predicted: true, inventory: inventory, checkDoafter: true, triggerHandContact: true))
                 return;
 
             _handsSystem.PickupOrDrop(actor, item.Value);
@@ -123,19 +123,19 @@ public abstract partial class InventorySystem
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));
 
-        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter: true);
+        TryEquip(actor, actor, held.Value, ev.Slot, predicted: true, inventory: inventory, force: true, checkDoafter: true, triggerHandContact: true);
     }
 
     public bool TryEquip(EntityUid uid, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false) =>
-        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter);
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false) =>
+        TryEquip(uid, uid, itemUid, slot, silent, force, predicted, inventory, clothing, checkDoafter, triggerHandContact);
 
     public bool TryEquip(EntityUid actor, EntityUid target, EntityUid itemUid, string slot, bool silent = false, bool force = false, bool predicted = false,
-        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false)
+        InventoryComponent? inventory = null, ClothingComponent? clothing = null, bool checkDoafter = false, bool triggerHandContact = false)
     {
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
@@ -146,14 +146,14 @@ public abstract partial class InventorySystem
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-equip-cannot"));
             return false;
         }
 
         if (!force && !CanEquip(actor, target, itemUid, slot, out var reason, slotDefinition, inventory, clothing))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -178,12 +178,12 @@ public abstract partial class InventorySystem
             };
 
             _doAfter.TryStartDoAfter(args);
-            return false;
+            return true; // EE - Changed to return true even if the item wasn't equipped instantly
         }
 
         if (!_containerSystem.Insert(itemUid, slotContainer))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -192,6 +192,10 @@ public abstract partial class InventorySystem
         {
             _audio.PlayPredicted(clothing.EquipSound, target, actor);
         }
+
+        // If new gloves are equipped, trigger OnContactInteraction for held items
+        if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
+            TriggerHandContactInteraction(target);
 
         Dirty(target, inventory);
 
@@ -352,9 +356,10 @@ public abstract partial class InventorySystem
         ClothingComponent? clothing = null,
         bool reparent = true,
         bool checkDoafter = false,
+        bool triggerHandContact = false,
         bool child = false) // Frontier: raise DroppedEvent on all children
     {
-        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent, checkDoafter, child); // Frontier: add child
+        return TryUnequip(uid, uid, slot, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact, child); // Frontier: add child
     }
 
     public bool TryUnequip(
@@ -368,9 +373,10 @@ public abstract partial class InventorySystem
         ClothingComponent? clothing = null,
         bool reparent = true,
         bool checkDoafter = false,
+        bool triggerHandContact = false,
         bool child = false) // Frontier: raise DroppedEvent on all children
     {
-        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoafter, child); // Frontier: add child
+        return TryUnequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact, child); // Frontier: add child
     }
 
     public bool TryUnequip(
@@ -384,9 +390,10 @@ public abstract partial class InventorySystem
         ClothingComponent? clothing = null,
         bool reparent = true,
         bool checkDoafter = false,
+        bool triggerHandContact = false,
         bool child = false) // Frontier: raise DroppedEvent on all children
     {
-        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoafter, child); // Frontier: add child
+        return TryUnequip(uid, uid, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact, child); // Frontier: add child
     }
 
     public bool TryUnequip(
@@ -401,11 +408,12 @@ public abstract partial class InventorySystem
         ClothingComponent? clothing = null,
         bool reparent = true,
         bool checkDoafter = false,
+        bool triggerHandContact = false,
         bool child = false) // Frontier: raise DroppedEvent on all children
     {
         var itemsDropped = 0;
         return TryUnequip(actor, target, slot, out removedItem, ref itemsDropped,
-            silent, force, predicted, inventory, clothing, reparent, checkDoafter, child); // Frontier: add child
+            silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact, child); // Frontier: add child (and triggerHandContact?!)
     }
 
     private bool TryUnequip(
@@ -421,6 +429,7 @@ public abstract partial class InventorySystem
         ClothingComponent? clothing = null,
         bool reparent = true,
         bool checkDoafter = false,
+        bool triggerHandContact = false,
         bool child = false) // Frontier: raise DroppedEvent on all children
     {
         removedItem = null;
@@ -430,14 +439,14 @@ public abstract partial class InventorySystem
 
         if (!Resolve(target, ref inventory, false))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
 
         if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
             return false;
         }
@@ -449,7 +458,7 @@ public abstract partial class InventorySystem
 
         if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
         {
-            if(!silent)
+            if (!silent)
                 _popup.PopupCursor(Loc.GetString(reason));
             return false;
         }
@@ -516,6 +525,10 @@ public abstract partial class InventorySystem
         {
             _audio.PlayPredicted(clothing.UnequipSound, target, actor);
         }
+
+        // If gloves are unequipped, OnContactInteraction should trigger for held items
+        if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
+            TriggerHandContactInteraction(target);
 
         Dirty(target, inventory);
 
@@ -591,5 +604,13 @@ public abstract partial class InventorySystem
 
         entityUid = container.ContainedEntity;
         return entityUid != null;
+    }
+
+    public void TriggerHandContactInteraction(EntityUid uid)
+    {
+        foreach (var item in _handsSystem.EnumerateHeld(uid))
+        {
+            _interactionSystem.DoContactInteraction(uid, item);
+        }
     }
 }

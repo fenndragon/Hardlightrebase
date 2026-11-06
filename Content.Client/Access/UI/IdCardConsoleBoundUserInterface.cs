@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -55,13 +54,13 @@ namespace Content.Client.Access.UI
             if (!disposing)
                 return;
 
-            _window?.Dispose();
+            _window?.Close();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            var castState = (IdCardConsoleBoundUserInterfaceState) state;
+            var castState = (IdCardConsoleBoundUserInterfaceState)state;
             _window?.UpdateState(castState);
         }
 

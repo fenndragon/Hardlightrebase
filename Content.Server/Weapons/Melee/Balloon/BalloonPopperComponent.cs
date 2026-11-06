@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tag;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Content.Shared._WF.EngineCompat;
 

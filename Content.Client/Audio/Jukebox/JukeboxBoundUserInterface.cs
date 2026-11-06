@@ -1,6 +1,7 @@
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
 using Robust.Client.UserInterface;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Prototypes;
 
@@ -43,6 +44,13 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.OnSongSelected += SelectSong;
 
+        // Frontier: Shuffle & Repeat
+        _menu.OnModeChanged += playbackMode =>
+        {
+            SendMessage(new JukeboxSetPlaybackModeMessage(playbackMode));
+        };
+        // End Frontier: Shuffle & Repeat
+
         _menu.SetTime += SetTime;
         PopulateMusic();
         Reload();
@@ -60,8 +68,8 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
 
         if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
         {
-            var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            var length = EntMan.System<AudioSystem>().GetAudioLength(new ResolvedPathSpecifier(songProto.Path.Path));
+            _menu.SetSelectedSong(songProto.Name, (float)length.TotalSeconds);
         }
         else
         {
@@ -97,5 +105,13 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
 
         SendMessage(new JukeboxSetTimeMessage(sentTime));
     }
+
+    // Frontier: Shuffle & Repeat
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        _menu?.UpdateState(state);
+    }
+    // End Frontier
 }
 

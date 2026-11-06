@@ -1,8 +1,7 @@
-using Content.Server._NF.Speech.Components;
+using Content.Server.NF.Speech.Components;
 using Robust.Shared.Random;
 using Content.Server.Speech;
 using Content.Server.Speech.EntitySystems;
-using System.Linq;
 using Content.Server.Chat.Systems;
 
 namespace Content.Server._NF.Speech.EntitySystems;
@@ -49,7 +48,7 @@ public sealed partial class CavemanAccentSystem : EntitySystem
 
             var modifiedWord = word;
 
-            if (actualLength > CavemanAccentComponent.MaxWordLength)
+            if (actualLength > component.MaxWordLength)
             {
                 modifiedWord = GetGrunt();
                 CapitalizeReplacement(word, ref modifiedWord);
@@ -135,7 +134,7 @@ public sealed partial class CavemanAccentSystem : EntitySystem
 
         if (int.TryParse(word, out num))
         {
-            num = int.Max(0, num); //Negatives treated as zero.
+            num = Math.Max(0, num); //Negatives treated as zero.
             if (num < CavemanAccentComponent.Numbers.Count)
             {
                 return Loc.GetString(CavemanAccentComponent.Numbers[num]);

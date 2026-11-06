@@ -20,8 +20,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System.Linq;
-
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -75,6 +73,12 @@ public sealed partial class SmokeSystem : EntitySystem
             if (curTime < smoke.NextSecond)
                 continue;
 
+            if (!Exists(smoke.SmokeEntity) || !_smokeQuery.HasComponent(smoke.SmokeEntity))
+            {
+                RemComp(uid, smoke);
+                continue;
+            }
+
             smoke.NextSecond += TimeSpan.FromSeconds(1);
             SmokeReact(uid, smoke.SmokeEntity);
         }
@@ -82,6 +86,9 @@ public sealed partial class SmokeSystem : EntitySystem
 
     private void OnStartCollide(Entity<SmokeComponent> entity, ref StartCollideEvent args)
     {
+        if (TerminatingOrDeleted(entity) || TerminatingOrDeleted(args.OtherEntity)) // HL: Make sure both entities are still valid
+            return;
+
         if (_smokeAffectedQuery.HasComponent(args.OtherEntity))
             return;
 
@@ -95,6 +102,9 @@ public sealed partial class SmokeSystem : EntitySystem
 
     private void OnEndCollide(Entity<SmokeComponent> entity, ref EndCollideEvent args)
     {
+        if (TerminatingOrDeleted(entity) || TerminatingOrDeleted(args.OtherEntity)) // HL: Make sure both entities are still valid, we'll check again later because this engine is weird
+            return;
+
         // if we are already in smoke, make sure the thing we are exiting is the current smoke we are in.
         if (_smokeAffectedQuery.TryGetComponent(args.OtherEntity, out var smokeAffectedComponent))
         {
@@ -115,7 +125,7 @@ public sealed partial class SmokeSystem : EntitySystem
             if (exists && ent == entity.Owner)
                 continue;
 
-            if (!_smokeQuery.HasComponent(ent))
+            if (!_smokeQuery.HasComponent(ent) || TerminatingOrDeleted(ent)) // HL: Make sure ent isn't about to be deleted
                 continue;
 
             smokeAffectedComponent ??= EnsureComp<SmokeAffectedComponent>(args.OtherEntity);
@@ -123,7 +133,7 @@ public sealed partial class SmokeSystem : EntitySystem
             return; // exit the function so we don't remove the component.
         }
 
-        if (smokeAffectedComponent != null)
+        if (smokeAffectedComponent != null && !TerminatingOrDeleted(args.OtherEntity)) // HL: Make sure ent isn't about to be deleted
             RemComp(args.OtherEntity, smokeAffectedComponent);
     }
 
@@ -273,7 +283,7 @@ public sealed partial class SmokeSystem : EntitySystem
         if (!_solutionContainerSystem.ResolveSolution(entity, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemSolution) || chemSolution.AvailableVolume <= 0)
             return;
 
-        var blockIngestion = _internals.AreInternalsWorking(entity);
+        var blockIngestion = _internals.AreInternalsWorking(entity) || !HasComp<RespiratorComponent>(entity);
 
         var cloneSolution = solution.Clone();
         var availableTransfer = FixedPoint2.Min(cloneSolution.Volume, component.TransferRate);

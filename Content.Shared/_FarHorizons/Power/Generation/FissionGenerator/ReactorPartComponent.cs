@@ -136,8 +136,9 @@ public sealed partial class ReactorPartComponent : Component
     public GasMixture? AirContents;
     #endregion
 
+    // WOLFGATE: correct malformed XML documentation after merge
     /// <summary>
-    /// Creates a new <see cref="ReactorPartComponent"> with information from an existing one.
+    /// Creates a new <see cref="ReactorPartComponent"/> with information from an existing one.
     /// </summary>
     /// <param name="source"></param>
     public ReactorPartComponent(ReactorPartComponent source)

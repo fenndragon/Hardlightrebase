@@ -1,10 +1,4 @@
-﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+#nullable enable
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
 using Content.Shared.Maps;
@@ -41,6 +35,7 @@ namespace Content.MapRenderer
                 var mapIds = pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
+                    .Where(map => !pair.IsTestPrototype(map))
                     .Select(map => map.ID)
                     .ToArray();
 

@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
-using Content.Server.Power.Components;
 //using Content.Server.Station.Systems;
 using Robust.Shared.Map; // Frontier modification
 using Content.Shared.DeviceNetwork;
@@ -39,11 +38,18 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
             return;
         _updateDiff -= UpdateRate;
 
-        var servers = EntityQueryEnumerator<CrewMonitoringServerComponent>();
+        var servers = EntityQueryEnumerator<CrewMonitoringServerComponent, TransformComponent>();
+        var processedMaps = new HashSet<MapId>();
 
-        while (servers.MoveNext(out var id, out var server))
+        while (servers.MoveNext(out var id, out var server, out var xform))
         {
             if (!_singletonServerSystem.IsActiveServer(id))
+                continue;
+
+            // VRS: suit sensors are map-scoped. Broadcasting every active crew monitor server
+            // globally causes station + expedition ship datasets to fight each other on clients.
+            // Keep one authoritative broadcast per map per tick.
+            if (!processedMaps.Add(xform.MapID))
                 continue;
 
             UpdateTimeout(id);
@@ -80,11 +86,24 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        List<string>? staleAddresses = null;
+
         foreach (var (address, sensor) in component.SensorStatus)
         {
-            var dif = _gameTiming.CurTime - sensor.Timestamp;
-            if (dif.Seconds > component.SensorTimeout)
-                component.SensorStatus.Remove(address);
+            var elapsed = _gameTiming.CurTime - sensor.Timestamp;
+            if (elapsed.TotalSeconds <= component.SensorTimeout)
+                continue;
+
+            staleAddresses ??= new List<string>();
+            staleAddresses.Add(address);
+        }
+
+        if (staleAddresses == null)
+            return;
+
+        foreach (var address in staleAddresses)
+        {
+            component.SensorStatus.Remove(address);
         }
     }
 

@@ -1,0 +1,5 @@
+<Document>
+  # Misdemeanors
+  These crimes tend to include both fines and brig time.
+  <GuideSpaceLawGroupEmbed Severity="Misdemeanor" />
+</Document>

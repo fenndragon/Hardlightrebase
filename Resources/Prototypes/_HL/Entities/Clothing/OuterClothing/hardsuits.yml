@@ -1,0 +1,827 @@
+# Faction Hardsuits
+# All inherit from Blood-red hardsuit (ClothingOuterHardsuitSyndie) with modifications
+
+# Arcadia Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitArcadia
+  name: arcadia hardsuit
+  description: A heavily armored hardsuit designed for corporate security operations. Features advanced protection systems.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/arcadiaHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/arcadiaHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitArcadia
+
+# Cybersun Hardsuit (Enhanced radiation resistance)
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitCybersun
+  name: cybersun hardsuit
+  description: A technologically advanced hardsuit with enhanced radiation shielding for hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/cybersunHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/cybersunHS.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.25  # Enhanced radiation resistance
+        Caustic: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCybersunHL
+
+# Dirizher Cartel Hardsuit (Unmarked)
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitCartel
+  name: unmarked hardsuit
+  description: A hardsuit with all identifying markings removed. Its origins are unclear.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/dirizherHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/dirizherHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCartel
+
+# Donk. Co Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitDonk
+  name: donk. co hardsuit
+  description: A corporate hardsuit featuring the distinctive Donk. Co branding and color scheme.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/donkcoHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/donkcoHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitDonk
+
+# Hardliner Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitHardliner
+  name: hardliner hardsuit
+  description: A militaristic hardsuit designed for aggressive operations and frontline combat.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/hardlinerHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/hardlinerHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitHardliner
+
+# Syndicate High Command Hardsuit (25% better armor)
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSyndicateHighCommand
+  name: syndicate high command hardsuit
+  description: This Shouldn't be here.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/highcommHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/highcommHS.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.375    # 25% better than 0.5
+        Slash: 0.375    # 25% better than 0.5
+        Piercing: 0.375 # 25% better than 0.5
+        Heat: 0.375     # 25% better than 0.5
+        Radiation: 0.375 # 25% better than 0.5
+        Caustic: 0.375  # 25% better than 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndicateHighCommand
+  - type: Tag
+    tags:
+    - ClothMade
+
+# Interdyne Hardsuit (Lighter)
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitInterdyne
+  name: interdyne hardsuit
+  description: A specialized hardsuit with advanced biological protection systems for hazardous research environments.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyneHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyneHS.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+        Radiation: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.95
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitInterdyne
+
+# Ramzi Clique Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitRamzi
+  name: ramzi clique hardsuit
+  description: A hardsuit bearing the colors and insignia of the Ramzi Clique organization.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/ramziHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/ramziHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRamzi
+
+# S.E.L.F. Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSELF
+  name: s.e.l.f. hardsuit
+  description: A hardsuit designed for the S.E.L.F. organization, featuring their distinctive styling.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/selfHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/selfHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSELF
+
+# SUNS Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSUNS
+  name: SUNS hardsuit
+  description: A mysterious hardsuit, bearing a golden sun emblem on a purple background.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/sunsHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/sunsHS.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.4
+        Radiation: 0.4
+        Caustic: 0.4
+        Holy: 0.4
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSUNS
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.75
+
+
+# Syndicate Navy Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitSyndicateNavy
+  name: syndicate navy hardsuit
+  description: A naval-grade hardsuit designed for space operations and boarding actions.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/syndnavyHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/syndnavyHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndicateNavy
+
+#Colonial Naval Infantry/Marines Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseColcommContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitColonialNavalInfantry
+  name: Colonial Navy M21 infantry hardsuit
+  description: A moderately armored mobile hardsuit used by the Colonial Navy. It features a distinctive pale-blue and black color scheme, and is equipped with a reinforced helmet for enhanced protection.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/colonialnavalinfantryHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/colonialnavalinfantryHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitColonialNavalInfantry
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.25
+        Piercing: 0.2
+        Heat: 0.25
+        Radiation: 0.4
+        Caustic: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+
+#Forged Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingForgedHardsuit
+  name: Forged Hardsuit
+  description: A forged hardsuit with a built-in helmet. It's horribly slow and lacking mostly in thermal protection, but adorned with patchwork armor plating.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/forgedhardsuit.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/forgedhardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.65
+        Piercing: 0.7
+        Heat: 0.85
+  - type: TemperatureProtection
+    heatingCoefficient: 0.5
+    coolingCoefficient: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetForgedHardsuit
+    slot: head
+  - type: Tag
+    tags:
+    - SuitEVA
+    - WhitelistChameleon
+
+# Faction Hardsuit Helmets
+# All inherit from Blood-red hardsuit helmet (ClothingHeadHelmetHardsuitSyndie) with modifications
+
+#Colonial Naval Infantry/Marines Hardsuit Helmet
+- type: entity
+  parent: NFClothingHeadHardsuitWithLightBaseNfsd
+  id: ClothingHeadHelmetHardsuitColonialNavalInfantry
+  categories: [ HideSpawnMenu ]
+  name: Colonial Navy M21 infantry hardsuit helmet
+  description: A reinforced hardsuit helmet used by the Colonial Navy.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/colonialnavalinfantryHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/colonialnavalinfantryHSHelm.rsi
+  - type: PointLight
+    color: "#5162FF"
+  - type: PressureProtection
+    highPressureMultiplier: 0.35
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.85
+        Radiation: 0.95
+        Caustic: 0.9
+
+# Arcadia Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitArcadia
+  name: arcadia hardsuit helmet
+  description: A hardsuit helmet designed for corporate security operations.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/arcadiaHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/arcadiaHSHelm.rsi
+
+# Cybersun Hardsuit Helmet (Enhanced radiation resistance)
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitCybersunHL
+  name: cybersun hardsuit helmet
+  description: A hardsuit helmet with enhanced radiation shielding for hazardous environments.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/cybersunHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/cybersunHSHelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Radiation: 0.45  # Enhanced radiation resistance
+        Caustic: 0.9
+
+# Dirizher Cartel Hardsuit Helmet (Unmarked)
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitCartel
+  name: unmarked hardsuit helmet
+  description: A hardsuit helmet with all identifying markings removed.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/dirizherHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/dirizherHSHelm.rsi
+
+# Donk. Co Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitDonk
+  name: donk. co hardsuit helmet
+  description: A hardsuit helmet manufactured by Donk. Co for corporate use.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/donkcoHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/donkcoHSHelm.rsi
+
+# Hardliner Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitHardliner
+  name: hardliner hardsuit helmet
+  description: A hardsuit helmet designed for combat operations.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/hardlinerHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/hardlinerHSHelm.rsi
+
+# Syndicate High Command Hardsuit Helmet (25% better armor)
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitSyndicateHighCommand
+  name: syndicate high command hardsuit helmet
+  description: An elite hardsuit helmet reserved for high-ranking Syndicate commanders.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/highcommHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/highcommHSHelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.675    # 25% better than 0.9
+        Slash: 0.675    # 25% better than 0.9
+        Piercing: 0.675 # 25% better than 0.9
+        Heat: 0.675     # 25% better than 0.9
+        Radiation: 0.675 # 25% better than 0.9
+        Caustic: 0.675  # 25% better than 0.9
+  - type: Tag
+    tags:
+    - ClothMade
+
+# Interdyne Hardsuit Helmet (Enhanced bio resistance)
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitInterdyne
+  name: interdyne hardsuit helmet
+  description: A hardsuit helmet with advanced biological protection systems.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyneHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyneHSHelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Radiation: 0.9
+        Caustic: 0.45  # Enhanced bio/caustic resistance
+
+# Ramzi Clique Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitRamzi
+  name: ramzi clique hardsuit helmet
+  description: A hardsuit helmet manufactured by the Ramzi Clique organization.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/ramziHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/ramziHSHelm.rsi
+
+# S.E.L.F. Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitSELF
+  name: s.e.l.f. hardsuit helmet
+  description: A hardsuit helmet manufactured by the S.E.L.F. organization.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/selfHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/selfHSHelm.rsi
+
+# SUNS Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitSUNS
+  name: SUNS hardsuit helmet
+  description: A mysterious hardsuit helmet, bearing purple and gold styling.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/sunsHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/sunsHSHelm.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+        Holy: 0.8
+
+# Syndicate Navy Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitSyndicateNavy
+  name: syndicate navy hardsuit helmet
+  description: A hardsuit helmet designed for space operations and boarding actions.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/syndnavyHSHelm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/syndnavyHSHelm.rsi
+
+#QM's Luxury Maxim Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitLuxmax
+  name: luxury maxim hardsuit
+  description: This luxury maxim hardsuit has been retrofitted with solid gold fittings and furnishings, making it more cumbersome, and less protective than a standard maxim hardsuit.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/luxmax.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients: #same stats as goliath hardsuit
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.5
+        Radiation: 0.3
+        Caustic: 0.8
+        Heat: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLuxmax
+  - type: HarpyHideWings # Frontier, needed for Harpies
+  - type: StaticPrice # Frontier
+    vendPrice: 7500
+
+# Inderdyne Director Hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitSyndieElite, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitInderdyneDirector
+  name: interdyne director hardsuit
+  description: A custom-made hardsuit with biological protection for the directors of interdyne.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyne-director.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyne-director.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitInterdyneDirector
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.5
+  - type: HideLayerClothing
+    slots:
+    - Tail
+
+# Interdyne Director Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndieElite, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitInterdyneDirector
+  name: interdyne director hardsuit helmet
+  description: A hardsuit helmet with biological protection for the directors of interdyne.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/Hardsuits/interdyne-director.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/Hardsuits/interdyne-director.rsi
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.8
+
+# Inderdyne Crew Hardsuit
+
+- type: entity
+  parent: [ClothingOuterHardsuitSyndieMedic, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitInderdyneCrew
+  name: interdyne hardsuit
+  description: A custom-made hardsuit with biological protection for the members of interdyne.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyne-crew.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/interdyne-crew.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitInterdyneCrew
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.7
+  - type: HideLayerClothing
+    slots:
+    - Tail
+
+
+# Interdyne Crew Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndieMedic, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitInterdyneCrew
+  name: interdyne hardsuit helmet
+  description: A hardsuit helmet with biological protection for the members of interdyne.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/Hardsuits/interdyne-crew.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/Hardsuits/interdyne-crew.rsi
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.9
+
+# Forged Hardsuit Helmet
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetForgedHardsuit
+  name: Forged Hardsuit Helmet
+  description: An emergency hardsuit helmet adorned with patchwork armor plating. It's horribly slow and lacking mostly in thermal protection, but it gets the job done.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/Hardsuits/forged-hardsuit-helm.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/Hardsuits/forged-hardsuit-helm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.35
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+
+#Terrestrial Engineering Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase # Removed BaseEngineeringContraband
+  id: ClothingOuterHardsuitTerrestrialEngineering
+  name: terrestrial engineering hardsuit
+  description: A variant of the beloved engineering hardsuit used in the Sol system for all terrestrial engineering operations! Why are you wearing it in space? Lightweight and compact, but its internals only accept low-capacity air tanks.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/engineering-terrestrial.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/engineering-terrestrial.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.01
+    lowPressureMultiplier: 10
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: FireProtection
+    reduction: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.9
+        Caustic: 0.8
+        Radiation: 0.3
+  - type: AllowSuitStorage
+    whitelist:
+      tags:
+      - TinyGasTank
+  - type: Item
+    size: Large
+  - type: ClothingSpeedModifier
+    walkModifier: 0.92
+    sprintModifier: 0.92
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitTerrestrial
+
+#Terrestrial Engineering Hardsuit Helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitTerrestrial
+  name: terrestrial engineering hardsuit helmet
+  description: An engineering hardsuit helmet not rated for vacuous environments.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/engineering-terrestrial-helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
+  - type: HandheldLight
+    addPrefix: false
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: equipped-head-light
+        shader: unshaded
+      head-resomi:
+      - state: equipped-head-light
+        shader: unshaded
+      head-thaven:
+      - state: equipped-head-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-light-vulpkanin
+        shader: unshaded
+      head-feroxi:
+      - state: equipped-head-light-feroxi
+        shader: unshaded
+      head-felionoid:
+      - state: equipped-head-light-feroxi
+        shader: unshaded
+      head-synth:
+      - state: equipped-head-light-synth
+        shader: unshaded
+      head-avali:
+      - state: equipped-head-light-avali
+        shader: unshaded
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-thaven:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-resomi:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
+      head-vulpkanin:
+      - state: equipped-head-vulpkanin
+      - state: equipped-head-unshaded-vulpkanin
+        shader: unshaded
+      head-feroxi:
+      - state: equipped-head-feroxi
+      - state: equipped-head-unshaded-feroxi
+        shader: unshaded
+      head-felionoid:
+      - state: equipped-head-feroxi
+      - state: equipped-head-unshaded-feroxi
+        shader: unshaded
+      head-synth:
+      - state: equipped-head-synth
+      - state: equipped-head-unshaded-synth
+        shader: unshaded
+      head-avali:
+      - state: equipped-head-avali
+      - state: equipped-head-unshaded-avali
+        shader: unshaded
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+  - type: PointLight
+    color: "#ffdbad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.01
+    lowPressureMultiplier: 10
+
+# Starbound Bluespace Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitStarboundBlueshield
+  name: Starbound Blueshield hardsuit
+  description: The Directors improvements amongst a base hardsuit - the inside lined with cooling durathread and the helmet retrofitted with a reinforced holoscreen to both protect the wearer and to convey information within their surrounding to them.
+  components:
+  - type: Sprite
+    sprite: _HL/Starbound/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _HL/Starbound/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+        Radiation: 0.6
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitStarboundBlueshield
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - Hardsuit
+
+# Starbound Bluespace Hardsuit Helmet
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitStarboundBlueshield
+  name: Starbound Blueshield hardsuit helmet
+  description: A reinforced hardsuit helmet fitted with a holoscreen that protects its wearer and displays surrounding personnel information.
+  components:
+  - type: Sprite
+    sprite: _HL/Starbound/Clothing/Head/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _HL/Starbound/Clothing/Head/Hardsuits/blueshield.rsi
+    equippedPrefix: off
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+# Cerulean Collective Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingOuterHardsuitCollective
+  name: Cerulean Standard Hardsuit
+  description: A sleek black hardsuit with blue detailings engraved into it. Designed with protection of the user first and foremost.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/collectiveHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/Hardsuits/collectiveHS.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCollective
+
+# Cerulean Collective Hardsuit Helmet
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC2ContrabandUnredeemable, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitCollective
+  name: Cerulean Standard Helmet
+  description: A sleek black helmet with blue detailings engraved into it. Designed with protection of the user first and foremost.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Head/Hardsuits/collectiveHS.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Head/Hardsuits/collectiveHS.rsi
+  - type: PointLight
+    color: "#87cefa"

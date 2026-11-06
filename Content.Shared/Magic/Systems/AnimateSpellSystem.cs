@@ -4,7 +4,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using System.Linq;
 
 namespace Content.Shared.Magic.Systems;
 
@@ -40,7 +39,7 @@ public sealed partial class AnimateSpellSystem : EntitySystem
         _container.AttachParentToContainerOrGrid((ent, xform)); // Items animated inside inventory now exit, they can't be picked up and so can't escape otherwise
 
         var ev = new AnimateSpellEvent();
-        RaiseLocalEvent(ref ev);
+        RaiseLocalEvent(ent, ref ev);
     }
 }
 

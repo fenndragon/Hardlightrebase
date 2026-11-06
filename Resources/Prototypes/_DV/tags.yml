@@ -1,4 +1,6 @@
 ## This is for Nyano and Delta V tags
+- type: Tag
+  id: AllowLamiaHardsuit
 
 - type: Tag
   id: BeltSlotNotBelt #not a 'belt'
@@ -38,3 +40,6 @@
 
 - type: Tag
   id: PreventLabel
+
+- type: Tag
+  id: Wakizashi

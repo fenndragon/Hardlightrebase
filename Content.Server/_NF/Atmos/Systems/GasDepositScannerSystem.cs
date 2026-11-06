@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server._NF.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Popups;
@@ -171,7 +170,7 @@ public sealed partial class GasDepositScannerSystem : EntitySystem
             return false;
 
         _userInterface.ServerSendUiMessage(uid, GasDepositScannerUiKey.Key,
-            new GasDepositScannerUserMessage(gasMixList.ToArray(),
+            new GasDepositScannerUserMessage(gasMixList,
                 GetNetEntity(component.Target) ?? NetEntity.Invalid));
         return true;
     }

@@ -1,0 +1,83 @@
+- type: entity
+  id: BorgChassisDog
+  name: Rhealis
+  parent: [BorgChassisQuad, ShowSecurityIcons]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: dogborg
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: dogborgl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: dogborgr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: dogborg_moving
+    noMovementLayers:
+      movement:
+        state: dogborg
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 7
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - XenoborgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - BorgModuleMedical
+      - BorgModuleEngineering
+      - BorgModuleScience
+    hasMindState: dogborgl
+    noMindState: dogborgr
+  - type: AccessReader
+    access: [["Security"], ["Command"]]
+  - type: SiliconLawProvider
+    laws: Qborg
+  - type: FlashImmunity
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: dogborg
+    stateOn: dogborgballz
+    #VisibleWhenEnabled: true
+    movementStateOff: dogborg_moving
+    movementStateOn: dogborg_movingballz

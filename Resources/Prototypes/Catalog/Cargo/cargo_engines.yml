@@ -10,12 +10,12 @@
 
 - type: cargoProduct
   id: EngineAmeJar
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
   product: CrateEngineeringAMEJar
-  cost: 10000 # Frontier - Up the price
+  cost: 5000 # Frontier - Up the price
   category: cargoproduct-category-name-engineering
   group: market
 
@@ -32,7 +32,7 @@
 
 - type: cargoProduct
   id: EngineSingularityGenerator
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
@@ -43,7 +43,7 @@
 
 - type: cargoProduct
   id: EngineSingularityContainment
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
@@ -53,21 +53,19 @@
   group: market
 
 - type: cargoProduct
-  name: "emitter crate"
   id: EngineSingularityEmitter
-  abstract: true # Frontier
-  description: "Contains an emitter. Used only for dangerous applications."
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: emitter2
   product: CrateEngineeringSingularityEmitter
-  cost: 3000
+  cost: 1500
   category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
   id: EngineSingularityCollector
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     state: ca_on
@@ -78,7 +76,7 @@
 
 - type: cargoProduct
   id: EngineParticleAccelerator
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/PA/control_box.rsi
     state: completed
@@ -99,7 +97,7 @@
 
 - type: cargoProduct
   id: EngineTeslaGenerator
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Tesla/generator.rsi
     state: icon
@@ -110,7 +108,7 @@
 
 - type: cargoProduct
   id: EngineTeslaCoil
-  abstract: true # Frontier
+  # abstract: true # Frontier
   icon:
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: coil

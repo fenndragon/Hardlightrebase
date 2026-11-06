@@ -2,18 +2,18 @@
   id: Nukeops
   name: roles-antag-nuclear-operative-name
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: roles-antag-nuclear-operative-objective
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
-  # guides: [ NuclearOperatives ] # Frontier: removed, irrelevant
+  guides: [ NuclearOperatives ]
 
 - type: antag
   id: NukeopsMedic
   name: roles-antag-nuclear-operative-agent-name
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: roles-antag-nuclear-operative-agent-objective
   requirements:
   - !type:OverallPlaytimeRequirement
@@ -21,13 +21,13 @@
   - !type:RoleTimeRequirement
     role: JobChemist
     time: 10800 # 3h
-  # guides: [ NuclearOperatives ] # Frontier: removed, irrelevant
+  guides: [ NuclearOperatives ]
 
 - type: antag
   id: NukeopsCommander
   name: roles-antag-nuclear-operative-commander-name
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: roles-antag-nuclear-operative-commander-objective
   requirements:
   - !type:OverallPlaytimeRequirement
@@ -35,8 +35,7 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 18000 # 5h
-  # should be changed to nukie playtime when thats tracked (wyci)
-  # guides: [ NuclearOperatives ] # Frontier: removed, irrelevant
+  guides: [ NuclearOperatives ]
 
 - type: startingGear
   id: SyndicateOperativeGearFullNoUplink

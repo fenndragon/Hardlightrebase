@@ -4,6 +4,7 @@ using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Mind;
@@ -32,6 +33,8 @@ public sealed partial class SuicideSystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -52,7 +55,7 @@ public sealed partial class SuicideSystem : EntitySystem
         if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
             return false;
 
-        _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
+        _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} is attempting to suicide");
 
         ICommonSession? session = null;
 
@@ -81,7 +84,7 @@ public sealed partial class SuicideSystem : EntitySystem
         }
         else
         {
-            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided.");
+            _adminLogger.Add(LogType.Mind, $"{ToPrettyString(victim):player} suicided.");
         }
         return true;
     }
@@ -121,7 +124,7 @@ public sealed partial class SuicideSystem : EntitySystem
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
 
         // Try to suicide by raising an event on the held item
-        if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
+        if (TryComp(victim, out HandsComponent? handsComponent)
             && handsComponent.ActiveHandEntity is { } item)
         {
             RaiseLocalEvent(item, suicideByEnvironmentEvent);
@@ -158,7 +161,7 @@ public sealed partial class SuicideSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", victim));
+        var othersMessage = Loc.GetString("suicide-command-default-text-others", ("name", Identity.Entity(victim, EntityManager)));
         _popup.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
 
         var selfMessage = Loc.GetString("suicide-command-default-text-self");

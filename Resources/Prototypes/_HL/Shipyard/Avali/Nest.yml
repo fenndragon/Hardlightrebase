@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: veladynee
+# Discord: veladynee
+
+# Maintainer Info
+# GitHub: veladynee
+# Discord: veladynee
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Nest
+  parent: BaseVessel
+  name: AVL Nest
+  description: A small Avalonian vessel designed by the Illuminate to serve as a home for a small pack of two to three Avali. Comes complete with an efficient thermo-electric generator, cooktop, and a spacious bedroom.
+  price: 23500 # HL: Rebalancing ship prices
+  category: Small
+  group: Shipyard
+  shuttlePath: /Maps/_HL/Shuttles/Avali/AvaliNest.yml
+  guidebookPage: null
+  class:
+  - Civilian
+  engine:
+  - RTG
+
+- type: gameMap
+  id: Nest
+  mapName: 'AVL Nest'
+  mapPath: /Maps/_HL/Shuttles/Avali/AvaliNest.yml
+  minPlayers: 0
+  stations:
+    Nest:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Nest {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            ContractorInterview: [ 0, 0 ]
+            PilotInterview: [ 0, 0 ]
+            MercenaryInterview: [ 0, 0 ]

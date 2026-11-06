@@ -1,4 +1,4 @@
-﻿using Content.Server.Construction.Components;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared._WF.EngineCompat;
 
@@ -14,7 +14,7 @@ public sealed partial class UpgradePowerDrawComponent : Component
     /// <summary>
     /// The base power draw of the machine.
     /// Prioritizes hv/mv draw over lv draw.
-    /// Value is initializezd on map init from <see cref="ApcPowerReceiverComponent"/>
+    /// Value is initializezd on map init from ApcPowerReceiverComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseLoad;

@@ -1,0 +1,100 @@
+- type: entity
+  id: BaseSpeedLoader50Magnum
+  name: "speed loader (.50 magnum)"
+  parent: [BaseItem, BaseC1Contraband]
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - SpeedLoader50Magnum
+  - type: SpeedLoader
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge50_magnumFMJ
+    capacity: 5
+  - type: Sprite
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  id: SpeedLoader50Magnum
+  name: "speed loader (.50 magnumFMJ)"
+  parent: BaseSpeedLoader50Magnum
+  description: Designed to quickly fill an empty revolver. Due to the size of the rounds and awkward shape, it only holds five rounds. Intended to hold general-purpose kinetic rounds.
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumFMJ
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/SpeedLoaders/50MagnumSpeedLoaders.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: base-5
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: base
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoader50MagnumEmpty
+  name: "speed loader (.50 magnum any)"
+  parent: SpeedLoader50Magnum
+  description: Designed to quickly fill an empty Titan Revolver. Holds up to five rounds.
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/SpeedLoaders/50MagnumSpeedLoaders.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: base-5
+        map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: SpeedLoader50MagnumPractice
+  name: "speed loader (.50 magnum Practice)"
+  parent: BaseSpeedLoader50Magnum
+  description: Designed to quickly fill an empty revolver. Holds five rounds. Intended for use with chalk-filled ammunition to practice the kick of the Titans.
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumPractice
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/SpeedLoaders/50MagnumSpeedLoaders.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: practice-5
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: base
+    steps: 6
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: SpeedLoader50MagnumRubber
+  name: "speed loader (.50 magnum Rubber)"
+  parent: BaseSpeedLoader50Magnum
+  description: Designed to quickly fill an empty revolver. Holds five less-lethal rounds to knock any threat flat on their back.
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumRubber
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/SpeedLoaders/50MagnumSpeedLoaders.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: rubber-5
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: base
+    steps: 6
+    zeroVisible: false
+  - type: Appearance

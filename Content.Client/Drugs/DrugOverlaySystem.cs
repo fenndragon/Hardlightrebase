@@ -13,48 +13,85 @@ public sealed partial class DrugOverlaySystem : EntitySystem
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IOverlayManager _overlayMan = default!;
 
-    private RainbowOverlay _overlay = default!;
+    private RainbowOverlay _rainbowOverlay = default!;
+    private AbyssalOverlay _abyssalOverlay = default!;
 
     public static string RainbowKey = "SeeingRainbows";
+    public static string AbyssalKey = "AbyssalWhispers";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SeeingRainbowsComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SeeingRainbowsComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SeeingRainbowsComponent, ComponentInit>(OnRainbowInit);
+        SubscribeLocalEvent<SeeingRainbowsComponent, ComponentShutdown>(OnRainbowShutdown);
+        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerAttachedEvent>(OnRainbowPlayerAttached);
+        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerDetachedEvent>(OnRainbowPlayerDetached);
 
-        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<SeeingRainbowsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<AbyssalWhispersComponent, ComponentInit>(OnAbyssalInit);
+        SubscribeLocalEvent<AbyssalWhispersComponent, ComponentShutdown>(OnAbyssalShutdown);
+        SubscribeLocalEvent<AbyssalWhispersComponent, LocalPlayerAttachedEvent>(OnAbyssalPlayerAttached);
+        SubscribeLocalEvent<AbyssalWhispersComponent, LocalPlayerDetachedEvent>(OnAbyssalPlayerDetached);
 
-        _overlay = new();
+        _rainbowOverlay = new();
+        _abyssalOverlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerAttachedEvent args)
+    // Rainbow overlay events
+    private void OnRainbowPlayerAttached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerAttachedEvent args)
     {
-        _overlayMan.AddOverlay(_overlay);
+        _overlayMan.AddOverlay(_rainbowOverlay);
     }
 
-    private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerDetachedEvent args)
+    private void OnRainbowPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerDetachedEvent args)
     {
-        _overlay.Intoxication = 0;
-        _overlay.TimeTicker = 0;
-        _overlayMan.RemoveOverlay(_overlay);
+        _rainbowOverlay.Intoxication = 0;
+        _rainbowOverlay.TimeTicker = 0;
+        _overlayMan.RemoveOverlay(_rainbowOverlay);
     }
 
-    private void OnInit(EntityUid uid, SeeingRainbowsComponent component, ComponentInit args)
+    private void OnRainbowInit(EntityUid uid, SeeingRainbowsComponent component, ComponentInit args)
     {
         if (_player.LocalEntity == uid)
-            _overlayMan.AddOverlay(_overlay);
+            _overlayMan.AddOverlay(_rainbowOverlay);
     }
 
-    private void OnShutdown(EntityUid uid, SeeingRainbowsComponent component, ComponentShutdown args)
+    private void OnRainbowShutdown(EntityUid uid, SeeingRainbowsComponent component, ComponentShutdown args)
     {
         if (_player.LocalEntity == uid)
         {
-            _overlay.Intoxication = 0;
-            _overlay.TimeTicker = 0;
-            _overlayMan.RemoveOverlay(_overlay);
+            _rainbowOverlay.Intoxication = 0;
+            _rainbowOverlay.TimeTicker = 0;
+            _overlayMan.RemoveOverlay(_rainbowOverlay);
+        }
+    }
+
+    // Abyssal overlay events
+    private void OnAbyssalPlayerAttached(EntityUid uid, AbyssalWhispersComponent component, LocalPlayerAttachedEvent args)
+    {
+        _overlayMan.AddOverlay(_abyssalOverlay);
+    }
+
+    private void OnAbyssalPlayerDetached(EntityUid uid, AbyssalWhispersComponent component, LocalPlayerDetachedEvent args)
+    {
+        _abyssalOverlay.Intoxication = 0;
+        _abyssalOverlay.TimeTicker = 0;
+        _overlayMan.RemoveOverlay(_abyssalOverlay);
+    }
+
+    private void OnAbyssalInit(EntityUid uid, AbyssalWhispersComponent component, ComponentInit args)
+    {
+        if (_player.LocalEntity == uid)
+            _overlayMan.AddOverlay(_abyssalOverlay);
+    }
+
+    private void OnAbyssalShutdown(EntityUid uid, AbyssalWhispersComponent component, ComponentShutdown args)
+    {
+        if (_player.LocalEntity == uid)
+        {
+            _abyssalOverlay.Intoxication = 0;
+            _abyssalOverlay.TimeTicker = 0;
+            _overlayMan.RemoveOverlay(_abyssalOverlay);
         }
     }
 }

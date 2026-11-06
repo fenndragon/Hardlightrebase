@@ -1,0 +1,46 @@
+- type: entity
+  id: bluespacestash
+  parent: BaseStructureDynamic
+  name: bluespace stash
+  description: A storage unit utilizing bluespace technology to maximize capacity. Items inside of this will not be seized by dockyard technicians when a ship is stored.
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Storage/bluespacestash.rsi
+    state: bluespace-stash
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 15
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Storage
+    grid:
+    - 0,0,25,20
+    maxItemSize: Ginormous
+    blacklist:
+      tags:
+      - Admin
+      components:
+      - StorageFill
+      - PresetIdCard
+      - IdCard
+      - Access
+      - Store
+      - Cash
+      - Headset
+      - DnaSequenceInjector
+  - type: HLPersistOnShipSave

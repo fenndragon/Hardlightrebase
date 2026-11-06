@@ -70,6 +70,14 @@
   materials:
     Cloth: 200
 
+- type: latheRecipe
+  abstract: true
+  id: BasePillowRecipe
+  categories:
+  - Pillows
+  materials:
+    Cloth: 500
+
 ## Recipes
 
 # Jumpsuits/skirts
@@ -82,7 +90,7 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorGrey
   result: ClothingUniformJumpskirtColorGrey
-  
+
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLoungewear
@@ -244,6 +252,18 @@
   parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCMOTurtle
   result: ClothingUniformJumpskirtCMOTurtle
+
+## Command (Generic)
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCommandGeneric
+  result: ClothingUniformJumpsuitCommandGeneric
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtCommandGeneric
+  result: ClothingUniformJumpskirtCommandGeneric
 
 ## Detective
 
@@ -823,6 +843,16 @@
   id: ClothingHeadHatBeretCmo
   result: ClothingHeadHatBeretCmo
 
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretCommand
+  result: ClothingHeadHatBeretCommand
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatCommandSoft
+  result: ClothingHeadHatCommandSoft
+
 # Non-command hats
 
 - type: latheRecipe
@@ -931,3 +961,68 @@
   parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedPurple
   result: ClothingNeckScarfStripedPurple
+
+# Floofstation - Collars
+- type: latheRecipe
+  id: ClothingNeckCollarCmd
+  result: ClothingNeckCollarCmd
+  completetime: 2
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+# HL - Pillows
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowLongWhite
+  result: PillowLongWhite
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowLumpBlue
+  result: PillowLumpBlue
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowLumpRed
+  result: PillowLumpRed
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowLumpWhite
+  result: PillowLumpWhite
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSmallBlue
+  result: PillowSmallBlue
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSmallRed
+  result: PillowSmallRed
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSmallWhite
+  result: PillowSmallWhite
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSquareBlue
+  result: PillowSquareBlue
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSquareRed
+  result: PillowSquareRed
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowSquareWhite
+  result: PillowSquareWhite
+
+- type: latheRecipe
+  parent: BasePillowRecipe
+  id: PillowVeryLargeSyndicate
+  result: PillowVeryLargeSyndicate

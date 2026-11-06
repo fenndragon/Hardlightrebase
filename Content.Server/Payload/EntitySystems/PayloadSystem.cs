@@ -9,7 +9,6 @@ using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
-using System.Linq;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -22,6 +21,8 @@ public sealed partial class PayloadSystem : EntitySystem
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private ISerializationManager _serializationManager = default!;
+
+    private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
@@ -100,9 +101,9 @@ public sealed partial class PayloadSystem : EntitySystem
             if (Factory.GetComponent(registration.Type) is not Component component)
                 continue;
 
-            var temp = (object) component;
+            var temp = (object)component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            EntityManager.AddComponent(uid, (Component) temp!);
+            AddComp(uid, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
         }
@@ -117,7 +118,7 @@ public sealed partial class PayloadSystem : EntitySystem
 
         foreach (var type in trigger.GrantedComponents)
         {
-            EntityManager.RemoveComponent(uid, type);
+            RemComp(uid, type);
         }
 
         trigger.GrantedComponents.Clear();

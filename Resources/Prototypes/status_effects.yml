@@ -1,4 +1,4 @@
-﻿# Status effect prototypes.
+# Status effect prototypes.
 # Holds no actual logic, just some basic data about the effect.
 
 - type: statusEffect
@@ -24,6 +24,9 @@
 
 - type: statusEffect
   id: SeeingRainbows
+
+- type: statusEffect
+  id: AbyssalWhispers
 
 - type: statusEffect
   id: Electrocution

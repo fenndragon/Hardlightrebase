@@ -3,20 +3,27 @@
   name: job-name-psychologist
   description: job-description-psychologist
   playTimeTracker: JobPsychologist
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: -10 # HardLight
   startingGear: PsychologistGear
   icon: "JobIconPsychologist"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-cmo
+  access:
+  - Medical
+  - Maintenance
+#  - Psychologist # DeltaV - Add Psychologist access later
+  extendedAccess:
+  - Chemistry
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
 - type: startingGear
   id: PsychologistGear
   equipment:
-    shoes: ClothingShoesLeather
+    # shoes: ClothingShoesLeather # Hardlight: Remove shoe requirement
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
   storage:

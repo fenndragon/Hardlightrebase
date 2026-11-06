@@ -1,0 +1,13 @@
+- type: gameMapPool
+  id: NFMapPool
+  maps:
+  - Reach
+  - Amber
+  - Bagel
+  - Box
+  - Eaglerock
+  - Convex
+  - Elkridge
+  - Fland
+  - HardlightSilica
+  - Oasis 

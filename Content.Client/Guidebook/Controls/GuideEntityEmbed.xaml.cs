@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
@@ -123,6 +122,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         }
     }
 
+    [Obsolete]
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -135,7 +135,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     {
         if (!args.TryGetValue("Entity", out var proto))
         {
-            Logger.Error("Entity embed tag is missing entity prototype argument");
+            Logger.GetSawmill("guidebook").Error("Entity embed tag is missing entity prototype argument");
             control = null;
             return false;
         }

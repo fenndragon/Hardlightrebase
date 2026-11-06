@@ -1,4 +1,33 @@
 # Raw
+- type: entity
+  parent: FoodMeatRotten
+  id: FoodMeatGoblin
+  name: raw goblin meat
+  description: Just look at that marbling! Wait, is that microplastic?
+  components:
+  - type: Sprite
+    state: rotten
+    color: lime
+
+- type: entity
+  parent: FoodFrozenBase
+  id: FoodMeatSheleg
+  name: raw sheleg meat
+  description: A slab of cold.. meat?
+  components:
+  - type: Food
+  - type: Sprite
+    sprite: _NF/Objects/Consumable/Food/frozen.rsi
+    state: sheleg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Ice
+          Quantity: 7
+        - ReagentId: Cryoxadone
+          Quantity: 3
 
 - type: entity
   name: prime-cut cat meat
@@ -78,7 +107,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  
+
 - type: entity
   name: battered raw fish fillet
   parent: FoodCuredCarp
@@ -114,7 +143,7 @@
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
+          Quantity: 15
         - ReagentId: Protein
           Quantity: 9
 
@@ -140,14 +169,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 52
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 35
         - ReagentId: Vitamin
-          Quantity: 8
+          Quantity: 7
         - ReagentId: Flavorol
-          Quantity: 4
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -167,14 +196,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7.5
+        maxVol: 17
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 8.75
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Flavorol
-          Quantity: 1
+          Quantity: 1.25
   - type: Sprite
     sprite: _NF/Objects/Consumable/Food/meat.rsi
     layers:

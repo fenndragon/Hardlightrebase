@@ -67,24 +67,34 @@ public abstract partial class SharedShuttleSystem : EntitySystem
             }
 
             if (itemSlot.Item is { Valid: true } disk)
-            {
-                ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
-                if (!Resolve(disk, ref diskCoordinates))
-                {
-                    return false;
-                }
+        {
+            ShuttleDestinationCoordinatesComponent? diskCoordinates = null;
+            if (!Resolve(disk, ref diskCoordinates))
+        {
+        return false;
+        }
 
-                var diskCoords = diskCoordinates.Destination;
+        var diskCoords = diskCoordinates.Destination;
 
-                if (diskCoords == null || !TryComp<FTLDestinationComponent>(diskCoords.Value, out var diskDestination) || diskDestination != destination)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
+        // 1. Check if diskCoords is null FIRST before accessing .Value
+        if (diskCoords == null)
+        {
+        return false;
+        }
+
+        // 2. Safely extract the value now that we know it's not null
+        var diskUid = EntityManager.GetEntity(diskCoords.Value);
+
+        // 3. Perform your component check
+        if (!TryComp<FTLDestinationComponent>(diskUid, out var diskDestination) || diskDestination != destination)
+        {
+        return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
         }
 
         if (HasComp<FTLMapComponent>(mapUid))

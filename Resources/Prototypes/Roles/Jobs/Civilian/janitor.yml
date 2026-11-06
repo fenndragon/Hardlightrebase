@@ -2,32 +2,33 @@
   id: Janitor
   name: job-name-janitor
   description: job-description-janitor
-  playTimeTracker: JobJanitorOld
-  setPreference: false # Frontier
+  playTimeTracker: JobJanitor
+  setPreference: true
+  weight: 30 # HardLight
   startingGear: JanitorGear
   icon: "JobIconJanitor"
   supervisors: job-supervisors-hop
-  # access: # Frontier
-  # - Service # Frontier
-  # - Janitor # Frontier
-  # - Maintenance # Frontier
+  access: # Frontier
+  - Service # Frontier
+  - Janitor # Frontier
+  - Maintenance # Frontier
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
-    prototype: WeaponRevolverInspector
+    prototype: NFWeaponRevolverInspector # Frontier: NF variant
 
 - type: startingGear
   id: JanitorGear
   equipment:
-    shoes: ClothingShoesGaloshes
+    # shoes: ClothingShoesGaloshes # HardLight: Add NF-style departmental loadouts
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff
 
 - type: startingGear
   id: JanitorMaidGear

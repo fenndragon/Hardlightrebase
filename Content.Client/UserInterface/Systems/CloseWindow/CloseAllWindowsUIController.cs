@@ -1,5 +1,3 @@
-using Content.Client.Gameplay;
-using Content.Client.Info;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -26,7 +24,7 @@ public sealed partial class CloseAllWindowsUIController : UIController
         {
             if (childControl is BaseWindow)
             {
-                ((BaseWindow) childControl).Close();
+                ((BaseWindow)childControl).Close();
             }
         }
     }

@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -56,7 +55,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnEntInserted(EntityUid uid, ImplanterComponent component, EntInsertedIntoContainerMessage args)
     {
-        var implantData = EntityManager.GetComponent<MetaDataComponent>(args.Entity);
+        var implantData = Comp<MetaDataComponent>(args.Entity);
         component.ImplantData = (implantData.EntityName, implantData.EntityDescription);
     }
 
@@ -369,22 +368,6 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
         Implanter = implanter;
     }
 }
-
-
-[Serializable, NetSerializable]
-public sealed class DeimplantBuiState : BoundUserInterfaceState
-{
-    public readonly string? Implant;
-
-    public Dictionary<string, string> ImplantList;
-
-    public DeimplantBuiState(string? implant, Dictionary<string, string> implantList)
-    {
-        Implant = implant;
-        ImplantList = implantList;
-    }
-}
-
 
 /// <summary>
 /// Change the chosen implanter in the UI.

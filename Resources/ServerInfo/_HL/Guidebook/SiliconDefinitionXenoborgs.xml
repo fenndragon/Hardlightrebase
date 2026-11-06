@@ -1,0 +1,54 @@
+<Document>
+# Xenoborgs
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Xenoborgs occupy a unique position among synthetic lifeforms.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Origins
+
+- Most Xenoborgs were once living people whose minds were integrated into the Xenoborg Collective.
+
+- Although rare, positronic intelligences and other synthetic minds may also become integrated into the Collective.
+
+- As a result, not every Xenoborg necessarily began life as a biological being.
+
+## Legal Status
+
+- While inhabiting a Xenoborg chassis and connected to the Collective, Xenoborgs are considered hostile entities and [textlink="enemies of Colonial Command" link="HLSpaceLawList"].
+
+- Personnel should prioritize the safety of themselves, the crew, and the station when dealing with active Xenoborg threats.
+
+- A Xenoborg should be considered a Xenoborg only while occupying a Xenoborg chassis and acting as part of the Collective.
+
+## Recovery and Deconversion
+
+- Many Xenoborgs originated as people or independent sophonts.
+
+- In some circumstances, it may be possible to recover and separate the underlying mind from the Collective through approved medical, scientific, or technological means.
+
+- When practical and safe to do so, recovery and deconversion should be considered before permanent destruction.
+
+- Once successfully separated from the Collective and transferred into a suitable non-Xenoborg form, the individual should be treated according to their new legal status and circumstances.
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#c8a404" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Warning[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      A Xenoborg chassis is considered an enemy asset. The mind contained within it may not be.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+</Document>

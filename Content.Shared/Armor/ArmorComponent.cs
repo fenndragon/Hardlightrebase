@@ -24,6 +24,12 @@ public sealed partial class ArmorComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float PriceMultiplier = 1;
+
+    /// <summary>
+    /// If true, you can examine the armor to see the protection. If false, the verb won't appear.
+    /// </summary>
+    [DataField]
+    public bool ShowArmorOnExamine = true;
 }
 
 /// <summary>
@@ -48,8 +54,13 @@ public sealed class CoefficientQueryEvent : EntityEventArgs, IInventoryRelayEven
     /// </summary>
     public DamageModifierSet DamageModifiers { get; set; } = new DamageModifierSet();
 
-    public CoefficientQueryEvent(SlotFlags slots)
+    // Far Horizons-Start - Protogen Armor Bypass
+    public bool IgnoreUnremovable = false;
+
+    public CoefficientQueryEvent(SlotFlags slots, bool ignoreUnremovable = false)
     {
         TargetSlots = slots;
+        IgnoreUnremovable = ignoreUnremovable;
     }
+    // Far Horizons-End
 }

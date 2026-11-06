@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Popups;
 using Content.Shared.Administration;
@@ -7,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Verbs
 {
@@ -27,13 +27,13 @@ namespace Content.Server.Verbs
         {
             var player = eventArgs.SenderSession;
 
-            if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
+            if (!Exists(GetEntity(args.EntityUid)))
             {
                 Log.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
-            if (player.AttachedEntity is not {} attached)
+            if (player.AttachedEntity is not { } attached)
             {
                 Log.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
@@ -76,7 +76,7 @@ namespace Content.Server.Verbs
             {
                 // Send an informative pop-up message
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user, user);
+                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupOrThrow(verb.Message), user, user);
 
                 return;
             }

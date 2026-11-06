@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Random;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Lightning;
 
@@ -7,7 +7,7 @@ public abstract partial class SharedLightningSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
-    /// Picks a random sprite state for the lightning. It's just data that gets passed to the <see cref="BeamComponent"/>
+    /// Picks a random sprite state for the lightning. It's just data that gets passed to the BeamComponent
     /// </summary>
     /// <returns>Returns a string "lightning_" + the chosen random number.</returns>
     public string LightningRandomizer()

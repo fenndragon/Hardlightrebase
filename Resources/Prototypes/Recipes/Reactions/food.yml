@@ -5,7 +5,7 @@
   conserveEnergy: false
   reactants:
     Milk:
-      amount: 40
+      amount: 20 # Coyote: Halve the cost.
     Enzyme:
       amount: 5
       catalyst: true
@@ -131,7 +131,7 @@
   conserveEnergy: false
   reactants:
     Milk:
-      amount: 15 # Upstream#35650: 30<15
+      amount: 15
     TableSalt:
       amount: 5
       catalyst: true

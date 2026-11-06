@@ -1,0 +1,1241 @@
+﻿- type: entity
+  id: BorgChassisQuad
+  parent: BaseBorgChassisNT
+  components:
+  - type: Body
+    prototype: Borg
+  - type: QuadborgSpriteOffset # HardLight
+    defaultOffset: 0,0.2
+    bigOffset: 0,0.3
+    smallOffset: 0,0.1
+    tinyOffset: 0,0.075
+  - type: Inventory
+    speciesId: quadborg # HardLight: Enables custom quadborg collars
+    templateId: borgquad # Hardlight: Changes Quadborgs over to use our armor slots
+  - type: Fixtures # HardLight
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadsprite
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritel
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriter
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadsprite_moving
+    noMovementLayers:
+      movement:
+        state: quadsprite
+  - type: Stripping
+  - type: Strap # HardLight: Enables buckling to borgs
+    blacklist: # HardLight: Stop crashing the damned clients and server!
+      components:
+      - BorgChassis
+    position: Stand
+    buckleOffset: "0,-0.2"
+    buckleSelfDoafterTime: 4.5 # people attempting to buckle to the borg will have a doafter
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - RoboticsConsole
+  - type: Sanitized
+  - type: Hands
+  # - type: Cuffable # Removed due to not having a cuffed sprite, throwing errors.
+  - type: ComplexInteraction
+  # - type: IdExaminable # HardLight: Quadborgs have hands and ID slots again!
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - XenoborgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: quadspritel
+    noMindState: quadspriter
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: quadsprite
+    name: cyborg
+  - type: Construction
+    node: cyborg
+  - type: Speech
+    speechVerb: Robotic
+  - type: LayingDown
+  - type: CumProducer
+    maxVol: 250
+    reVol: 50
+  - type: AccessReader
+    access: [["Security"], ["Command"], ["Research"], ["Mercenary"]]
+  - type: SiliconLawProvider
+    laws: Qborg
+  - type: LeashAnchor # Floofstation
+    kind: Intrinsic
+  - type: InteractionPopup  # Hardlight change
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadsprite
+    stateOn: quadspriteballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadsprite_moving
+    movementStateOn: quadsprite_movingballz
+
+- type: entity
+  id: BorgChassisQuadSec
+  parent: [BorgChassisQuad, ShowSecurityIcons]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadsprite
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritel
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriter
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadsprite_moving
+    noMovementLayers:
+      movement:
+        state: quadsprite
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColSec
+    - Security
+    - Science
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - XenoborgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: quadspritel
+    noMindState: quadspriter
+  - type: AccessReader
+    access: [["Security"], ["Command"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
+  - type: SiliconLawProvider
+    laws: Qborg
+  - type: FlashImmunity
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadspritesec
+    stateOn: quadspritesecballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadspritesec_moving
+    movementStateOn: quadspritesec_movingballz
+
+- type: entity
+  id: SyndiQuad
+  parent: [BorgChassisQuad, BaseBorgChassisSyndicate]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: SyndQuad
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: SyndQuadl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: SyndQuadr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: SyndQuad_moving
+    noMovementLayers:
+      movement:
+        state: SyndQuad
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Syndicate
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Syndicate
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Syndicate
+    - Common
+    - Faction
+  # HardLight end
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: SyndQuadl
+    noMindState: SyndQuadr
+  - type: Access #HL
+    tags:  #HL
+    - SyndicateAgent #HL
+    - NuclearOperative #HL
+  - type: AccessReader
+    access: [["NuclearOperative"], ["SyndicateAgent"]]
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: SyndQuad
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: SyndQuad
+    stateOn: SyndQuadballz
+    #VisibleWhenEnabled: true
+    movementStateOff: SyndQuad_moving
+    movementStateOn: SyndQuad_movingballz
+  # Note: No toggle added here; no provided SyndQuad ballz states.
+
+- type: entity
+  id: assaultQuad
+  parent: [SyndiQuad]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: assaultquad
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: assaultquadr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: assaultquadl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: assaultquadr
+    noMindState: assaultquadl
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: assaultquad_moving
+    noMovementLayers:
+      movement:
+        state: assaultquad
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: assaultquad
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: assaultquad
+    stateOn: assaultquadballz
+    #VisibleWhenEnabled: true
+    movementStateOff: assaultquad_moving
+    movementStateOn: assaultquad_movingballz
+
+- type: entity
+  id: chewsborg
+  parent: [SyndiQuad]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: chews
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: chewsr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: chewsl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: chewsr
+    noMindState: chews
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chews_moving
+    noMovementLayers:
+      movement:
+        state: chews
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: chews
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: chews
+    stateOn: chewsballz
+    #VisibleWhenEnabled: true
+    movementStateOff: chews_moving
+    movementStateOn: chews_movingballz
+
+- type: entity
+  id: littlehelper
+  parent: [BorgChassisApex]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: littlehelper
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: littlehelperr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: littlehelperl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: littlehelperr
+    noMindState: littlehelper
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: littlehelper_moving
+    noMovementLayers:
+      movement:
+        state: littlehelper
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: littlehelper
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: littlehelper
+    stateOn: littlehelperballz
+    #VisibleWhenEnabled: true
+    movementStateOff: littlehelper_moving
+    movementStateOn: littlehelper_movingballz
+
+- type: entity
+  id: Shibaborg
+  parent: [wolfborg]
+  name: Hiro
+  description: A shiba inu that looks surprisingly real. Good boy.
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.5, 0.5
+    layers:
+    - state: shiba
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: wolfdogr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: wolfdogl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: ContainerFill
+    containers:
+      borg_module:
+        - BorgModuleStorage
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: shiba_moving
+    noMovementLayers:
+      movement:
+        state: shiba
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: shiba
+    name: cyborg
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+        - BorgModuleGeneric
+        - XenoborgModuleGeneric
+        - BorgModuleSecurity
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+        - BorgModuleMedical
+        - BorgModuleEngineering
+        - BorgModuleScience
+        - BorgModuleService
+        - BorgModuleCargo
+        - BorgModuleJanitor
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: shiba
+    stateOn: shibaballz
+    #VisibleWhenEnabled: true
+    movementStateOff: shiba_moving
+    movementStateOn: shiba_movingballz
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    wideAnimation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+    mustBeEquippedToUse: false
+
+- type: entity
+  id: wolfborg
+  parent: [BorgChassisApex]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: wolfdog
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: wolfdogr
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: wolfdogl
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: wolfdogr
+    noMindState: wolfdogl
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: wolfdog_moving
+    noMovementLayers:
+      movement:
+        state: wolfdog
+  - type: BorgTransponder
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: wolfdog
+    name: cyborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: wolfdog
+    stateOn: wolfdogballz
+    #VisibleWhenEnabled: true
+    movementStateOff: wolfdog_moving
+    movementStateOn: wolfdog_movingballz
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: BarestepHard
+  - type: Speech
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Pout', 'Howl', 'Growl', 'Yip', 'Awoo', 'Yap', 'Gekker', 'Purr' ]
+  - type: Vocal
+    sounds:
+      Male: MaleVulpkanin
+      Female: FemaleVulpkanin
+      Unsexed: MaleVulpkanin
+  - type: InteractionPopup
+    successChance: 0.5
+    interactSuccessString: petting-success-soft-floofy
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Floof/Voice/Vulpkanin/yap.ogg
+
+- type: entity
+  id: BorgChassisQuadCC
+  parent: BorgChassisQuad
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadspriteCC
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritel
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriter
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColCom
+    - Command
+    - ColSec
+    - Security
+    - Medical
+    - Engineering
+    - Science
+    - Supply
+    - Service
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColCom
+    - Command
+    - ColSec
+    - Security
+    - Medical
+    - Engineering
+    - Science
+    - Supply
+    - Service
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - ColCom
+    - Command
+    - ColSec
+    - Security
+    - Medical
+    - Engineering
+    - Science
+    - Supply
+    - Service
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 12 #HL
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleCargo
+      - BorgModuleEngineering
+      - BorgModuleMedical
+      - BorgModuleSecurity
+      - BorgModuleScience
+      - BorgModuleService
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - BorgModuleJanitor
+      - XenoborgModuleGeneric
+  - type: Access #HL
+    tags: #HL
+    - CentralCommand #HL
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadspriteCC_moving
+    noMovementLayers:
+      movement:
+        state: quadspriteCC
+  - type: SiliconLawProvider
+    laws: ColComm
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadspriteCC
+    stateOn: quadspriteCCballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadspriteCC_moving
+    movementStateOn: quadspriteCC_movingballz
+
+- type: entity
+  id: BorgChassisQuadsalv
+  parent: BorgChassisQuad
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadspritesalv
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritesalvl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspritesalvr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadspritesalv_moving
+    noMovementLayers:
+      movement:
+        state: quadspritesalv
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Supply
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Supply
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Supply
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 7
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleCargo
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: quadspritesalvl
+    noMindState: quadspritesalvr
+  - type: AccessReader
+    access: [["Command"], ["Research"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
+  - type: SiliconLawProvider
+    laws: Corporate
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadspritesalv
+    stateOn: quadspritesalvballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadspritesalv_moving
+    movementStateOn: quadspritesalv_movingballz
+
+- type: entity
+  id: BorgChassisQuadserv
+  parent: BorgChassisQuad
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadspriteserv
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspriteservl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriteservr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadspriteserv_moving
+    noMovementLayers:
+      movement:
+        state: quadspriteserv
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Service
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Service
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Service
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleService
+      - BorgModuleJanitor #HL
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: quadspriteservl
+    noMindState: quadspriteservr
+  - type: AccessReader
+    access: [["Command"], ["Research"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
+  - type: SiliconLawProvider
+    laws: StationEfficiency
+  - type: FabricateActions # HardLight
+    actions:
+    - ActionFabricatePaper
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadspriteserv
+    stateOn: quadspriteservballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadspriteserv_moving
+    movementStateOn: quadspriteserv_movingballz
+
+- type: entity
+  id: BorgChassisQuadEngineer
+  parent: BorgChassisQuad
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: engieborg
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: engieborgl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engieborgr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: engieborg_moving
+    noMovementLayers:
+      movement:
+        state: engieborg
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Engineering
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Engineering
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Engineering
+    - Science
+    - Common
+    - Faction
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 8
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: engieborgl
+    noMindState: engieborgr
+  - type: AccessReader
+    access: [["Command"], ["Research"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
+  - type: SiliconLawProvider
+    laws: StationEfficiency
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: engieborg
+    stateOn: engieborgballz
+    #VisibleWhenEnabled: true
+    movementStateOff: engieborg_moving
+    movementStateOn: engieborg_movingballz
+  # Note: No toggle added here; no provided engieborg ballz states.
+
+- type: entity
+  id: BorgChassisQuadmed
+  parent: [BorgChassisQuad, ShowMedicalIcons]
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: quadspritemed
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritemedl
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspritemedr
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: quadspritemed_moving
+    noMovementLayers:
+      movement:
+        state: quadspritemed
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Medical
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Medical
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Medical
+    - Science
+    - Common
+    - Faction
+  - type: SurgerySpeedModifier #shitmed
+    speedModifier: 1.75
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 7
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: quadspritemedl
+    noMindState: quadspritemedr
+  - type: AccessReader
+    access: [["Command"], ["Research"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
+  - type: SiliconLawProvider
+    laws: Medical
+  - type: SolutionScanner
+  - type: FabricateActions
+    actions:
+    - ActionFabricateLollipop
+    - ActionFabricateGumball
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: quadspritemed
+    stateOn: quadspritemedballz
+    #VisibleWhenEnabled: true
+    movementStateOff: quadspritemed_moving
+    movementStateOn: quadspritemed_movingballz
+  # - type: LanguageKnowledge
+    # speaks:
+    # - TauCetiBasic
+    # - SolCommon
+    # - Tradeband
+    # - Freespeak
+    # - Elyran
+    # - RobotTalk
+    # - Sign
+    # understands:
+    # - TauCetiBasic
+    # - SolCommon
+    # - Tradeband
+    # - Freespeak
+    # - Elyran
+    # - RobotTalk
+    # - Sign
+
+- type: entity
+  id: BorgChassisApex
+  parent: BorgChassisQuadCC
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: Apex
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritel
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriter
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: Apex_moving
+    noMovementLayers:
+      movement:
+        state: Apex
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleService
+      - BorgModuleSecurity
+      - BorgModuleCargo
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: quadspritel
+    noMindState: quadspriter
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: SiliconLawProvider
+    laws: Qborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: Apex
+    stateOn: Apexballz
+    #VisibleWhenEnabled: true
+    movementStateOff: Apex_moving
+    movementStateOn: Apex_movingballz
+
+- type: entity
+  id: BorgChassisChip
+  parent: BorgChassisQuadCC
+  components:
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: chip_quadsprite
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: quadspritel
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: quadspriter
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: chip_quadsprite_moving
+    noMovementLayers:
+      movement:
+        state: chip_quadsprite
+  - type: BorgChassis
+    maxModules: 10
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleService
+      - BorgModuleSecurity
+      - BorgModuleCargo
+      - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - XenoborgModuleGeneric
+    hasMindState: quadspritel
+    noMindState: quadspriter
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: SiliconLawProvider
+    laws: Qborg
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: chip_quadsprite
+    stateOn: chip_quadspriteballz
+    #VisibleWhenEnabled: true
+    movementStateOff: chip_quadsprite
+    movementStateOn: chip_quadsprite_movingballz
+
+  # Note: No toggle added here; no provided Chip ballz states.
+
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: Xenoquad
+  name: Quad Xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army. This one seems to have 4 legs and additional assets.
+  components:
+  - type: Construction
+    node: start
+  - type: BorgTransponder
+    name: Quad xenoborg
+    sprite:
+      sprite: _HL/Mobs/Player/borgs/quads.rsi
+      state: XenoQuad
+  - type: BorgChassis
+    maxModules: 10
+    hasMindState: XenoQuad_e
+    noMindState: XenoQuad_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - XenoborgModuleGeneric
+      - BorgModuleSecurity
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - BorgModuleMedical
+      - BorgModuleEngineering
+      - BorgModuleScience
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleKill
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleTool
+      - BorgModuleAdvancedSurgery
+      - BorgModuleOperative
+      - XenoborgModuleFireExtinguisher
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: Sprite
+    sprite: _HL/Mobs/Player/borgs/quads.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: XenoQuad
+      map: ["movement", "enum.ToggleVisuals.Layer"]
+    - state: XenoQuad_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: XenoQuad_e
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteStateToggle
+    spriteLayer: enum.ToggleVisuals.Layer
+    stateOff: XenoQuad
+    stateOn: XenoQuadballz
+    #VisibleWhenEnabled: true
+    movementStateOff: XenoQuad_moving
+    movementStateOn: XenoQuad_movingballz
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: XenoQuad_moving
+    noMovementLayers:
+      movement:
+        state: XenoQuad
+
+
+# xenoborg empty
+- type: entity
+  parent: Xenoquad
+  id: XenoquadPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleKill
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleTool
+      - BorgModuleAdvancedSurgery
+      - BorgModuleOperative
+      - XenoborgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted

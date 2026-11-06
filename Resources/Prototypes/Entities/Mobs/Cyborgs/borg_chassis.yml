@@ -4,25 +4,25 @@
   components:
   - type: Sprite
     layers:
-    - state: robot
-      map: ["enum.BorgVisualLayers.Body", "movement"]
-    - state: robot_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: borg
+      map: [ "enum.BorgVisualLayers.Body", "movement" ]
+    - state: borg_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
-    - state: robot_l
+    - state: borg_l
       shader: unshaded
-      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      map: [ "light","enum.BorgVisualLayers.LightStatus" ]
       visible: false
   - type: BorgChassis
     # Default borg can take no modules until selected type.
     maxModules: 0
-    hasMindState: robot_e
-    noMindState: robot_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
   - type: BorgTransponder
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: robot
+      sprite: Mobs/Silicon/Chassis/generic/default.rsi
+      state: borg
     name: cyborg
   - type: InteractionPopup
     interactSuccessString: petting-success-generic-cyborg
@@ -30,14 +30,9 @@
   - type: BorgSwitchableType
     inherentRadioChannels:
     - Common
-    - Traffic
-    typeWhitelist: #Mono
-    - generic
-    - engineering
-    - mining
-    - janitor
-    - medical
-    - service
+    - Faction
+    - Binary
+    - Trinary # HL: Trinary
 
 - type: entity
   id: BorgChassisGeneric
@@ -47,8 +42,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: generic
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: generic_default
 
 - type: entity
   id: BorgChassisMining
@@ -57,8 +50,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: mining
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: mining_default
 
 - type: entity
   id: BorgChassisEngineer
@@ -67,8 +58,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: engineering
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: engineer_default
 
 - type: entity
   id: BorgChassisJanitor
@@ -77,8 +66,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: janitor
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: janitor_default
 
 - type: entity
   id: BorgChassisMedical
@@ -87,8 +74,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: medical
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: default_medical
 
 - type: entity
   id: BorgChassisService
@@ -97,8 +82,6 @@
   components:
   - type: BorgSwitchableType
     selectedBorgType: service
-  - type: BorgSwitchableSubtype # Goobstation
-    borgSubtype: default_service
 
 - type: entity
   id: BorgChassisSyndicateAssault
@@ -106,72 +89,72 @@
   name: syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
-  - type: Sprite
-    layers:
-    - state: synd_sec
-    - state: synd_sec_e
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: synd_sec_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: BorgChassis
-    maxModules: 5
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleSyndicate
-      - BorgModuleSyndicateAssault
-    hasMindState: synd_sec_e
-    noMindState: synd_sec
-  - type: InteractionPopup
-    interactSuccessString: petting-success-syndicate-cyborg
-    interactFailureString: petting-failure-syndicate-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_sec.rsi
+      layers:
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
+    - type: BorgChassis
+      maxModules: 3
+      moduleWhitelist:
+        tags:
+        - BorgModuleGeneric
+        - BorgModuleSyndicate
+        - BorgModuleSyndicateAssault
+      hasMindState: borg_e
+      noMindState: borg
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
+  parent: [ BaseBorgChassisSyndicate, ShowMedicalIcons ]
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
-  - type: Sprite
-    layers:
-    - state: synd_medical
-    - state: synd_medical_e
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: synd_medical_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: BorgChassis
-    maxModules: 5
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleMedical
-      - BorgModuleSyndicate
-    hasMindState: synd_medical_e
-    noMindState: synd_medical
-  - type: ShowHealthBars
-  - type: InteractionPopup
-    interactSuccessString: petting-success-syndicate-cyborg
-    interactFailureString: petting-failure-syndicate-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: SolutionScanner
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepHoverBorg
-      params:
-        volume: -6
-  - type: SurgeryTarget
-  - type: Sanitized
+    - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_medical.rsi
+      layers:
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
+    - type: BorgChassis
+      maxModules: 3
+      moduleWhitelist:
+        tags:
+        - BorgModuleGeneric
+        - BorgModuleMedical
+        - BorgModuleSyndicate
+      hasMindState: borg_e
+      noMindState: borg
+    - type: ShowHealthBars
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: SolutionScanner
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepHoverBorg
+        params:
+          volume: -6
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
@@ -179,37 +162,36 @@
   name: syndicate saboteur cyborg
   description: A streamlined engineering cyborg, equipped with covert modules. Its chameleon projector lets it disguise itself as a Nanotrasen cyborg.
   components:
-  - type: Sprite
-    layers:
-    - state: synd_engi
-    - state: synd_engi_e
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: synd_engi_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: BorgChassis
-    maxModules: 5
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleEngineering
-      - BorgModuleSyndicate
-    hasMindState: synd_engi_e
-    noMindState: synd_engi
-  - type: ShowHealthBars
-    damageContainers:
-    - Inorganic
-    - Silicon
-    - WFSiliconWolfmed # WOLFGATE(Wolfmed): playtest 3: the IPC's container, so its bar shows
-    - Synth # WOLFGATE(Wolfmed): the HardLight Synth's container, so its bar shows
-  - type: InteractionPopup
-    interactSuccessString: petting-success-syndicate-cyborg
-    interactFailureString: petting-failure-syndicate-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: Sprite
+      sprite: Mobs/Silicon/Chassis/synd_eng.rsi
+      layers:
+      - state: borg
+      - state: borg_e
+        map: [ "enum.BorgVisualLayers.Light" ]
+        shader: unshaded
+        visible: false
+      - state: borg_l
+        shader: unshaded
+        map: [ "light" ]
+        visible: false
+    - type: BorgChassis
+      maxModules: 3
+      moduleWhitelist:
+        tags:
+        - BorgModuleGeneric
+        - BorgModuleEngineering
+        - BorgModuleSyndicate
+      hasMindState: borg_e
+      noMindState: borg
+    - type: ShowHealthBars
+      damageContainers:
+      - Inorganic
+      - Silicon
+    - type: InteractionPopup
+      interactSuccessString: petting-success-syndicate-cyborg
+      interactFailureString: petting-failure-syndicate-cyborg
+      interactSuccessSound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BorgChassisDerelict
@@ -218,25 +200,27 @@
   description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
   components:
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/derelict.rsi
     layers:
-    - state: derelict
-    - state: derelict_e_r
-      map: ["enum.BorgVisualLayers.Light"]
+    - state: borg
+    - state: borg_e_r
+      map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
-    - state: derelict_l
+    - state: borg_l
       shader: unshaded
-      map: ["light"]
+      map: [ "light" ]
       visible: false
   - type: BorgChassis
-    maxModules: 6 # the seventh one broke lol
+    maxModules: 5 # the sixth one broke lol
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
-    hasMindState: derelict_e
-    noMindState: derelict_e_r
-  - type: Construction
-    node: derelictcyborg
+    hasMindState: borg_e
+    noMindState: borg_e_r
+#  - type: Construction
+#    node: derelictcyborg
+# HL: Not craftable anyways as derelictcyborg node doesn't exist
   - type: InteractionPopup
     interactSuccessString: petting-success-derelict-cyborg
     interactFailureString: petting-failure-derelict-cyborg

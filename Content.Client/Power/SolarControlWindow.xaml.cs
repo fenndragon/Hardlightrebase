@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Shared.Solar;
@@ -28,7 +27,7 @@ namespace Content.Client.Power
         {
             PanelRotation.OnTextEntered += text =>
             {
-                if (!double.TryParse((string?) text.Text, out var value))
+                if (!double.TryParse((string?)text.Text, out var value))
                     return;
 
                 SolarControlConsoleAdjustMessage msg = new()
@@ -45,7 +44,7 @@ namespace Content.Client.Power
 
             PanelVelocity.OnTextEntered += text =>
             {
-                if (!double.TryParse((string?) text.Text, out var value))
+                if (!double.TryParse((string?)text.Text, out var value))
                     return;
 
                 SolarControlConsoleAdjustMessage msg = new()
@@ -81,7 +80,7 @@ namespace Content.Client.Power
         {
             _lastState = scc;
             NotARadar.UpdateState(scc);
-            OutputPower.Text = ((int) MathF.Floor(scc.OutputPower)).ToString();
+            OutputPower.Text = ((int)MathF.Floor(scc.OutputPower)).ToString();
             SunAngle.Text = FormatAngle(scc.TowardsSun);
             UpdateField(PanelRotation, FormatAngle(scc.Rotation));
             UpdateField(PanelVelocity, FormatAngle(scc.AngularVelocity * 60));
@@ -101,8 +100,8 @@ namespace Content.Client.Power
 
         public const int StandardSizeFull = 290;
         public const int StandardRadiusCircle = 140;
-        public int SizeFull => (int) (StandardSizeFull * UIScale);
-        public int RadiusCircle => (int) (StandardRadiusCircle * UIScale);
+        public int SizeFull => (int)(StandardSizeFull * UIScale);
+        public int RadiusCircle => (int)(StandardRadiusCircle * UIScale);
 
         public SolarControlNotARadar()
         {

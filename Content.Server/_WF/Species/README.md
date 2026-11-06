@@ -266,6 +266,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - documents the client-only draw depth field
   - HardLight circle squeeze fields
   - unused once sneak state moved onto the networked component fields directly
+  - notify geometry handling when sneaking changes
 - [`Content.Shared/_DV/Abilities/SharedCrawlUnderObjectsSystem.cs`](../../../Content.Shared/_DV/Abilities/SharedCrawlUnderObjectsSystem.cs): rewritten as a shared, predicted system with HardLight's squeeze geometry
 - [`Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs`](../../../Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs): ported from HardLight/Starlight, needed by the Avali "Scratch" language
 - [`Content.Shared/_FarHorizons/Damage/HealModifyEvent.cs`](../../../Content.Shared/_FarHorizons/Damage/HealModifyEvent.cs): heal modifiers, ported from HardLight
@@ -459,9 +460,6 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - psionic components (InnatePsionicPowers, PsionicBonusChance) dropped - Wolfgate has no psionics system.
   - HardLight's GalacticCommon is TauCetiBasic here
   - was RMCSkrellWarble, which shared Warble's trigger words
-- [`Resources/Prototypes/_DV/Entities/Mobs/Species/vulpkanin.yml`](../../../Resources/Prototypes/_DV/Entities/Mobs/Species/vulpkanin.yml)
-  - this species has wag-capable tails but had no Wagging Tail action
-  - upstream's vulpkanin speech bubble
 - [`Resources/Prototypes/_DV/Species/avali.yml`](../../../Resources/Prototypes/_DV/Species/avali.yml)
   - tails are optional so players can go without one
   - was 6, more marking slots
@@ -625,7 +623,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_NF/Loadouts/species_loadout_groups.yml`](../../../Resources/Prototypes/_NF/Loadouts/species_loadout_groups.yml)
   - one more for the Avali auto-injector
   - Avali auto-injector, like the Vox tank
-- [`Resources/Prototypes/_NF/Species/goblin_species.yml`](../../../Resources/Prototypes/_NF/Species/goblin_species.yml)
+- [`Resources/Prototypes/_NF/Species/goblin.yml`](../../../Resources/Prototypes/_NF/Species/goblin.yml)
   - was 1, more marking slots
   - was 2, more marking slots
 - [`Resources/Prototypes/_Obelisk/Species/hydrakin.yml`](../../../Resources/Prototypes/_Obelisk/Species/hydrakin.yml)

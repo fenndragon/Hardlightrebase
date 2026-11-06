@@ -1,0 +1,15 @@
+- type: construction
+  name: directional_wall_name
+  id: WallDirectionalSolid # HardLight: WallDirectional<WallDirectionalSolid
+  graph: WallDirectionalSolid # HardLight: WallDirectional<WallDirectionalSolid
+  startNode: start
+  targetNode: wallDirectionalSolid
+  category: construction-category-structures
+  description: directional_wall_desc
+  # icon:
+  #   sprite: _Goobstation/Structures/Walls/directional.rsi
+  #   state: directionalwall
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true

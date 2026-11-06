@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
@@ -51,8 +50,8 @@ namespace Content.Server.Examine
             var channel = player.Channel;
             var entity = GetEntity(request.NetEntity);
 
-            if (session.AttachedEntity is not {Valid: true} playerEnt
-                || !EntityManager.EntityExists(entity))
+            if (session.AttachedEntity is not { Valid: true } playerEnt
+                || !Exists(entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                     request.NetEntity, request.Id, _entityNotFoundMessage), channel);

@@ -30,8 +30,8 @@
     solution: bucket
   - type: SolutionTransfer
     transferAmount: 100
-    maxTransferAmount: 100
-    minTransferAmount: 10
+    maxTransferAmount: 250
+    minTransferAmount: 5
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:

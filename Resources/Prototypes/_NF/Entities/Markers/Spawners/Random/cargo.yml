@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: RandomCargoSpawner
   name: random cargo spawner
   parent: MarkerBase
@@ -21,7 +21,7 @@
   name: random cargo spawner
   suffix: Generic
   parent: MarkerBase
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       layers:
@@ -69,7 +69,7 @@
 #        - CrateEngineeringSingularityCollector
 #        - CrateEngineeringParticleAccelerator
 #        - CrateEngineeringSolar
-#        - CrateFoodMRE
+        - CrateFoodMRE
         - CrateFunInstrumentsVariety
         - CrateFunInstrumentsBrass
         - CrateFunInstrumentsString
@@ -117,7 +117,7 @@
   name: random cargo spawner
   suffix: Animal
   parent: MarkerBase
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       layers:

@@ -1,4 +1,3 @@
-using System.IO;
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
@@ -37,6 +36,13 @@ namespace Content.Shared.Chat
         public Color? MessageColorOverride;
         public string? AudioPath;
         public float AudioVolume;
+
+        /// <summary>
+        /// For <see cref="ChatChannel.Radio"/> messages: the prototype ID of the radio channel (e.g. "Common", "Security").
+        /// Null for announcements or other radio messages that are not tied to a specific channel.
+        /// Used by the client to filter radio channels independently.
+        /// </summary>
+        public string? RadioChannelId;
 
         [NonSerialized]
         public bool Read;
@@ -77,7 +83,7 @@ namespace Content.Shared.Chat
         {
             var stream = new MemoryStream();
             serializer.SerializeDirect(stream, Message);
-            buffer.WriteVariableInt32((int) stream.Length);
+            buffer.WriteVariableInt32((int)stream.Length);
             buffer.Write(stream.AsSpan());
         }
     }

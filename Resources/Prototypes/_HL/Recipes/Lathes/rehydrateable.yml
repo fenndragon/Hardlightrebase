@@ -1,0 +1,8 @@
+
+# Medical
+- type: latheRecipe
+  id: SynthHeadEmpty
+  result: BioSynthHeadEmpty
+  completetime: 10
+  materials:
+    Biomass: 5

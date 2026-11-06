@@ -1,0 +1,129 @@
+- type: entity
+  id: CratePrinter
+  parent: BaseLatheLube
+  name: Cargo Crate Printer
+  description: Prints and fills cargo crates with various items, Access locked to cargo personnel.
+  components:
+  - type: Sprite
+    snapCardinals: true # Frontier
+    sprite: _Crescent/Structures/cratefab.rsi
+    layers:
+    - state: fab-idle
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: fab-load
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: fab-o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: CargoCratePrinterMachineCircuitboard
+  - type: Lathe
+    idleState: fab-idle
+    runningState: fab-active
+    staticPacks:
+    - HLCargoCrates
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: OreSiloClient
+  - type: DeviceLinkSink
+    ports:
+      - FillbotAnyItem
+  - type: AccessReader # HardLight
+    access: [["Cargo"]]
+  - type: ActivatableUIRequiresAccess # HardLight
+
+- type: entity
+  id: SlopDispenser
+  parent: BaseLathe
+  name: nutrient paste dispenser
+  description: Produces tha slop using biomass. Can also convert plants to biomass for direct use.
+  components:
+    - type: Sprite
+      sprite: _HL/Structures/Machines/slop_machine.rsi
+      snapCardinals: true
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: SlopDispenserMachineCircuitboard
+    - type: MaterialStorage
+      ignoreColor: true
+      whitelist:
+        tags:
+          - Sheet
+          - RawMaterial
+    - type: Lathe
+      idleState: icon
+      runningState: building
+      staticPacks:
+        - SlopStatic
+    - type: ProduceMaterialExtractor
+
+- type: entity
+  abstract: true
+  parent: BaseLathe
+  id: BaseLatheFuel
+  components:
+  - type: ReagentSpeed
+    solution: fuel
+    modifiers:
+      WeldingFuel: 0.2
+  - type: SolutionContainerManager
+    solutions:
+      fuel:
+        maxVol: 500
+  - type: Spillable
+    solution: fuel
+  - type: RefillableSolution
+    solution: fuel
+  - type: ExaminableSolution
+    solution: fuel
+
+- type: entity
+  id: TiderLathe
+  parent: BaseLatheFuel
+  name: maints anvil
+  description: Every maints blacksmith's dream, a forge for producing gear in bulk.
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Machines/tider_anvil.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - TiderAnvilMats
+        - TiderAnvilParts
+  - type: OreSiloClient
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
+    staticPacks:
+    - TiderAnvilStatic
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Machine
+    board: AssortedForgeParts

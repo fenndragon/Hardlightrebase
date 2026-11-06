@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -48,7 +46,8 @@ public sealed partial class RadiationCollectorSystem : EntitySystem
         if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
             return false;
 
-        if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
+        var gasTankUid = container.ContainedEntities.First();
+        if (!TryComp<GasTankComponent>(gasTankUid, out gasTankComponent))
             return false;
 
         return true;
@@ -58,6 +57,7 @@ public sealed partial class RadiationCollectorSystem : EntitySystem
     {
         TryGetLoadedGasTank(uid, out var gasTank);
         UpdateTankAppearance(uid, component, gasTank);
+        UpdateMachineAppearance(uid, component); // HardLight: Restore visual state on load
     }
 
     private void OnTankChanged(EntityUid uid, RadiationCollectorComponent component, ContainerModifiedMessage args)
@@ -193,7 +193,7 @@ public sealed partial class RadiationCollectorSystem : EntitySystem
 
     private void UpdateMachineAppearance(EntityUid uid, RadiationCollectorComponent component, AppearanceComponent? appearance = null)
     {
-        if (!Resolve(uid, ref appearance))
+        if (!Resolve(uid, ref appearance, false))
             return;
 
         var state = component.Enabled ? RadiationCollectorVisualState.Active : RadiationCollectorVisualState.Deactive;

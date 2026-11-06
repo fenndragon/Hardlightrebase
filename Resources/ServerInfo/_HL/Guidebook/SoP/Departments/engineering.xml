@@ -1,0 +1,85 @@
+<Document>
+# Engineering
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Engineering is responsible for maintaining station infrastructure, utilities, atmospherics, and structural integrity.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Engineering Roles
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Role[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Responsibility[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      [textlink="Chief Engineer" link="SOPCE"]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Oversees the Engineering Department, coordinates infrastructure projects, maintains station utilities, and ensures engineering personnel operate safely and effectively.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Atmospheric Technician
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Maintains the station's atmospheric systems, gas distribution network, temperature regulation, and environmental safety.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Station Engineer
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Maintains station infrastructure, repairs damage, restores utilities, constructs approved projects, and responds to engineering emergencies.
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Technical Assistant
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Assists Engineering personnel with repairs, maintenance, construction projects, and general departmental duties while learning the responsibilities of the Engineering Department.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Department Expectations
+
+- Engineers should prioritize maintaining power, atmosphere, and station integrity.
+- Major construction projects or significant infrastructure modifications should be communicated to department leadership whenever possible.
+- Engineering personnel are expected to respond to emergencies such as breaches, power failures, fires, and atmospheric hazards.
+- Safety should always be considered before experimentation or unconventional engineering projects.
+- Engineering is encouraged to solve problems creatively, but solutions should remain believable and reasonably safe.
+- Engineers should communicate with other departments regarding construction, repairs, and infrastructure concerns that may impact station operations.
+- Engineering personnel are not Security and should generally avoid inserting themselves into law enforcement matters unless necessary for self-defense or emergency response.
+
+## Final Note
+
+Engineering is responsible for the station's continued survival. Creative problem solving is encouraged, but good judgment and safety should always come first.
+
+</Document>

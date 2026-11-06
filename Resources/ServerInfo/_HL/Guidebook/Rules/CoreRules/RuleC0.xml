@@ -1,0 +1,103 @@
+<Document>
+[head=3][color=#ff0000]WARNING: You must be 18 or older to play. Users under 18 will be banned immediately.[/head][/color]
+
+[color=#99ff99]Hard Light is an english speaking 18+ medium roleplay server[/color]
+
+[color=#a4885c][head=3]0. Implementation and interpretation of the rules is up to the sole discretion of the Admins.[/head][/color]
+
+	• Admins will instead be held accountable through use of the Admin code of conduct.
+
+[color=#ffff00]If you have any questions about these rules, please use the Admin help menu by hitting F1 in-game, or clicking the "AHelp" button in the lobby, or alternatively, ask for assistance on the discord.[/color]
+
+[head=3][color=#ff0000]Rules marked in Hardlight's [color=#00fffb]color[/color] will be enforced at all times. Other rules will only be enforced upon recieving a user report.[/head][/color]
+
+[head=3][color=#ff0000]Rules marked in [color=#00fffb]red[/color] are [bold]zero-tolerance[/bold]. Violating these rules will result in an immediate one-day ban at minimum.[/head][/color]
+
+  Each section contains its own list of rules. Click on the section name to view the full version.
+
+  - [textlink="Section 1. Behavioral Rules" link="RuleC1"]
+  - [textlink="Section 2. Gameplay Rules" link="RuleC2"]
+  - [textlink="Section 3. Metagaming Rules" link="RuleC3"]
+  - [textlink="Section 4. New-life Rules" link="RuleC4"]
+  - [textlink="Section 5. Character Naming Rules" link="RuleC5"]
+  - [textlink="Section 6. Roleplay Rules" link="RuleC6"]
+  - [textlink="Section 7. Powergaming Rules" link="RuleC7"]
+  - [textlink="Section 8. End-Of-Round (EOR) Rules" link="RuleC8"]
+  - [textlink="Section 9. Erotic-Role-Play (ERP) Rules" link="RuleC9"]
+  - [textlink="Section 10. Command and Security Rules" link="RuleC10"]
+  - [textlink="Section 11. Antagonist Rules" link="RuleC11"]
+  - [textlink="Section 12. Escalation Guidelines" link="RuleC12"]
+  - [textlink="Section 13. Ship saving" link="RuleC13"]
+
+[head=3]Definitions[/head]
+
+For detailed guidance, see [textlink="Roleplay Expectations" link="RoleplayExpectations"]. The rules below stand on their own and are enforceable as written.
+
+[color=#00fffb]Powergaming[/color] Taking unreasonable steps to eliminate failure states or vulnerabilities, at the cost of believability.
+
+[color=#00fffb]Min-maxing[/color] A form of powergaming: combining gear, chemicals, genetics, or constructions to reach an advantage the mechanics were not designed to produce, or taking "best in slot" gear across multiple slots to eliminate risk.
+
+[color=#00fffb]Validhunting[/color] Seeking out, chasing, or attacking a threat on the basis of player knowledge that the target is an antagonist, rather than in-character motivation.
+
+[color=#00fffb]Metagaming[/color] Acting on information your character does not have.
+
+[color=#00fffb]Greentext[/color] Mechanical completion of objectives. Greentext records an outcome and carries no weight in evaluating roleplay.
+
+[color=#00fffb]Self-antagging[/color] Engaging in antagonistic actions against other players or the station, usually but not always criminal offenses, while not an antagonist role.
+  - Antagonist roles are those such as (but not limited to): Traitor, Xenoborg, Thief.
+
+[color=#ffff00][head=3]Section 1: Behavior Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="1" />
+
+[color=#ffff00][head=3]Section 2: Game Server Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="2" />
+
+[color=#ffff00][head=3]Section 3: Metagaming Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="3" />
+
+[color=#ffff00][head=3]Section 4: New-Life Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="4" />
+
+[color=#ffff00][head=3]Section 5: Naming Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="5" />
+
+[color=#ffff00][head=3]Section 6: Roleplay Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="6" />
+
+[color=#ffff00][head=3]Section 7: Powergaming Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="7" />
+
+[color=#ffff00][head=3]Section 8: End-of-Round (EOR) Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="8" />
+
+[color=#ffff00][head=3]Section 9: Erotic-Role-Play (ERP) Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="9" />
+
+[color=#ffff00][head=3]Section 10: Command and Security Rules[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="10" />
+
+[color=#ffff00][head=3]Section 11: Antagonist Guidelines[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="11" />
+
+[color=#ffff00][head=3]Section 12: Escalation Guidelines[/head][/color]
+
+<GuideServerRuleGroupEmbed Section="12" />
+
+[color=#ffff00][head=3]Section 13: Ship saving[/head][/color]
+
+Examples of these guidelines can be found in [textlink="Shipbuilding Guidelines" link="ShipyardBuildingGuidelines"]
+
+<GuideServerRuleGroupEmbed Section="13" />
+
+</Document>

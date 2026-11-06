@@ -1,5 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
@@ -20,7 +18,7 @@ namespace Content.Tests.Shared.Gamestates
             foreach (var compType in comps)
             {
                 // Any component should be able to be instantiated without DI injection.
-                _ = (IComponent) Activator.CreateInstance(compType);
+                _ = (IComponent)Activator.CreateInstance(compType);
             }
         }
 

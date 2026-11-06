@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Radio.Components;
 using Content.Shared.Wires;
@@ -10,8 +9,9 @@ public sealed class RemoveEncryptionKeys : InteractionTest
     [Test]
     public async Task HeadsetKeys()
     {
-        await SpawnTarget("ClothingHeadsetGrey");
+        await SpawnTarget("ClothingHeadsetFreelance"); //HL: Changed to a headset that doesn't have common as the default
         var comp = Comp<EncryptionKeyHolderComponent>();
+        await InteractUsing("EncryptionKeyCommon");// Hardlight: Our headsets have intrinsic keys, as such we've got to add a common key first to perform the test.
 
         Assert.Multiple(() =>
         {
@@ -22,7 +22,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Remove the key
-        await InteractUsing(Screw);
+        await InteractUsing(Cut); // HL: We use Wirecutters here
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(0));
@@ -34,13 +34,12 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         await AssertEntityLookup(("EncryptionKeyCommon", 1));
 
         // Re-insert a key.
-        await InteractUsing("EncryptionKeyCentCom");
+        await InteractUsing("EncryptionKeyColCom");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
-            Assert.That(comp.DefaultChannel, Is.EqualTo("CentCom"));
             Assert.That(comp.Channels, Has.Count.EqualTo(1));
-            Assert.That(comp.Channels.First(), Is.EqualTo("CentCom"));
+            Assert.That(comp.Channels, Does.Contain("ColCom")); //HL: We use intrinsic channels so just check that it's been installed.
         });
     }
 
@@ -87,13 +86,13 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Reinsert a key
-        await InteractUsing("EncryptionKeyCentCom");
+        await InteractUsing("EncryptionKeyColCom");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
-            Assert.That(comp.DefaultChannel, Is.EqualTo("CentCom"));
+            Assert.That(comp.DefaultChannel, Is.EqualTo("ColCom"));
             Assert.That(comp.Channels, Has.Count.EqualTo(1));
-            Assert.That(comp.Channels.First(), Is.EqualTo("CentCom"));
+            Assert.That(comp.Channels.First(), Is.EqualTo("ColCom"));
         });
 
         // Remove it again

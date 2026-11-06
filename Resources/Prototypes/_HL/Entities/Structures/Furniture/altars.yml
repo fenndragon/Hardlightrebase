@@ -1,0 +1,81 @@
+- type: entity
+  id: AbyssAltar
+  parent: AltarBase
+  name: abyssal altar
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Furniture/Altars/goldabyssaltar.rsi
+    layers:
+    - state: abyss
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: _HL/Structures/Furniture/Altars/goldabyssaltar.rsi
+    state: abyss
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#a834eb"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          AdminInstantEffectSmoke10:
+            min: 1
+            max: 1 # Frontier: 5<3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: AbyssAltarGold
+  parent: AltarBase
+  name: golden abyss altar
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Furniture/Altars/goldabyssaltar.rsi
+    layers:
+    - state: goldabyss
+    - state: lightning
+      shader: unshaded
+  - type: Icon
+    sprite: _HL/Structures/Furniture/Altars/goldabyssaltar.rsi
+    state: goldabyss
+  - type: PointLight
+    radius: 1.5
+    energy: 1
+    color: "#a834eb"
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          TreasureCoinGold3:
+            min: 1
+            max: 3 # Frontier: 5<3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

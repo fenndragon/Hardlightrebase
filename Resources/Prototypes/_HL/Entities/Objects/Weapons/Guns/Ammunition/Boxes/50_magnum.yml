@@ -1,0 +1,106 @@
+- type: entity
+  abstract: true
+  id: BaseAmmoBox50_magnum
+  parent: [BaseItem, RecyclableItemCardboard]
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge50_magnumFMJ
+    proto: Cartridge50_magnumFMJ
+    capacity: 30
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+       ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/Boxes/50Magnum.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+  - type: Animateable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: EmitSoundOnCollide
+    sound:
+      collection: WeakHit
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/drop.ogg
+      params:
+        volume: 2
+  - type: DamageOnHighSpeedImpact
+    soundHit:
+      collection: MetalThud
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+  - type: CollisionWake
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: -0.25,-0.25,0.25,0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
+#Ammunition Boxes
+- type: entity
+  parent: BaseAmmoBox50_magnum
+  id: AmmoBox50_magnumFMJ
+  name: ammunition box (.50 magnum FMJ)
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumFMJ
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseAmmoBox50_magnum
+  id: AmmoBox50_magnumRubber
+  name: ammunition box (.50 magnum Rubber)
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumRubber
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/Boxes/50Magnum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-rubber-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseAmmoBox50_magnum
+  id: AmmoBox50_magnumPractice
+  name: ammunition box (.50 magnum Practice)
+  description: a cardboard box of .50 magnum rounds. Intended to hold non-harmful chalk ammunition, to get used to the kick from the powerful cartridges.
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge50_magnumPractice
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Ammunition/Boxes/50Magnum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-practice-1
+      map: ["enum.GunVisualLayers.Mag"]

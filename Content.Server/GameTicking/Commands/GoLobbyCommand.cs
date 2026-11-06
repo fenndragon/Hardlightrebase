@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.GameTicking.Presets;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -35,6 +35,7 @@ namespace Content.Server.GameTicking.Commands
             config.SetCVar(CCVars.GameLobbyEnabled, true);
 
             ticker.RestartRound();
+            ticker.ReturnPlayersToLobby(); // HardLight
 
             if (preset != null)
             {

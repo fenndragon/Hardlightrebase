@@ -31,8 +31,14 @@ chat-emote-name-cathisses = Cat Hisses
 chat-emote-name-monkeyscreeches = Monkey Screeches
 chat-emote-name-robotbeep = Robot
 chat-emote-name-yawn = Yawn
-chat-emote-name-snore = Snore
-
+chat-emote-name-flap = Flap Wings
+chat-emote-name-stroke = Stroke
+chat-emote-name-plap = Plap
+chat-emote-name-wetplap = Wet Plap
+chat-emote-name-wetplorp = Wet Plorp
+chat-emote-name-pullout = Pull Out
+chat-emote-name-cumin = Cum Inside
+chat-emote-name-cumout = Cum Inside
 # Message
 chat-emote-msg-scream = screams!
 chat-emote-msg-laugh = laughs.
@@ -52,6 +58,7 @@ chat-emote-msg-salute = salutes.
 chat-emote-msg-gasp = gasps.
 chat-emote-msg-deathgasp = seizes up and falls limp, {POSS-ADJ($entity)} eyes dead and lifeless...
 chat-emote-msg-deathgasp-monkey = lets out a faint chimper as {SUBJECT($entity)} collapses and stops moving...
+chat-emote-msg-deathgasp-scurret = lets out a final 'wa' and falls still...
 chat-emote-msg-buzz = buzzes!
 chat-emote-msg-weh = wehs!
 chat-emote-msg-hew = hews!
@@ -66,4 +73,7 @@ chat-emote-msg-catmeow = meows.
 chat-emote-msg-cathisses = hisses!
 chat-emote-msg-monkeyscreeches = screeches!
 chat-emote-msg-yawn = yawns.
-chat-emote-msg-snore = snores.
+chat-emote-msg-flap = flaps {POSS-ADJ($entity)} wings.
+
+# Floof - Feroxi Port
+chat-emote-msg-gnash = gnashes {POSS-ADJ($entity)} teeth.

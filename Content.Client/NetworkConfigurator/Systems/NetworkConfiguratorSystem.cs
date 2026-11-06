@@ -112,7 +112,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
         {
             _configurator = configurator;
             _keyBindingName = keyBindingName;
-            _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+            _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
             AddChild(_label);
         }
 
@@ -125,7 +125,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
 
             _linkModeActive = _configurator.LinkModeActive;
 
-            var modeLocString = _linkModeActive??false
+            var modeLocString = _linkModeActive ?? false
                 ? "network-configurator-examine-mode-link"
                 : "network-configurator-examine-mode-list";
 

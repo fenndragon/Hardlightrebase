@@ -1,0 +1,66 @@
+
+- type: entity
+  name: improvised flamethrower
+  parent: [BaseItem, BaseC3ExpeditionContraband]
+  id: flamethrower
+  description: A surprisingly well made device crafted out of scrap and old tools that manages to shoot individual jets of flame.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Flamethrowers/impflamethrower.rsi
+    layers:
+    - state: icon
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Flamethrowers/impflamethrower.rsi
+    slots:
+    - Back
+    - suitStorage
+  - type: Item
+    size: Large
+    sprite: _HL/Objects/Weapons/Guns/Flamethrowers/impflamethrower.rsi
+  - type: Gun
+    fireRate: 3
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Effects/teleport_departure.ogg
+  - type: RefillableSolution
+    solution: Welder
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 50
+        maxVol: 50
+  - type: SolutionAmmoProvider
+    solutionId: Welder
+    proto: ProjectileFlamethrown
+  - type: Welder
+
+- type: entity
+  id: ProjectileFlamethrown
+  name: fire
+  description:
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#E25822"
+    radius: 0.5
+    energy: 1.25
+  - type: Projectile
+    damage:
+      types:
+        Heat: 2
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: IgnitionSource
+    temperature: 360
+    ignited: true
+  - type: IgniteOnCollide
+    fireStacks: 1

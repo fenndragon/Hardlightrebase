@@ -30,7 +30,7 @@ public sealed partial class BorgSystem
         var query = EntityQueryEnumerator<BorgTransponderComponent, BorgChassisComponent, DeviceNetworkComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var chassis, out var device, out var meta))
         {
-            if (comp.NextDisable is {} nextDisable && now >= nextDisable)
+            if (comp.NextDisable is { } nextDisable && now >= nextDisable)
                 DoDisable((uid, comp, chassis, meta));
 
             if (now < comp.NextBroadcast)
@@ -73,7 +73,7 @@ public sealed partial class BorgSystem
             return;
         }
 
-        if (ent.Comp2.BrainEntity is not {} brain)
+        if (ent.Comp2.BrainEntity is not { } brain)
             return;
 
         var message = Loc.GetString(ent.Comp1.DisabledPopup, ("name", Name(ent, ent.Comp3)));
@@ -90,7 +90,7 @@ public sealed partial class BorgSystem
         if (command == RoboticsConsoleConstants.NET_DISABLE_COMMAND)
             Disable(ent);
         else if (command == RoboticsConsoleConstants.NET_DESTROY_COMMAND)
-            Destroy(ent);
+            Destroy(ent.Owner);
     }
 
     private void Disable(Entity<BorgTransponderComponent, BorgChassisComponent?> ent)
@@ -110,8 +110,15 @@ public sealed partial class BorgSystem
         ent.Comp1.NextDisable = _timing.CurTime + ent.Comp1.DisableDelay;
     }
 
-    private void Destroy(Entity<BorgTransponderComponent> ent)
+    /// <summary>
+    /// Makes a borg with <see cref="BorgTransponderComponent"/> explode
+    /// </summary>
+    /// <param name="ent">the entity of the borg</param>
+    public void Destroy(Entity<BorgTransponderComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         // this is stealthy until someone realises you havent exploded
         if (CheckEmagged(ent, "destroyed"))
         {

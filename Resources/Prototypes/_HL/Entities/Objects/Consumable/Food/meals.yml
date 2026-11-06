@@ -1,0 +1,223 @@
+- type: entity
+  name: nutrient paste meal
+  parent: FoodMealBase
+  id: FoodThaSlop #tha slop
+  description: A synthetic mixture of protein, carbohydrates, and vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: FlavorProfile
+      flavors:
+        - thaslop
+    - type: Food
+      trash:
+        - FoodPacketMRETrash
+    - type: Sprite
+      sprite: _HL/Objects/Consumable/Food/tha_slop.rsi
+      layers:
+        - state: thaslop
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 55
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 50
+    - type: Tag
+      tags:
+        - Meat
+
+- type: entity
+  name: empty nutrient paste meal container
+  parent: FoodPacketBoritosTrash
+  id: FoodThaSlopTrash
+  description: The empty container of a nutrient paste meal.
+  components:
+    - type: Sprite
+      sprite: _HL/Objects/Consumable/Food/tha_slop.rsi
+      layers:
+        - state: emptyslopcan
+    - type: StaticPrice
+      price: 6
+
+- type: entity
+  name: nutrient paste drink
+  parent: FoodThaSlop
+  id: FoodThaSlopDrink
+  description: A synthetic drinkable mixture of protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Food
+      trash:
+        - FoodThaSlopTrash
+    - type: Sprite
+      layers:
+        - state: slopcan
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 15
+
+- type: entity
+  name: vegetarian nutrient paste drink
+  parent: FoodThaSlopDrink
+  id: FoodVeggieThaSlopDrink
+  description: A synthetic drinkable mixture of plant-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Tag
+      tags:
+      - Vegetable
+    - type: Sprite
+      layers:
+        - state: veggieslopcan
+
+- type: entity
+  name: meat nutrient paste drink
+  parent: FoodThaSlopDrink
+  id: FoodMeatThaSlopDrink
+  description: A synthetic drinkable mixture of animal-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Tag
+      tags:
+        - Meat
+    - type: Sprite
+      layers:
+        - state: meatslopcan
+
+- type: entity
+  name: vegetarian nutrient paste meal
+  parent: FoodThaSlop
+  id: FoodVeggieThaSlop
+  description: A synthetic mixture of plant-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Tag
+      tags:
+      - Vegetable
+    - type: Sprite
+      layers:
+        - state: veggiepaste
+
+- type: entity
+  name: meat nutrient paste meal
+  parent: FoodThaSlop
+  id: FoodMeatThaSlop
+  description: A synthetic mixture of animal-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Tag
+      tags:
+      - Meat
+    - type: Sprite
+      layers:
+        - state: meatpaste
+
+- type: entity
+  name: nutrient paste brick
+  parent: FoodThaSlop
+  id: FoodThaSlopBrick
+  description: A synthetic mixture of protein, carbohydrates, and vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+  - type: Sprite
+    layers:
+      - state: slopbrick
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nutriment
+            Quantity: 35
+
+- type: entity
+  name: vegetarian nutrient paste brick
+  parent: FoodThaSlopBrick
+  id: FoodVeggieThaSlopBrick
+  description: A synthetic mixture of plant-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+  - type: Sprite
+    layers:
+      - state: veggiebrick
+
+- type: entity
+  name: Meat Nutrient Paste Brick
+  parent: FoodThaSlopBrick
+  id: FoodMeatThaSlopBrick
+  description: A synthetic mixture of animal-based protein, carbohydrates, vitamins, amino acids and minerals. Everything the body needs, and absolutely disgusting.
+  components:
+    - type: Sprite
+      layers:
+      - state: meatbrick
+
+- type: entity
+  name: meat on a bone
+  parent: FoodMeatRawBase
+  id: FoodMeatOnBone
+  description: A huge chunk of raw meat on a bone.
+  components:
+  - type: Food
+    trash:
+    - MaterialBones1
+  - type: Sprite
+    sprite: _HL/Objects/Consumable/Food/meatonbone.rsi
+    state: raw
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 27
+        - ReagentId: Fat
+          Quantity: 27
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeat
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: MeatOnBone
+    node: start
+    defaultTarget: meat on bone
+  - type: Tag
+    tags:
+    - Meat
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  name: cooked meat on a bone
+  parent: FoodMeatBase
+  id: FoodMeatOnBoneCooked
+  description: A cooked chunk of meat. Smells primal.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    sprite: _HL/Objects/Consumable/Food/meatonbone.rsi
+    state: cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Protein
+          Quantity: 15
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCooked
+  - type: Food
+    trash:
+    - MaterialBones1
+  - type: Construction
+    graph: MeatOnBone
+    node: meat on bone
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Heat: 3

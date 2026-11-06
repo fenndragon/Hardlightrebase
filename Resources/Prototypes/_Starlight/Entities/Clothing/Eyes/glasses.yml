@@ -1,43 +1,12 @@
 - type: entity
-  parent: ClothingEyesHudMedical
-  id: ClothingEyesGlassesMedicalPrescription
-  name: prescription medical glasses
-  description: A set of prescription glasses with an integrated medical scanner heads-up display. Not covered under insurance.
+  parent: [ClothingEyesBase, BaseC1Contraband]
+  id: ClothingEyesGlassesNullSpace
+  name: nullspace goggles
+  description: An unusual pair of goggles developed during a time of inhumane experimentation involving Shadekin. They are designed to allow the wearer to peer into NullSpace.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionmedical.rsi
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionmedical.rsi
-  - type: VisionCorrection
-  - type: Tag
-    tags:
-    - HudMedical
-    - WhitelistChameleon
-
-- type: entity
-  parent: ClothingEyesHudSecurity
-  id: ClothingEyesGlassesSecurityPrescription
-  name: prescription security glasses
-  description: A set of unshielded prescription glasses with an integrated humanoid infoscanner heads-up display.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionsecglasses.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionsecglasses.rsi
-  - type: VisionCorrection
-  - type: Tag
-    tags:
-    - HudSecurity
-    - WhitelistChameleon
-
-- type: entity
-  parent: ClothingEyesGlassesChemical
-  id: ClothingEyesGlassesChemicalPrescription
-  name: prescription chemical analysis glasses
-  description: A set of prescription glasses for chemists.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionscience.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Eyes/Glasses/prescriptionscience.rsi
-  - type: VisionCorrection
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: ShowNullSpace
+    showShader: true

@@ -1,5 +1,4 @@
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -108,7 +107,7 @@ namespace Content.Server.Popups
             if (message == null)
                 return;
 
-            if (TryComp(recipient, out ActorComponent? actor))
+            if (TryComp(recipient, out ActorComponent? actor) && actor.PlayerSession != null)
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), actor.PlayerSession);
         }
 
@@ -157,6 +156,20 @@ namespace Content.Server.Popups
                 // With no recipient, send to everyone (in PVS range)
                 RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)));
             }
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                filter = filter.RemovePlayerByAttachedEntity(recipient.Value);
+            }
+
+            RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter, recordReplay);
         }
 
         public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)

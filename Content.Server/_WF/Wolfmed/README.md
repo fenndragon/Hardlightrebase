@@ -1814,7 +1814,7 @@ Skipped ("dirty-disposed").
 - [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Ammunition/Projectiles/12_gauge.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Ammunition/Projectiles/12_gauge.yml): W1: buckshot leaves fragments, not a clean channel.
 - [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Melee/shockmaul.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Melee/shockmaul.yml): a blunt weapon can execute, with bludgeoning lines in place of the throat-slitting ones
 - [`Resources/Prototypes/_Mono/Traits/physical.yml`](../../../Resources/Prototypes/_Mono/Traits/physical.yml): the drones repair a chassis too; flesh-only mending left every chassis wound open
-- [`Resources/Prototypes/_NF/Body/Organs/goblin_organs.yml`](../../../Resources/Prototypes/_NF/Body/Organs/goblin_organs.yml)
+- [`Resources/Prototypes/_NF/Body/Organs/goblin.yml`](../../../Resources/Prototypes/_NF/Body/Organs/goblin.yml)
   - M4: OD16 parity, Wolfmed lung data (plan 9.2 group A-prime)
   - in the lungs slot; BaseHumanOrgan leaves it blank, so surgery and the analyzer missed it
 - [`Resources/Prototypes/_NF/Catalog/Fills/Backpacks/duffelbag.yml`](../../../Resources/Prototypes/_NF/Catalog/Fills/Backpacks/duffelbag.yml): the advanced bag had no bone gel for mending fractures
@@ -1969,9 +1969,6 @@ Skipped ("dirty-disposed").
 - [`Resources/Prototypes/Body/Parts/slime.yml`](../../../Resources/Prototypes/Body/Parts/slime.yml)
   - P5-1: slime wound profile, no bone fractures; WFWolfmedPartSlime must stay FIRST (RT first-parent-wins)
   - M4, plan 9.3: a slime's core, its brain, is in the torso, so losing the head is not death.
-- [`Resources/Prototypes/borg_types.yml`](../../../Resources/Prototypes/borg_types.yml)
-  - playtest 3: the IPC's container, so its bar shows
-  - the HardLight Synth's container, so its bar shows
 - [`Resources/Prototypes/Catalog/Fills/Backpacks/duffelbag.yml`](../../../Resources/Prototypes/Catalog/Fills/Backpacks/duffelbag.yml): W4: the graft step's tool, beside the bone gel it mirrors.
 - [`Resources/Prototypes/Catalog/Fills/Crates/medical.yml`](../../../Resources/Prototypes/Catalog/Fills/Crates/medical.yml)
   - W7: infection cure, orderable without chemistry.
@@ -2047,9 +2044,6 @@ Skipped ("dirty-disposed").
 - [`Resources/Prototypes/Entities/Clothing/OuterClothing/vests.yml`](../../../Resources/Prototypes/Entities/Clothing/OuterClothing/vests.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/Entities/Debugging/spanisharmyknife.yml`](../../../Resources/Prototypes/Entities/Debugging/spanisharmyknife.yml): a multi-mode tool does the surgery its modes stand in for (feedback #136)
 - [`Resources/Prototypes/Entities/Markers/Spawners/Random/Department/medical.yml`](../../../Resources/Prototypes/Entities/Markers/Spawners/Random/Department/medical.yml): playtest 5: sutures found in more places.
-- [`Resources/Prototypes/Entities/Mobs/Cyborgs/borg_chassis.yml`](../../../Resources/Prototypes/Entities/Mobs/Cyborgs/borg_chassis.yml)
-  - playtest 3: the IPC's container, so its bar shows
-  - the HardLight Synth's container, so its bar shows
 - [`Resources/Prototypes/Entities/Mobs/NPCs/simplemob.yml`](../../../Resources/Prototypes/Entities/Mobs/NPCs/simplemob.yml): W2: an animal's unarmed attack is a bite, which Wolfmed's wound rules turn into an avulsion.
 - [`Resources/Prototypes/Entities/Mobs/Player/admin_ghost.yml`](../../../Resources/Prototypes/Entities/Mobs/Player/admin_ghost.yml)
   - playtest 3: the IPC's container, so its bar shows
@@ -2077,9 +2071,6 @@ Skipped ("dirty-disposed").
   - ITEMS, playtest 5: 7x2, room for the tourniquet, splint, suture and painkillers.
   - playtest 5: 7x2 like the other kits, room for a tourniquet, a splint and an epinephrine pen.
 - [`Resources/Prototypes/Entities/Objects/Specific/Research/anomaly.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Research/anomaly.yml): a blunt weapon can execute, with bludgeoning lines in place of the throat-slitting ones
-- [`Resources/Prototypes/Entities/Objects/Specific/Robotics/borg_modules.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Robotics/borg_modules.yml)
-  - the field items Wolfmed's wound and IPC treatments call for
-  - fracture setting and burn grafting
 - [`Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml): BRAIN: organ health, so a chassis can be killed
 - [`Resources/Prototypes/Entities/Objects/Tools/cable_coils.yml`](../../../Resources/Prototypes/Entities/Objects/Tools/cable_coils.yml)
   - W6: the surgery tool for the servo step. Servo damage carries no damage type, so the coil's

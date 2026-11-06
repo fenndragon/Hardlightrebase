@@ -1,8 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Maps;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
 {
@@ -101,7 +99,7 @@ namespace Content.Server.Atmos
 
         GasMixture IGasMixtureHolder.Air
         {
-            get => Air ?? new GasMixture(Atmospherics.CellVolume){ Temperature = Temperature };
+            get => Air ?? new GasMixture(Atmospherics.CellVolume) { Temperature = Temperature };
             set => Air = value;
         }
 
@@ -142,7 +140,7 @@ namespace Content.Server.Atmos
             AirArchived = Air != null ? Air.Clone() : null;
             Space = space;
 
-            if(immutable)
+            if (immutable)
                 Air?.MarkImmutable();
         }
 

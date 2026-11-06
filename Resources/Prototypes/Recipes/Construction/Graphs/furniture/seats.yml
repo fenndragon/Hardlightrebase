@@ -36,11 +36,12 @@
             - material: Steel
               amount: 2
               doAfter: 1
-        - to: chairComfy
-          steps:
-            - material: Steel
-              amount: 2
-              doAfter: 1
+        # HL - Consolidate comfy chairs into _Starlight
+        #- to: chairComfy
+        #  steps:
+        #    - material: Steel
+        #      amount: 2
+        #      doAfter: 1
         - to: chairPilotSeat
           steps:
             - material: Steel
@@ -68,25 +69,30 @@
             - material: Steel
               amount: 2
               doAfter: 1
+        - to: stoolCard
+          steps:
+            - material: Cardboard
+              amount: 3
+              doAfter: 1
         - to: chairWoodBench
           steps:
             - material: WoodPlank
               amount: 4
               doAfter: 2
-        - to: redComfBench
-          steps:
-            - material: Steel
-              amount: 2
-              doAfter: 1
-            - material: Cloth
-              amount: 1
-        - to: blueComfBench
-          steps:
-            - material: Steel
-              amount: 2
-              doAfter: 1
-            - material: Cloth
-              amount: 1
+        #- to: redComfBench
+        #  steps:
+        #    - material: Steel
+        #      amount: 2
+        #      doAfter: 1
+        #    - material: Cloth
+        #      amount: 1
+        #- to: blueComfBench
+        #  steps:
+        #    - material: Steel
+        #      amount: 2
+        #      doAfter: 1
+        #    - material: Cloth
+        #      amount: 1
 
     - node: chair
       entity: Chair
@@ -155,18 +161,18 @@
           steps:
             - tool: Screwing
               doAfter: 1
-
-    - node: chairComfy
-      entity: ComfyChair
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-          steps:
-            - tool: Screwing
-              doAfter: 1
+    # HL - Consolidate
+    #- node: chairComfy
+    #  entity: ComfyChair
+    #  edges:
+    #    - to: start
+    #      completed:
+    #        - !type:SpawnPrototype
+    #          prototype: SheetSteel1
+    #          amount: 2
+    #      steps:
+    #        - tool: Screwing
+    #          doAfter: 1
 
     - node: chairPilotSeat
       entity: ChairPilotSeat
@@ -287,6 +293,20 @@
             - tool: Screwing
               doAfter: 1
 
+    - node: stoolCard
+      entity: CardStool
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialCardboard1
+              amount: 3
+            - !type:PlaySound
+              sound: /Audio/Items/Toys/ToyFall2.ogg
+          steps:
+            - tool: Slicing
+              doAfter: 1
+
     - node: chairWoodBench
       entity: WoodenBench
       edges:
@@ -299,39 +319,39 @@
             - tool: Screwing
               doAfter: 2
 
-    - node: redComfBench
-      entity: BenchRedComfy
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 1
-          steps:
-            - tool: Cutting
-              doAfter: 1
-            - tool: Screwing
-              doAfter: 1
+    #- node: redComfBench
+    #  entity: BenchRedComfy
+    #  edges:
+    #    - to: start
+    #      completed:
+    #        - !type:SpawnPrototype
+    #          prototype: SheetSteel1
+    #          amount: 2
+    #        - !type:SpawnPrototype
+    #          prototype: MaterialCloth1
+    #          amount: 1
+    #      steps:
+    #        - tool: Cutting
+    #          doAfter: 1
+    #        - tool: Screwing
+    #          doAfter: 1
 
-    - node: blueComfBench
-      entity: BenchBlueComfy
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 1
-          steps:
-            - tool: Cutting
-              doAfter: 1
-            - tool: Screwing
-              doAfter: 1
+    #- node: blueComfBench
+    #  entity: BenchBlueComfy
+    #  edges:
+    #    - to: start
+    #      completed:
+    #        - !type:SpawnPrototype
+    #          prototype: SheetSteel1
+    #          amount: 2
+    #        - !type:SpawnPrototype
+    #          prototype: MaterialCloth1
+    #          amount: 1
+    #      steps:
+    #        - tool: Cutting
+    #          doAfter: 1
+    #        - tool: Screwing
+    #          doAfter: 1
 
     # Frontier: fancy wooden chairs
     - node: chairWoodFancyBlack

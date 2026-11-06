@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using ImGuiNET;
 using Robust.Shared.Maths;
 using static ImGuiNET.ImGui;
@@ -96,7 +94,7 @@ namespace Pow3r
                 Begin("Memory");
 
                 var heap = GC.GetTotalMemory(false);
-                Text($"Managed heap: {heap>>20} MiB");
+                Text($"Managed heap: {heap >> 20} MiB");
 
                 End();
             }
@@ -428,7 +426,7 @@ namespace Pow3r
 
         private static uint CvtColor(Color color)
         {
-            return color.R | ((uint) color.G << 8) | ((uint) color.B << 16) | ((uint) color.A << 24);
+            return color.R | ((uint)color.G << 8) | ((uint)color.B << 16) | ((uint)color.A << 24);
         }
 
         private static Vector2 CalcWindowCenter()

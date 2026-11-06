@@ -15,4 +15,10 @@ public sealed partial class FlashImmunityComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    // WOLFGATE(EngineCompat) START: field used by HardLight night-vision flash handling
+    /// <summary>Whether this also blocks special vision such as night vision.</summary>
+    [DataField, AutoNetworkedField]
+    public bool BlocksSpecialVision = true;
+    // WOLFGATE END
 }

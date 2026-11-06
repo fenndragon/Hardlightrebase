@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -7,7 +8,7 @@ namespace Content.Shared.Climbing.Components;
 /// <summary>
 /// Indicates that this entity is able to be placed on top of surfaces like tables.
 /// Does not by itself allow the entity to carry out the action of climbing, unless
-/// <see cref="CanClimb"/> is true. Use <see cref="CanForceClimb"/> to control whether
+/// <see cref="CanClimb"/> is true. Use CanForceClimb to control whether
 /// the entity can force other entities onto surfaces.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
@@ -24,6 +25,12 @@ public sealed partial class ClimbingComponent : Component
     /// </summary>
     [AutoNetworkedField, DataField]
     public bool IsClimbing;
+
+    /// <summary>
+    /// The Climbing DoAfter.
+    /// </summary>
+    [DataField]
+    public DoAfterId? DoAfter;
 
     /// <summary>
     /// Whether the owner is being moved onto the climbed entity.

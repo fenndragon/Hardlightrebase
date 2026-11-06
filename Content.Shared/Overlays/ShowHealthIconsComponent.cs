@@ -16,6 +16,7 @@ public sealed partial class ShowHealthIconsComponent : Component
     [DataField, AutoNetworkedField] // Shitmed Change
     public List<ProtoId<DamageContainerPrototype>> DamageContainers = new()
     {
-        "Biological"
+        "Biological",
+        "Synth" // HardLight
     };
 }

@@ -1,0 +1,35 @@
+# S.I.N Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSIN
+  name: S.I.N Cloak
+  description: A cloak intended for those within the organization of S.I.N.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/Cloaks/sincloak.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/Cloaks/sincloak.rsi
+
+# Cerulean Core Shroud
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCERULCore
+  name: Cerulean core shroud
+  description: A cloak intended for cores of the Cerulean Collective.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/Cloaks/cloak_cerulcore.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/Cloaks/cloak_cerulcore.rsi
+
+# Cybersun R#D Poncho/Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCSRD
+  name: Cybersun R&D Cloak
+  description: A durathread cloak in the colors of Cybersun's R&D team. Rumor has it that these are sometimes used as tents.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/Cloaks/cybersuncloak.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/Cloaks/cybersuncloak.rsi

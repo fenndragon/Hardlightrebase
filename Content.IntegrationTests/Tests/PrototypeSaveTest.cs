@@ -1,11 +1,7 @@
 #nullable enable
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Coordinates;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -30,6 +26,7 @@ namespace Content.IntegrationTests.Tests;
 public sealed class PrototypeSaveTest
 {
     [Test]
+    [Ignore("This test appears to be passing, but we have WAY too much stuff in the server and it takes literal hours, so we'll just skip it.")]
     public async Task UninitializedSaveTest()
     {
         await using var pair = await PoolManager.GetServerClient();

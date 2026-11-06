@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Client.Items.Systems;
@@ -41,6 +40,9 @@ public sealed partial class StorageWindow : BaseWindow
 
     private ValueList<EntityUid> _contained = new();
     private ValueList<EntityUid> _toRemove = new();
+
+    // Manually store this because you can't have a 0x0 GridContainer but we still need to add child controls for 1x1 containers.
+    private Vector2i _pieceGridSize;
 
     private TextureButton? _backButton;
 
@@ -408,11 +410,14 @@ public sealed partial class StorageWindow : BaseWindow
         _contained.Clear();
         _contained.AddRange(storageComp.Container.ContainedEntities.Reverse());
 
+        var width = boundingGrid.Width + 1;
+        var height = boundingGrid.Height + 1;
+
         // Build the grid representation
-        if (_pieceGrid.Rows - 1 != boundingGrid.Height || _pieceGrid.Columns - 1 != boundingGrid.Width)
+        if (_pieceGrid.Rows != _pieceGridSize.Y || _pieceGrid.Columns != _pieceGridSize.X)
         {
-            _pieceGrid.Rows = boundingGrid.Height + 1;
-            _pieceGrid.Columns = boundingGrid.Width + 1;
+            _pieceGrid.Rows = height;
+            _pieceGrid.Columns = width;
             _controlGrid.Clear();
 
             for (var y = boundingGrid.Bottom; y <= boundingGrid.Top; y++)
@@ -430,6 +435,7 @@ public sealed partial class StorageWindow : BaseWindow
             }
         }
 
+        _pieceGridSize = new(width, height);
         _toRemove.Clear();
 
         // Remove entities no longer relevant / Update existing ones
@@ -656,7 +662,7 @@ public sealed partial class StorageWindow : BaseWindow
         if (StorageEntity != null)
             origin = _entity.GetComponent<StorageComponent>(StorageEntity.Value).Grid.GetBoundingBox().BottomLeft;
 
-        var textureSize = (Vector2) _emptyTexture!.Size * 2;
+        var textureSize = (Vector2)_emptyTexture!.Size * 2;
         var position = ((UserInterfaceManager.MousePositionScaled.Position
                          - _backgroundGrid.GlobalPosition
                          - ItemGridPiece.GetCenterOffset(entity, location, _entity) * 2

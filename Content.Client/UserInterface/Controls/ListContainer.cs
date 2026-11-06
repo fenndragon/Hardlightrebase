@@ -1,6 +1,6 @@
-using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -92,20 +92,25 @@ public class ListContainer : Control
 
     public virtual void PopulateList(IReadOnlyList<ListData> data)
     {
-        if ((_itemHeight == 0 || _data is {Count: 0}) && data.Count > 0)
+        if ((_itemHeight == 0 || _data is { Count: 0 }) && data.Count > 0)
         {
             ListContainerButton control = new(data[0], 0);
             GenerateItem?.Invoke(data[0], control);
+            // Yes this AddChild is necessary for reasons (get proper style or whatever?)
+            // without it the DesiredSize may be different to the final DesiredSize.
+            AddChild(control);
             control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
-            control.Dispose();
+            control.Orphan();
         }
 
         // Ensure buttons are re-generated.
+#pragma warning disable CS0618 // Upstream ListContainerTest requires button.Dispose
         foreach (var button in _buttons.Values)
         {
             button.Dispose();
         }
+#pragma warning restore CS0618
         _buttons.Clear();
 
         _data = data.ToList();
@@ -245,12 +250,12 @@ public class ListContainer : Control
          */
         var scroll = GetScrollValue();
         var oldTopIndex = _topIndex;
-        _topIndex = (int) ((scroll.Y + ActualSeparation) / (_itemHeight + ActualSeparation));
+        _topIndex = (int)((scroll.Y + ActualSeparation) / (_itemHeight + ActualSeparation));
         if (_topIndex != oldTopIndex)
             _updateChildren = true;
 
         var oldBottomIndex = _bottomIndex;
-        _bottomIndex = (int) Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + ActualSeparation));
+        _bottomIndex = (int)Math.Ceiling((scroll.Y + finalHeight) / (_itemHeight + ActualSeparation));
         _bottomIndex = Math.Min(_bottomIndex, _data.Count);
         if (_bottomIndex != oldBottomIndex)
             _updateChildren = true;
@@ -296,11 +301,13 @@ public class ListContainer : Control
                 }
             }
 
+#pragma warning disable CS0618 // This is from upstream -.-
             foreach (var (data, button) in toRemove)
             {
                 _buttons.Remove(data);
                 button.Dispose();
             }
+#pragma warning restore CS0618
 
             _vScrollBar.SetPositionLast();
         }
@@ -309,9 +316,9 @@ public class ListContainer : Control
         #region Layout Children
         // Use pixel position
         var pixelWidth = (int)(finalWidth * UIScale);
-        var pixelSeparation = (int) (ActualSeparation * UIScale);
+        var pixelSeparation = (int)(ActualSeparation * UIScale);
 
-        var pixelOffset = (int) -((scroll.Y - _topIndex * (_itemHeight + ActualSeparation)) * UIScale);
+        var pixelOffset = (int)-((scroll.Y - _topIndex * (_itemHeight + ActualSeparation)) * UIScale);
         var first = true;
         foreach (var child in Children)
         {
@@ -385,8 +392,10 @@ public sealed class ListContainerButton : ContainerButton, IEntityControl
 
     public ListContainerButton(ListData data, int index)
     {
+        AddStyleClass(StyleClassButton);
         Data = data;
         Index = index;
+        StyleBoxOverride = new StyleBoxFlat(Color.White);
         // AddChild(Background = new PanelContainer
         // {
         //     HorizontalExpand = true,

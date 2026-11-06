@@ -1,0 +1,114 @@
+- type: job
+  id: MedicalQuadBorg
+  name: job-name-medical-quadborg
+  description: job-description-medical-quadborg
+  playTimeTracker: JobMedicalQuadBorg
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 21600 # Floof: 6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 3600 # Floof: 1 hrs
+  canBeAntag: false
+  weight: -20
+  startingGear: MedicalQuadBorgGear
+  icon: JobIconMedicalBorg
+  supervisors: job-supervisors-cmo
+  jobEntity: PlayerBorgQuadmed
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: SurgerySpeedModifier # Shitmed
+      SpeedModifier: 1.75
+
+- type: job
+  id: ServiceQuadBorg
+  name: job-name-service-quadborg
+  description: job-description-service-quadborg
+  playTimeTracker: JobServiceQuadBorg
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 21600 # Floof: 6 hrs
+  canBeAntag: false
+  weight: -50 # HardLight
+  startingGear: ServiceQuadBorgGear
+  icon: JobIconServiceBorg
+  supervisors: job-supervisors-hop
+  jobEntity: PlayerBorgQuadserv
+
+- type: job
+  id: SalvageQuadBorg
+  name: job-name-salvage-quadborg
+  description: job-description-salvage-quadborg
+  playTimeTracker: JobSalvageQuadBorg
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 21600 # Floof: 6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600 # Floof: 1 hrs
+  canBeAntag: false
+  weight: -20
+  startingGear: SalvageQuadBorgGear
+  icon: JobIconSalvageBorg
+  supervisors: job-supervisors-Quartermaster
+  jobEntity: PlayerBorgQuadsalv
+
+- type: job
+  id: SecurityQuadBorg
+  name: job-name-security-quadborg
+  description: job-description-security-quadborg
+  playTimeTracker: JobSecurityQuadBorg
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 21600 # Floof: 6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 3600 # Floof: 1 hrs
+  canBeAntag: false
+  startingGear: SecurityQuadBorgGear
+  icon: JobIconSecurityBorg
+  supervisors: job-supervisors-hos
+  jobEntity: PlayerBorgQuad
+
+- type: job
+  id: EngineeringQuadBorg
+  name: job-name-engineering-quadborg
+  description: job-description-engineering-quadborg
+  playTimeTracker: JobEngineeringQuadBorg
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 21600 # Floof: 6 hrs
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 3600 # Floof: 1 hrs
+  canBeAntag: false
+  startingGear: EngineeringQuadBorgGear
+  icon: JobIconEngineeringBorg
+  supervisors: job-supervisors-ChiefEngineer
+  jobEntity: PlayerBorgQuadEngineer
+
+- type: startingGear
+  id: MedicalQuadBorgGear
+  equipment:
+    id: MedicalQuadborgPDA
+
+- type: startingGear
+  id: ServiceQuadBorgGear
+  equipment:
+    id: ServiceQuadborgPDA
+
+- type: startingGear
+  id: SalvageQuadBorgGear
+  equipment:
+    id: SalvageQuadborgPDA
+
+- type: startingGear
+  id: SecurityQuadBorgGear
+  equipment:
+    id: SecurityQuadborgPDA
+
+- type: startingGear
+  id: EngineeringQuadBorgGear
+  equipment:
+    id: EngineerQuadborgPDA

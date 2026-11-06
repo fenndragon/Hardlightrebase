@@ -1,0 +1,186 @@
+using Content.Server._HL.Spawning.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Preferences.Managers;
+using Content.Shared._Mono.Traits.Physical;
+using Content.Shared.CCVar;
+using Content.Shared.CombatMode.Pacification;
+using Content.Shared.GameTicking;
+using Content.Shared.Preferences;
+using Robust.Server.Player;
+using Robust.Shared.GameObjects;
+
+namespace Content.IntegrationTests.Tests._HL;
+
+[TestFixture]
+[TestOf(typeof(SpawnCharacterOverrideRuleSystem))]
+public sealed class CharacterOverrideRuleSystemTests
+{
+    private const string TestMapId = "CharacterOverrideRuleTestMap";
+    private const string OverrideEntityId = "CharacterOverrideRuleTestMob";
+    private const string BlacklistedOverrideEntityId = "CharacterOverrideRuleBlacklistedMob";
+    private const string TraitId = "CharacterOverrideRuleTestTrait";
+    private const string BlacklistedTraitId = "CharacterOverrideRuleBlacklistedTrait";
+    private const string MatchingProfileName = "Character Override Trait Test";
+    private const string BlacklistedMatchingProfileName = "Override Blacklist Test";
+
+    [TestPrototypes]
+    private const string Prototypes = @"
+- type: gameMap
+  id: CharacterOverrideRuleTestMap
+  mapName: CharacterOverrideRuleTestMap
+  mapPath: /Maps/Test/empty.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: ""Empty""
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ -1, -1 ]
+
+- type: entity
+  id: CharacterOverrideRuleTestMob
+  parent: MobHuman
+  name: Character Override Rule Test Mob
+
+- type: entity
+  id: CharacterOverrideRuleBlacklistedMob
+  parent: MobHuman
+  name: Character Override Rule Blacklisted Test Mob
+  components:
+    - type: Pacified
+
+- type: trait
+  id: CharacterOverrideRuleTestTrait
+  name: trait-synthetic-name
+  description: trait-synthetic-desc
+  components:
+    - type: Pacified
+
+- type: trait
+  id: CharacterOverrideRuleBlacklistedTrait
+  name: trait-synthetic-name
+  description: trait-synthetic-desc
+  components:
+    - type: PlateletFactories
+  blacklist:
+    components:
+      - Pacified
+
+- type: spawnCharacterOverrideRule
+  id: CharacterOverrideRuleTestRule
+  match: Character Override Trait Test
+  checkProfileName: true
+  checkEntityName: false
+  entity: CharacterOverrideRuleTestMob
+  transferHumanoidAppearance: true
+
+- type: spawnCharacterOverrideRule
+  id: CharacterOverrideRuleBlacklistedRule
+  match: Override Blacklist Test
+  checkProfileName: true
+  checkEntityName: false
+  entity: CharacterOverrideRuleBlacklistedMob
+  transferHumanoidAppearance: true
+";
+
+    [Test]
+    public async Task EntityOverrideReappliesSelectedProfileTraitsTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true,
+            Dirty = true // HL: Mark as dirty because we're changing with the player entity and it wasn't clearing properly
+        });
+
+        var server = pair.Server;
+        var ticker = server.System<GameTicker>();
+        var prefMan = server.ResolveDependency<IServerPreferencesManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+        var userId = pair.Client.User!.Value;
+
+        server.CfgMan.SetCVar(CCVars.GameMap, TestMapId);
+
+        var prefs = prefMan.GetPreferences(userId);
+        Assert.That(prefs.SelectedCharacterIndex, Is.Zero);
+
+        var selected = (HumanoidCharacterProfile)prefs.Characters[0];
+        var profile = selected
+            .WithName(MatchingProfileName)
+            .WithTraitPreference(TraitId, server.ProtoMan);
+
+        await server.WaitPost(() => prefMan.SetProfile(userId, 0, profile).Wait());
+
+        ticker.ToggleReadyAll(true);
+        await server.WaitPost(() => ticker.StartRound());
+        await pair.RunTicksSync(100);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(ticker.PlayerGameStatuses[userId], Is.EqualTo(PlayerGameStatus.JoinedGame));
+
+            var attached = playerMan.GetSessionById(userId).AttachedEntity;
+            Assert.That(attached, Is.Not.Null);
+
+            var meta = server.EntMan.GetComponent<MetaDataComponent>(attached!.Value);
+            Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(OverrideEntityId));
+            Assert.That(server.EntMan.HasComponent<PacifiedComponent>(attached.Value), Is.True);
+        });
+
+        await server.WaitPost(() => ticker.RestartRound());
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EntityOverrideIgnoresOverrideBodyRestrictionWhenReapplyingTraitsTest()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            InLobby = true,
+            Dirty = true // HL: Mark as dirty because we're changing with the player entity and it wasn't clearing properly
+        });
+
+        var server = pair.Server;
+        var ticker = server.System<GameTicker>();
+        var prefMan = server.ResolveDependency<IServerPreferencesManager>();
+        var playerMan = server.ResolveDependency<IPlayerManager>();
+        var userId = pair.Client.User!.Value;
+
+        server.CfgMan.SetCVar(CCVars.GameMap, TestMapId);
+
+        var prefs = prefMan.GetPreferences(userId);
+        Assert.That(prefs.SelectedCharacterIndex, Is.Zero);
+
+        var selected = (HumanoidCharacterProfile)prefs.Characters[0];
+        var profile = selected
+          .WithName(BlacklistedMatchingProfileName)
+          .WithTraitPreference(BlacklistedTraitId, server.ProtoMan);
+
+        await server.WaitPost(() => prefMan.SetProfile(userId, 0, profile).Wait());
+
+        ticker.ToggleReadyAll(true);
+        await server.WaitPost(() => ticker.StartRound());
+        await pair.RunTicksSync(10);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(ticker.PlayerGameStatuses[userId], Is.EqualTo(PlayerGameStatus.JoinedGame));
+
+            var attached = playerMan.GetSessionById(userId).AttachedEntity;
+            Assert.That(attached, Is.Not.Null);
+
+            var meta = server.EntMan.GetComponent<MetaDataComponent>(attached!.Value);
+            Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(BlacklistedOverrideEntityId));
+            Assert.That(server.EntMan.HasComponent<PlateletFactoriesComponent>(attached.Value), Is.True);
+        });
+
+        await server.WaitPost(() => ticker.RestartRound());
+        await pair.CleanReturnAsync();
+    }
+}

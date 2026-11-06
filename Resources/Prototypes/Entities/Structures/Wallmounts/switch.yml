@@ -325,6 +325,14 @@
   - type: AccessReader
     access: [["Captain"]]
 
+- type: entity # Move this to _HL later
+  id: LockableButtonStationCaptain
+  suffix: Station Captain
+  parent: LockableButton
+  components:
+  - type: AccessReader
+    access: [["StationCaptain"]]
+
 - type: entity
   id: LockableButtonHeadOfPersonnel
   suffix: HeadOfPersonnel
@@ -558,8 +566,8 @@
     access: [["Atmospherics"]]
 
 - type: entity
-  id: LockableButtonCentcomm
-  suffix: CentComm
+  id: LockableButtonColcomm
+  suffix: ColComm
   parent: LockableButton
   components:
   - type: AccessReader

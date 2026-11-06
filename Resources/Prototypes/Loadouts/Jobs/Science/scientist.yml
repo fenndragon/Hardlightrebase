@@ -75,6 +75,17 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
 
+# Jumpsuit - Funky
+- type: loadout
+  id: RoboticistJumpsuitInterfacing
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRoboticistInterfacing
+
+- type: loadout
+  id: RoboticistJumpskirtInterfacing
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtRoboticistInterfacing
+
 # Back
 - type: loadout
   id: ScientistBackpack
@@ -101,6 +112,11 @@
   id: ScienceLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRnd
+
+- type: loadout # Starlight
+  id: WindbreakerScience
+  equipment:
+    outerClothing: ClothingOuterWindbreakerScience
 
 - type: loadout
   id: ScienceWintercoat
@@ -136,6 +152,12 @@
   equipment:
     gloves: ClothingHandsGlovesRobohands
 
+# Gloves - Funky
+- type: loadout
+  id: RobohandsGlovesInterfacing
+  equipment:
+    gloves: ClothingHandsGlovesRobohandsInterfacing
+
 # Shoes
 - type: loadout
   id: ScienceWinterBoots
@@ -155,3 +177,8 @@
     proto: SeniorResearcher
   equipment:
     id: SeniorResearcherPDA
+
+- type: loadout # starlight
+  id: ScientistJumpskirtFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtScientistFormal

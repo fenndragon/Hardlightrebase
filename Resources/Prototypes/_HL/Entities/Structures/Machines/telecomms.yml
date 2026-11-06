@@ -1,0 +1,96 @@
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledArcadia
+  suffix: Arcadia
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyArcadia
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledNanotrasen
+  suffix: Nanotrasen
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyNanotrasen
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledCartel
+  suffix: Cartel
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyCartel
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledColComm
+  suffix: ColCom
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyColCom
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledViperCell
+  suffix: ViperCell
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyViperCell
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledStatic
+  suffix: Static
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyStatic
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledEvent1
+  suffix: Event1
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyEvent1
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledEvent2
+  suffix: Event2
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyEvent2
+      - EncryptionKeyCommon
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomServerFilledEvent3
+  suffix: Event3
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      #- EncryptionKeyEvent3
+      - EncryptionKeyCommon

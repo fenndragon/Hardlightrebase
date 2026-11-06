@@ -277,7 +277,6 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
   - each drain takes its own tick
   - each drain takes its own tick of the second, not all on one
   - a dry drain searches less often
-- [`Content.Server/GameTicking/Rules/GameRuleSystem.Utility.cs`](../../GameTicking/Rules/GameRuleSystem.Utility.cs): wizden#41390, was IsTileAirBlocked
 - [`Content.Server/IgnitionSource/IgnitionSourceSystem.cs`](../../IgnitionSource/IgnitionSourceSystem.cs): walk a copy of the lit list; a fire this starts can light another source
 - [`Content.Server/Medical/SuitSensors/SuitSensorSystem.cs`](../../Medical/SuitSensors/SuitSensorSystem.cs)
   - finding what's due walks every sensor; NextUpdate keeps the rate

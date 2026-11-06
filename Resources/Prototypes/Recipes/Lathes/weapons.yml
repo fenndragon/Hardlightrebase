@@ -1,0 +1,4 @@
+# These weapon recipes have been moved to NF-specific files to avoid duplicates:
+# - WeaponShotgunDoubleBarreled (now in _NF/Recipes/Lathes/weapons.yml)
+# - WeaponRifleNovaliteC1 (now in _NF/Recipes/Lathes/weapons.yml)  
+# - WeaponRifleGestio (now in _NF/Recipes/Lathes/weapons.yml)

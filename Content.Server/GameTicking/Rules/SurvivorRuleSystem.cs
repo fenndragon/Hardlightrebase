@@ -25,6 +25,8 @@ public sealed partial class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComp
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+
     public override void Initialize()
     {
         base.Initialize();

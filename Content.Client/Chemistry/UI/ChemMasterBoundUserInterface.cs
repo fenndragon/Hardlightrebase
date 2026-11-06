@@ -1,7 +1,6 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
@@ -42,10 +41,10 @@ namespace Content.Client.Chemistry.UI
                 new ChemMasterSetModeMessage(ChemMasterMode.Discard));
             _window.CreatePillButton.OnPressed += _ => SendMessage(
                 new ChemMasterCreatePillsMessage(
-                    (uint) _window.PillDosage.Value, (uint) _window.PillNumber.Value, _window.LabelLine));
+                    (uint)_window.PillDosage.Value, (uint)_window.PillNumber.Value, _window.LabelLine));
             _window.CreateBottleButton.OnPressed += _ => SendMessage(
                 new ChemMasterOutputToBottleMessage(
-                    (uint) _window.BottleDosage.Value, _window.LabelLine));
+                    (uint)_window.BottleDosage.Value, _window.LabelLine));
             _window.BufferSortButton.OnPressed += _ => SendMessage(
                     new ChemMasterSortingTypeCycleMessage());
             _window.OutputBufferDraw.OnPressed += _ => SendMessage(
@@ -60,20 +59,21 @@ namespace Content.Client.Chemistry.UI
             }
 
             _window.OnReagentButtonPressed += (args, button) => SendMessage(new ChemMasterReagentAmountButtonMessage(button.Id, button.Amount, button.IsBuffer));
+            _window.OnToggleValveButtonPressed += () => SendMessage(new ChemMasterToggleValveMessage()); // Starlight-edit: Plumbing valve
         }
 
         /// <summary>
         /// Update the ui each time new state data is sent from the server.
         /// </summary>
         /// <param name="state">
-        /// Data of the <see cref="SharedReagentDispenserComponent"/> that this ui represents.
+        /// Data of the SharedReagentDispenserComponent that this ui represents.
         /// Sent from the server.
         /// </param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
-            var castState = (ChemMasterBoundUserInterfaceState) state;
+            var castState = (ChemMasterBoundUserInterfaceState)state;
 
             _window?.UpdateState(castState); // Update window state
         }

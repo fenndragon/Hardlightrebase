@@ -71,8 +71,9 @@ namespace Content.Shared.Strip.Components
     [ByRefEvent]
     public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
 
+    // WOLFGATE: close the malformed XML see element
     /// <summary>
-    ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.
+    ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem"/>.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed partial class StrippableDoAfterEvent : DoAfterEvent

@@ -9,6 +9,8 @@
   components:
   - type: Transform
     anchored: false
+  - type: Tag
+    tags: []
 
 # Clutter
 - type: entity
@@ -53,7 +55,7 @@
 - type: entity
   name: random pen
   id: SpawnDungeonLootBureaucracyPen
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   parent: MarkerBasePlaceFree
   suffix: Dungeon
   components:
@@ -481,20 +483,24 @@
     - VendingMachinePottedPlantVend
     - WaterCooler
     - SpawnDungeonMachineFrame
-    #- VendingMachineChang # No food vendomats in expeds - buy from food ships or die
-    #- VendingMachineDonut
-    #- VendingMachineDiscount
-    #- VendingMachineSnack
-    #- VendingMachineSustenance
-    #- VendingMachineSnackBlue
-    #- VendingMachineSnackOrange
-    #- VendingMachineSnackGreen
-    #- VendingMachineSnackTeal
+    # HL Vendor Change Start - expeds should have snack machines
+    # No food vendomats in expeds - buy from food ships or die
+    - VendingMachineChang 
+    - VendingMachineDonut
+    - VendingMachineDiscount
+    - VendingMachineSnack
+    - VendingMachineSustenance
+    - VendingMachineSnackBlue
+    - VendingMachineSnackOrange
+    - VendingMachineSnackGreen
+    - VendingMachineSnackTeal
+    # HL Vendor Change End
     chance: 1
     offset: 0.0
     rarePrototypes:
     # - VendingMachineChemicalsSyndicate # A bit less Syndicate loot
     - VendingMachineArcadia
+    - VendingMachineRMCDrobe
     # - VendingMachineSyndieDrobe # A bit less Syndicate loot
     - VendingMachineSyndieContraband
     rareChance: 0.03 # actually rare vs. entry frequencies
@@ -538,8 +544,9 @@
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - VendingMachineMagivend
+    # - VendingMachineMagivend # Hardlight: Removed. No Real Wizards allowed.
     - VendingMachineArcadia
+    - VendingMachineRMCDrobe
     - VendingMachineBountyVendPunk
     - VendingMachineSyndieDrobe #Mono in
     - VendingMachineSyndieContraband
@@ -577,6 +584,7 @@
     - VendingMachineSyndieContraband
     - VendingMachineSec
     - VendingMachineArcadia
+    - VendingMachineRMCDrobe
     - SpawnDungeonMachineFrame
     rareChance: 0.03
 
@@ -585,7 +593,7 @@
   id: SpawnDungeonMachineFrame
   parent: MarkerBase
   suffix: Dungeon
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -608,7 +616,7 @@
   id: SpawnDungeonComputerFrame
   parent: MarkerBase
   suffix: Dungeon
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -631,7 +639,7 @@
   id: SpawnDungeonCanisterBroken
   parent: MarkerBase
   suffix: Dungeon
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
@@ -790,7 +798,7 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Materials/Sheets/metal.rsi
+      - sprite: _Mono/Objects/Materials/Sheets/metal.rsi
         state: plasteel_3
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -829,7 +837,7 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Materials/ingots.rsi
+      - sprite: _Mono/Objects/Materials/ingots.rsi
         state: gold_3
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -858,7 +866,7 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Materials/Sheets/metal.rsi
+      - sprite: _Mono/Objects/Materials/Sheets/metal.rsi
         state: plasteel
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -897,7 +905,7 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Objects/Materials/ingots.rsi
+      - sprite: _Mono/Objects/Materials/ingots.rsi
         state: gold
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -930,7 +938,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Materials/ore.rsi
+      - sprite: _Mono/Objects/Materials/ore.rsi
         state: plasma
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -960,7 +968,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Materials/ore.rsi
+      - sprite: _Mono/Objects/Materials/ore.rsi
         state: plasma
       - sprite: _NF/Markers/general.rsi
         state: questionmark

@@ -1,7 +1,7 @@
 using Content.Server.Inventory;
-using Content.Shared.Radio.Components;
-using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
+using Content.Server.Radio.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Radio.Components;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Prototypes;
@@ -12,48 +12,49 @@ namespace Content.Server.Silicons.Borgs;
 /// <summary>
 /// Server-side logic for borg type switching. Handles more heavyweight and server-specific switching logic.
 /// </summary>
-public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
+public sealed class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeSystem
 {
-    [Dependency] private BorgSystem _borgSystem = default!;
-    [Dependency] private ServerInventorySystem _inventorySystem = default!;
+    [Dependency] private readonly BorgSystem _borgSystem = default!;
+    [Dependency] private readonly ServerInventorySystem _inventorySystem = default!;
 
-    protected override void SelectBorgModule(Entity<BorgSwitchableTypeComponent> ent, ProtoId<BorgTypePrototype> borgType, ProtoId<BorgSubtypePrototype> borgSubtype)
+    protected override void SelectBorgModule(Entity<BorgSwitchableTypeComponent> ent, ProtoId<BorgTypePrototype> borgType)
     {
         var prototype = Prototypes.Index(borgType);
 
-        // Assign radio channels
+        // Assign radio channels.
+        // HardLight: write to IntrinsicChannels (rather than just Channels) so per-borg-type
+        // channels survive EncryptionChannelsChangedEvent rebuilds in IntrinsicRadioKeySystem.
+        // Without this, installing or removing an encryption key would clobber the borg type's
+        // own radio channels (e.g. SecBorg losing Security comms after adding any other key).
         string[] radioChannels = [.. ent.Comp.InherentRadioChannels, .. prototype.RadioChannels];
+        var keyHolder = CompOrNull<EncryptionKeyHolderComponent>(ent);
+
         if (TryComp(ent, out IntrinsicRadioTransmitterComponent? transmitter))
+        {
+            transmitter.IntrinsicChannels = [.. radioChannels];
             transmitter.Channels = [.. radioChannels];
+            if (keyHolder != null)
+                transmitter.Channels.UnionWith(keyHolder.Channels);
+        }
 
         if (TryComp(ent, out ActiveRadioComponent? activeRadio))
-            activeRadio.Channels = [.. radioChannels];
-
-        // Corvax-Next-AiRemoteControl-Start
-        if (TryComp(ent, out AiRemoteControllerComponent? aiRemoteComp))
         {
-            if (TryComp(aiRemoteComp.AiHolder, out IntrinsicRadioTransmitterComponent? stationAiTransmitter) && transmitter != null)
-            {
-                aiRemoteComp.PreviouslyTransmitterChannels = [.. radioChannels];
-                transmitter.Channels = [.. stationAiTransmitter.Channels];
-            }
-
-            if (TryComp(aiRemoteComp.AiHolder, out ActiveRadioComponent? stationAiActiveRadio) && activeRadio != null)
-            {
-                aiRemoteComp.PreviouslyActiveRadioChannels = [.. radioChannels];
-                activeRadio.Channels = [.. stationAiActiveRadio.Channels];
-            }
+            activeRadio.IntrinsicChannels = [.. radioChannels];
+            activeRadio.Channels = [.. radioChannels];
+            if (keyHolder != null)
+                activeRadio.Channels.UnionWith(keyHolder.Channels);
         }
-        // Corvax-Next-AiRemoteControl-End
 
         // Borg transponder for the robotics console
         if (TryComp(ent, out BorgTransponderComponent? transponder))
         {
             _borgSystem.SetTransponderSprite(
                 (ent.Owner, transponder),
-                new SpriteSpecifier.Rsi(new ResPath("Mobs/Silicon/chassis.rsi"), prototype.SpriteBodyState));
+                new SpriteSpecifier.Rsi(new ResPath(prototype.SpritePath), prototype.SpriteBodyState));
 
-            _borgSystem.SetTransponderName((ent.Owner, transponder),Loc.GetString($"borg-type-{borgType}-name"));
+            _borgSystem.SetTransponderName(
+                (ent.Owner, transponder),
+                Loc.GetString($"borg-type-{borgType}-transponder"));
         }
 
         // Configure modules
@@ -93,6 +94,6 @@ public sealed partial class BorgSwitchableTypeSystem : SharedBorgSwitchableTypeS
             _inventorySystem.SetTemplateId((ent.Owner, inventory), prototype.InventoryTemplateId);
         }
 
-        base.SelectBorgModule(ent, borgType, borgSubtype);
+        base.SelectBorgModule(ent, borgType);
     }
 }

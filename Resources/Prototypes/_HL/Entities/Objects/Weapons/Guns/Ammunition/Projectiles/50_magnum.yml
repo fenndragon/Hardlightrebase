@@ -1,0 +1,46 @@
+- type: entity
+  id: Bullet50_magnumFMJ
+  name: bullet (.50 magnum)
+  categories: [HideSpawnMenu]
+  parent: BaseBullet
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 50
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: bullet
+
+
+- type: entity
+  id: Bullet50_magnumRubber
+  name: bullet (.50 magnum Rubber)
+  categories: [HideSpawnMenu]
+  parent: BaseBullet
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnCollide
+    damage: 45
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: bullet
+
+
+- type: entity
+  id: Bullet50_magnumPractice
+  name: bullet (.50 magnum Practice)
+  categories: [HideSpawnMenu]
+  parent: BaseBulletPractice
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 5
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: bullet
+

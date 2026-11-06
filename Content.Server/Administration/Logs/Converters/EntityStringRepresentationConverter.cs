@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Content.Server.Administration.Managers;
-using Robust.Server.Player;
 
 namespace Content.Server.Administration.Logs.Converters;
 
@@ -13,7 +12,7 @@ public sealed partial class EntityStringRepresentationConverter : AdminLogConver
     {
         writer.WriteStartObject();
 
-        writer.WriteNumber("id", (int) value.Uid);
+        writer.WriteNumber("id", (int)value.Uid);
 
         if (value.Name != null)
         {

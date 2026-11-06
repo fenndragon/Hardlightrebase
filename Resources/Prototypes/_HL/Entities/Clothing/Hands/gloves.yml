@@ -1,0 +1,122 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesPuncherPoc
+  name: improvised punching gloves
+  description: Simple and grisly insulated gloves with small metal plates sewn on. Lends your fists some serious potential for harm.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Gloves/punchgloves.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Gloves/punchgloves.rsi
+  - type: StaminaDamageOnHit
+    damage: 14
+  - type: MeleeWeapon
+    autoAttack: True
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 12
+    soundHit:
+      collection: MetalThud
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
+  - type: FingerprintMask
+  - type: Insulated
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesPuncherPocSharp
+  name: improvised sharp punching gloves
+  description: The plastic knuckle guards on these insulated combat gloves have had decidedly more lethal industrial screws pushed through them.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Gloves/nailgloves.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Gloves/nailgloves.rsi
+  - type: StaminaDamageOnHit
+    damage: 4
+  - type: MeleeWeapon
+    autoAttack: True
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
+        Piercing: 6
+    soundHit:
+      collection: MetalThud
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-red
+  - type: FingerprintMask
+  - type: Insulated
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: HLClothingHandsGlovesClockwork
+  name: clockwork gauntlets
+  description: Heavy, shock-resistant gauntlets with brass reinforcement.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Gloves/clockwork_gauntlets.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Gloves/clockwork_gauntlets.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-orange
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesInterdyne
+  name: interdyne surgical gloves
+  description: shock resistant gloves with a self-sterilizing surface for interdyne surgeons.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Gloves/interdyne-surgical.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Gloves/interdyne-surgical.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-pink
+  - type: FingerprintMask
+ 
+- type: entity
+  parent: [ClothingHandsBase, BaseC3ExpeditionContraband]
+  id: ClothingHandsGlovesAberrant
+  name: aberrant gloves
+  description: For some reason, you feel everything you touch with those gloves as if you did not have any.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Gloves/aberrantgloves.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Gloves/aberrantgloves.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialSheetMeat1
+      amount: 1
+  - type: MeleeWeapon
+    autoAttack: True
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 15 #Pretty good, but its c3, after all. Plus heat weakness
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcClaw
+    mustBeEquippedToUse: true
+  - type: Fiber
+    fiberMaterial: fibers-flesh
+  - type: FingerprintMask
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 1.1 
+  - type: Insulated

@@ -8,7 +8,6 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Client.Power;
 
@@ -98,7 +97,7 @@ public sealed partial class PowerMonitoringWindow : FancyWindow
 
     private void OnTabChanged(int tab)
     {
-        SendPowerMonitoringConsoleMessageAction?.Invoke(_focusEntity, (PowerMonitoringConsoleGroup) tab);
+        SendPowerMonitoringConsoleMessageAction?.Invoke(_focusEntity, (PowerMonitoringConsoleGroup)tab);
     }
 
     private void OnShowCableToggled(PowerMonitoringConsoleLineGroup lineGroup)

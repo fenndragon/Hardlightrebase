@@ -1,8 +1,6 @@
-﻿using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 
@@ -56,12 +54,12 @@ public sealed partial class AdminLogManager
             {
                 EntityUid id => id,
                 EntityStringRepresentation rep => rep.Uid,
-                ICommonSession {AttachedEntity: {Valid: true}} session => session.AttachedEntity,
-                IComponent component => component.Owner,
+                ICommonSession { AttachedEntity: { Valid: true } } session => session.AttachedEntity,
                 _ => null
             };
 
-            if (_entityManager.TryGetComponent(entityId, out ActorComponent? actor))
+            if (_entityManager.TryGetComponent(entityId, out ActorComponent? actor)
+                && actor.PlayerSession != null)
             {
                 players.Add(actor.PlayerSession.UserId.UserId);
             }

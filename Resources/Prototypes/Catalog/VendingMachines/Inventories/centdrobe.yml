@@ -13,11 +13,15 @@
     ClothingHeadHatCentcom: 3
     ClothingHeadHatCentcomcap: 3
     ClothingMaskGasCentcom: 3
-    ClothingHeadsetCentCom: 3
+    #ClothingHeadsetColCom: 3
     ClothingOuterWinterCentcom: 3
     ClothingOuterCoatExpensive: 1
     ClothingNeckScarfStripedCentcom: 3
     ClothingNeckCloakCentcom: 3
+    ClothingNeckCollarCC: 3 # Floofstation - Collar addition
+    ClothingHandsCCWarmers: 3
+    ClothingUnderSocksCC: 3
+    ClothingUniformCCThong: 3
   contrabandInventory:
     ToyFigurineCaptain: 1
     ToyFigurineHeadOfPersonnel: 1

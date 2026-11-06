@@ -5,6 +5,7 @@ using Robust.Packaging.AssetProcessing;
 using Robust.Packaging.AssetProcessing.Passes;
 using Robust.Packaging.Utility;
 using Robust.Shared.Timing;
+using System.Threading;
 
 namespace Content.Packaging;
 

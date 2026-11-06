@@ -1,0 +1,177 @@
+- type: entity
+  id: BaseWeaponTitan
+  name: BaseTitan
+  description: the bigger iron on your hip
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/Titan.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: AmmoCounter
+  - type: Gun
+    soundGunShot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
+    selectedMode: SemiAuto
+    fireRate: 0.5
+    availableModes:
+    - SemiAuto
+    minAngle: 25
+    maxAngle: 55
+    angleIncrease: 5
+  - type: Wieldable
+  - type: GunRequiresWield
+  - type: GunWieldBonus
+    minAngle: -0 # because GunRequiresWield
+    maxAngle: -0
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - Cartridge50_magnumFMJ
+        - SpeedLoader50Magnum
+    mayTransfer: true
+    proto: Cartridge50_magnumFMJ
+    capacity: 5
+    chambers: [True, True, True, True, True]
+    ammoSlots: [Null, Null, Null, Null, Null]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: StaticPrice
+    price: 250
+  - type: Multishot #in case a Big trait character attempts it, due to ignoring weapons requiring Wielding
+    missChance: 0.5
+    spreadMultiplier: 3
+    spreadAddition: 40 # these numbers may be adjusted. intended to punish getting around the Wielded property.
+
+
+- type: entity
+  id: WeaponRevolverTitan
+  name: Titan (.50 magnum)
+  description: A massive revolver, originally designed to hunt ancient Solrian megafauna. Uses .50 Magnum rounds.
+  parent: [BaseWeaponTitan, BaseC3ExpeditionContraband]
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/Titan.rsi
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/Titan.rsi
+  - type: Wieldable
+  - type: GunRequiresWield
+  - type: GunWieldBonus
+    minAngle: -0
+    maxAngle: -0
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
+  - type: RevolverAmmoProvider
+    capacity: 5
+    chambers:
+    - true
+    - true
+    - true
+    - true
+    - true
+    ammoSlots:
+    - null
+    - null
+    - null
+    - null
+    - null
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  id: WeaponRevolverBoneCollector
+  name: Bone Collector (.50 magnum)
+  description: A massive revolver with a thinner barrel and smoothed cylinder, bearing a sleek brass finish. The firing mechanisms have been well-maintained.
+  parent: [BaseWeaponTitan, BaseC3ExpeditionContraband]
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/BoneCollector.rsi
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/BoneCollector.rsi
+  - type: Gun
+    fireRate: 0.7
+    soundGunshot: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
+  - type: RevolverAmmoProvider
+    capacity: 5
+    chambers:
+    - true
+    - true
+    - true
+    - true
+    - true
+    ammoSlots:
+    - null
+    - null
+    - null
+    - null
+    - null
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 400
+
+- type: entity
+  id: WeaponRevolverAtlas
+  name: Atlas (.50 magnum)
+  description: An exceedingly rare and massive revolver sporting a blackened steel finish, with a custom ergonomic grip and glowing front sight post.
+  parent: [BaseWeaponTitan, BaseC3Contraband]
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/Atlas.rsi
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Revolvers/Atlas.rsi
+  - type: Gun
+    fireRate: 1.1
+    minAngle: 20
+    maxAngle: 50
+    angleIncrease: 5
+    angleDecay: 2
+    soundGunshot: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
+  - type:  RevolverAmmoProvider
+    capacity: 5
+    chambers:
+    - true
+    - true
+    - true
+    - true
+    - true
+    ammoSlots:
+    - null
+    - null
+    - null
+    - null
+    - null
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 1000

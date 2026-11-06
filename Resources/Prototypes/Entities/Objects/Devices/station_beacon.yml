@@ -713,3 +713,50 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-vox
+
+# Ghost Only Beacons
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconGhost
+  suffix: Boo
+  components:
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    blacklist:
+      tags:
+      - GhostOnlyWarp
+
+# ColComm Beacons
+- type: entity
+  parent: DefaultStationBeaconGhost
+  id: DefaultStationBeaconColComm
+  suffix: ColComm
+  components:
+  - type: NavMapBeacon
+    text: ColComm
+
+- type: entity
+  parent: DefaultStationBeaconGhost
+  id: DefaultStationBeaconColCommAfterhours
+  suffix: ColComm Afterhours
+  components:
+  - type: NavMapBeacon
+    text: Afterhours
+
+- type: entity
+  parent: DefaultStationBeaconGhost
+  id: DefaultStationBeaconColCommThunderdome
+  suffix: ColComm Thunder Dome
+  components:
+  - type: NavMapBeacon
+    text: Thunderdome
+
+- type: entity
+  parent: DefaultStationBeaconGhost
+  id: DefaultStationBeaconColCommERT
+  suffix: ColComm ERT
+  components:
+  - type: NavMapBeacon
+    text: ERT

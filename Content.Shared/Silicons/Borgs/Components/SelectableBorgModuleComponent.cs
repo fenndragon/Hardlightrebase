@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;
@@ -17,7 +17,7 @@ public sealed partial class SelectableBorgModuleComponent : Component
     /// <summary>
     /// The sidebar action for swapping to this module.
     /// </summary>
-    [DataField("moduleSwapActionEntity")] public EntityUid? ModuleSwapActionEntity;
+    public EntityUid? ModuleSwapActionEntity;
 }
 
 public sealed partial class BorgModuleActionSelectedEvent : InstantActionEvent

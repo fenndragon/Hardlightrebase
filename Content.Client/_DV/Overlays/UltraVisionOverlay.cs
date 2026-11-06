@@ -16,18 +16,21 @@ public sealed partial class UltraVisionOverlay : Overlay
 
     public override bool RequestScreenTexture => true;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    private static readonly ProtoId<ShaderPrototype> UltraVisionShaderId = "UltraVision";
     private readonly ShaderInstance _ultraVisionShader;
 
     public UltraVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _ultraVisionShader = _prototypeManager.Index<ShaderPrototype>("UltraVision").Instance().Duplicate();
+        _ultraVisionShader = _prototypeManager.Index(UltraVisionShaderId).Instance().Duplicate();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (_playerManager.LocalEntity is not { Valid: true } player
-            || !_entityManager.HasComponent<UltraVisionComponent>(player))
+            || (!
+                _entityManager.HasComponent<UltraVisionComponent>(player)
+                && !_entityManager.HasComponent<UltraVisionNoBypassComponent>(player)))
         {
             return false;
         }

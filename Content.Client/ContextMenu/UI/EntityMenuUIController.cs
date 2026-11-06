@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Examine;
@@ -9,6 +8,9 @@ using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Turrets;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -69,7 +71,7 @@ namespace Content.Client.ContextMenu.UI
             _context.OnContextKeyEvent += OnKeyBindDown;
 
             CommandBinds.Builder
-                .Bind(EngineKeyFunctions.UseSecondary,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
+                .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
                 .Register<EntityMenuUIController>();
         }
 
@@ -168,7 +170,7 @@ namespace Content.Client.ContextMenu.UI
             if (_stateManager.CurrentState is not GameplayStateBase)
                 return false;
 
-            if (_combatMode.IsInCombatMode(args.Session?.AttachedEntity))
+            if (_combatMode.IsInCombatMode(args.Session?.AttachedEntity) && !CanOpenEntityMenuInCombat(args.Session?.AttachedEntity))
                 return false;
 
             var coords = _xform.ToMapCoordinates(args.Coordinates);
@@ -177,6 +179,16 @@ namespace Content.Client.ContextMenu.UI
                 OpenRootMenu(entities);
 
             return true;
+        }
+
+        private bool CanOpenEntityMenuInCombat(EntityUid? entity)
+        {
+            if (entity == null || !entity.Value.IsValid())
+                return false;
+
+            return EntityManager.HasComponent<StationAiTurretComponent>(entity.Value)
+                   || EntityManager.HasComponent<BorgBrainComponent>(entity.Value)
+                   || EntityManager.HasComponent<StationAiHeldComponent>(entity.Value);
         }
 
         /// <summary>
@@ -306,13 +318,13 @@ namespace Content.Client.ContextMenu.UI
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
+                Log.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
                 return;
             }
 
             // remove the element
             var parent = element.ParentMenu?.ParentElement;
-            element.Dispose();
+            element.Orphan();
             Elements.Remove(entity);
 
             // update any parent elements
@@ -340,7 +352,7 @@ namespace Content.Client.ContextMenu.UI
             if (entity == null)
             {
                 // This whole element has no associated entities. We should remove it
-                element.Dispose();
+                element.Orphan();
                 return;
             }
 
@@ -352,7 +364,7 @@ namespace Content.Client.ContextMenu.UI
                 // There was only one entity in the sub-menu. So we will just remove the sub-menu and point directly to
                 // that entity.
                 element.Entity = entity;
-                element.SubMenu.Dispose();
+                element.SubMenu.Orphan();
                 element.SubMenu = null;
                 Elements[entity.Value] = element;
             }

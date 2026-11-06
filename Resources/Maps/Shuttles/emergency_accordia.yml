@@ -22,7 +22,6 @@ entities:
       name: NT Evac Accordia
     - type: Transform
       pos: -0.5104167,-0.5
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -74,6 +73,8 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
     - type: Shuttle
+    - type: WorldLoader
+      disabled: False
     - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier

@@ -1,6 +1,5 @@
 using Content.Server.EUI;
 using Content.Shared.CrewManifest;
-using Content.Shared.Eui;
 
 namespace Content.Server.CrewManifest;
 
@@ -27,10 +26,10 @@ public sealed class CrewManifestEui : BaseEui
         _crewManifest = crewManifestSystem;
     }
 
-    public override CrewManifestEuiState GetNewState()
+    public override CrewManifestEuiState GetNewState() // Coyote: Remove name
     {
-        var (name, entries) = _crewManifest.GetCrewManifest(_station);
-        return new(name, entries);
+        var entries = _crewManifest.GetCrewManifest();
+        return new(entries);
     }
 
     public override void Closed()

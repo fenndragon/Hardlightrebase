@@ -1,0 +1,27 @@
+- type: entity
+  parent: ClothingMaskGasERT
+  id: ClothingMaskGasChrono
+  name: futuristic gasmask
+  description: A futuristic gas mask of unknown design with an unimaginable number of filtration systems
+  components:
+  - type: Sprite
+    sprite: Goobstation/Clothing/Mask/chronolegioneer.rsi
+  - type: Clothing
+    sprite: Goobstation/Clothing/Mask/chronolegioneer.rsi
+  - type: VoiceMask
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HidesHair
+    - HidesNose
+  - type: UserInterface # Hardlight start: Make it actually, y'know, work?
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface # Hardlight end
+
+- type: entity
+  parent: ClothingMaskGasChrono
+  id: ClothingMaskGasChronoUnremoveable
+  suffix: Unremoveable
+  components:
+  - type: Unremoveable

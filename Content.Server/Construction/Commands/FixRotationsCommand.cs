@@ -18,6 +18,10 @@ public sealed partial class FixRotationsCommand : IConsoleCommand
     private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
     private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
 
+    private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
+    private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
+    private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "fixrotations";
     public string Description => "Sets the rotation of all occluders, low walls and windows to south.";

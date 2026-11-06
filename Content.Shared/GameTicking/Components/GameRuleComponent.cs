@@ -1,6 +1,7 @@
 using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Content.Shared.Roles; // Hardlight
 
 namespace Content.Shared.GameTicking.Components;
 
@@ -37,10 +38,10 @@ public sealed partial class GameRuleComponent : Component
     public MinMax? Delay;
 
     /// <summary>
-    /// Mono: A minimum and maximum number of grids this event affects(if applicable)
+    ///     Hardlight: Require active job to run the event.
     /// </summary>
     [DataField]
-    public MinMax NumberOfGrids;
+    public Dictionary<ProtoId<JobPrototype>, int> RequiredJobs = new();
 }
 
 /// <summary>

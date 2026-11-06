@@ -244,11 +244,12 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
         }
     }
 
+    // WOLFGATE: correct the malformed XML parameter tag
     /// <summary>
     /// Used where you want to try to ensnare an entity with the <see cref="EnsnareableComponent"/>
     /// </summary>
     /// <param name="target">The entity that will be ensnared</param>
-    /// <paramref name="ensnare"> The entity that is used to ensnare</param>
+    /// <param name="ensnare">The entity that is used to ensnare</param>
     /// <param name="component">The ensnaring component</param>
     public bool TryEnsnare(EntityUid target, EntityUid ensnare, EnsnaringComponent component)
     {

@@ -3,27 +3,40 @@
   name: job-name-chaplain
   description: job-description-chaplain
   playTimeTracker: JobChaplain
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 10800
+  weight: 10 # HardLight
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-hop
+  access:
+  - Chapel
+  - Research
+  - Maintenance
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
   - !type:AddComponentSpecial
     components:
-    - type: BibleUser #Lets them heal with bibles
+    - type: BibleUser # Lets them heal with bibles
+    - type: PsionicBonusChance #Nyano: Makes it more likely to become psionic.
+      multiplier: 3
+    - type: InnatePsionicPowers
+      powersToAdd:
+        - TelepathyPower
+        - HealingWordPower
 
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    # shoes: ClothingShoesColorBlack # HardLight: Add NF-style departmental loadouts
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:
     back:
     - Bible
     - RubberStampChaplain
+  inhand:
+    - STextImplanter

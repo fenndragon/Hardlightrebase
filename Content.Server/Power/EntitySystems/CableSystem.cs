@@ -1,4 +1,3 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
@@ -47,13 +46,13 @@ public sealed partial class CableSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var ev = new CableAnchorStateChangedEvent(xform);
+        var ev = new CableAnchorStateChangedEvent(uid, xform);
         RaiseLocalEvent(uid, ref ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
-        _adminLogger.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
+        _adminLogger.Add(LogType.CableCut, LogImpact.High, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
 
         Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);
@@ -61,7 +60,7 @@ public sealed partial class CableSystem : EntitySystem
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
-        var ev = new CableAnchorStateChangedEvent(args.Transform, args.Detaching);
+        var ev = new CableAnchorStateChangedEvent(uid, args.Transform, args.Detaching);
         RaiseLocalEvent(uid, ref ev);
 
         if (args.Anchored)

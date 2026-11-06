@@ -3,30 +3,36 @@
   name: job-name-rd
   description: job-description-rd
   playTimeTracker: JobResearchDirector
-  setPreference: false # Frontier
+  setPreference: true # Frontier
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
-  weight: 10
+  - !type:RoleTimeRequirement
+    role: JobScientist
+    time: 18000 # 5 hrs
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 36000 # 10 hrs
+  weight: 30 # HardLight: 10<30
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   supervisors: job-supervisors-captain
   canBeAntag: false
-  ## Frontier: commented stuff below out
-  # access:
-  # - Research
-  # - Command
-  # - Maintenance
-  # - ResearchDirector
-  # - Brig
-  # - Cryogenics
-  # special:
-  # - !type:AddImplantSpecial
-  #   implants: [ MindShieldImplant ]
-  # - !type:AddComponentSpecial
-  #   components:
-  #     - type: CommandStaff
-  ## End Frontier: commented stuff above out
+  requireAdminNotify: true
+  access:
+  - Research
+  - Command
+  - Maintenance
+  - ResearchDirector
+  - Brig
+  - Cryogenics
+  - Frontier
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: CommandStaff
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
+      flatBonus: 1
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
@@ -35,6 +41,7 @@
   equipment:
     id: RnDPDA
     ears: ClothingHeadsetRD
+    pocket2: NFHyperlinkBookCommandSOP # HardLight
   storage:
     back:
     - Flash

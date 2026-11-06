@@ -1,7 +1,3 @@
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
@@ -115,7 +111,7 @@ namespace Content.Shared.Examine
             if (!examinerComp.CheckInRangeUnOccluded)
                 return true;
 
-            if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
+            if (Comp<TransformComponent>(examiner).MapID != target.MapId)
                 return false;
 
             // Do target InRangeUnoccluded which has different checks.
@@ -198,8 +194,8 @@ namespace Content.Shared.Examine
             }
 
             var ray = new Ray(origin.Position, dir.Normalized());
-            var rayResults = _occluder
-                .IntersectRayWithPredicate(origin.MapId, ray, length, state, predicate, false);
+            var rayResults = new List<RayCastResults>();
+            _occluder.IntersectRay(rayResults, origin.MapId, ray, length, (state, predicate), static (e, s) => s.predicate(e.Owner, s.state));
 
             if (rayResults.Count == 0) return true;
 
@@ -400,11 +396,11 @@ namespace Content.Shared.Examine
 
         /// <summary>
         ///     Message group handling. Call this if you want the next set of examine messages that you're adding to have
-        ///     a consistent order with regards to each other. This is done so that client & server will always
+        ///     a consistent order with regards to each other. This is done so that client &amp; server will always
         ///     sort messages the same as well as grouped together properly, even if subscriptions are different.
         ///     You should wrap it in a using() block so popping automatically occurs.
         /// </summary>
-        public ExamineGroupDisposable PushGroup(string groupName, int priority=0)
+        public ExamineGroupDisposable PushGroup(string groupName, int priority = 0)
         {
             // Ensure that other examine events correctly ended their groups.
             DebugTools.Assert(_currentGroupPart == null);
@@ -429,12 +425,12 @@ namespace Content.Shared.Examine
 
         /// <summary>
         /// Push another message into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushText"/>
-        public void PushMessage(FormattedMessage message, int priority=0)
+        public void PushMessage(FormattedMessage message, int priority = 0)
         {
             if (message.Nodes.Count == 0)
                 return;
@@ -452,24 +448,24 @@ namespace Content.Shared.Examine
 
         /// <summary>
         /// Push another message parsed from markup into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushText"/>
         /// <seealso cref="PushMessage"/>
-        public void PushMarkup(string markup, int priority=0)
+        public void PushMarkup(string markup, int priority = 0)
         {
             PushMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
         }
 
         /// <summary>
         /// Push another message containing raw text into this examine result, on its own line.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="PushMarkup"/>
         /// <seealso cref="PushMessage"/>
-        public void PushText(string text, int priority=0)
+        public void PushText(string text, int priority = 0)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);
@@ -478,7 +474,7 @@ namespace Content.Shared.Examine
 
         /// <summary>
         /// Adds a message directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddMarkup"/>
@@ -500,24 +496,24 @@ namespace Content.Shared.Examine
 
         /// <summary>
         /// Adds markup directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddText"/>
         /// <seealso cref="AddMessage"/>
-        public void AddMarkup(string markup, int priority=0)
+        public void AddMarkup(string markup, int priority = 0)
         {
             AddMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
         }
 
         /// <summary>
         /// Adds text directly without starting a newline after.
-        /// End message will be grouped by <see cref="priority"/>, then by group if one was started
+        /// End message will be grouped by priority, then by group if one was started
         /// then by ordinal comparison.
         /// </summary>
         /// <seealso cref="AddMarkup"/>
         /// <seealso cref="AddMessage"/>
-        public void AddText(string text, int priority=0)
+        public void AddText(string text, int priority = 0)
         {
             var msg = new FormattedMessage();
             msg.AddText(text);

@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Events;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
 using Content.Shared.StatusEffect;
@@ -10,7 +11,7 @@ public abstract partial class SharedGodmodeSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    [Dependency] private SharedBodySystem _bodySystem = default!; // Shitmed Change
+    [Dependency] private SharedBodySystem _bodySystem = default!; // WOLFGATE: retain one body-system dependency after merge
 
     public override void Initialize()
     {

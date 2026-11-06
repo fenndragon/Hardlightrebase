@@ -11,14 +11,10 @@
     rootTask:
        task: SimpleHostileCompound
     blackboard:
-      NavClimb: !type:Bool
-        false
-      NavInteract: !type:Bool
-        true
-      NavPry: !type:Bool
-        true
-      NavSmash: !type:Bool
-        true
+      NavClimb: true
+      NavInteract: true
+      NavPry: true
+      NavSmash: true
   - type: NpcFactionMember
     factions:
     - DinosaursNF
@@ -55,14 +51,14 @@
       types:
         Bloodloss:
           -1
-  - type: MobThresholds # Base value to fall back to
+  - type: MobThresholds
     thresholds:
       0: Alive
-      50: Dead
+      40: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      30: 0.7
-      40: 0.5
+      24: 0.7
+      32: 0.5
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepThud
@@ -81,23 +77,27 @@
   id: MobDinosaurCompyExpeditions
   name: compsognathus
   description: Compsognathus is a genus of small, bipedal, carnivorous theropods. They have long hind legs and longer tails, which they used for balance during locomotion. Their forelimbs are small but beware of their claws.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 1
+    - id: MaterialBones1
+      amount: 2
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.1 #Small critter, not alot of meat
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.1
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/compy.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: compy
-      scale: 0.6, 0.6
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      50: Dead
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      30: 0.7
-      40: 0.5
+      scale: 0.4, 0.4
   - type: DamageStateVisuals
     states:
       Alive:
@@ -127,22 +127,26 @@
   id: MobDinosaurDiloExpeditions
   name: dilophosaurus
   description: With a name meaning "two-crested lizard", these measure in at about 7 m in length and 400 kg in weight. Slender and lightly built, these are very agile.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 1
+    - id: MaterialBones1
+      amount: 2
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.2 #Small critter, not alot of meat
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.1
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/dilo.rsi
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: dilo
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      50: Dead
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      30: 0.7
-      40: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -170,8 +174,20 @@
   id: MobDinosaurRaptorExpeditions
   name: velociraptor
   description: A bipedal, featherless carnivore with a long tail. Each of its hindfeet has an enlarged sickle-shaped claw, which is used to tackle and restrain prey. Very fast, exercise caution.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 2
+    - id: MaterialBones1
+      amount: 5
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.3 #Small critter, not alot of meat
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.2
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/raptor.rsi
@@ -181,11 +197,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      64: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      48: 0.7
-      64: 0.5
+      38: 0.7
+      52: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -212,8 +228,23 @@
   id: MobDinosaurParaExpeditions
   name: parasaurolophus
   description: A large carnivore that can reach over 9 metres (30 ft) long and weigh over 5 metric tons (5.5 short tons), these can move on two legs or four. Reasonably fast for its size, but comparatively fragile and weak.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 2
+    - id: MaterialBones1
+      amount: 7
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.3 # 0-2 legs randomly
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.3 
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.2
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/para.rsi
@@ -223,11 +254,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      80: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      60: 0.7
-      80: 0.5
+      48: 0.7
+      64: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -254,8 +285,23 @@
   id: MobDinosaurKentroExpeditions
   name: kentrosaurus
   description: On the smaller side of dinosaurs, Kentrosaurus generally measure around 4–4.5 m, and weigh about 700–1,600 kg. Its elongated head and beak are used to bite off plant material or tear off limbs.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 3
+    - id: MaterialBones1
+      amount: 10
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.4 # 0-2 legs randomly
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.4
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.3
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/kentro.rsi
@@ -265,11 +311,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      120: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      90: 0.7
-      120: 0.5
+      72: 0.7
+      96: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -296,8 +342,23 @@
   id: MobDinosaurTrikeExpeditions
   name: triceratops
   description: Bearing a large bony frill with three horns on its skull, this massive quadruped is one of the most recognizable of all dinosaurs and the best-known ceratopsian. Typically tries to gore whatever it attacks.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 4
+    - id: MaterialBones1
+      amount: 15
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.6 # 0-2 legs randomly
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.6
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.4
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/trike.rsi
@@ -307,11 +368,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      160: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      120: 0.7
-      160: 0.5
+      96: 0.7
+      130: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -327,7 +388,7 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Piercing: 15
+        Piercing: 12
         Structural: 20
   - type: MovementSpeedModifier
     baseSprintSpeed : 3
@@ -338,8 +399,23 @@
   id: MobDinosaurAnkiExpeditions
   name: ankylosaurus
   description: Typically between between 6 and 8 meters long and between 4.8 and 8 tons in weight, this lumbering beast shouldn't be underestimated. Its wide, low skull and robust body can take a beating and still survive, and the large club on the end of its tail can be used as a weapon.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 4
+    - id: MaterialBones1
+      amount: 15
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.6 # 0-2 legs randomly
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.6
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.4
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/anki.rsi
@@ -349,11 +425,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      200: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      150: 0.7
-      200: 0.5
+      120: 0.7
+      160: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -380,8 +456,22 @@
   id: MobDinosaurSpinoExpeditions
   name: spinosaurus
   description: With a typical length of 14 m and a mass of 7.4 tons, Spinosaurus has large, robust forelimbs. Each of its hands has three-fingers, with an enlarged claw on the first digit. Surprisingly quick for its size, this giant can take a lot of punishment.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+    - id: MaterialBones1
+      amount: 20
+    - id: FoodMeatOnBone
+      amount: 1
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.5
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.5
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/spino.rsi
@@ -391,11 +481,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead
+      280: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      210: 0.7
-      280: 0.5
+      170: 0.7
+      225: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -422,8 +512,22 @@
   id: MobDinosaurStegoExpeditions
   name: stegosaurus
   description: Large and heavily built, these herbivorous quadrupeds have rounded backs, short fore limbs, long hind limbs, and tails held high in the air. Lumbering, but lethal up close.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatChicken
+      amount: 5
+    - id: MaterialBones1
+      amount: 20
+    - id: FoodMeatOnBone
+      amount: 1
+    - id: FoodMeatOnBone
+      amount: 1
+      prob: 0.7
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.5
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/stego.rsi
@@ -433,11 +537,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      350: Dead
+      280: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      210: 0.7
-      280: 0.5
+      170: 0.7
+      225: 0.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -466,8 +570,20 @@
   id: MobDinosaurTrexExpeditions
   name: tyrannosaurus
   description: A massive therapod, its giant thorax is balanced by a long, heavy tail. Relative to its large and powerful hind limbs, the forelimbs of Tyrannosaurus are short but incredible powerful for their size, and they have two clawed digits.
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
+  - type: Butcherable
+    spawned:
+    - id: MaterialBones
+      amount: 1
+    - id: FoodMeatOnBone
+      amount: 5
+    - id: DinosaurEggSentient
+      amount: 1
+      prob: 0.3
+    - id: DinosaurFang
+      amount: 1
+      prob: 0.7
   - type: Sprite
     drawdepth: Mobs
     sprite: _NF/Mobs/Dinosaurs/trex.rsi
@@ -477,11 +593,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      450: Dead
+      360: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      270: 0.7
-      360: 0.5
+      220: 0.7
+      290: 0.5
   - type: DamageStateVisuals
     states:
       Alive:

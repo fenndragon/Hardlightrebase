@@ -8,6 +8,7 @@
     state: rods
   - type: Item
     sprite: Objects/Materials/parts.rsi
+  - type: NotInsurable # HardLight
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
@@ -19,6 +20,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: PartBase
@@ -57,9 +61,18 @@
   - type: StaticPrice
     price: 0
   - type: StackPrice
-    price: 5 # Frontier: 7.5<5 - TODO: material value rework
+    price: 7.5 # HL: Price balancing
   - type: Extractable
     grindableSolutionName: rod
+  # HardLight start
+  - type: Food
+    requiresSpecialDigestion: true
+    solution: rod
+  - type: FlavorProfile
+    flavors:
+    - metallic
+  - type: BadFood
+  # HardLight end
   - type: SolutionContainerManager
     solutions:
       rod:
@@ -82,6 +95,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack
@@ -96,6 +110,7 @@
   - type: Tag
     tags:
     - RodMetal1
+    - ConstructionMaterial
   - type: Sprite
     state: rods
   - type: Stack

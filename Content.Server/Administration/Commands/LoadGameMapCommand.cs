@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
-using Robust.Shared.EntitySerialization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -38,7 +37,7 @@ namespace Content.Server.Administration.Commands
             }
 
             if (!int.TryParse(args[0], out var mapId))
-                    return;
+                return;
 
             var stationName = args.Length == 5 ? args[4] : null;
 

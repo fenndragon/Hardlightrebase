@@ -28,6 +28,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Bark: # HardLight - JuiceThatMakesYouBark
+      collection: VulpkaninBarks
     Belch: # Frontier
       collection: Belch # Frontier
     Hiss:
@@ -44,6 +46,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    Trill:
+      collection: FelionoidTrills
 
 - type: emoteSounds
   id: FemaleFelinid
@@ -74,6 +78,8 @@
       collection: Weh
     Hew:
       collection: Hew
+    Bark: # HardLight - JuiceThatMakesYouBark
+      collection: VulpkaninBarks
     Belch: # Frontier
       collection: Belch # Frontier
     Hiss:
@@ -90,3 +96,5 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    Trill:
+      collection: FelionoidTrills

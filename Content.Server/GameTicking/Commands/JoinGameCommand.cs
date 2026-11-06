@@ -1,4 +1,5 @@
 using Content.Server.Administration.Managers;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -46,7 +47,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
-                Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
+                Logger.GetSawmill("security").Info($"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
                 return;
             }
@@ -63,11 +64,19 @@ namespace Content.Server.GameTicking.Commands
                 if (!int.TryParse(args[1], out var sid))
                 {
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+                    return;
                 }
 
                 var station = _entManager.GetEntity(new NetEntity(sid));
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+
+                if (station == EntityUid.Invalid || !_entManager.TryGetComponent<StationJobsComponent>(station, out var stationJobsComp))
+                {
+                    shell.WriteError("Invalid station selection.");
+                    return;
+                }
+
+                if (stationJobs.TryGetJobSlot(station, jobPrototype, out var slots, stationJobsComp) == false || slots == 0)
                 {
                     shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;

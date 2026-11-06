@@ -1,20 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Station.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Station.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public abstract partial class GameRuleSystem<T> where T: IComponent
+public abstract partial class GameRuleSystem<T> where T : IComponent
 {
     protected EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent> QueryActiveRules()
     {
         return EntityQueryEnumerator<ActiveGameRuleComponent, T, GameRuleComponent>();
+    }
+
+    protected EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent> QueryDelayedRules()
+    {
+        return EntityQueryEnumerator<DelayedStartRuleComponent, T, GameRuleComponent>();
     }
 
     /// <summary>
@@ -51,45 +54,6 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         // TODO: Engine PR.
         station = stations[RobustRandom.Next(stations.Count)];
-        return true;
-    }
-
-    /// <summary>
-    ///     Mono: Utility function for finding multiple random event-eligible station entitys
-    /// </summary>
-    protected bool TryGetRandomStations(int min, int max, [NotNullWhen(true)] out List<EntityUid>? station, Func<EntityUid, bool>? filter = null)
-    {
-        var stations = new ValueList<EntityUid>(Count<StationEventEligibleComponent>());
-
-        filter ??= _ => true;
-        var query = AllEntityQuery<StationEventEligibleComponent>();
-
-        while (query.MoveNext(out var uid, out _))
-        {
-            if (!filter(uid))
-                continue;
-
-            stations.Add(uid);
-        }
-
-        if (stations.Count == 0)
-        {
-            station = null;
-            return false;
-        }
-
-        var numStations = Math.Min(RobustRandom.Next(min, max + 1), stations.Count);
-        station = new List<EntityUid>();
-
-        // TODO: Engine PR.
-        while(numStations > 0)
-        {
-            var randomStation = stations[RobustRandom.Next(stations.Count)];
-            station.Add(randomStation);
-            stations.Remove(randomStation);
-            numStations--;
-        }
-
         return true;
     }
 
@@ -145,12 +109,12 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         for (var i = 0; i < 10; i++)
         {
-            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
-            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
+            var randomX = RobustRandom.Next((int)aabb.Left, (int)aabb.Right);
+            var randomY = RobustRandom.Next((int)aabb.Bottom, (int)aabb.Top);
 
             tile = new Vector2i(randomX, randomY);
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
-                || _atmosphere.IsTileAirBlockedCached(targetGrid, tile)) // WOLFGATE(Performance): wizden#41390, was IsTileAirBlocked
+                || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
             {
                 continue;
             }

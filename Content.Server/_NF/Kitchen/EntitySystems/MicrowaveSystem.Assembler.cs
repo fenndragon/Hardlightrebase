@@ -1,6 +1,6 @@
 
 // Overlaps with existing namespace.
-using System.Linq;
+
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Shared._NF.Kitchen.Components;
@@ -33,10 +33,26 @@ public sealed partial class MicrowaveSystem : EntitySystem
             string? solidID = null;
             int amountToAdd = 1;
 
-            // If a microwave recipe uses a stacked item, use the default stack prototype id instead of prototype id
+            // HardLight #1363: mirror the regular microwave's stack handling so recipes that key
+            // on a stack id (e.g. "Brutepack", "Ointment") still match items spawned as the
+            // single-count entity (e.g. "Brutepack1" from the medical lathe). For stacks that
+            // spawn themselves (StackSpawnSelf, like produce / FoodPoppy), keep using the
+            // entity's prototype id so per-entity-keyed recipes still work.
             if (TryComp<StackComponent>(item, out var stackComp))
             {
-                solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                if (HasComp<StackSpawnSelfComponent>(item))
+                {
+                    var metaData = MetaData(item);
+                    if (metaData.EntityPrototype is not null)
+                        solidID = metaData.EntityPrototype.ID;
+                    else
+                        solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                }
+                else
+                {
+                    solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                }
+
                 amountToAdd = stackComp.Count;
             }
             else
@@ -106,12 +122,12 @@ public sealed partial class MicrowaveSystem : EntitySystem
                 return;
             }
 
-            if (_tag.HasTag(item, "Metal") && component.CanIrradiate)
+            if (_tag.HasTag(item, MetalTag) && component.CanIrradiate)
             {
                 malfunctioning = true;
             }
 
-            if (_tag.HasTag(item, "Plastic") && (component.CanHeat || component.CanIrradiate))
+            if (_tag.HasTag(item, PlasticTag) && (component.CanHeat || component.CanIrradiate))
             {
                 var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
                 _container.Insert(junk, component.Storage);

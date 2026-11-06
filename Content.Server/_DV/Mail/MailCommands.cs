@@ -1,4 +1,3 @@
-using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -7,7 +6,6 @@ using Content.Server.Administration;
 using Content.Server._DV.Mail.Components;
 using Content.Server._DV.Mail.EntitySystems;
 using Content.Server._NF.SectorServices;
-using Content.Server._DV.Cargo.Components;
 using Content.Server._NF.Mail.Components;
 
 namespace Content.Server._DV.Mail;
@@ -111,7 +109,7 @@ public sealed partial class MailToCommand : LocalizedCommands // Frontier: ICons
             return;
         }
 
-        if (!mailSystem.TryGetMailTeleporterForReceiver(recipientUid, out var teleporterComponent, out var teleporterUid))
+        if (!mailSystem.TryGetMailTeleporterForReceiver(recipientUid, out _, out var teleporterUid)) // HardLight: var teleporterComponent<_
         {
             shell.WriteLine(Loc.GetString("command-mailto-no-teleporter-found"));
             return;
@@ -183,7 +181,7 @@ public sealed partial class MailNowCommand : IConsoleCommand
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IEntitySystemManager _entitySystemManager = default!; // Frontier
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public void Execute(IConsoleShell shell, string argStr, string[] args) // HardLight: Removed async
     {
         var sectorService = _entitySystemManager.GetEntitySystem<SectorServiceSystem>();
         // Frontier: sector-wide mail

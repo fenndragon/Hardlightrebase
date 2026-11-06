@@ -17,10 +17,10 @@ namespace Content.Shared.Silicons.Borgs;
 /// </summary>
 public abstract partial class SharedBorgSystem : EntitySystem
 {
-    [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] protected ItemSlotsSystem ItemSlots = default!;
-    [Dependency] protected ItemToggleSystem Toggle = default!;
-    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
+    [Dependency] protected readonly ItemToggleSystem Toggle = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,7 +33,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-        //SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt); // Mono
+        SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         InitializeRelay();
@@ -96,13 +96,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
         component.ModuleContainer = Container.EnsureContainer<Container>(uid, component.ModuleContainerId, containerManager);
     }
 
-    // Mono
-    //private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
-    //{
-    //    // borgs can't view their own ui
-    //    if (args.User == uid)
-    //        args.Cancel();
-    //}
+    private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        // borgs generaly can't view their own ui
+        if (args.User == uid && !component.CanOpenSelfUi)
+            args.Cancel();
+    }
 
     protected virtual void OnInserted(EntityUid uid, BorgChassisComponent component, EntInsertedIntoContainerMessage args)
     {

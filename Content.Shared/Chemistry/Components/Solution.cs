@@ -6,7 +6,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System.Collections;
-using System.Linq;
 using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Shared.Chemistry.Components
@@ -16,7 +15,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks
+    public sealed partial class Solution : IEnumerable<ReagentQuantity>, ISerializationHooks, IRobustCloneable<Solution>
     {
         // This is a list because it is actually faster to add and remove reagents from
         // a list than a dictionary, though contains-reagent checks are slightly slower,
@@ -101,7 +100,7 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
             foreach (var (reagent, quantity) in Contents)
             {
-                _heatCapacity += (float) quantity *
+                _heatCapacity += (float)quantity *
                                     protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
 
@@ -147,8 +146,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Constructs a solution containing 100% of a reagent (ex. A beaker of pure water).
         /// </summary>
-        /// <param name="prototype">The prototype ID of the reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
         public Solution(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null) : this()
         {
             AddReagent(new ReagentId(prototype, data), quantity);
@@ -175,6 +172,7 @@ namespace Content.Shared.Chemistry.Components
             Volume = solution.Volume;
             MaxVolume = solution.MaxVolume;
             Temperature = solution.Temperature;
+            CanReact = solution.CanReact;
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
             _heatCapacityUpdateCounter = solution._heatCapacityUpdateCounter;
@@ -190,7 +188,7 @@ namespace Content.Shared.Chemistry.Components
         public void ValidateSolution()
         {
             // sandbox forbids: [Conditional("DEBUG")]
-    #if DEBUG
+#if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == Volume);
 
@@ -208,7 +206,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
-    #endif
+#endif
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -350,16 +348,12 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
-        /// <param name="prototype">The prototype ID of the reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(string prototype, FixedPoint2 quantity, bool dirtyHeatCap = true)
             => AddReagent(new ReagentId(prototype, null), quantity, dirtyHeatCap);
 
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
-        /// <param name="id">The reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(ReagentId id, FixedPoint2 quantity, bool dirtyHeatCap = true)
         {
             if (quantity <= 0)
@@ -388,8 +382,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
-        /// <param name="reagentId">The reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(ReagentPrototype proto, ReagentId reagentId, FixedPoint2 quantity)
         {
             AddReagent(reagentId, quantity, false);
@@ -404,8 +396,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
         /// </summary>
-        /// <param name="proto">The prototype of the reagent to add.</param>
-        /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(ReagentPrototype proto, FixedPoint2 quantity, float temperature, IPrototypeManager? protoMan, List<ReagentData>? data = null)
         {
             if (_heatCapacityDirty)
@@ -480,7 +470,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
-        /// <param name="toRemove">The reagent to be removed.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
         public FixedPoint2 RemoveReagent(ReagentQuantity toRemove, bool preserveOrder = false, bool ignoreReagentData = false)
         {
@@ -553,8 +542,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
-        /// <param name="prototype">The prototype of the reagent to be removed.</param>
-        /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
         public FixedPoint2 RemoveReagent(string prototype, FixedPoint2 quantity, List<ReagentData>? data = null, bool ignoreReagentData = false)
         {
@@ -564,8 +551,6 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
-        /// <param name="reagentId">The reagent to be removed.</param>
-        /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>How much reagent was actually removed. Zero if the reagent is not present on the solution.</returns>
         public FixedPoint2 RemoveReagent(ReagentId reagentId, FixedPoint2 quantity, bool preserveOrder = false, bool ignoreReagentData = false)
         {
@@ -662,7 +647,7 @@ namespace Content.Shared.Chemistry.Components
             var origVol = Volume;
             var effVol = Volume.Value;
             newSolution = new Solution(Contents.Count) { Temperature = Temperature };
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
 
             for (var i = Contents.Count - 1; i >= 0; i--) // iterate backwards because of remove swap.
             {
@@ -678,7 +663,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 DebugTools.Assert(newQuantity >= 0);
@@ -769,7 +754,6 @@ namespace Content.Shared.Chemistry.Components
         /// Splits a solution, taking the specified amount of each reagent specified in reagents from the solution.
         /// If any reagent in the solution has less volume than specified, it will all be transferred into the new solution.
         /// </summary>
-        /// <param name="toTakePer">How much of each reagent to take.</param>
         /// <returns>A new solution containing the reagents taken from the original solution.</returns>
         public Solution SplitSolutionPerReagentWithOnly(FixedPoint2 toTakePer, params string[] reagents)
         {
@@ -843,7 +827,7 @@ namespace Content.Shared.Chemistry.Components
 
             var effVol = Volume.Value;
             Volume -= toTake;
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
             for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
                 var (reagent, quantity) = Contents[i];
@@ -858,7 +842,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)

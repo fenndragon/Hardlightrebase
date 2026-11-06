@@ -14,9 +14,10 @@ namespace Content.Shared.Machines.Components;
 [Access(typeof(SharedMultipartMachineSystem))]
 public sealed partial class MultipartMachineComponent : Component
 {
+    // WOLFGATE: mark the YAML example as code in XML documentation
     /// <summary>
     /// Dictionary of Enum values to specific parts of this machine.
-    /// Each key can be specified as 'enum.<EnumName>.<EnumValue>` in Yaml.
+    /// Each key can be specified as <c>enum.&lt;EnumName&gt;.&lt;EnumValue&gt;</c> in YAML.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Dictionary<Enum, MachinePart> Parts = [];

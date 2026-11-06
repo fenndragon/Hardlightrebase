@@ -97,6 +97,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - spawn the actor instead of using the session's entity
 - [`Content.IntegrationTests/Utility/GameDataScrounger.Files.cs`](../../Content.IntegrationTests/Utility/GameDataScrounger.Files.cs): Resource paths require forward slashes, including on Windows.
 - [`Content.Packaging/ClientPackaging.cs`](../../Content.Packaging/ClientPackaging.cs): ship the licence texts and legal notes in the client zip
+- [`Content.Server.Database/Model.Ban.cs`](../../Content.Server.Database/Model.Ban.cs): avoid linking the new Ban model to the legacy ServerBan collection
 - [`Content.Server/_Crescent/ShipShields/ShipShieldsSystem.Commands.cs`](../../Content.Server/_Crescent/ShipShields/ShipShieldsSystem.Commands.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/_Crescent/ShipShields/ShipShieldsSystem.Emitter.cs`](../../Content.Server/_Crescent/ShipShields/ShipShieldsSystem.Emitter.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/_FarHorizons/Power/Generation/FissionGenerator/NuclearCentrifugeComponent.cs`](../../Content.Server/_FarHorizons/Power/Generation/FissionGenerator/NuclearCentrifugeComponent.cs): relabelled MIT as in HardLight b602e8d485
@@ -175,7 +176,6 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - a freed tile is never scheduled earlier than the current iteration.
   - a blocker never clears earlier than the current iteration.
 - [`Content.Server/Explosion/EntitySystems/TriggerSystem.cs`](../../Content.Server/Explosion/EntitySystems/TriggerSystem.cs): restore the licence header removed by Kill Spdx
-- [`Content.Server/GameTicking/GameTicker.Spawning.cs`](../../Content.Server/GameTicking/GameTicker.Spawning.cs): OwO accent removed
 - [`Content.Server/Ghost/Roles/Components/ToggleableGhostRoleComponent.cs`](../../Content.Server/Ghost/Roles/Components/ToggleableGhostRoleComponent.cs): a device that only carries the wipe verb (a PDA) keeps its own activation
 - [`Content.Server/Ghost/Roles/ToggleableGhostRoleSystem.cs`](../../Content.Server/Ghost/Roles/ToggleableGhostRoleSystem.cs): a device that only carries the wipe verb (a PDA) leaves using and activating it to its own UI
 - [`Content.Server/Kitchen/EntitySystems/MicrowaveSystem.cs`](../../Content.Server/Kitchen/EntitySystems/MicrowaveSystem.cs)
@@ -218,13 +218,21 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - restore the licence header removed by Kill Spdx
   - a free vend skips the cash payment, which logs a zero amount as invalid
 - [`Content.Server/Weapons/Ranged/Systems/GunSystem.cs`](../../Content.Server/Weapons/Ranged/Systems/GunSystem.cs): a bolt-action gun leaves its chamber full, and ammo that shoots itself has to leave it
+- [`Content.Shared.Database/LogType.cs`](../../Content.Shared.Database/LogType.cs): escape ampersand in XML documentation
 - [`Content.Shared/_Crescent/ShipShields/ShipShieldComponent.cs`](../../Content.Shared/_Crescent/ShipShields/ShipShieldComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Crescent/ShipShields/ShipShieldedComponent.cs`](../../Content.Shared/_Crescent/ShipShields/ShipShieldedComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Crescent/ShipShields/ShipShieldEmitterComponent.cs`](../../Content.Shared/_Crescent/ShipShields/ShipShieldEmitterComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Crescent/ShipShields/ShipShieldVisualsComponent.cs`](../../Content.Shared/_Crescent/ShipShields/ShipShieldVisualsComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/_ES/Weapons/Ranged/Attachments/Components/ESGunRecoilAttachmentComponent.cs`](../../Content.Shared/_ES/Weapons/Ranged/Attachments/Components/ESGunRecoilAttachmentComponent.cs): correct malformed XML documentation after merge
+- [`Content.Shared/_ES/Weapons/Ranged/Attachments/Components/ESGunWieldRecoilAttachmentComponent.cs`](../../Content.Shared/_ES/Weapons/Ranged/Attachments/Components/ESGunWieldRecoilAttachmentComponent.cs): correct malformed XML documentation after merge
+- [`Content.Shared/_FarHorizons/Materials/MaterialProperties.cs`](../../Content.Shared/_FarHorizons/Materials/MaterialProperties.cs): correct malformed XML documentation after merge
 - [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/NuclearReactorComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/NuclearReactorComponent.cs): relabelled MIT as in HardLight b602e8d485
-- [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs): relabelled MIT as in HardLight b602e8d485
-- [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs): relabelled MIT as in HardLight b602e8d485
+- [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs)
+  - relabelled MIT as in HardLight b602e8d485
+  - correct malformed XML documentation after merge
+- [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs)
+  - relabelled MIT as in HardLight b602e8d485
+  - escape comparison operators in XML documentation
 - [`Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs`](../../Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs): the client picks the gun to fire from this
 - [`Content.Shared/_Goobstation/Construction/ConstructedEvent.cs`](../../Content.Shared/_Goobstation/Construction/ConstructedEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs`](../../Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs): restore the licence header removed by Kill Spdx
@@ -236,6 +244,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/_Goobstation/Factory/Filters/CombinedFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/CombinedFilterComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/Filters/FilterSlotComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/FilterSlotComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/Filters/LabelFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/LabelFilterComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/_Goobstation/Factory/Filters/MobFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/MobFilterComponent.cs): resolve the paired filter system namespace
 - [`Content.Shared/_Goobstation/Factory/Filters/NameFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/NameFilterComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/Filters/PressureFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/PressureFilterComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/Filters/StackFilterComponent.cs`](../../Content.Shared/_Goobstation/Factory/Filters/StackFilterComponent.cs): restore the licence header removed by Kill Spdx
@@ -252,14 +261,18 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/_Goobstation/Factory/StartableMachineComponent.cs`](../../Content.Shared/_Goobstation/Factory/StartableMachineComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/StartableMachineSystem.cs`](../../Content.Shared/_Goobstation/Factory/StartableMachineSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/StorageBinComponent.cs`](../../Content.Shared/_Goobstation/Factory/StorageBinComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/_Goobstation/MartialArts/Components/GrabStagesOverrideComponent.cs`](../../Content.Shared/_Goobstation/MartialArts/Components/GrabStagesOverrideComponent.cs): import the compatible grab-stage types
+- [`Content.Shared/_Goobstation/Radio/Components/RadioMicrophoneComponent.cs`](../../Content.Shared/_Goobstation/Radio/Components/RadioMicrophoneComponent.cs): keep the radio-frequency description inside its XML summary
 - [`Content.Shared/_Goobstation/StationRadio/Systems/StationRadioReceiverSystem.cs`](../../Content.Shared/_Goobstation/StationRadio/Systems/StationRadioReceiverSystem.cs)
   - the track's audio entity despawns when it ends, and a volume is not a gain
   - one place that mutes or restores the playing track
   - see WfSetAudible
   - forget a finished track's audio entity, whose uid would otherwise still be networked
 - [`Content.Shared/_Goobstation/StationRadio/Systems/VinylPlayerSystem.cs`](../../Content.Shared/_Goobstation/StationRadio/Systems/VinylPlayerSystem.cs): forget a finished track's audio entity, whose uid would otherwise still be networked
+- [`Content.Shared/_HL/Clothing/EntitySystems/UnremovableClothingSystem.cs`](../../Content.Shared/_HL/Clothing/EntitySystems/UnremovableClothingSystem.cs): disambiguate imported clothing components
 - [`Content.Shared/_Mono/Economy/SharedCreditReceiverSystem.cs`](../../Content.Shared/_Mono/Economy/SharedCreditReceiverSystem.cs): _log was never assigned, so every log line in TryCashPayment threw a NullReferenceException
 - [`Content.Shared/_Mono/ShipGuns/ShipGunClassComponent.cs`](../../Content.Shared/_Mono/ShipGuns/ShipGunClassComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/_Mono/ShipRepair/Components/ShipRepairToolComponent.cs`](../../Content.Shared/_Mono/ShipRepair/Components/ShipRepairToolComponent.cs): correct malformed XML documentation after merge
 - [`Content.Shared/_Mono/Traits/Physical/BionicLegsComponent.cs`](../../Content.Shared/_Mono/Traits/Physical/BionicLegsComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Mono/Traits/Physical/GlassJawComponent.cs`](../../Content.Shared/_Mono/Traits/Physical/GlassJawComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Mono/Traits/Physical/HemophiliaComponent.cs`](../../Content.Shared/_Mono/Traits/Physical/HemophiliaComponent.cs): restore the licence header removed by Kill Spdx
@@ -284,12 +297,17 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/_RMC14/Weapons/Ranged/Prediction/PredictedProjectileHitEvent.cs`](../../Content.Shared/_RMC14/Weapons/Ranged/Prediction/PredictedProjectileHitEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_RMC14/Weapons/Ranged/Prediction/PredictedProjectileServerComponent.cs`](../../Content.Shared/_RMC14/Weapons/Ranged/Prediction/PredictedProjectileServerComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_RMC14/Weapons/Ranged/Prediction/SharedGunPredictionSystem.cs`](../../Content.Shared/_RMC14/Weapons/Ranged/Prediction/SharedGunPredictionSystem.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/_White/Actions/Events/SpawnActionEvent.cs`](../../Content.Shared/_White/Actions/Events/SpawnActionEvent.cs): distinguish the tile coordinates from the base entity target
 - [`Content.Shared/Access/Components/IdCardConsoleComponent.cs`](../../Content.Shared/Access/Components/IdCardConsoleComponent.cs): Monolith#4816 added the level without a way to hand it out
 - [`Content.Shared/Blocking/BlockingSystem.User.cs`](../../Content.Shared/Blocking/BlockingSystem.User.cs)
   - throttles the shield refusal popup
   - only a gun the user carries is refused, not an innate ability or a mounted weapon
   - a switched-off or folded shield blocks nothing
   - the attempt repeats every tick while the trigger is held
+- [`Content.Shared/Body/Systems/SharedBodySystem.Organs.cs`](../../Content.Shared/Body/Systems/SharedBodySystem.Organs.cs): correct malformed XML documentation after merge
+- [`Content.Shared/Chemistry/EntitySystems/SharedSolutionContainerSystem.cs`](../../Content.Shared/Chemistry/EntitySystems/SharedSolutionContainerSystem.cs)
+  - close the malformed XML summary after merge
+  - keep the solution transfer parameter valid XML
 - [`Content.Shared/Clothing/EntitySystems/HideLayerClothingSystem.cs`](../../Content.Shared/Clothing/EntitySystems/HideLayerClothingSystem.cs)
   - a modsuit seal adds and removes this on a worn helmet, which raises no equip events
   - layers follow the component while the clothing is worn
@@ -299,25 +317,45 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - a suit deleted along with its wearer can't take the piece back
   - another suit's piece goes back to its suit, and what it covered is kept under this one
 - [`Content.Shared/Damage/Systems/DamageableSystem.cs`](../../Content.Shared/Damage/Systems/DamageableSystem.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/Damage/Systems/SharedGodmodeSystem.cs`](../../Content.Shared/Damage/Systems/SharedGodmodeSystem.cs): retain one body-system dependency after merge
 - [`Content.Shared/DisplacementMap/DisplacementData.cs`](../../Content.Shared/DisplacementMap/DisplacementData.cs): wizden#38042, the stencil one draws nothing in UI sprite views
 - [`Content.Shared/DoAfter/SharedDoAfterSystem.Update.cs`](../../Content.Shared/DoAfter/SharedDoAfterSystem.Update.cs)
   - drifting doesn't interrupt work on yourself
   - drifting isn't moving, so it doesn't interrupt work on yourself or something you carry
   - skipped while drifting
+- [`Content.Shared/Drowsiness/DrowsinessSystem.cs`](../../Content.Shared/Drowsiness/DrowsinessSystem.cs): keep one prototype namespace import after merge
+- [`Content.Shared/Drunk/DrunkSystem.cs`](../../Content.Shared/Drunk/DrunkSystem.cs): keep one prototype namespace import after merge
+- [`Content.Shared/Emag/Systems/EmagSystem.cs`](../../Content.Shared/Emag/Systems/EmagSystem.cs): add the missing XML summary tag
+- [`Content.Shared/Ensnaring/SharedEnsnareableSystem.cs`](../../Content.Shared/Ensnaring/SharedEnsnareableSystem.cs): correct the malformed XML parameter tag
+- [`Content.Shared/Eye/Blinding/Systems/TemporaryBlindnessSystem.cs`](../../Content.Shared/Eye/Blinding/Systems/TemporaryBlindnessSystem.cs): keep one prototype namespace import after merge
+- [`Content.Shared/Fluids/Components/PuddleComponent.cs`](../../Content.Shared/Fluids/Components/PuddleComponent.cs): retain one copy after merge
 - [`Content.Shared/Gibbing/Systems/GibbingSystem.cs`](../../Content.Shared/Gibbing/Systems/GibbingSystem.cs)
   - bodiless giblets are skipped when flung.
   - bodiless dropped contents are skipped instead of flung.
+- [`Content.Shared/Humanoid/HumanoidAppearanceComponent.cs`](../../Content.Shared/Humanoid/HumanoidAppearanceComponent.cs): retain one height and width pair after merge
+- [`Content.Shared/Inventory/InventorySystem.Equip.cs`](../../Content.Shared/Inventory/InventorySystem.Equip.cs): keep one prototype namespace import after merge
 - [`Content.Shared/Lightning/Components/SharedLightningComponent.cs`](../../Content.Shared/Lightning/Components/SharedLightningComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/MachineLinking/SharedSignalTimerComponent.cs`](../../Content.Shared/MachineLinking/SharedSignalTimerComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/Machines/Components/MultipartMachineComponent.cs`](../../Content.Shared/Machines/Components/MultipartMachineComponent.cs): mark the YAML example as code in XML documentation
 - [`Content.Shared/Maps/ContentTileDefinition.cs`](../../Content.Shared/Maps/ContentTileDefinition.cs): Monolith#4804 made this true, which draws weather inside ships and buildings
+- [`Content.Shared/Maps/TurfHelpers.cs`](../../Content.Shared/Maps/TurfHelpers.cs)
+  - replace the removed map-manager API
+  - use the current shared map system
+  - forward the current map-system dependency
+- [`Content.Shared/Maps/TurfSystem.cs`](../../Content.Shared/Maps/TurfSystem.cs): use valid XML in the turf-system summary
+- [`Content.Shared/Mind/MindComponent.cs`](../../Content.Shared/Mind/MindComponent.cs): replace the ampersand in XML documentation
+- [`Content.Shared/Mind/SharedMindSystem.cs`](../../Content.Shared/Mind/SharedMindSystem.cs): close the malformed XML remarks tag
+- [`Content.Shared/Objectives/Systems/SharedObjectivesSystem.cs`](../../Content.Shared/Objectives/Systems/SharedObjectivesSystem.cs): correct malformed XML parameter tags
 - [`Content.Shared/Pinpointer/SharedNavMapSystem.cs`](../../Content.Shared/Pinpointer/SharedNavMapSystem.cs): compare region seeds by content; the reference compare dirtied every nav map each second
 - [`Content.Shared/Polymorph/Systems/SharedChameleonProjectorSystem.cs`](../../Content.Shared/Polymorph/Systems/SharedChameleonProjectorSystem.cs)
   - unanchoring left the mob a Dynamic body
   - unanchoring left the mob a Dynamic body it could not walk
+- [`Content.Shared/Popups/SharedPopupSystem.cs`](../../Content.Shared/Popups/SharedPopupSystem.cs): keep the popup description inside its XML summary
 - [`Content.Shared/Preferences/HumanoidCharacterProfile.cs`](../../Content.Shared/Preferences/HumanoidCharacterProfile.cs)
   - restore the licence header removed by Kill Spdx
   - the company is passed through the constructor
   - copies keep the company
+  - match the optional session contract
   - count downsides first so a positive trait isn't dropped by set order
   - MemberwiseEquals - Equals(other) resolved to this override and recursed forever.
   - hash only what MemberwiseEquals compares by value
@@ -325,15 +363,32 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the company is part of the hash
 - [`Content.Shared/Projectiles/ProjectileComponent.cs`](../../Content.Shared/Projectiles/ProjectileComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Projectiles/SharedProjectileSystem.cs`](../../Content.Shared/Projectiles/SharedProjectileSystem.cs): the client replays a thrown embed's collision in prediction, and the projectile is already in
+- [`Content.Shared/Radio/EntitySystems/EncryptionKeySystem.cs`](../../Content.Shared/Radio/EntitySystems/EncryptionKeySystem.cs): replace the ampersand in XML documentation
+- [`Content.Shared/RCD/RCDPrototype.cs`](../../Content.Shared/RCD/RCDPrototype.cs): keep Monolith's strongly typed prototype ID
+- [`Content.Shared/Research/Prototypes/TechDisciplinePrototype.cs`](../../Content.Shared/Research/Prototypes/TechDisciplinePrototype.cs): escape the ampersand in XML documentation
+- [`Content.Shared/Research/Prototypes/TechnologyPrototype.cs`](../../Content.Shared/Research/Prototypes/TechnologyPrototype.cs): escape the ampersand in XML documentation
+- [`Content.Shared/Shuttles/Components/FTLMapComponent.cs`](../../Content.Shared/Shuttles/Components/FTLMapComponent.cs): replace the ampersand in XML documentation
+- [`Content.Shared/Silicons/Laws/SiliconLawsetPrototype.cs`](../../Content.Shared/Silicons/Laws/SiliconLawsetPrototype.cs): retain the self-closing XML see element
+- [`Content.Shared/Sound/Components/BaseEmitSoundComponent.cs`](../../Content.Shared/Sound/Components/BaseEmitSoundComponent.cs): synchronize configured sound values through generated component states
+- [`Content.Shared/Species/Components/ReformComponent.cs`](../../Content.Shared/Species/Components/ReformComponent.cs): keep one prototype namespace import after merge
+- [`Content.Shared/Speech/EntitySystems/SharedStutteringSystem.cs`](../../Content.Shared/Speech/EntitySystems/SharedStutteringSystem.cs): keep one prototype namespace import after merge
+- [`Content.Shared/SprayPainter/SprayPainterEvents.cs`](../../Content.Shared/SprayPainter/SprayPainterEvents.cs)
+  - import spray painter prototype types
+  - import typed prototype identifiers
+  - retain the paint event used by Triad persistence
 - [`Content.Shared/Stacks/StackComponent.cs`](../../Content.Shared/Stacks/StackComponent.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/Storage/Components/SharedEntityStorageComponent.cs`](../../Content.Shared/Storage/Components/SharedEntityStorageComponent.cs): retain the storage attempt event used by foldable entities
 - [`Content.Shared/Storage/EntitySystems/MaterialReclaimerMagnetPickupSystem.cs`](../../Content.Shared/Storage/EntitySystems/MaterialReclaimerMagnetPickupSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Storage/EntitySystems/MaterialStorageMagnetPickupSystem.cs`](../../Content.Shared/Storage/EntitySystems/MaterialStorageMagnetPickupSystem.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/Strip/Components/StrippableComponent.cs`](../../Content.Shared/Strip/Components/StrippableComponent.cs): close the malformed XML see element
 - [`Content.Shared/Strip/Components/ThievingComponent.cs`](../../Content.Shared/Strip/Components/ThievingComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Strip/SharedStrippableSystem.cs`](../../Content.Shared/Strip/SharedStrippableSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Strip/ThievingSystem.cs`](../../Content.Shared/Strip/ThievingSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Temperature/Systems/SharedTemperatureSystem.cs`](../../Content.Shared/Temperature/Systems/SharedTemperatureSystem.cs): a band takes the slowdown of the lowest threshold above it; warming past a threshold gave it that threshold's heavier slowdown
 - [`Content.Shared/Traits/Assorted/AlcoholToleranceComponent.cs`](../../Content.Shared/Traits/Assorted/AlcoholToleranceComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Traits/TraitPrototype.cs`](../../Content.Shared/Traits/TraitPrototype.cs): restore the licence header removed by Kill Spdx
+- [`Content.Shared/Weapons/Misc/SharedGrapplingGunSystem.cs`](../../Content.Shared/Weapons/Misc/SharedGrapplingGunSystem.cs): keep one numerics namespace import after merge
+- [`Content.Shared/Weapons/Ranged/Components/GunComponent.cs`](../../Content.Shared/Weapons/Ranged/Components/GunComponent.cs): close the malformed XML see element
 - [`Content.Shared/Weapons/Ranged/Events/RequestShootEvent.cs`](../../Content.Shared/Weapons/Ranged/Events/RequestShootEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs`](../../Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs): C# % keeps the sign, index 0 gave -1 and crashed the server
 - [`LEGAL.md`](../../LEGAL.md)
@@ -408,7 +463,6 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Entities/Objects/Economy/components.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Economy/components.yml): Monolith#4805 commented the price out with the flash, leaving 300 for a good made from 1800
 - [`Resources/Prototypes/_Mono/Entities/Objects/Electronics/mech.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Electronics/mech.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Objects/Specific/Mechs/mech_construction.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Specific/Mechs/mech_construction.yml): restore the licence header removed by Kill Spdx
-- [`Resources/Prototypes/_Mono/Entities/Objects/Specific/Robotics/borg_modules.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Specific/Robotics/borg_modules.yml): its own id; the shared Security id made every faction weapon module a duplicate of the rest
 - [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Launchers/mpssm.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Launchers/mpssm.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/base_launcher.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/base_launcher.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/charon_launcher.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/charon_launcher.yml)

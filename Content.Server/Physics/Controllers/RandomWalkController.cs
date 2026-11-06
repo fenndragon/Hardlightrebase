@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Physics.Components;
 using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
@@ -43,9 +42,9 @@ internal sealed partial class RandomWalkController : VirtualController
         var query = EntityQueryEnumerator<RandomWalkComponent, PhysicsComponent>();
         while (query.MoveNext(out var uid, out var randomWalk, out var physics))
         {
-            if (EntityManager.HasComponent<ActorComponent>(uid)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(uid)
-            ||  EntityManager.HasComponent<FollowerComponent>(uid))
+            if (HasComp<ActorComponent>(uid)
+            || HasComp<ThrownItemComponent>(uid)
+            || HasComp<FollowerComponent>(uid))
                 continue;
 
             var curTime = _timing.CurTime;
@@ -58,16 +57,14 @@ internal sealed partial class RandomWalkController : VirtualController
     /// Updates the direction and speed a random walker is moving at.
     /// Also resets the random walker's cooldown.
     /// </summary>
-    /// <param name="randomWalk">The random walker state.</param>
-    /// <param name="physics">The physics body associated with the random walker.</param>
     public void Update(EntityUid uid, RandomWalkComponent? randomWalk = null, PhysicsComponent? physics = null)
     {
-        if(!Resolve(uid, ref randomWalk))
+        if (!Resolve(uid, ref randomWalk))
             return;
 
         var curTime = _timing.CurTime;
         randomWalk.NextStepTime = curTime + TimeSpan.FromSeconds(_random.NextDouble(randomWalk.MinStepCooldown.TotalSeconds, randomWalk.MaxStepCooldown.TotalSeconds));
-        if(!Resolve(uid, ref physics))
+        if (!Resolve(uid, ref physics))
             return;
 
         var pushVec = _random.NextAngle().ToVec();

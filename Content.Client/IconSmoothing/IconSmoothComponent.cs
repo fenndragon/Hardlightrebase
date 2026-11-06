@@ -27,12 +27,18 @@ namespace Content.Client.IconSmoothing
         public string? SmoothKey { get; private set; }
 
         /// <summary>
+        ///     Additional keys to smooth with.
+        /// </summary>
+        [DataField]
+        public List<string> AdditionalKeys = new();
+
+        /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("base")]
         public string StateBase { get; set; } = string.Empty;
 
-        [DataField("shader", customTypeSerializer:typeof(PrototypeIdSerializer<ShaderPrototype>))]
+        [DataField("shader", customTypeSerializer: typeof(PrototypeIdSerializer<ShaderPrototype>))]
         public string? Shader;
 
         /// <summary>

@@ -2,21 +2,24 @@
   id: Captain
   name: job-name-captain
   description: job-description-captain
-  playTimeTracker: JobCaptain
+  playTimeTracker: JobCaptain # HardLight/ Why is this here?
   setPreference: false # Frontier
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hours
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hours
+      time: 14400 # 4 hours
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hours
+      time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 54000 # 15 hours
+      time: 14400 # 4 hours
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"
@@ -26,27 +29,30 @@
 #  supervisors: job-supervisors-centcom
 #  canBeAntag: false
   access:
-  - Captain # Just making sure in the case of any error that this role cannot be used for any bad doing.
+    - Captain # Just making sure in the case of any error that this role cannot be used for any bad doing.
   accessGroups:
-  - GeneralAccess # Frontier
   # - AllAccess
+    - GeneralAccess
   # special:
-  # - !type:AddImplantSpecial
-    # implants: [ MindShieldImplant ]
   # - !type:AddComponentSpecial
-    # components:
-      # - type: CommandStaff
-# End Frontier
+  #   components:
+  #   - type: PsionicBonusChance #Nyano - Summary: makes it more likely to become psionic.
+  #     flatBonus: 0.025
 
 - type: startingGear
   id: CaptainGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesCaptain
-    id: CaptainPDA
+# HL start - Add NF-style departmental loadouts
+#    shoes: ClothingShoesBootsLaceup
+#    eyes: ClothingEyesGlassesSunglasses
+#    gloves: ClothingHandsGlovesCaptain
+# HL end
+    id: StationCaptainPDA
     ears: ClothingHeadsetAltCommand
+    pocket2: NFHyperlinkBookCommandSOP # HardLight
   storage:
     back:
     - Flash
-    # - StationCharter # Frontier
+    - NFHyperlinkBookCommandSOP
+
+    # - StationCharter Frontier::

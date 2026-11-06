@@ -1,9 +1,11 @@
 # Moth Foods, the three C's: cheese, coleslaw, and cotton
 # Base ingredients
+# These dishes were all missing Flavorol, so I added it while updating the nutrient values
+
 - type: entity
   name: herby cheese
   parent: FoodBakingBase
-  id: FoodMothHerbyCheese
+  id: FoodMothHerbyCheese #there is no recipe to craft this
   description: As a staple of mothic cuisine, cheese is often augmented with various flavours to keep variety in their diet.
   components:
   - type: FlavorProfile
@@ -43,10 +45,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 17
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
 
@@ -186,14 +188,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 69
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 40
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Protein
           Quantity: 8
+        - ReagentId: Flavorol
+          Quantity: 10
 #Tastes like cheese, tofu and veggies
 
 - type: entity
@@ -258,10 +262,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 50
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Protein
@@ -286,14 +290,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 90
         reagents:
         - ReagentId: Nutriment
-          Quantity: 16
+          Quantity: 80
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Protein
-          Quantity: 2
+          Quantity: 1
 
 - type: entity
   name: big baked rice
@@ -315,10 +319,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 54
         reagents:
         - ReagentId: Nutriment
-          Quantity: 16
+          Quantity: 35
         - ReagentId: Protein
           Quantity: 6
         - ReagentId: Vitamin
@@ -341,10 +345,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 14
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2.5
+          Quantity: 6
         - ReagentId: Protein
           Quantity: 1
         - ReagentId: Vitamin
@@ -374,10 +378,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 47
         reagents:
         - ReagentId: Nutriment
-          Quantity: 18
+          Quantity: 35
         - ReagentId: Protein
           Quantity: 6
         - ReagentId: Vitamin
@@ -401,10 +405,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 13
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 6
         - ReagentId: Protein
           Quantity: 1
         - ReagentId: Vitamin
@@ -426,10 +430,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 17
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
 #Tastes like corn and char
@@ -450,10 +454,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 16
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 6
 #Tastes like corn, butter and char
@@ -475,10 +479,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 20
         - ReagentId: Protein
           Quantity: 5
 #Tastes like creamy cheese, breading and oil
@@ -501,10 +505,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 20
         - ReagentId: Protein
           Quantity: 2
         - ReagentId: Vitamin
@@ -534,9 +538,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Fiber
           Quantity: 10
         - ReagentId: Vitamin
           Quantity: 6
@@ -564,10 +570,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 31
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Protein
@@ -592,10 +598,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 12
         - ReagentId: Vitamin
           Quantity: 3
         - ReagentId: Water
@@ -617,10 +623,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 23
         reagents:
           - ReagentId: Nutriment
-            Quantity: 5
+            Quantity: 15
           - ReagentId: Vitamin
             Quantity: 3
 # Tastes like tomato, squirming.
@@ -642,10 +648,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 53
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 8
         - ReagentId: Protein
@@ -671,10 +677,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Water
@@ -697,10 +703,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 44
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Protein
@@ -726,10 +732,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 43
         reagents:
         - ReagentId: Nutriment
-          Quantity: 22
+          Quantity: 30
         - ReagentId: Protein
           Quantity: 8
 
@@ -748,12 +754,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 11
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
-        - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 15
 #Tastes like cornmeal.
 
 - type: entity
@@ -772,10 +776,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 33
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 4
         - ReagentId: Protein
@@ -800,10 +804,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 58
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 35
         - ReagentId: Vitamin
           Quantity: 6
         - ReagentId: Protein
@@ -829,10 +833,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 44
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 30
         - ReagentId: CapsaicinOil
           Quantity: 4
         - ReagentId: Vitamin
@@ -859,10 +863,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 28
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
+          Quantity: 20
         - ReagentId: Protein
           Quantity: 3
 #Tastes like mozzarella, tomato and balsamic
@@ -884,10 +888,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 43
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Protein
@@ -939,10 +943,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 33
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 20
         - ReagentId: Vitamin
           Quantity: 2
         - ReagentId: Protein
@@ -971,16 +975,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 125
         reagents:
         - ReagentId: Nutriment
-          Quantity: 25
+          Quantity: 80
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 16
+        - ReagentId: Flavorol
+          Quantity: 24
         - ReagentId: CapsaicinOil
-          Quantity: 1
+          Quantity: 8
         - ReagentId: BbqSauce
-          Quantity: 4
+          Quantity: 8
 
 - type: entity
   name: slice of firecracker pizza
@@ -1000,16 +1006,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 0.8
+          Quantity: 2
+        - ReagentId: Flavorol
+          Quantity: 3
         - ReagentId: CapsaicinOil
-          Quantity: 0.1
+          Quantity: 1
         - ReagentId: BbqSauce
-          Quantity: 0.5
+          Quantity: 1
 # Tastes like crust, chili, corn, cheese
 
 - type: entity
@@ -1065,14 +1073,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 125
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 80
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 16
+        - ReagentId: Flavorol
+          Quantity: 24
         - ReagentId: Allicin
-          Quantity: 2
+          Quantity: 8
 
 - type: entity
   name: slice of pesto pizza
@@ -1092,14 +1102,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
         - ReagentId: Vitamin
-          Quantity: 0.8
+          Quantity: 2
+        - ReagentId: Flavorol
+          Quantity: 3
         - ReagentId: Allicin
-          Quantity: 0.25
+          Quantity: 1
 # Tastes like crust, pesto, cheese
 
 - type: entity
@@ -1165,10 +1177,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 38
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 10
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Protein
           Quantity: 1
         - ReagentId: Sugar
@@ -1198,12 +1212,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 15
         - ReagentId: Sugar
-          Quantity: 10
+          Quantity: 15
+        - ReagentId: Flavorol
+          Quantity: 20
   - type: MothFood # Frontier
   # Frontier: edible without special requirements
   # - type: Food
@@ -1228,12 +1244,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 3
         - ReagentId: Sugar
-          Quantity: 2
+          Quantity: 3
+        - ReagentId: Flavorol
+          Quantity: 4
   - type: MothFood # Frontier
   # Frontier: edible without special requirements
   # - type: Food
@@ -1272,12 +1290,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: Flavorol
           Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 1
   - type: MothFood # Frontier
   - type: Food
     requiresSpecialDigestion: true

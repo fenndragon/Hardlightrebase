@@ -425,8 +425,9 @@ public enum LogType
     /// </summary>
     InteractUsing = 92,
 
+    // WOLFGATE: escape ampersand in XML documentation
     /// <summary>
-    /// Storage & entity-storage related interactions
+    /// Storage &amp; entity-storage related interactions
     /// </summary>
     Storage = 93,
 
@@ -511,5 +512,12 @@ public enum LogType
     /// Anatomy organs and settings.
     /// </summary>
     WFAnatomy = 12490,
+    // WOLFGATE END
+
+    // WOLFGATE(EngineCompat) START: psionic log type ported from HardLight
+    /// <summary>
+    /// Psionic abilities and events.
+    /// </summary>
+    Psionics = 421,
     // WOLFGATE END
 }

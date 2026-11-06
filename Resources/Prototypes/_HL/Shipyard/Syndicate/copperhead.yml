@@ -1,0 +1,44 @@
+# Author Info
+# GitHub: Sophia12434
+# Discord: Rusnt
+
+# Maintainer Info
+# GitHub: Sophia12434
+# Discord: Rusnt
+
+# Shuttle Notes:
+#
+- type: vessel
+  id: Archer
+  parent: BaseVessel
+  name: TSF-SKR Archer
+  description: A combat ship outfitted with 4 plasma turrets and 6 light autocannons. This ship has a military IFF designation.
+  price: 88500 # HL: Rebalancing ship prices
+  category: Medium
+  group: Syndicate
+  shuttlePath: /Maps/_HL/Shuttles/Syndicate/Copperhead.yml
+  guidebookPage: Null
+  class:
+  - Syndicate
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Archer
+  mapName: 'TSF-SKR Archer'
+  mapPath: /Maps/_HL/Shuttles/Syndicate/Copperhead.yml
+  minPlayers: 0
+  stations:
+    Copperhead:
+      stationProto: StandardFrontierVessel
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Copperhead {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationJobs
+          availableJobs:
+            Contractor: [ 0, 0 ]
+            Pilot: [ 0, 0 ]
+            Mercenary: [ 0, 0 ]

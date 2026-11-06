@@ -89,7 +89,7 @@ public sealed partial class MoverController : SharedMoverController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        if (_playerManager.LocalEntity is not {Valid: true} player)
+        if (_playerManager.LocalEntity is not { Valid: true } player)
             return;
 
         if (RelayQuery.TryGetComponent(player, out var relayMover))
@@ -116,7 +116,7 @@ public sealed partial class MoverController : SharedMoverController
 
     public override void SetSprinting(Entity<InputMoverComponent> entity, ushort subTick, bool walking)
     {
-        // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
+        // Logger.GetSawmill(nameof(MoverController)).($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
         base.SetSprinting(entity, subTick, walking);
 
         if (walking && _cfg.GetCVar(CCVars.ToggleWalk))
@@ -125,3 +125,4 @@ public sealed partial class MoverController : SharedMoverController
             _alerts.ClearAlert(entity, WalkingAlert);
     }
 }
+

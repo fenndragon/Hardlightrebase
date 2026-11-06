@@ -8,5 +8,11 @@
     <LangVersion Condition="'$(LangVersion)' == ''">14</LangVersion>
     <IsPackable Condition="'$(IsPackable)' == ''">false</IsPackable>
     <Nullable Condition="'$(Nullable)' == ''">enable</Nullable>
+    <!-- WOLFGATE(EngineCompat): ported HardLight files rely on implicit usings -->
+    <ImplicitUsings Condition="'$(ImplicitUsings)' == ''">enable</ImplicitUsings>
   </PropertyGroup>
+  <!-- WOLFGATE(EngineCompat): System.Threading.Timer collides with Robust.Shared.Timing.Timer -->
+  <ItemGroup>
+    <Using Remove="System.Threading" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,51 @@
+<Document>
+# Ship Building Guidelines and Restrictions
+The following is a comprehensive guideline on current expectations for ship building in [bold]Hardlight[/bold].
+
+## Size Limits
+The size limit for building custom ships is [bold]50 x 80 tiles[/bold]. Your ship can go longer in one direction, so long as it's appropriately shorter in the other, as to not exceed the total tile-count of an 80 x 50 footprint.
+
+## Ship Shape & Silhouette
+Your ship cannot be a square or rectangle in shape. Its IFF signature must be unique and at least somewhat geometrically broken up in some fashion. [bold]No flying space bricks or tubes.[/bold] Break up your ship's shape to at least some degree to make it uniquely identifiable at a glance.
+
+## Armor
+[bold][color=#ffcc33]PNG placeholder: /ship-building/wall_variation.png (Ship Layers Acceptability)[/color][/bold]
+All armored hulls are to be [bold]no thicker than 3 layers deep[/bold]. Noses of ships have a small amount of leeway here for aesthetic purposes. Example — the Buran:
+[bold][color=#ffcc33]PNG placeholder: /0.png (Buran Example Ship)[/color][/bold]
+
+## Thrusters
+[bold][color=#ffcc33]PNG placeholder: /ship-building/protected_nacelle.png (Unacceptable Thruster Configuration - Not vulnerable)[/color][/bold]
+- All thrusters must be [bold]exposed to space[/bold], guarded only by grilles.
+- Chuted thrusters may be set back [bold]no deeper than 5 tiles[/bold] into a chute, with [bold]no more than 3 full tiles of grilles[/bold] in front of them. An additional Half-Grille may be added if it makes sense for aesthetic purposes.
+- Angled chutes are fine so long as they abide by the depth rule, and are guarded by a hard limit of [bold]no more than 3 grilles[/bold].
+- Thrusters [bold]cannot be stacked[/bold] in chutes. Each chute should contain a single thruster only — small, medium, or large.
+- Nacelles can be made, so long as the thrusters can still be shot at and are only covered by grilles.
+Examples of acceptable nacelles (they can still easily be attacked).
+[bold][color=#ffcc33]PNG placeholder: /ship-building/nacelles_accepted.png (Acceptable Ship Nacelles)[/color][/bold]
+In all of these examples, the thrusters can be directly shot at and disabled via EMP or boarding action.
+
+## Docking
+The larger the ship, the more docking ports it must have. It is your responsibility to find a way to minimize your docking impact as best as possible, as to avoid one ship taking up the entirety of 3 docks. For those seeking to build larger ships, you are [italic]strongly[/italic] encouraged to build a public throughway to aid in ease of docking.
+
+## Atmos Tanks
+[bold][color=#ffcc33]PNG placeholder: /ship-building/gas_tank.png (Directional Fan Atmos Tank)[/color][/bold]
+- Atmos tanks are limited to [bold]no larger than 40 tiles[/bold]. Be it a 10x4 tank or some other configuration, the maximum tile count is a hard 40 per tank.
+- [bold]Only one tank per gas type[/bold] per ship.
+- All atmospheric tanks must be [bold]hard-walled or glassed in[/bold]. They may not be run by directional fans.
+- No sub-framing to contain more gas than the space should normally hold.
+
+## Shields
+[bold][color=#ffcc33]PNG placeholder: /ship-building/containment_field.png (Containment Field as Shield)[/color][/bold]
+Emitter shields are [bold]not[/bold] to be used as ship shields — that is what actual ship shields are for. The only time emitter shields should be on a ship is to contain a tesla power source.
+
+## Directional Fans
+[bold][color=#ffcc33]PNG placeholder: /ship-building/directiona_lfans.png (Directional Fan Walling versus Acceptable Airlock Fan)[/color][/bold]
+Ships are [bold]not[/bold] to be enclosed with Directional Fans. Those are allowed for external access points or specialty rooms only, such as:
+- Docking points
+- Thruster access points
+- Salvage bays
+- Any other point that has intended external access
+- Cold rooms
+- Artifact chambers
+This means putting them under doors/blastdoors/airlocks/docking points is fine if they are for external access or the other mentioned use cases. All walls should be clear of Directional Fans — enclosing your ship in them will be considered [bold]Power Gaming[/bold] and will be removed and noted.
+</Document>

@@ -14,7 +14,6 @@ entities:
       name: Canister
     - type: Transform
       pos: -0.52213657,-0.49262553
-      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -156,6 +155,7 @@ entities:
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Canister
+    - type: InitRepairSnapshot
 - proto: AirAlarm
   entities:
   - uid: 62
@@ -168,7 +168,7 @@ entities:
       devices:
       - 35
       - 36
-- proto: AirlockGlassShuttle
+- proto: AirlockExternalGlassShuttleRegular
   entities:
   - uid: 16
     components:
@@ -592,13 +592,6 @@ entities:
     components:
     - type: Transform
       pos: 0.5,-0.5
-      parent: 1
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 54
-    components:
-    - type: Transform
-      pos: 0.5,0.5
       parent: 1
 - proto: SubstationWallBasic
   entities:

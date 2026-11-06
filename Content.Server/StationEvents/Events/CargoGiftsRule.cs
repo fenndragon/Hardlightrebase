@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.GameTicking;
@@ -53,7 +52,7 @@ public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleCo
         }
 
         // Add some presents
-        var outstanding = CargoSystem.GetOutstandingOrderCount(cargoDb);
+        var outstanding = CargoSystem.GetOutstandingOrderCount(cargoDb, component.Account);
         while (outstanding < cargoDb.Capacity - component.OrderSpaceToLeave && component.Gifts.Count > 0)
         {
             // I wish there was a nice way to pop this
@@ -72,7 +71,8 @@ public sealed partial class CargoGiftsRule : StationEventSystem<CargoGiftsRuleCo
                     Loc.GetString(component.Description),
                     Loc.GetString(component.Dest),
                     cargoDb,
-                    stationData!
+                    component.Account,
+                    (station.Value, stationData)
             ))
             {
                 break;

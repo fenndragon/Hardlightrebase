@@ -50,7 +50,6 @@ by `GeneticCloningSystem`.
 - [`Resources/Maps/_Mono/Outpost/caelestinus_central.yml`](../../../Resources/Maps/_Mono/Outpost/caelestinus_central.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
 - [`Resources/Maps/_Mono/ShuttleEvent/asakim_medium.yml`](../../../Resources/Maps/_Mono/ShuttleEvent/asakim_medium.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
 - [`Resources/Maps/_Mono/ShuttleEvent/asakim_small.yml`](../../../Resources/Maps/_Mono/ShuttleEvent/asakim_small.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
-- [`Resources/Maps/centcomm.yml`](../../../Resources/Maps/centcomm.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
 - [`Resources/Maps/Shuttles/dart.yml`](../../../Resources/Maps/Shuttles/dart.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
 - [`Resources/Maps/Shuttles/emergency_raven.yml`](../../../Resources/Maps/Shuttles/emergency_raven.yml): Mapped a genetic database and a body scanner console, linked to the scanner and pod.
 

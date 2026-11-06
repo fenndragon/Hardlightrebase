@@ -42,8 +42,9 @@ public sealed partial class MaterialProperties()
     [DataField("plasma_offgas")]
     public float ActivePlasma { get; set; } = 0;
 
+    // WOLFGATE: correct malformed XML documentation after merge
     /// <summary>
-    /// Creates a new <see cref="MaterialProperties"> with information from an existing one.
+    /// Creates a new <see cref="MaterialProperties"/> with information from an existing one.
     /// </summary>
     /// <param name="source"></param>
     public MaterialProperties(MaterialProperties source) : this()

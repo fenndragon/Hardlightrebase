@@ -1,0 +1,9 @@
+<changelog:ChangelogTab
+    xmlns="https://spacestation14.io"
+    xmlns:changelog="clr-namespace:Content.Client._HL.Changelog">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer Margin="5" VerticalExpand="True" HScrollEnabled="False">
+            <BoxContainer Orientation="Vertical" Name="ChangelogBody" />
+        </ScrollContainer>
+    </BoxContainer>
+</changelog:ChangelogTab>

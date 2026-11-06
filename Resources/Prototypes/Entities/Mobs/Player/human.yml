@@ -3,6 +3,8 @@
   name: Urist McHands
   parent: BaseMobHuman
   id: MobHuman
+  components:
+  - type: PotentialPsionic #Nyano - Summary: makes potentially psionic.
 
 #Syndie
 - type: entity
@@ -14,11 +16,12 @@
   - type: RandomHumanoidAppearance
     randomizeName: false
     hair: HairBald
+#  - type: BankAccount
   - type: Loadout
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
-    nameSegments: [names_death_commando]
+    nameSegments: [NamesDeathCommando]
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -68,8 +71,8 @@
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
-    - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-operator
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -82,6 +85,9 @@
   components:
   - type: NukeOperative
   - type: RandomHumanoidAppearance
+  - type: PsionicBonusChance #Nyano - Summary: makes more likely to be psionic.
+    multiplier: 7
+    warn: false
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -97,11 +103,15 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: PsionicBonusChance #Nyano - Summary: makes more likely to be psionic.
+    multiplier: 7
+    warn: false
 
 # Wizard
 - type: entity

@@ -1,7 +1,6 @@
 using Content.Server.GameTicking.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.GameTicking;
 
@@ -13,7 +12,7 @@ public sealed partial class GameTicker
     [ViewVariables]
     private List<ResPath>? _lobbyBackgrounds;
 
-    private static readonly string[] WhitelistedBackgroundExtensions = new string[] {"png", "jpg", "jpeg", "webp"};
+    private static readonly string[] WhitelistedBackgroundExtensions = new string[] { "png", "jpg", "jpeg", "webp" };
 
     private void InitializeLobbyBackground()
     {
@@ -25,19 +24,8 @@ public sealed partial class GameTicker
         RandomizeLobbyBackground();
     }
 
-    private void RandomizeLobbyBackground() {
-        // WOLFGATE(Symphony): a background the SSymphony panel set holds over every round until it is cleared
-        if (LobbyBackgroundOverride != null)
-        {
-            LobbyBackground = LobbyBackgroundOverride;
-            return;
-        }
-        // WOLFGATE(Symphony): or one from the panel's pool, a different one each round
-        if (PickFromPool() is { } pooled)
-        {
-            LobbyBackground = pooled;
-            return;
-        }
+    private void RandomizeLobbyBackground()
+    {
         LobbyBackground = _lobbyBackgrounds!.Any() ? _robustRandom.Pick(_lobbyBackgrounds!).ToString() : null;
     }
 }

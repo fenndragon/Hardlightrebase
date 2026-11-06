@@ -1,0 +1,571 @@
+<Document>
+# Prisoner Treatment
+
+This page defines prisoner treatment standards for Security operations. It is intended to preserve lawful enforcement while maintaining a humane, roleplay-forward environment.
+
+## Core Standard
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Info[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Prisoners are in custody, not outside the law. Security is responsible for lawful confinement, basic welfare, and timely release.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Principle
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Practical Standard
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Lawful custody
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Confinement must be tied to valid charges/sentences and proper authority
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Humane treatment
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Basic needs and medical safety remain in scope while incarcerated
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Accountability
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Restrictions and major custody decisions should be explainable and reviewable
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+RP-first enforcement
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Maintain station safety without treating brig as pure punishment theater
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+## Prisoner Rights
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="3">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Right Area
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Baseline Right
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Limit/Condition
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Medical care
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Prisoners have a right to medical aid when sick or injured
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+In self-harm situations, immediate treatment decisions may be discretionary for Security based on active risk and scene safety
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Timer fairness
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Sentence timers continue during lawful medical treatment
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Timer manipulation to extend punishment is not permitted
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Legal notice
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Prisoners must be informed of charges and sentence
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Updates are required if charges/sentence change
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Timely release
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Prisoners may not be held past lawful sentence
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Holding beyond sentence requires new lawful cause and documented authorization
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Perma legal rights
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Permanent-confinement prisoners retain legal representation and appeal rights
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Appeals follow normal Colonial Command process
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Basic living conditions
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Isolation/perma confinement must still provide minimum necessities
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Safety controls may be applied, but not deprivation beyond lawful necessity
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Communication
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Headset/radio access is not an absolute right while incarcerated
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Access may be restricted for bona fide misuse (including disruptive comms behavior)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Visitation
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Visitation is a privilege, not a right
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Permitted only at the discretion of the ranking officer; visitors are subject to full person search; use the visitation booth where one exists
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#c8a404" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Warning[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Communication Access
+Headset access is a controllable custody privilege, not an unconditional prisoner right.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+## Prisoner Responsibilities
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="3">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Responsibility
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Expected Behavior
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Typical Consequence for Violation
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Comply with lawful custody
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Follow lawful orders from Security staff
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Additional lawful charges or disciplinary handling
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Preserve brig safety
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Do not damage cells or equipment
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Timer reset, isolation, or prisoner infraction handling
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Do not escape
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Do not attempt or complete escape from custody
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Re-detention, timer reset, and related charges
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Do not obstruct operations
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Do not interfere with transport/intake/process flow
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Additional lawful charges (for example obstruction-related offenses)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Use comms appropriately
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+No comms spam/disruption while in custody
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Headset restriction/removal, plus comms-related charge if applicable
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#808080" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Note[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Prisoner misconduct outcomes are governed by existing Space Law and prisoner infraction procedures; this page does not create a separate punishment ladder.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+## Property and Evidence Handling
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="3">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Item Type
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Intake Handling
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Release Handling
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Standard personal property
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+May be temporarily removed and logged during sentence service
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Return on lawful release unless separately restricted by charge/safety basis
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+PDA
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Seize during incarceration to control communications and evidence risk
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Return on lawful release unless held as evidence/contraband
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+ID card
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Remains on the prisoner during incarceration for identity and processing continuity
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Continues with prisoner unless separately restricted by a lawful basis
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Evidence items
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Secure through normal evidence procedures
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Retained per investigation/evidence requirements
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Contraband
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Confiscate and process per Space Law
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Not returned where possession remains unlawful
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#ba292c" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Important[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Evidence chain integrity matters: seized items should be logged and secured so later review is possible.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+## Execution and Extreme Measures Safeguards
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Safeguard
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Requirement
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Authorization
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Execution requires Captain authorization
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Announcement timing
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Public comms announcement must occur before execution
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Record/reporting
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Required details and Colonial Command fax/reporting must be completed
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+<ColorBox Color="#ba292c" OutlineThickness="0">
+<Box VerticalAlignment="Center">
+[bold][color=#ffffff]Danger[/color][/bold]
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box Orientation="Vertical">
+Execution is an extreme measure. All procedural safeguards must be followed exactly.
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+
+## Restriction Authority
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="3">
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Decision Area
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Default Authority
+</Box>
+</ColorBox>
+<ColorBox Color="#1b67a5" OutlineThickness="0">
+<Box>
+Override Authority
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Routine prisoner-treatment restrictions (comms limits, visitation limits, isolation placement, intake controls)
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+Warden
+</Box>
+</ColorBox>
+<ColorBox Color="#1a1b23" OutlineThickness="0">
+<Box>
+HoS or Captain where operationally/legal necessity requires
+</Box>
+</ColorBox>
+</Table>
+</Box>
+
+## See Also
+
+- [textlink="Crimes & Punishments" link="HLSpaceLawList"]
+- [textlink="Legal Procedures" link="SOPSecurityPoliciesProcedures"]
+- [textlink="Security Policies & Guidebook" link="SOPSecurityPolicies"]
+- [textlink="Security Authority" link="SOPSecurityAuthorityOverview"]
+
+</Document>

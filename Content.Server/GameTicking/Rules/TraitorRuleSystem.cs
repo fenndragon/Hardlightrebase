@@ -12,12 +12,12 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
 using Content.Shared.PDA;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Roles.RoleCodeword;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
 using System.Text;
 
 namespace Content.Server.GameTicking.Rules;
@@ -74,7 +74,7 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
         string[] codewords = new string[finalCodewordCount];
         for (var i = 0; i < finalCodewordCount; i++)
         {
-            codewords[i] = _random.PickAndTake(codewordPool);
+            codewords[i] = Loc.GetString(_random.PickAndTake(codewordPool));
         }
         return codewords;
     }
@@ -98,7 +98,7 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
             briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
         }
 
-        var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
+        var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers));
 
         // Uplink code will go here if applicable, but we still need the variable if there aren't any
         Note[]? code = null;
@@ -164,8 +164,8 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
 
         // Change the faction
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Change faction");
-        _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
-        _npcFaction.AddFaction(traitor, component.SyndicateFaction);
+        _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction.Id, false);
+        _npcFaction.AddFaction(traitor, component.SyndicateFaction.Id);
 
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Finished");
         return true;
@@ -183,13 +183,19 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");
             // Codes are only generated if the uplink is a PDA
-            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            var ev = new GenerateUplinkCodeEvent();
+            RaiseLocalEvent(pda.Value, ref ev);
 
-            // If giveUplink is false the uplink code part is omitted
-            briefing = string.Format("{0}\n{1}",
-                briefing,
-                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
-            return (code, briefing);
+            if (ev.Code is { } generatedCode)
+            {
+                code = generatedCode;
+
+                // If giveUplink is false the uplink code part is omitted
+                briefing = string.Format("{0}\n{1}",
+                    briefing,
+                    Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+                return (code, briefing);
+            }
         }
         else if (pda is null && uplinked)
         {
@@ -203,7 +209,7 @@ public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleCompon
     // TODO: AntagCodewordsComponent
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
-        if(comp.GiveCodewords)
+        if (comp.GiveCodewords)
             args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 

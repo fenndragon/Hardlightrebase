@@ -46,9 +46,9 @@ public sealed class DCCVars
     public static readonly CVarDef<int> YearOffset =
         CVarDef.Create("game.current_year_offset", 867, CVar.SERVERONLY);
 
-    /// <summary>
-    /// Whether the Shipyard is enabled.
-    /// </summary>
+    // <summary>
+    // Whether the Shipyard is enabled.
+    // </summary>
     //public static readonly CVarDef<bool> Shipyard =
     //    CVarDef.Create("shuttle.shipyard", true, CVar.SERVERONLY);
 }

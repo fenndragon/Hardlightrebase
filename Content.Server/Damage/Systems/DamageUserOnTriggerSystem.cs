@@ -1,8 +1,6 @@
 using Content.Server.Damage.Components;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.StepTrigger;
-using Content.Shared.StepTrigger.Systems;
 
 namespace Content.Server.Damage.Systems;
 
@@ -41,7 +39,7 @@ public sealed partial class DamageUserOnTriggerSystem : EntitySystem
 
 public sealed class BeforeDamageUserOnTriggerEvent : EntityEventArgs
 {
-    public DamageSpecifier Damage { get; set;  }
+    public DamageSpecifier Damage { get; set; }
     public EntityUid Tripper { get; }
 
     public BeforeDamageUserOnTriggerEvent(DamageSpecifier damage, EntityUid target)

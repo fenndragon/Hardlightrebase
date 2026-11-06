@@ -19,7 +19,7 @@ public sealed partial class ImplanterStatusControl : Control
     {
         IoCManager.InjectDependencies(this);
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         _label.MaxWidth = 350;
         AddChild(new ClipControl { Children = { _label } });
 

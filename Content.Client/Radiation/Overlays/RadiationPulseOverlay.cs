@@ -5,7 +5,6 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -29,8 +28,10 @@ namespace Content.Client.Radiation.Overlays
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
+            _baseShader = _prototypeManager.Index(RadiationShaderId).Instance().Duplicate();
         }
+
+        private static readonly ProtoId<ShaderPrototype> RadiationShaderId = "Radiation";
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
         {

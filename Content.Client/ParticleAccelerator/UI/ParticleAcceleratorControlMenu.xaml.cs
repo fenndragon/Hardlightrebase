@@ -209,7 +209,7 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 
     private void UpdateUI(bool assembled, bool blocked, bool enabled, bool powerBlock)
     {
-        bool hasAccess = _player.LocalSession?.AttachedEntity is {} player
+        bool hasAccess = _player.LocalSession?.AttachedEntity is { } player
             && _accessReader.IsAllowed(player, _entity);
 
         OnButton.Pressed = enabled;
@@ -251,7 +251,7 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
         if (_lastDraw != 0)
         {
             var val = _drawNoiseGenerator.GetNoise(_time, 0f);
-            watts = (int) (_lastDraw + val * 5);
+            watts = (int)(_lastDraw + val * 5);
         }
 
         DrawValueLabel.SetMarkup(Loc.GetString("particle-accelerator-control-menu-draw-value",
@@ -263,6 +263,7 @@ public sealed partial class ParticleAcceleratorControlMenu : FancyWindow
 public sealed class PASegmentControl : Control
 {
     private readonly ShaderInstance _greyScaleShader;
+    private static readonly ProtoId<ShaderPrototype> GreyscaleShaderId = "Greyscale";
     private readonly TextureRect _base;
     private readonly TextureRect _unlit;
     private RSI? _rsi;
@@ -272,7 +273,7 @@ public sealed class PASegmentControl : Control
 
     public PASegmentControl()
     {
-        _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
+        _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index(GreyscaleShaderId).Instance();
 
         AddChild(_base = new TextureRect());
         AddChild(_unlit = new TextureRect());

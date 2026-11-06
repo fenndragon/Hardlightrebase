@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ActionSmite
   name: Smite
   description: Instantly gibs a target.
@@ -79,3 +79,146 @@
         requiredTriggeredSpeed: -1
   - type: Magic
     requiresClothes: true
+
+- type: entity
+  id: ActionCoreImbue
+  name: The Core
+  description: Imbue the Core tattoo onto the back of the target. Alone, it gives mild benefits, but its true power lies in unlocking the power of future fable tattoos.
+  components:
+  - type: Tag
+    tags:
+    - CoreTattoo
+  - type: EntityTargetAction
+    useDelay: 420
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - Body
+    blacklist:
+      components:
+      - Cybernetics
+    canTargetSelf: true
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/inneranomaly.ogg
+    icon:
+      sprite: _HL/Objects/Magic/chaplainIcons.rsi
+      state: liquidBL
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: NoSlip
+- type: entity
+  id: ActionCoreToggle
+  name: Activate Core
+  description: Focus your energy into the fable of your Core. Doing so activates the bonuses it provides but causes you to heat up.
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent
+    useDelay: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5.5
+
+
+- type: entity
+  id: ActionArmourImbue
+  name: Iron Bull
+  description: Imbue the fable of a raging bull across the target's sternum. Requires the Core tattoo.
+  components:
+  - type: EntityTargetAction
+    useDelay: 300
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - NoSlip
+    blacklist:
+      components:
+      - Cybernetics
+    canTargetSelf: true
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/inneranomaly.ogg
+    icon:
+      sprite: _HL/Objects/Magic/chaplainIcons.rsi
+      state: liquidBL
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: Oni
+        modifiers:
+          coefficients:
+            Blunt: 0.6
+            Slash: 0.6
+            Piercing: 0.6
+
+- type: entity
+  id: ActionSpeedImbue
+  name: Winged Step
+  description: Imbue the fable of a hunting bird near the target's ankles. Requires the Core tattoo.
+  components:
+  - type: EntityTargetAction
+    useDelay: 300
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - NoSlip
+    blacklist:
+      components:
+      - Cybernetics
+    canTargetSelf: true
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/inneranomaly.ogg
+    icon:
+      sprite: _HL/Objects/Magic/chaplainIcons.rsi
+      state: liquidBL
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: ActionGrant
+        actions:
+        - ActionSpawnWaterSpell
+#        actionEntities: ActionSpawnWaterSpell
+
+- type: entity
+  id: ActionPoisonImbue
+  name: Decaying Touch
+  description: Imbue the fable of decay in swirling, thorned vines around the target's Core. Requires the Core tattoo.
+  components:
+  - type: EntityTargetAction
+    useDelay: 300
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - NoSlip
+    blacklist:
+      components:
+      - Cybernetics
+    canTargetSelf: true
+    interactOnMiss: false
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/inneranomaly.ogg
+    icon:
+      sprite: _HL/Objects/Magic/chaplainIcons.rsi
+      state: liquidBL
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: DamageOnInteract
+        damage:
+          types:
+            Poison: 8
+        popupText: interact-poison-popup
+        stunChance: 0.5
+        stunSeconds: 1
+        interactSound: /Audio/Effects/lightburn.ogg
+      - type: DamageOnAttacked
+        damage:
+          types:
+            Poison: 8
+
+- type: entity
+  id: ActionTogging
+  name: Toggle Iron Hide
+  description: Toggle the protective iron blessing granted by your tattoo.
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent
+    useDelay: 2

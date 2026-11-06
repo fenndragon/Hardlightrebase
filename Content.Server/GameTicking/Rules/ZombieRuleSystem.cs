@@ -4,6 +4,7 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Zombies;
 using Content.Shared.GameTicking.Components;
@@ -20,19 +21,19 @@ using System.Globalization;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
+public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private ChatSystem _chat = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private SharedMindSystem _mindSystem = default!;
-    [Dependency] private SharedRoleSystem _roles = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private ZombieSystem _zombie = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
 
     public override void Initialize()
     {
@@ -172,7 +173,7 @@ public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponen
             zombieCount++;
         }
 
-        return zombieCount / (float) (players.Count + zombieCount);
+        return zombieCount / (float)(players.Count + zombieCount);
     }
 
     /// <summary>
@@ -189,7 +190,7 @@ public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponen
         {
             foreach (var station in _station.GetStationsSet())
             {
-                if (_station.GetLargestGrid(station) is { } grid)
+                if (TryComp<StationDataComponent>(station, out var data) && _station.GetLargestGrid(data) is { } grid)
                     stationGrids.Add(grid);
             }
         }

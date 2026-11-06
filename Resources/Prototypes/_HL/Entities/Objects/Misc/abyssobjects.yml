@@ -1,0 +1,37 @@
+- type: entity
+  parent: BaseItem
+  id: AbyssBallBase
+  name: abyssal ball
+  description: A swirling mass of darkness that seems to defy reality.
+  components:
+  - type: AmbientSound
+    range: 1
+    volume: -10
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects #it needs to draw over stuff.
+    sprite: _HL/Objects/Abyssal/abyss_ball.rsi
+    state: abyss_ball
+
+- type: entity
+  name: warding candle
+  description: A black candle with intricate runes engraved on it. Its flame is quite cold.
+  parent: BaseItem
+  suffix: Decorative
+  id: CandleInfiniteWarding
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _HL/Objects/Abyssal/wardcandles.rsi
+    layers:
+      - state: candle-big
+        color: "#16111a"
+      - state: fire-big
+        shader: unshaded
+  - type: PointLight
+    color: "#a834eb"
+    radius: 7
+    energy: 5
+

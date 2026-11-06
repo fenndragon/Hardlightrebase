@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseStockPart
   name: stock part
   parent: [BaseItem, RecyclableItemDeviceTiny] # Frontier: added RecyclableItemDeviceTiny
@@ -25,6 +25,10 @@
       - MachineUpgrading
     - type: Stack
       count: 1
+    - type: Tag
+      tags:
+      - ConstructionMaterial
+    - type: ConstructionMaterials # Frontier
 
 # Rating 1
 

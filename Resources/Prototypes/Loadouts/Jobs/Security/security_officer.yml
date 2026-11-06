@@ -67,7 +67,7 @@
 
 - type: loadout
   id: TrooperUniform
-  equipment: 
+  equipment:
     jumpsuit: ClothingUniformSecurityTrooper
 
 - type: loadout
@@ -128,6 +128,11 @@
   id: SecurityOfficerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterSec
+
+- type: loadout # Starlight
+  id: WindbreakerSecurity
+  equipment:
+    outerClothing: ClothingOuterWindbreakerSecurity
 
 # Shoes
 - type: loadout

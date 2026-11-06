@@ -104,13 +104,14 @@
           type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
-    - type: InteractionPopup
-      interactSuccessString: petting-success-holo
-      interactFailureString: petting-failure-holo
-      successChance: 0.7
+#    - type: InteractionPopup # EE interaction system - commented out
+#      interactSuccessString: petting-success-holo
+#      interactFailureString: petting-failure-holo
+#      successChance: 0.7
     - type: Tag
       tags:
         - CannotSuicide
+        - NoPaint
     - type: AnimatedEmotes # goob edit - animated emotes
 
 # From the uplink injector
@@ -233,6 +234,7 @@
       tags:
         - CannotSuicide
         - FootstepSound
+        - NoPaint
     - type: Inventory
       templateId: holoclown
     - type: Hands
@@ -244,6 +246,9 @@
           Piercing: 4
         groups:
           Burn: 3
+      catchingFailDamage:
+        types:
+          Blunt: 1
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
@@ -257,13 +262,15 @@
       prototypes: [ HoloClownGear ]
     - type: RandomMetadata
       nameSegments:
-      - names_clown
+      - NamesClown
+    # Frontier: no faction/NPC behaviour
     # - type: NpcFactionMember
-      # factions:
-        # - Syndicate
-    # - type: HTN # Frontier
-      # rootTask:
-        # task: SimpleHumanoidHostileCompound
+    #   factions:
+    #     - Syndicate
+    # - type: HTN
+    #   rootTask:
+    #     task: SimpleHumanoidHostileCompound
+    # End Frontier
 
 - type: entity
   id: ActionToggleGuardian

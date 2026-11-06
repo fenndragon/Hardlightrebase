@@ -1,0 +1,26 @@
+<Document>
+  # HARBORMASTER-CLASS SERVICE SHUTTLE
+  <Box>
+  <GuideEntityEmbed Entity="NFPosterContrabandLvhiStation" Caption=""/>
+  </Box>
+  <Box>
+  <GuideEntityEmbed Entity="ShuttleMapHarbormaster" Caption=""/>
+  </Box>
+    [color=#a4885c]Ship Size:[/color] Small
+
+	[color=#a4885c]Recommended Crew:[/color] 1-2
+
+	[color=#a4885c]Power Gen Type:[/color] Bananium
+
+	[color=#a4885c]Expeditions:[/color] None
+
+	[color=#a4885c]IFF Console:[/color] None
+
+  "An affordable shuttle for towing derelict ships to and from Frontier Station. Manufactured by Langstad-Voigt Heavy Industries."
+
+  # Tips on running LVHI Harbormaster shuttles
+  - The total power load for the shuttle in standard complectation is 36 [bold]kW[/bold]. For more general info on the power grid, see the guidebook article [textlink="Power" link="Power"].
+  - Be warned that D-K Jr.-type portable generator is radioactive, wear radiation suit when working with the generator.
+  - For basics of shuttle piloting see [textlink="Piloting" link="Piloting"].
+
+</Document>

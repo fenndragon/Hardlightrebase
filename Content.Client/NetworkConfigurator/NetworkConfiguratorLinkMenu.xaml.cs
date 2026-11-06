@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
@@ -14,6 +14,8 @@ namespace Content.Client.NetworkConfigurator;
 [GenerateTypedNameReferences]
 public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     private const string PanelBgColor = "#202023";
 
     private readonly LinksRender _links;
@@ -33,6 +35,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
     public NetworkConfiguratorLinkMenu()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         var footerStyleBox = new StyleBoxFlat()
         {
@@ -43,7 +46,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         FooterPanel.PanelOverride = footerStyleBox;
         MainPanel.PanelOverride = new StyleBoxFlat(Color.FromHex(PanelBgColor));
 
-        ButtonClear.AddStyleClass("ButtonColorRed");
+        ButtonClear.AddStyleClass("negative");
         ButtonLinkDefault.Disabled = true;
 
         _links = new LinksRender(ButtonContainerLeft, ButtonContainerRight);
@@ -61,7 +64,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         ButtonContainerRight.RemoveAllChildren();
 
         _sources.Clear();
-        _sources.AddRange(linkState.Sources);
+        _sources.AddRange(linkState.Sources.Select(s => _prototypeManager.Index(s)));
         _links.SourceButtons.Clear();
         var i = 0;
         foreach (var source in _sources)
@@ -73,7 +76,7 @@ public sealed partial class NetworkConfiguratorLinkMenu : FancyWindow
         }
 
         _sinks.Clear();
-        _sinks.AddRange(linkState.Sinks);
+        _sinks.AddRange(linkState.Sinks.Select(s => _prototypeManager.Index(s)));
         _links.SinkButtons.Clear();
         i = 0;
         foreach (var sink in _sinks)

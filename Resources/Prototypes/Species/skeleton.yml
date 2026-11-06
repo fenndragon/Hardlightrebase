@@ -6,14 +6,16 @@
   sprites: MobSkeletonSprites
   defaultSkinTone: "#fff9e2"
   markingLimits: MobHumanMarkingLimits
-  maleFirstNames: skeletonNamesFirst
-  femaleFirstNames: skeletonNamesFirst
+  maleFirstNames: NamesSkeletonFirst
+  femaleFirstNames: NamesSkeletonFirst
   dollPrototype: MobSkeletonPersonDummy
-  skinColoration: TintedHues
+  skinColoration: AnyColour # Hardlight
 
 - type: speciesBaseSprites
   id: MobSkeletonSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking
+    TailOversuit: MobHumanoidAnyMarking
     Head: MobSkeletonHead
     Chest: MobSkeletonTorso
     UndergarmentTop: MobHumanoidAnyMarking # WOLFGATE(Genitals): underwear/genital layers ported from HardLight

@@ -1,5 +1,4 @@
-using System.Threading.Tasks;
-using Content.Shared.Maps;
+using Content.Shared.Maps; // Upstream#33105
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
 using Content.Shared.Procedural.DungeonLayers;
@@ -17,10 +16,11 @@ public sealed partial class DungeonJob
     private async Task PostGen(
         OreDunGen gen,
         Dungeon dungeon,
-        Random random)
+        IRobustRandom random)
     {
         // Doesn't use dungeon data because layers and we don't need top-down support at the moment.
 
+        // Upstream#33105 - maskable room generation (Thank you, TheShuEd!)
         var replaceEntities = new Dictionary<Vector2i, EntityUid>();
         var availableTiles = new List<Vector2i>();
         var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
@@ -29,10 +29,14 @@ public sealed partial class DungeonJob
         {
             var tile = tileRef.Value.GridIndices;
 
+            // HardLight: Skip empty tiles since they won't be visible and may be used for other purposes.
+            if (tileRef.Value.Tile.IsEmpty)
+                continue;
+
             //Tile mask filtering
             if (gen.TileMask is not null)
             {
-                if (!gen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))
+                if (!gen.TileMask.Contains(((ContentTileDefinition)_tileDefManager[tileRef.Value.Tile.TypeId]).ID))
                     continue;
             }
 
@@ -40,7 +44,9 @@ public sealed partial class DungeonJob
             if (gen.EntityMask is not null)
             {
                 var found = false;
+                var blocked = false; // HardLight
                 var enumerator2 = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+
                 while (enumerator2.MoveNext(out var uid))
                 {
                     var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
@@ -48,20 +54,35 @@ public sealed partial class DungeonJob
                     if (prototype?.ID is null)
                         continue;
 
-                    if (!gen.EntityMask.Contains(prototype.ID))
-                        continue;
+                    // HardLight: If the tile contains an entity matching the mask,
+                    // we can replace it but not add ores to the same tile as other anchored content.
+                    if (gen.EntityMask.Contains(prototype.ID))
+                    {
+                        // Keep the first matching entity for replacement.
+                        if (!found)
+                            replaceEntities[tile] = uid.Value;
 
-                    replaceEntities[tile] = uid.Value;
-                    found = true;
+                        found = true;
+                        continue;
+                    }
+
+                    // HardLight: If mixed with any other anchored entity, do not touch this tile.
+                    blocked = true;
+                    break;
                 }
 
-                if (!found)
+                if (!found || blocked) // HardLight: Added blocked
                     continue;
             }
             else
             {
-                //If entity mask null - we ignore the tiles that have anything on them.
-                if (!_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                // If entity mask null - we ignore the tiles that have anything on them.
+                if (!_anchorable.TileFree(GridEntity, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
+
+                var anchored = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile); // HardLight
+                // HardLight: Do not place ores on tiles that already contain anchored map content.
+                if (anchored.MoveNext(out _))
                     continue;
             }
 
@@ -73,6 +94,7 @@ public sealed partial class DungeonJob
             if (!ValidateResume())
                 return;
         }
+        // End Upstream#33105 - maskable room generation (Thank you, TheShuEd!)
 
         var remapping = new Dictionary<EntProtoId, EntProtoId>();
 
@@ -80,7 +102,7 @@ public sealed partial class DungeonJob
         if (_prototype.TryIndex(gen.Entity, out var proto) &&
             proto.Components.TryGetComponent("EntityRemap", out var comps))
         {
-            var remappingComp = (EntityRemapComponent) comps;
+            var remappingComp = (EntityRemapComponent)comps;
             remapping = remappingComp.Mask;
         }
 
@@ -148,7 +170,7 @@ public sealed partial class DungeonJob
 
             if (groupSize > 0)
             {
-                _sawmill.Warning($"Found remaining group size for ore veins of {gen.Entity.Id ?? "null"}!");
+                _sawmill.Warning($"Found remaining group size for ore veins of {gen.Entity.Id ?? "null"}!"); // Upstream#33105 - Replacement<Entity.Id
             }
         }
     }

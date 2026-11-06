@@ -1,12 +1,5 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Singularity.Components;
 using Content.Server.Tesla.Components;
-using Content.Shared.Database;
-using Content.Shared.Singularity.Components;
-using Content.Shared.Mind.Components;
-using Content.Shared.Tag;
-using Robust.Shared.Physics.Events;
-using Content.Server.Lightning.Components;
 using Robust.Server.Audio;
 using Content.Server.Singularity.Events;
 
@@ -32,7 +25,8 @@ public sealed partial class TeslaEnergyBallSystem : EntitySystem
         if (TryComp<SinguloFoodComponent>(args.Entity, out var singuloFood))
         {
             AdjustEnergy(tesla, tesla.Comp, singuloFood.Energy);
-        } else
+        }
+        else
         {
             AdjustEnergy(tesla, tesla.Comp, tesla.Comp.ConsumeStuffEnergy);
         }

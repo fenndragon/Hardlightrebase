@@ -4,10 +4,28 @@
   id: MobGoblinBase
   abstract: true
   components:
+  # HardLight start
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - Ancestor
+    understands:
+    - GalacticCommon
+    - Ancestor
+  # HardLight end
   - type: Sprite
     scale: 0.8, 0.7
   - type: HumanoidAppearance
     species: Goblin
+    hideLayersOnEquip:
+    - Hair
+    - HeadTop
+    - Snout # Nose, tusks
+    # HL start: Hide genital markings on equip
+    - Genital
+    - Penis
+    - Breasts
+    # HL end
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:
@@ -39,6 +57,7 @@
     - GoblinMutter
     - GoblinThroatSinging
     - Hiss
+    - Belch
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -52,7 +71,7 @@
       - 3,3,3,6
     storedRotation: -67.5 # Bug: must be half the angle.
   - type: Vocal
-    wilhelm: "/Audio/_NF/Voice/Goblin/goblin-cackle-05.ogg"
+    wilhelm: "/Audio/_NF/Voice/Goblin/goblin_cackle_5.ogg"
     sounds:
       Male: MaleGoblin
       Female: FemaleGoblin
@@ -107,6 +126,24 @@
         probability: 0.2
   - type: Rummager # DeltaV Code
   - type: AlwaysTriggerMousetrap # DeltaV Code
+  - type: Inventory
+    speciesId: goblin
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      accessory1:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      accessory2:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   save: false

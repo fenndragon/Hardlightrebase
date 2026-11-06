@@ -7,7 +7,10 @@
     ClothingUniformRandomPunkCroptop: 12
     ClothingUniformRandomPunkTanktop: 8
     ClothingUniformRandomArmlessNoSkirt: 6
+    ClothingUniformRandomPunkPantsOnly: 6
+    ClothingUniformRandomPunkShortsOnly: 6
     ClothingBeltPunkRandomized: 6
+    ClothingMaskBalaclavaRandom: 6
     NFPouchPunk: 6
     ClothingShoesBootsPunkRandomized: 6
     ClothingOuterArmorPunkRandomized: 4
@@ -15,3 +18,4 @@
     ClothingOuterArmorPunkOrange: 2
     ClothingOuterArmorPunkRed: 2
     HoloGraffitiProjector: 4
+    ClothingWalletLeatherPunk: 3

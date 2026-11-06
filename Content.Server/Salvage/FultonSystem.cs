@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Shared.Salvage.Fulton;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -53,12 +52,17 @@ public sealed partial class FultonSystem : SharedFultonSystem
 
     private void Fulton(EntityUid uid, FultonedComponent component)
     {
+        if (!TryComp(uid, out TransformComponent? xform))
+        {
+            RemCompDeferred<FultonedComponent>(uid);
+            return;
+        }
+
         if (!Deleted(component.Beacon) &&
             TryComp(component.Beacon, out TransformComponent? beaconXform) &&
             !Container.IsEntityOrParentInContainer(component.Beacon.Value, xform: beaconXform) &&
             CanFulton(uid))
         {
-            var xform = Transform(uid);
             var metadata = MetaData(uid);
             var oldCoords = xform.Coordinates;
             var offset = _random.NextVector2(1.5f);

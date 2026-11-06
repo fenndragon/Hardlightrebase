@@ -14,12 +14,15 @@
     ClothingShoesBootsWork: 3
     ClothingHeadHatHardhatYellow: 3
     ClothingHeadHatHardhatOrange: 3
-    ClothingHeadsetEngineering: 3
-    EncryptionKeyEngineering: 10
+    #ClothingHeadsetEngineering: 3
+    #EncryptionKeyEngineering: 10
     ClothingMaskGas: 3
     ClothingOuterWinterEngi: 2
+    ClothingOuterWindbreakerEngineering: 2 # Starlight
     ClothingNeckScarfStripedOrange: 3
     ClothingShoesBootsWinterEngi: 2
+    ClothingNeckCollarEngi: 2 # Floofstation - Collar addition
+    ClothingUniformFiresuitCroptop: 2 # Hardlight
     # Frontier
     # WOLFGATE(MeridianClothing) START: Meridian Rift clothing, written by Tools/_WF/MeridianClothing/port.py
     WFMeridianClothingAccessoryMedalSilverEmergencyServicesEngineering: 2
@@ -63,6 +66,7 @@
     ClothingNeckScarfStripedLightBlue: 3
     ClothingMaskGasAtmos: 2
     ClothingShoesBootsWinterAtmos: 2 #Delta V: Add departmental winter boots
+    ClothingUniformFiresuitAtmosCroptop: 2 # Hardlight
 # Senior:
     ClothingUniformJumpsuitSeniorEngineer: 1
     ClothingUniformJumpskirtSeniorEngineer: 1
@@ -77,9 +81,15 @@
     ClothingHeadHatBeretEngineering: 1
     ClothingNeckCloakCe: 1
     ClothingNeckMantleCE: 1
-    ClothingHeadsetAltEngineering: 1
-    RubberStampCE: 1
+    #ClothingHeadsetAltEngineering: 1
+    #RubberStampCE: 1
     # End Frontier
+    ClothingHandsEngiWarmers: 3
+    ClothingUnderSocksEngi: 3
+    ClothingUniformEngiThong: 3
+    ClothingHandsChiefEngiWarmers: 3
+    ClothingUnderSocksChiefEngi: 3
+    ClothingUniformChiefEngiThong: 3
   contrabandInventory:
     ToyFigurineEngineer: 1
     ToyFigurineChiefEngineer: 1

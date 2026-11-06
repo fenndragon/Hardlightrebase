@@ -1,4 +1,4 @@
-﻿using Content.Shared.Smoking;
+using Content.Shared.Smoking;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.Visualizers;
@@ -15,8 +15,8 @@ public sealed class SmokeVisualizerSystem : VisualizerSystem<SmokeVisualsCompone
     {
         if (args.Sprite == null)
             return;
-        if(!AppearanceSystem.TryGetData<Color>(uid, SmokeVisuals.Color, out var color))
+        if (!AppearanceSystem.TryGetData<Color>(uid, SmokeVisuals.Color, out var color))
             return;
-        args.Sprite.Color = color;
+        SpriteSystem.SetColor((uid, args.Sprite), color);
     }
 }

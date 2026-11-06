@@ -1,8 +1,6 @@
 using System.Diagnostics;
-using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Administration;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
@@ -136,7 +134,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             QueueReflood(node);
 
-            InitGroup(node, new List<Node> {node});
+            InitGroup(node, new List<Node> { node });
         }
 
         public override void Update(float frameTime)
@@ -175,7 +173,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 if (toRemove.NodeGroup == null)
                     continue;
 
-                var group = (BaseNodeGroup) toRemove.NodeGroup;
+                var group = (BaseNodeGroup)toRemove.NodeGroup;
 
                 group.RemoveNode(toRemove);
                 toRemove.NodeGroup = null;
@@ -208,7 +206,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
                 if (node.NodeGroup?.Remaking == false)
                 {
-                    QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
+                    QueueRemakeGroup((BaseNodeGroup)node.NodeGroup);
                 }
 
                 // GetCompatibleNodes will involve getting the transform & grid as most connection requirements are
@@ -223,7 +221,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                     {
                         // We are expanding into an existing group,
                         // remake it so that we can treat it uniformly.
-                        var group = (BaseNodeGroup) compatible.NodeGroup;
+                        var group = (BaseNodeGroup)compatible.NodeGroup;
                         QueueRemakeGroup(group);
                     }
 
@@ -300,7 +298,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
         private BaseNodeGroup InitGroup(Node node, List<Node> groupNodes)
         {
-            var newGroup = (BaseNodeGroup) _nodeGroupFactory.MakeNodeGroup(node.NodeGroupID);
+            var newGroup = (BaseNodeGroup)_nodeGroupFactory.MakeNodeGroup(node.NodeGroupID);
             newGroup.Initialize(node, EntityManager);
             newGroup.NetId = _groupNetIdCounter++;
 
@@ -366,6 +364,27 @@ namespace Content.Server.NodeContainer.EntitySystems
                 }
             }
         }
+        // Starlight Start: DockPipeSystem
+        private IEnumerable<Node> GetCompatibleNodes(
+            Node node,
+            NodeContainerComponent container,
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            EntityQuery<TransformComponent> xformQuery,
+            Entity<MapGridComponent>? grid)
+        {
+            if (!xformQuery.TryGetComponent(node.Owner, out var xform))
+                yield break;
+
+            if (!node.Connectable(EntityManager, xform))
+                yield break;
+
+            foreach (var reachable in node.GetReachableNodes((node.Owner, xform), nodeQuery, xformQuery, grid, EntityManager))
+            {
+                if (xformQuery.HasComponent(reachable.Owner))
+                    yield return reachable;
+            }
+        }
+        // Starlight End
 
         private void VisDoUpdate(float frametime)
         {
@@ -447,6 +466,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.Pipe => Color.Blue,
                 NodeGroupID.WireNet => Color.DarkMagenta,
                 NodeGroupID.Teg => Color.Red,
+                NodeGroupID.NullEnforcer => Color.MediumPurple,
                 _ => Color.White
             };
         }

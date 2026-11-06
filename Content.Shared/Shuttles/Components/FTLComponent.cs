@@ -38,16 +38,16 @@ public sealed partial class FTLComponent : Component
     [DataField]
     public EntProtoId? VisualizerProto = "FtlVisualizerEntity";
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? VisualizerEntity;
 
     /// <summary>
     /// Coordinates to arrive it: May be relative to another grid (for docking) or map coordinates.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityCoordinates TargetCoordinates;
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public Angle TargetAngle;
 
     /// <summary>
@@ -62,9 +62,7 @@ public sealed partial class FTLComponent : Component
         Params = AudioParams.Default.WithVolume(-3f).WithLoop(true)
     };
 
-    [DataField]
     public EntityUid? StartupStream;
 
-    [DataField]
     public EntityUid? TravelStream;
 }

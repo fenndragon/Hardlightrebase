@@ -5,9 +5,9 @@
   description: A piece of unrefined ore.
   components:
   - type: Sprite
-    sprite: Objects/Materials/ore.rsi
+    sprite: _Mono/Objects/Materials/ore.rsi
   - type: Item
-    sprite: Objects/Materials/ore.rsi
+    sprite: _Mono/Objects/Materials/ore.rsi
     size: Normal
   # WOLFGATE(CargoLoad): ore weighs down the ship carrying it
   - type: WFCargoMass
@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - Ore
+  - type: NotInsurable # HardLight
   - type: Fixtures
     fixtures:
       fix1:
@@ -157,6 +158,7 @@
           Quantity: 10
   - type: Item
     heldPrefix: plasma
+  - type: NFFuel # Frontier
 
 - type: entity
   parent: PlasmaOre
@@ -264,6 +266,7 @@
         canReact: false
   - type: Item
     heldPrefix: uranium
+  - type: NFFuel # Frontier
 
 - type: entity
   parent: UraniumOre
@@ -306,6 +309,7 @@
           Quantity: 5
   - type: Item
     heldPrefix: bananium
+  - type: NFFuel # Frontier
 
 - type: entity
   parent: BananiumOre
@@ -328,6 +332,15 @@
   - type: Material
   - type: Extractable
     grindableSolutionName: coal
+  # HardLight start
+  - type: Food
+    requiresSpecialDigestion: true
+    solution: coal
+  - type: FlavorProfile
+    flavors:
+    - bitter
+  - type: BadFood
+  # HardLight end
   - type: SolutionContainerManager
     solutions:
       coal:

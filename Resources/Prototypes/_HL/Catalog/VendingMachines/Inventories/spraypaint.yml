@@ -1,0 +1,27 @@
+#HL This is the inventory of the SprayVend
+- type: vendingMachineInventory
+  id: sprayVendInventory
+  startingInventory:
+    SprayPaintBlue: 2
+    SprayPaintRed: 2
+    SprayPaintOrange: 2
+    SprayPaintBlack: 2
+    SprayPaintGreen: 2
+    SprayPaintPurple: 2
+    SprayPaintWhite: 2
+    DeathPaint: 2 
+    DeathPaintTwo: 2
+    SprayPaintBlueDeep: 2
+    SprayPaintRedDeep: 2
+    SprayPaintGreenDeep: 2
+    SprayPaintBlackDeep: 2
+    SprayPaintPurpleDeep: 2
+    SprayPaintSilver: 2
+    SprayPaintGrey: 2
+    SprayPaintGreyDeep: 2
+    SprayPaintAqua: 2
+    SprayPaintAquaDeep: 2
+    SprayPaintGold: 2
+    SprayPaintYellow: 2
+    SprayPaintPink: 2
+    SprayPaintBrown: 2

@@ -1,6 +1,5 @@
-﻿using Content.Client.UserInterface.Fragments;
+using Content.Client.UserInterface.Fragments;
 using Content.Shared.CartridgeLoader.Cartridges;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
@@ -24,6 +23,6 @@ public sealed partial class CrewManifestUi : UIFragment
         if (state is not CrewManifestUiState crewManifestState)
             return;
 
-        _fragment?.UpdateState(crewManifestState.StationName, crewManifestState.Entries);
+        _fragment?.UpdateState(crewManifestState.Entries); // coyote: remove name
     }
 }

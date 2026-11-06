@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
@@ -29,7 +28,7 @@ public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new []{ typeof(StorageSystem) });
+        SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new[] { typeof(StorageSystem) });
         SubscribeLocalEvent<PneumaticCannonComponent, GunShotEvent>(OnShoot);
         SubscribeLocalEvent<PneumaticCannonComponent, ContainerIsInsertingAttemptEvent>(OnContainerInserting);
         SubscribeLocalEvent<PneumaticCannonComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
@@ -43,9 +42,9 @@ public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (!_toolSystem.HasQuality(args.Used, component.ToolModifyPower))
             return;
 
-        var val = (int) component.Power;
-        val = (val + 1) % (int) PneumaticCannonPower.Len;
-        component.Power = (PneumaticCannonPower) val;
+        var val = (int)component.Power;
+        val = (val + 1) % (int)PneumaticCannonPower.Len;
+        component.Power = (PneumaticCannonPower)val;
 
         Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-change-power",
             ("power", component.Power.ToString())), uid, args.User);
@@ -119,7 +118,7 @@ public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
     private Entity<GasTankComponent>? GetGas(EntityUid uid)
     {
         if (!Container.TryGetContainer(uid, PneumaticCannonComponent.TankSlotId, out var container) ||
-            container is not ContainerSlot slot || slot.ContainedEntity is not {} contained)
+            container is not ContainerSlot slot || slot.ContainedEntity is not { } contained)
             return null;
 
         return TryComp<GasTankComponent>(contained, out var gasTank) ? (contained, gasTank) : null;

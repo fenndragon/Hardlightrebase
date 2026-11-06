@@ -2,7 +2,7 @@
   id: CrateCargoLuxuryHardsuit
   parent: CratePirate
   name: luxury mining hardsuit crate
-  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
+  description: Finally, a hardsuit Quartermasters could call their own. Colcomm has heard you, now stop asking.
   components:
   - type: StorageFill
     contents:
@@ -104,22 +104,22 @@
       prob: 0.001
       orGroup: Canister
     #weapons
-    - id: WeaponPulseCarbine
+    - id: NFWeaponEnergyRifleAssaultPulseCarbine # Frontier: WeaponPulseCarbine<NFWeaponEnergyRifleAssaultPulseCarbine
       prob: 0.0001
       orGroup: Weapons
-    - id: WeaponRifleAk
+    - id: NFWeaponRifleAssaultSm # Frontier: WeaponRifleAk<NFWeaponRifleAssaultSm
       prob: 0.0001
       orGroup: Weapons
-    - id: WeaponLauncherPirateCannon
+    - id: WeaponLauncherPirateCannon # Frontier: WeaponLauncherPirateCannon<NFWeaponLauncherPirateCannon
       prob: 0.001
       orGroup: Weapons
-    - id: WeaponPistolCHIMP
+    - id: NFWeaponPistolCHIMP # Frontier: FWeaponPistolCHIMP<NFWeaponPistolCHIMP
       prob: 0.001
       orGroup: Weapons
-    - id: WeaponSniperMosin
+    - id: WeaponSniperMosin # Frontier: WeaponSniperMosin<NFWeaponRifleBarlowsBolt
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponMakeshiftLaser
+    - id: NFWeaponEnergyPistolLaserMakeshift # Frontier: WeaponMakeshiftLaser<NFWeaponEnergyPistolLaserMakeshift
       prob: 0.001
       orGroup: Weapons
     - id: Sledgehammer
@@ -131,10 +131,10 @@
     - id: ThrowingStar
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponLaserGun
+    - id: NFWeaponEnergyPistolLaser # Frontier: WeaponLaserGun<NFWeaponEnergyPistolLaser
       prob: 0.001
       orGroup: Weapons
-    - id: WeaponShotgunHandmade
+    - id: NFWeaponShotgunHandmade # Frontier: WeaponShotgunHandmade<NFWeaponShotgunHandmade
       prob: 0.01
       orGroup: Weapons
     - id: WeaponFlareGun
@@ -158,7 +158,7 @@
     - id: WeaponTurretXeno
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponRifleFoam
+    - id: WeaponRifleFoam # Frontier: WeaponRifleFoam<NFWeaponRifleFoam
       prob: 0.03
       orGroup: Weapons
     #clothing
@@ -228,6 +228,9 @@
     - id: ClothingUniformJumpskirtOfLife
       prob: 0.01
       orGroup: Clothes
+    - id: ClothingOuterHardsuitLuxmax #HL start
+      prob: 0.001
+      orGroup: Clothes #HL end
     #swag
     - id: ClothingNeckBling
       prob: 0.01
@@ -308,6 +311,18 @@
     - id: PlushieThrongler #hehe
       prob: 0.0005
       orGroup: Plushies
+    - id: PlushieLoming
+      prob: 0.1
+      orGroup: Plushies
+    - id: PlushieMrBones
+      prob: 0.01
+      orGroup: Plushies
+    - id: PlushieMaintsNaked
+      prob: 0.009
+      orGroup: Plushies
+    - id: PlushieXiv3n
+      prob: 0.009
+      orGroup: Plushies
     #useful
     - id: AmeJar
       prob: 0.01
@@ -373,7 +388,7 @@
     - id: ClothingHandsGlovesColorYellowBudget
       prob: 0.01
       orGroup: NotUseful
-    - id: CartridgeCap
+    - id: NFCartridgeCap # Frontier: CartridgeCap<NFCartridgeCap
       prob: 0.01
       orGroup: NotUseful
     - id: EncryptionKeyCommon
@@ -394,10 +409,10 @@
     - id: WeakKudzu
       prob: 0.01
       orGroup: NotUseful
-    - id: MagazineFoamBox
+    - id: NFMagazineBoxFoam # Frontier: MagazineFoamBox<
       prob: 0.001
       orGroup: NotUseful
-    - id: BoxDonkSoftBox
+    - id: NFBoxDonkSoftBox # Frontier: use NF variant
       prob: 0.008
       orGroup: NotUseful
     - id: GrenadeFoamDart

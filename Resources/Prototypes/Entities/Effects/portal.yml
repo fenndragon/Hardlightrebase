@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BasePortal
   abstract: true
   name: bluespace portal
@@ -24,6 +24,7 @@
         - WallLayer
         hard: false
   - type: Portal
+  - type: Dispellable
 
 - type: entity
   id: PortalRed

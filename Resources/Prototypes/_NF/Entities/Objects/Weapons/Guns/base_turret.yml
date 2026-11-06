@@ -21,7 +21,7 @@
         mask:
           - MachineMask
         layer:
-          - MachineLayer
+          - TurretLayer # Hardlight
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/turrets.rsi
     drawdepth: Mobs
@@ -108,6 +108,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Gun
+    examineCaliber: gun-examine-caliber-25
     fireRate: 6
     selectedMode: FullAuto
     availableModes:

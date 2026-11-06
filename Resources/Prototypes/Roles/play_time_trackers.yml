@@ -136,6 +136,9 @@
 - type: playTimeTracker
   id: JobStationAi
 
+- type: playTimeTracker # Move this to _HL later
+  id: JobStationCaptain
+
 - type: playTimeTracker
   id: JobStationEngineer
 
@@ -156,3 +159,6 @@
 
 - type: playTimeTracker
   id: JobBrigmedic
+
+- type: playTimeTracker
+  id: JobSeniorOfficer

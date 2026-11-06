@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -51,8 +47,8 @@ namespace Content.MapRenderer.Painters
                 if (string.IsNullOrWhiteSpace(path))
                     return;
 
-                var x = (int) (tile.X + xOffset);
-                var y = (int) (tile.Y + yOffset);
+                var x = (int)(tile.X + xOffset);
+                var y = (int)(tile.Y + yOffset);
                 var image = images[path][tile.Tile.Variant];
 
                 gridCanvas.Mutate(o => o.DrawImage(image, new Point(x * tileSize, y * tileSize), 1));
@@ -60,7 +56,7 @@ namespace Content.MapRenderer.Painters
                 i++;
             });
 
-            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {gridUid} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(TilePainter)} painted {i} tiles on grid {gridUid} in {(int)stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private Dictionary<string, List<Image>> GetTileImages(
@@ -99,7 +95,7 @@ namespace Content.MapRenderer.Painters
                 }
             }
 
-            Console.WriteLine($"Indexed all tile images in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"Indexed all tile images in {(int)stopwatch.Elapsed.TotalMilliseconds} ms");
 
             return images;
         }

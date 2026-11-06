@@ -3,6 +3,7 @@ namespace Content.Server.Chat.Systems;
 using Content.Shared.Chat; // Einstein Engines - Languages
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
+using Content.Shared.Chat;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -45,7 +46,7 @@ public sealed partial class EmoteOnDamageSystem : EntitySystem
         }
         else
         {
-            _chatSystem.TryEmoteWithoutChat(uid,emote);
+            _chatSystem.TryEmoteWithoutChat(uid, emote);
         }
 
         emoteOnDamage.LastEmoteTime = _gameTiming.CurTime;

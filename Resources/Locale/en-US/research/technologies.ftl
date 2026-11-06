@@ -36,8 +36,12 @@ research-technology-wave-particle-harnessing = Wave Particle Harnessing
 research-technology-advanced-riot-control = Advanced Riot Control
 research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponry
 research-technology-experimental-battery-ammo = Experimental Battery Ammo
-research-technology-basic-shuttle-armament = Shuttle basic armament
-research-technology-advanced-shuttle-weapon = Advanced shuttle weapons
+research-technology-kinetic-modifications = Kinetic Modifications
+# Frontier: Shuttle Basic < Basic Shuttle
+research-technology-energy_barriers = Energy Barriers
+research-technology-basic-shuttle-armament = Basic Shuttle Armament
+research-technology-advanced-shuttle-weapon = Advanced Shuttle Weapons
+research-technology-thermal-weaponry = Thermal Weaponry
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
@@ -49,6 +53,7 @@ research-technology-anomaly-harnessing = Anomaly Core Harnessing
 research-technology-abnormal-artifact-manipulation = Artifact Recycling
 research-technology-gravity-manipulation = Gravity Manipulation
 research-technology-quantum-leaping = Quantum Leaping
+research-technology-bluespace-time-manipulation = Bluespace Time Manipulation
 research-technology-advanced-anomaly-research = Advanced Anomaly Research
 research-technology-rped = Rapid Part Exchange
 research-technology-super-parts = Super Parts
@@ -73,3 +78,4 @@ research-technology-advanced-spray = Advanced Spray
 research-technology-bluespace-cargo-transport = Bluespace Cargo Transport
 research-technology-quantum-fiber-weaving = Quantum Fiber Weaving
 research-technology-bluespace-chemistry = Bluespace Chemistry
+research-technology-ai = AI Technology

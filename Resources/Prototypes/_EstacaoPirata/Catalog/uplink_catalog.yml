@@ -2,7 +2,7 @@
   id: UplinkSyndicateDeck
   name: uplink-syndicate-deck-name
   description: uplink-syndicate-deck-desc
-  productEntity: CardBoxSyndicate
+  productEntity: PlayingCardDeckBoxSyndicate
   cost:
     Telecrystal: 5 # Mono: 4>5 frontier revert
   categories:

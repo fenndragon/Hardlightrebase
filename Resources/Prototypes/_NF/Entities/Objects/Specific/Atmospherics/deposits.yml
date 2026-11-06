@@ -27,7 +27,7 @@
   abstract: true
   components:
   - type: RandomGasDeposit
-    scale: 0.30
+    scale: 0.60
   - type: Sprite
     scale: 0.75, 0.75
 
@@ -36,7 +36,7 @@
   abstract: true
   components:
   - type: RandomGasDeposit
-    scale: 0.60
+    scale: 1.20
   - type: Sprite
     scale: 0.85, 0.85
 
@@ -45,7 +45,7 @@
   abstract: true
   components:
   - type: RandomGasDeposit
-    scale: 1.40
+    scale: 2.80
   - type: Sprite
     scale: 1.1, 1.1
 
@@ -54,7 +54,7 @@
   abstract: true
   components:
   - type: RandomGasDeposit
-    scale: 2.70
+    scale: 5.40
   - type: Sprite
     scale: 1.2, 1.2
 # endregion Base Deposits
@@ -151,7 +151,7 @@
 - type: entity
   parent: BaseGasDeposit
   id: GasDepositMuddlePlasma
-  suffix: Muddled PL+
+  suffix: Muddled P+
   components:
   - type: RandomGasDeposit
     depositPrototype: MuddlePlasma

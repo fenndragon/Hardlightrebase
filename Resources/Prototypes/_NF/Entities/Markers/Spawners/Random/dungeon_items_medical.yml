@@ -111,7 +111,7 @@
     chance: 0.95
     offset: 0.0
     rarePrototypes:
-    - WeaponShotgunHandmade
+    - NFWeaponShotgunHandmade
     rareChance: 0.05
 
 - type: entity
@@ -259,8 +259,8 @@
     - CombatMedipen
     - Stimpack
     - StimpackMini
-    - CognizineChemistryBottle
-    - OmnizineChemistryBottle
+    - ChemistryBottleCognizine
+    - ChemistryBottleOmnizine
     rareChance: 0.01
 
 - type: entity
@@ -444,7 +444,6 @@
     chance: 0.65
     offset: 0.0
     rarePrototypes:
-    # - SyndiHypo #  # A bit less Syndicate loot
      - Hypospray
     rareChance: 0.01
 
@@ -578,9 +577,9 @@
     chance: 0.9
     offset: 0.0
     rarePrototypes:
-    - CrateServiceKitMedbay
-    - CrateServiceKitChemLab
-    - CrateServiceKitMedbayCryo
+    #- CrateServiceKitMedbay
+    #- CrateServiceKitChemLab
+    #- CrateServiceKitMedbayCryo
     - CrateEvaKitCmo
     rareChance: 0.01
 
@@ -654,7 +653,7 @@
     offset: 0.0
     rarePrototypes:
     - VendingMachineSyndieContraband
-#    - VendingMachineSyndieDrobe # A bit less Syndicate loot
+    # - VendingMachineSyndieDrobe # A bit less Syndicate loot
     - VendingMachineRobotics
     rareChance: 0.01
 
@@ -702,12 +701,12 @@
     chance: 1
     offset: 0.0
     rarePrototypes:
-    - CognizineChemistryBottle
-    - OmnizineChemistryBottle
-    - PaxChemistryBottle
-    - MuteToxinChemistryBottle
-    - ToxinChemistryBottle
-    - LeadChemistryBottle
+    - ChemistryBottleCognizine
+    - ChemistryBottleOmnizine
+    - ChemistryBottlePax
+    - ChemistryBottleMuteToxin
+    - ChemistryBottleToxin
+    - ChemistryBottleLead
     rareChance: 0.01
 
 - type: entity
@@ -748,9 +747,9 @@
     - OrganHarvesterMachineCircuitboard
     chance: 0.95
     offset: 0.0
-    rarePrototypes:
-    - ComputerIFFCircuitboard
-    rareChance: 0.03
+    # rarePrototypes:
+    # - ComputerIFFCircuitboard
+    # rareChance: 0.03
 
 - type: entity
   name: random flatpack

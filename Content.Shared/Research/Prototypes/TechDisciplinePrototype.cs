@@ -46,8 +46,9 @@ public sealed partial class TechDisciplinePrototype : IPrototype
     [DataField("lockoutTier")]
     public int LockoutTier = 4;
 
+    // WOLFGATE: escape the ampersand in XML documentation
     /// <summary>
-    /// Goobstation R&D console rework field
+    /// Goobstation R&amp;D console rework field
     /// Name that appears on this discipline's button in console
     /// </summary>
     [DataField(required: true)]

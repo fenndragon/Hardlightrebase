@@ -84,6 +84,12 @@ public sealed partial class ItemToggleComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public SoundSpecifier? SoundFailToActivate;
+
+    /// <summary>
+    ///     HardLight: If this is set to false, wielding and unwielding will not toggle the item.
+    /// </summary>
+    [DataField]
+    public bool AutoToggleOnWield = true;
 }
 
 /// <summary>
@@ -92,13 +98,18 @@ public sealed partial class ItemToggleComponent : Component
 [ByRefEvent]
 public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
+    /// <summary>
+    /// Should we silently fail.
+    /// </summary>
+    public bool Silent = false;
+
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
 
     /// <summary>
     /// Pop-up that gets shown to users explaining why the attempt was cancelled.
     /// </summary>
-    public string? Popup { get; set; }
+    public string? Popup;
 }
 
 /// <summary>
@@ -107,8 +118,18 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 [ByRefEvent]
 public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 {
+    /// <summary>
+    /// Should we silently fail.
+    /// </summary>
+    public bool Silent = false;
+
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
+
+    /// <summary>
+    /// Pop-up that gets shown to users explaining why the attempt was cancelled.
+    /// </summary>
+    public string? Popup;
 }
 
 /// <summary>

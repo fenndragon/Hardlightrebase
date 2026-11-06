@@ -1,4 +1,4 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -9,19 +9,19 @@ namespace Content.Server.GameTicking.Rules.VariationPass;
 /// <inheritdoc cref="EntityReplaceVariationPassComponent"/>
 /// <summary>
 ///     A base system for fast replacement of entities utilizing a query, rather than having to iterate every entity
-///     To use, you must have a marker component to use for <see cref="TEntComp"/>--each replaceable entity must have it
-///     Then you need an inheriting system as well as a unique game rule component for <see cref="TGameRuleComp"/>
+///     To use, you must have a marker component to use for TEntComp--each replaceable entity must have it
+///     Then you need an inheriting system as well as a unique game rule component for TGameRuleComp
 ///
 ///     This means a bit more boilerplate for each one, but significantly faster to actually execute.
 ///     See <see cref="WallReplaceVariationPassSystem"/>
 /// </summary>
 public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleComp> : VariationPassSystem<TGameRuleComp>
-    where TEntComp: IComponent
-    where TGameRuleComp: IComponent
+    where TEntComp : IComponent
+    where TGameRuleComp : IComponent
 {
     /// <summary>
     ///     Used so we don't modify while enumerating
-    ///     if the replaced entity also has <see cref="TEntComp"/>.
+    ///     if the replaced entity also has TEntComp.
     ///
     ///     Filled and cleared within the same tick so no persistence issues.
     /// </summary>
@@ -36,7 +36,7 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
         stopwatch.Start();
 
         var replacementMod = Random.NextGaussian(pass.EntitiesPerReplacementAverage, pass.EntitiesPerReplacementStdDev);
-        var prob = (float) Math.Clamp(1 / replacementMod, 0f, 1f);
+        var prob = (float)Math.Clamp(1 / replacementMod, 0f, 1f);
 
         if (prob == 0)
             return;

@@ -1,0 +1,27 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float effectScale;
+
+// Very subtle vignette effect - dark edges only
+const highp float VignetteRadius = 0.7; // Larger radius = more subtle effect
+const highp float VignetteStrength = 0.3; // Maximum darkness at edges
+const highp float VignetteSmooth = 0.3; // Smoothness of the vignette transition
+
+void fragment() {
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+    
+    // Get the original screen color
+    COLOR = zTextureSpec(SCREEN_TEXTURE, coord);
+    
+    // Create a subtle vignette effect (darker edges)
+    highp vec2 center = vec2(0.5, 0.5);
+    highp float distance = length(coord - center);
+    
+    // Create a smooth vignette that only affects the very edges
+    highp float vignette = smoothstep(VignetteRadius - VignetteSmooth, VignetteRadius + VignetteSmooth, distance);
+    
+    // Apply very subtle darkening based on effect scale
+    highp float darkening = 1.0 - (vignette * VignetteStrength * effectScale);
+    
+    // Apply the darkening effect - multiply RGB to darken, preserve alpha
+    COLOR.rgb *= darkening;
+}

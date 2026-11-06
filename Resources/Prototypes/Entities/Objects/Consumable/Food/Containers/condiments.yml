@@ -18,6 +18,7 @@
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
+  - type: NFIngredient # Frontier
 
 # Packets
 
@@ -98,7 +99,7 @@
     maxFillLevels: 2
     fillBaseName: packet-trans-
   - type: StaticPrice # Frontier
-    price: 5 # Frontier
+    price: 10 # HL: Price balancing
 
 - type: entity
   parent: BaseFoodCondimentPacket

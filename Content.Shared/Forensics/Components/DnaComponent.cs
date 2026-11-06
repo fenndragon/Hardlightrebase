@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Forensics.Components;
 
@@ -9,5 +9,5 @@ namespace Content.Shared.Forensics.Components;
 public sealed partial class DnaComponent : Component
 {
     [DataField("dna"), AutoNetworkedField]
-    public string DNA = String.Empty;
+    public string? DNA;
 }

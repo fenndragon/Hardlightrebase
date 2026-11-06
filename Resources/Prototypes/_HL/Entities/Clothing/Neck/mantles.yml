@@ -1,0 +1,162 @@
+  # Faction Mantles
+# Neck slot clothing items inheriting from ClothingNeckBase
+
+# Cybersun Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCybersun
+  name: cybersun mantle
+  description: An elegant mantle featuring Cybersun's corporate colors and technological aesthetic.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/cybersunmantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/cybersunmantle.rsi
+
+# Cybersun Mantle (Dyeable)
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCybersunDyeable
+  name: cybersun mantle
+  suffix: dyeable
+  description: An elegant mantle featuring Cybersun's design, with customizable color options.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/cybersunmantledye.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/cybersunmantledye.rsi
+
+# Dirizher Cartel Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCartel
+  name: cartel mantle
+  description: A distinctive mantle bearing the subtle markings of the Dirizher Cartel.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantle.rsi
+
+# Dirizher Cartel Lieutenant Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCartelLieutenant
+  name: cartel lieutenant mantle
+  description: A mantle denoting the rank of lieutenant within the Dirizher Cartel hierarchy.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantlesilver.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantlesilver.rsi
+
+# Dirizher Cartel Command Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCartelCommand
+  name: cartel command mantle
+  description: An ornate mantle reserved for high-ranking commanders within the Dirizher Cartel.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantlegold.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/dirizhermantlegold.rsi
+
+# Syndicate High Command Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSyndicateHighCommand
+  name: syndicate high command mantle
+  description: An elite mantle reserved for the highest echelons of Syndicate leadership.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/highcommmantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/highcommmantle.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+
+# Interdyne Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleInterdyne
+  name: interdyne mantle
+  description: A research-oriented mantle featuring Interdyne's distinctive styling and professional appearance.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/interdynemantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/interdynemantle.rsi
+
+# SUNS Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSUNS
+  name: SUNS mantle
+  description: A mantle featuring the SUNS organization's colors and design specifications.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/sunsmantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/sunsmantle.rsi
+
+# Syndicate Navy Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSyndicateNavy
+  name: syndicate navy mantle
+  description: A naval-style mantle designed for Syndicate Navy personnel and operations.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/syndnavymantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/syndnavymantle.rsi
+
+# Directorate Mantle
+- type: entity
+  parent: [HLColCommBaseNeck, ClothingNeckBase]
+  id: ClothingNeckMantleDirectorate
+  name: directorate's mantle
+  description: Worn by the acting and previous directors of the Colonial Command.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/ccdirectoratemantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/ccdirectoratemantle.rsi
+
+# ColComm Manica
+- type: entity
+  parent: [HLColCommBaseNeck, ClothingNeckBase]
+  id: ClothingNeckMantleColComm
+  name: Colcomm's manica
+  description: A segmented arm covering for any colonial command personel. Almost exactly like the chief engineers, As you've earned the right to wear this!
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/colcommmantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/colcommmantle.rsi
+
+# S.I.N Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSIN
+  name: S.I.N Mantle
+  description: A handcrafted mantle for those of high standing within S.I.N.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/sinmantle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/sinmantle.rsi
+
+# Dusk Enclave Mantle
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleDuskEnclave
+  name: Dusk Enclave mantle
+  description: A distinctive mantle bearing the colors of the Dusk Enclave.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/Neck/mantles/duskenclavemandle.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/Neck/mantles/duskenclavemandle.rsi

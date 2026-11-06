@@ -16,7 +16,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 {
     public Action<MarkingSet>? OnMarkingAdded;
     public Action<MarkingSet>? OnMarkingRemoved;
-    public Action<MarkingSet>? OnMarkingColorChange;
+    public Action<MarkingSet>? OnMarkingDataChanged; // Coyote: OnMarkingColorChange to OnMarkingDataChanged
     public Action<MarkingSet>? OnMarkingRankChange;
     public Action<HumanoidVisualLayers, CustomBaseLayerInfo?>? OnLayerInfoModified;
     private readonly IPrototypeManager _protoMan = default!;
@@ -39,7 +39,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
 
         MarkingPickerWidget.OnMarkingAdded += set => OnMarkingAdded!(set);
         MarkingPickerWidget.OnMarkingRemoved += set => OnMarkingRemoved!(set);
-        MarkingPickerWidget.OnMarkingColorChange += set => OnMarkingColorChange!(set);
+        MarkingPickerWidget.OnMarkingDataChanged += set => OnMarkingDataChanged!(set);
         MarkingPickerWidget.OnMarkingRankChange += set => OnMarkingRankChange!(set);
         MarkingForced.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
         MarkingIgnoreSpecies.OnToggled += args => MarkingPickerWidget.Forced = args.Pressed;
@@ -135,7 +135,7 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
             };
 
             var lineEditBox = new BoxContainer();
-            lineEditBox.AddChild(new Label { Text = "Prototype id: "});
+            lineEditBox.AddChild(new Label { Text = "Prototype id: " });
 
             // TODO: This line edit should really be an options / dropdown selector, not text.
             _lineEdit = new() { MinWidth = 200 };

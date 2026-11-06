@@ -31,9 +31,6 @@ unmarked:
   - path: Resources/Maps/_Mono/ShuttleEvent/asakim_small.yml
     module: Cloning
     reason: Mapped a genetic database and a body scanner console, linked to the scanner and pod.
-  - path: Resources/Maps/centcomm.yml
-    module: Cloning
-    reason: Mapped a genetic database and a body scanner console, linked to the scanner and pod.
   - path: Resources/Maps/_Mono/POI/pdvhelios.yml
     module: LiveFixes
     reason: Removed saved configurator lists that held invalid entity references.
@@ -1342,7 +1339,7 @@ unmarked:
   - path: Content.Server/_Mono/VendingMachine/VendingMachinePurchaseSystem.cs
     module: EngineCompat
     reason: Engine v280 removed IMapManager; uses SharedMapSystem.
-  - path: Content.Server/_NF/Cargo/Systems/CargoSystem.PirateBounty.cs
+  - path: Content.Server/_NF/Cargo/Systems/NFCargoSystem.PirateBounty.cs
     module: EngineCompat
     reason: Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
   - path: Content.Server/_NF/Construction/Components/ComputerTabletopBoardComponent.cs
@@ -1684,7 +1681,7 @@ unmarked:
   - path: Content.Shared/Nutrition/EntitySystems/ThirstSystem.cs
     module: EngineCompat
     reason: Engine v289 removed [ValidatePrototypeId]; its constants became ProtoId fields.
-  - path: Content.Shared/Nyanotrasen/Digging/EarthDiggingComponent.cs
+  - path: Content.Shared/_NF/Digging/Components/EarthDiggingComponent.cs
     module: EngineCompat
     reason: Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
   - path: Content.Shared/Nyanotrasen/Item/PseudoItem/SharedPseudoItemSystem.cs
@@ -1786,10 +1783,10 @@ unmarked:
   - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageAirMod.cs
     module: EngineCompat
     reason: Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
-  - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeMod.cs
+  - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageBiomeModPrototype.cs
     module: EngineCompat
     reason: Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
-  - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonMod.cs
+  - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageDungeonModPrototype.cs
     module: EngineCompat
     reason: Engine v289 removed the PrototypeId serializers; uses the EngineCompat copies.
   - path: Content.Shared/Salvage/Expeditions/Modifiers/SalvageLightMod.cs
@@ -2188,7 +2185,7 @@ unmarked:
   - path: Resources/Prototypes/_Mono/Entities/Structures/Wallmounts/addon_armor.yml
     module: EngineCompat
     reason: Engine v286 Box2 rejects inverted bounds; fixture bounds normalized.
-  - path: Resources/Prototypes/_NF/Entities/Clothing/Head/softsuit-helmets.yml
+  - path: Resources/Prototypes/_Mono/Entities/Clothing/Head/softsuit-helmets.yml
     module: EngineCompat
     reason: Engine v291 replaced PointLight mask paths with lightMask prototypes.
   - path: Resources/Prototypes/_NF/Entities/Mobs/NPCs/mob_hostile_expeditions_explorers.yml

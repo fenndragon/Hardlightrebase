@@ -1,5 +1,4 @@
 using Content.Shared.Physics;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 
@@ -17,7 +16,7 @@ public abstract partial class SharedContentAudioSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        Audio.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
+        Audio.OcclusionCollisionMask = (int)CollisionGroup.Impassable;
     }
 
     protected void SilenceAudio()

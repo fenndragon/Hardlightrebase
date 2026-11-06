@@ -1,0 +1,55 @@
+- type: entity
+  id: LockerWallBluespace
+  parent: NFBaseLockerGridInvWallColor
+  name: Bluespace wall locker
+  suffix: null
+  description: Wall locker infused with bluespace tech. Items inside of this will not be seized by dockyard technicians when a ship is stored.
+  components:
+  - type: Sprite
+    sprite: _HL/Structures/Closets/Bluespace_wall_locker.rsi
+    layers:
+    - state: bluespace
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: icon
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+  - type: EntityStorageVisuals
+    stateBaseClosed: icon
+    stateBaseOpen: bluespace
+    stateDoorOpen: bluespace_open
+    stateDoorClosed: icon
+  - type: StaticPrice
+    price: 500000
+  - type: CargoSellBlacklist
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
+    blacklist:
+      tags:
+      - Admin
+      components:
+      - StorageFill
+      - PresetIdCard
+      - IdCard
+      - Access
+      - Store
+      - Cash
+      - Headset
+      - DnaSequenceInjector
+  - type: Construction
+    graph: LockerWallBluespace
+    node: done
+  - type: HLPersistOnShipSave
+  - type: ShipyardSellCondition # Frontier: Teleport to shipyard console on sale
+    preserveOnSale: true
+
+- type: entity
+  id: HLLockerWallMedical
+  parent: LockerWallMedical
+  suffix: Station
+  components:
+  - type: AccessReader
+    access: [["Medical"]]

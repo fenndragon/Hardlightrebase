@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.StationRecords;
 using Robust.Shared.Utility;
 
 namespace Content.Server.StationRecords;
@@ -110,7 +108,7 @@ public sealed partial class StationRecordSet
             return false;
         }
 
-        entry = (T) entryObject;
+        entry = (T)entryObject;
         _recentlyAccessed.Add(key);
 
         return true;

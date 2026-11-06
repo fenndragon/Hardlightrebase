@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Shared._Starlight.Language; // Starlight
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
@@ -48,7 +49,7 @@ public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
                 // if the player has not already received the chat message, send it to them but don't log it to the chat
                 // window. This is simply so that it appears in camera.
                 if (TryComp(viewer, out ActorComponent? actor))
-                    ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false, true));
+                    ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, ObserverType.NoObserver, true));
             }
         }
     }
@@ -73,7 +74,7 @@ public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
         if (!TryComp(uid, out SurveillanceCameraComponent? camera))
             return;
 
-        var ev = new SurveillanceCameraSpeechSendEvent(args.Source, args.Message);
+        var ev = new SurveillanceCameraSpeechSendEvent(args.Source, args.Message, args.Language); // Starlight
 
         foreach (var monitor in camera.ActiveMonitors)
         {
@@ -102,11 +103,13 @@ public sealed class SurveillanceCameraSpeechSendEvent : EntityEventArgs
 {
     public EntityUid Speaker { get; }
     public string Message { get; }
+    public LanguagePrototype? Language { get; } //Starlight
 
-    public SurveillanceCameraSpeechSendEvent(EntityUid speaker, string message)
+    public SurveillanceCameraSpeechSendEvent(EntityUid speaker, string message, LanguagePrototype? language) // Starlight
     {
         Speaker = speaker;
         Message = message;
+        Language = language; // Starlight
     }
 }
 

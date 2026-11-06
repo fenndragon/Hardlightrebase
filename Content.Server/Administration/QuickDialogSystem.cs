@@ -108,62 +108,62 @@ public sealed partial class QuickDialogSystem : EntitySystem
         switch (entryType)
         {
             case QuickDialogEntryType.Integer:
-            {
-                var result = int.TryParse(input, out var val);
-                output = (T?) (object?) val;
-                return result;
-            }
+                {
+                    var result = int.TryParse(input, out var val);
+                    output = (T?)(object?)val;
+                    return result;
+                }
             case QuickDialogEntryType.Float:
-            {
-                var result = float.TryParse(input, out var val);
-                output = (T?) (object?) val;
-                return result;
-            }
+                {
+                    var result = float.TryParse(input, out var val);
+                    output = (T?)(object?)val;
+                    return result;
+                }
             case QuickDialogEntryType.ShortText:
-            {
-                if (input.Length > 100)
                 {
-                    output = default;
-                    return false;
-                }
+                    if (input.Length > 100)
+                    {
+                        output = default;
+                        return false;
+                    }
 
-                output = (T?) (object?) input;
-                return output is not null;
-            }
+                    output = (T?)(object?)input;
+                    return output is not null;
+                }
             case QuickDialogEntryType.LongText:
-            {
-                if (input.Length > 2000)
                 {
-                    output = default;
-                    return false;
+                    if (input.Length > 2000)
+                    {
+                        output = default;
+                        return false;
+                    }
+
+                    //It's verrrry likely that this will be longstring
+                    var longString = (LongString)input;
+
+                    output = (T?)(object?)longString;
+                    return output is not null;
                 }
-
-                //It's verrrry likely that this will be longstring
-                var longString = (LongString) input;
-
-                output = (T?) (object?) longString;
-                return output is not null;
-            }
             default:
                 throw new ArgumentOutOfRangeException(nameof(entryType), entryType, null);
         }
     }
 
-    private QuickDialogEntryType TypeToEntryType(Type T)
+    private QuickDialogEntryType TypeToEntryType(Type type)
     {
-        if (T == typeof(int) || T == typeof(uint) || T == typeof(long) || T == typeof(ulong))
+        if (type == typeof(int) || type == typeof(uint) || type == typeof(long) || type == typeof(ulong))
             return QuickDialogEntryType.Integer;
 
-        if (T == typeof(float) || T == typeof(double))
+        if (type == typeof(float) || type == typeof(double))
             return QuickDialogEntryType.Float;
 
-        if (T == typeof(string)) // People are more likely to notice the input box is too short than they are to notice it's too long.
+        if (type == typeof(string)) // People are more likely to notice the input box is too short than they are to notice it's too long.
             return QuickDialogEntryType.ShortText;
 
-        if (T == typeof(LongString))
+        if (type == typeof(LongString))
             return QuickDialogEntryType.LongText;
 
-        throw new ArgumentException($"Tried to open a dialog with unsupported type {T}.");
+        throw new ArgumentException($"Tried to open a dialog with unsupported type {type}.");
     }
 }
 

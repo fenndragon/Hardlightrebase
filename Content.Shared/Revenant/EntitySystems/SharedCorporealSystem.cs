@@ -1,6 +1,5 @@
 using Content.Shared.Physics;
 using Robust.Shared.Physics;
-using System.Linq;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Systems;
@@ -40,8 +39,8 @@ public abstract partial class SharedCorporealSystem : EntitySystem
         {
             var fixture = fixtures.Fixtures.First();
 
-            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) (CollisionGroup.SmallMobMask | CollisionGroup.GhostImpassable), fixtures);
-            _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int) CollisionGroup.SmallMobLayer, fixtures);
+            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int)(CollisionGroup.SmallMobMask | CollisionGroup.GhostImpassable), fixtures);
+            _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, (int)CollisionGroup.SmallMobLayer, fixtures);
         }
         _movement.RefreshMovementSpeedModifiers(uid);
     }
@@ -54,7 +53,7 @@ public abstract partial class SharedCorporealSystem : EntitySystem
         {
             var fixture = fixtures.Fixtures.First();
 
-            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int) CollisionGroup.GhostImpassable, fixtures);
+            _physics.SetCollisionMask(uid, fixture.Key, fixture.Value, (int)CollisionGroup.GhostImpassable, fixtures);
             _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, 0, fixtures);
         }
         component.MovementSpeedDebuff = 1; //just so we can avoid annoying code elsewhere

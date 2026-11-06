@@ -3,7 +3,6 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Random;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
@@ -57,6 +56,9 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
         // Set the new time.
         var timeInterval = _random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents);
         paracusia.NextIncidentTime += TimeSpan.FromSeconds(timeInterval);
+
+        if (_timing.CurTime <= paracusia.IncidentsDelayedUntil)
+            return;
 
         // Offset position where the sound is played
         var randomOffset =

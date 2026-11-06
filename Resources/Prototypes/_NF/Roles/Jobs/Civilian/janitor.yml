@@ -2,11 +2,12 @@
   id: NFJanitor
   name: job-name-janitor
   description: job-description-janitor
-  playTimeTracker: JobJanitor
+  playTimeTracker: JobJanitorOld
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 7200 # mono - change to 2 hr
   startingGear: NFJanitorGear
+  setPreference: false # Frontier
   alwaysUseSpawner: true
   setPreference: false
   icon: "JobIconJanitor"
@@ -24,7 +25,7 @@
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
-    prototype: WeaponRevolverInspector
+    prototype: NFWeaponRevolverInspector
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
   - !type:GiveItemOnHolidaySpecial

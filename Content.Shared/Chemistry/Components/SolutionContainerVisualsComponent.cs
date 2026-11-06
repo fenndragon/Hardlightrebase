@@ -1,4 +1,3 @@
-using Content.Shared.Hands.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Components
@@ -35,9 +34,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [DataField]
         public string? SolutionName;
-
-        [DataField]
-        public string InitialName = string.Empty;
 
         [DataField]
         public string InitialDescription = string.Empty;

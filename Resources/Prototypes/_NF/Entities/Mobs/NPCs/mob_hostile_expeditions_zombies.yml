@@ -1,0 +1,353 @@
+# BASE
+- type: entity
+  parent:
+  - MobNonHumanHostileBase
+  - MobHumanoidHostileAISimpleMelee
+  - NFMobRestrictions
+  id: BaseMobZombieExpeditions
+  name: undead
+  description: A shambling mass of flesh, animated through disease.
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Zombie
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _HL/Mobs/Aliens/zombies.rsi
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      56: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      34: 0.7
+      60: 0.5
+  - type: Stamina
+    critThreshold: 64
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRotten
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 4294967295
+  - type: MeleeWeapon
+    attackRate: 1.0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 8
+        Poison: 4
+        Structural: 20
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.3
+    baseSprintSpeed : 4.3
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: Inventory
+    templateId: hostilehumanoid
+
+# MOBS
+# T1
+- type: entity
+  parent: BaseMobZombieExpeditions
+  id: MobZTaken
+  name: taken
+  description: Whether through natural decay, malignant mutation or injuries sustained from ex-survivors, these infected are much slower than their disease-kin, being little more than animated corpses.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: taken
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      24: 1
+      90: 1
+  - type: SpawnOnTrigger
+    proto: MobZombieGearT1
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: taken
+      Critical:
+        Base: taken_dead
+      Dead:
+        Base: taken_dead
+
+- type: entity
+  parent: BaseMobZombieExpeditions
+  id: MobZVasophage
+  name: vasophage
+  description: A crab-like clump of decayed flesh with limbs covered in wet, needle-like fibers, best not let it grab you, vaccine or no.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: vasophage
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      56: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: vasophage
+      Critical:
+        Base: vasophage_dead
+      Dead:
+        Base: vasophage_dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+        Poison: 8
+  - type: SpawnOnTrigger
+    proto: MobZombieGearT1
+
+# Little worm shit that comes out of dead enemies
+- type: entity
+  parent: BaseMobZombieExpeditions
+  id: MobZWorm
+  name: muscle worm
+  description: A disgusting sliver of flesh that seems to have grown inside the infected, good thing you've inoculated, right?
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: worm
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      10: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 2
+        Poison: 2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: worm
+      Critical:
+        Base: worm_dead
+      Dead:
+        Base: worm_dead
+  - type: PointLight
+    enabled: true
+    autoRot: true
+    netsync: false
+    radius: 2
+    energy: 3
+    color: "#a83244"
+
+#T2
+- type: entity
+  parent:
+  - BaseMobZombieExpeditions
+  id: MobZHeadless
+  name: headless
+  description: Evidently the old wisdom of destroying the brain hasn’t worked here, try cutting its limbs off next.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: headless
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      48: 1
+      64: 1
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+        Poison: 4
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 4
+  - type: SpawnOnTrigger
+    proto: MobZombieGearT2
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: headless
+      Critical:
+        Base: headless_dead
+      Dead:
+        Base: headless_dead
+
+#T3
+- type: entity
+  parent:
+  - BaseMobZombieExpeditions
+  - MobHumanoidHostileAISimpleRanged
+  id: MobZCarrier
+  name: carrier
+  description: This unfortunate soul has had their flesh mutated into the perfect environment for Vasophages to grow, and will happily throw these at you should you get too close.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.5
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: carrier
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: carrier
+      Dead:
+        Base: carrier_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      140: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      80: 0.4
+      100: 0.7
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 15
+    rechargeSound:
+      path: /Audio/_NF/Effects/silence.ogg
+  - type: BasicEntityAmmoProvider
+    proto: MobZVasophage
+    capacity: 1
+    count: 1
+  - type: Gun
+    showExamineText: false
+    fireRate: 0.75
+    minAngle: 10
+    maxAngle: 20
+    angleIncrease: 2
+    angleDecay: 3
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+  - type: SpawnOnTrigger
+    proto: MobZombieGearT3
+
+- type: entity
+  parent: BaseMobZombieExpeditions
+  id: MobZBloated
+  name: bloated
+  description: Rolls of rotten flesh drip down like melting wax with every lumbering step towards you, though its arms seem almost vestigial, and with the head protected under layers of rot and fat, how could it possibly hurt you?
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 3.6
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: bloated
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: bloated
+      Dead:
+        Base: bloated_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      90: 0.7
+      150: 0.9
+  - type: MeleeWeapon
+    attackRate: 1
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 6
+  - type: TriggerOnMobstateChange
+    mobState:
+    - Critical
+    - Dead
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2
+    intensitySlope: 3
+    totalIntensity: 60 # about a 2-3 tile radius
+    canCreateVacuum: false
+
+#T4 (wiiiiitch, witchwitchwitchwitchwitch)
+- type: entity
+  parent: [ BaseMobZombieExpeditions, MobHostileBossBase, NFMobBossRestrictions ]
+  id: MobZP0
+  name: patient zero
+  description: Whether fortune or misfortune, this individual exhibited no symptoms of the disease they carried until it was far too late. Their natural resistance only gave the virus more time to mutate. They're barely human, now.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 0.1
+    baseSprintSpeed : 0.1
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: pzero
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: pzero
+      Dead:
+        Base: pzero_dead
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      180: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      40: 48
+      96: 48
+      179: 48
+  - type: MeleeWeapon
+    autoAttack: false
+    attackRate: 1
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+        Blunt: 6
+        Poison: 8
+        Structural: 30
+  - type: SpawnOnTrigger
+    proto: MobZombieGearT4

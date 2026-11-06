@@ -6,7 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;
 using Content.Shared.Kitchen; // Frontier
-using Robust.Shared.Serialization; // Frontier
+// Frontier
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Content.Shared.Kitchen.Components; // Frontier
 
@@ -111,6 +111,7 @@ namespace Content.Shared.Kitchen.Components // Mono: Moved to Shared
 
         /// <summary>
         /// Chance of lightning occurring when we microwave a metallic object
+        /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public float LightningChance = .75f;
 

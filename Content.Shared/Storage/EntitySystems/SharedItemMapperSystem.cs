@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
@@ -34,7 +33,7 @@ public abstract partial class SharedItemMapperSystem : EntitySystem
             val.Layer = layerName;
         }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+        if (TryComp(uid, out AppearanceComponent? appearanceComponent))
         {
             var list = new List<string>(component.MapLayers.Keys);
             _appearance.SetData(uid, StorageMapVisuals.InitLayers, new ShowLayerData(list), appearanceComponent);
@@ -67,7 +66,7 @@ public abstract partial class SharedItemMapperSystem : EntitySystem
         if (!Resolve(uid, ref itemMapper))
             return;
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent)
+        if (TryComp(uid, out AppearanceComponent? appearanceComponent)
             && TryGetLayers(uid, itemMapper, out var containedLayers))
         {
             _appearance.SetData(uid,

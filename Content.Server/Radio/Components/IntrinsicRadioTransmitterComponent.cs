@@ -1,0 +1,23 @@
+using Content.Shared.Radio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+
+namespace Content.Server.Radio.Components;
+
+/// <summary>
+///     This component allows an entity to directly translate spoken text into radio messages (effectively an intrinsic
+///     radio headset).
+/// </summary>
+[RegisterComponent]
+public sealed partial class IntrinsicRadioTransmitterComponent : Component
+{
+    [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+    public HashSet<string> Channels = new();
+
+
+    /// <summary>
+    ///     The channels that this radio will always be able to talk to.
+    /// </summary>
+    [DataField("intrinsicChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+    public HashSet<string> IntrinsicChannels = new();
+
+}

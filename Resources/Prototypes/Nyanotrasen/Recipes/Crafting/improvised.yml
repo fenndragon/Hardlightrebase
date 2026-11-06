@@ -1,0 +1,15 @@
+- type: construction
+  id: tinfoilhat
+  graph: TinfoilHat
+  startNode: start
+  targetNode: tinfoilhat
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: fishlabeler
+  graph: fishlabeler
+  startNode: start
+  targetNode: fishlabeler
+  category: construction-category-misc
+  objectType: Item

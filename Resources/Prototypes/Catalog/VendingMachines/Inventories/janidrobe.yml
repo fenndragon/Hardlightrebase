@@ -1,6 +1,7 @@
 - type: vendingMachineInventory
   id: JaniDrobeInventory
   startingInventory:
+    NFClothingBackpackDuffelJanitor: 2 # Frontier
     ClothingBackpackMessengerJanitor: 2 # Frontier
     ClothingUniformJumpsuitJanitor: 2
     ClothingUniformJumpskirtJanitor: 2
@@ -35,6 +36,9 @@
     ClothingHeadHatHoodBioJanitor: 1 # Frontier - Bio suit
     ClothingOuterBioJanitor: 1 # Frontier - Bio suit
     ClothingOuterEVASuitJanitor: 1 # Frontier - EVA
+    ClothingHandsJanitorWarmers: 2
+    ClothingUnderSocksJanitor: 2
+    ClothingUniformJanitorThong: 2
   contrabandInventory:
     ToyFigurineJanitor: 1
     ClothingUniformJumpskirtJanimaid: 2 # Frontier

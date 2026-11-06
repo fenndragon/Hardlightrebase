@@ -1,0 +1,26 @@
+- type: entity
+  parent: [ClothingBackpack]
+  id: ClothingBackpackHoP
+  name: head of personnel's backpack
+  description: A luxurious backpack, perfect for filling to the brim with paperwork.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/hop.rsi
+
+- type: entity
+  parent: [ClothingBackpack]
+  id: ClothingBackpackCommandGeneric
+  name: command backpack
+  description: A Command-colored backpack with NanoTrasen's colors. It has an aura of non-descript authority.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/command.rsi
+
+- type: entity
+  parent: [ClothingBackpack]
+  id: ClothingBackpackBlueShield
+  name: blueshield backpack
+  description: A lightweight but reliable backpack. Can't go wrong with the classics!
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Back/Backpacks/blueshield.rsi

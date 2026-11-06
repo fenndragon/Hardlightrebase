@@ -1,0 +1,91 @@
+- type: job
+  id: ForensicMantis
+  name: job-name-mantis
+  description: job-description-mantis
+  playTimeTracker: JobForensicMantis
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobScientist
+      time: 9000
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 12000
+    # - !type:CharacterLogicOrRequirement
+    #   requirements:
+    #     - !type:CharacterSpeciesRequirement
+    #       inverted: true
+    #       species:
+    #         - IPC
+    #     - !type:CharacterTraitRequirement
+    #       traits:
+    #         - AnomalousPositronics
+    #     - !type:CharacterTraitRequirement
+    #       inverted: true
+    #       traits:
+    #         - Pacifist
+    # - !type:CharacterEmployerRequirement
+    #   employers:
+    #   - NanoTrasen
+    #   - ZengHuPharmaceuticals
+    # - !type:CharacterItemGroupRequirement
+    #   group: TraitsCasterType
+  weight: 20 # HardLight
+  startingGear: ForensicMantisGear
+  icon: "JobIconForensicMantis"
+  supervisors: job-supervisors-rd
+  canBeAntag: true # Delta V: Mantis is no longer a Detective
+  # whitelistRequired: true
+  access:
+  - Research
+  - Maintenance
+  - Mantis # Delta V: Mantis, see Resources/Prototypes/DeltaV/Access/epistemics.yml
+  special:
+  - !type:AddComponentSpecial
+    components:
+      - type: Psionic
+        powerSlots: 2
+        baselinePowerCost: 75
+        nextPowerCost: 75
+        removable: false
+        # powerPool: PsychoHistorianPowerPool
+      - type: InnatePsionicPowers
+        powersToAdd:
+          - MetapsionicPower
+          - TelepathyPower
+          - TelepathicIdentificationPower # Hardlight
+          - MantisSummonBlackBlade
+          - AssayPower # Hardlight
+
+- type: playTimeTracker
+  id: JobForensicMantis
+
+- type: startingGear
+  id: ForensicMantisGear
+  # subGear:
+  # - ForensicMantisPlasmamanGear
+  equipment:
+    # jumpsuit: ClothingUniformJumpsuitMantis # Hardlight
+    # back: ClothingBackpackScience
+    # shoes: ClothingShoesBootsMantis
+    # head: ClothingHeadHatFezMantis
+    id: ForensicMantisPDA
+    # eyes: ClothingEyesGlassesSunglasses # Hardlight
+    ears: ClothingHeadsetScience # Delta V: Mantis is part of Epistemics
+    # gloves: ClothingHandsGlovesColorWhite # Hardlight
+    # outerClothing: ClothingOuterCoatMantis # Hardlight
+    belt: ClothingBeltMantis
+    pocket1: BookPsionicsGuidebook
+  storage:
+    back:
+    - HandLabeler
+    - PillMindbreakerToxin
+    - BoxFolderGrey
+    # - RubberStampMantis
+
+# - type: startingGear
+#   id: ForensicMantisPlasmamanGear
+#   parent: BasePlasmamanMaskGear
+#   equipment:
+#     jumpsuit: ClothingUniformEnvirosuitMantis
+#     head: ClothingHeadEnvirohelmMantis
+#     gloves: ClothingHandsGlovesEnviroglovesWhite

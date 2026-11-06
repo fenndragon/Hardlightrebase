@@ -61,7 +61,6 @@ job's `AddComponentSpecial`, has `WFRadioOnJoinSystem` report the arrival on a r
 - [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs): a company rank or custom title stays on the ID
 - [`Content.Server/Administration/Systems/AdminSystem.cs`](../../Administration/Systems/AdminSystem.cs): real job plus custom title
 - [`Content.Server/Database/ServerDbBase.cs`](../../Database/ServerDbBase.cs)
-- [`Content.Server/GameTicking/GameTicker.Spawning.cs`](../../GameTicking/GameTicker.Spawning.cs): custom title
 - [`Content.Shared/Preferences/Loadouts/RoleLoadout.cs`](../../../Content.Shared/Preferences/Loadouts/RoleLoadout.cs): player-written job title, for roles with a custom job title prototype
 - [`Content.Shared/Roles/Jobs/SharedJobSystem.cs`](../../../Content.Shared/Roles/Jobs/SharedJobSystem.cs): custom job title
 - [`Resources/Prototypes/_Mono/Roles/Jobs/Mieyo/employee.yml`](../../../Resources/Prototypes/_Mono/Roles/Jobs/Mieyo/employee.yml): reports arrivals on the MMC radio, since the job spawner skips the station announcement

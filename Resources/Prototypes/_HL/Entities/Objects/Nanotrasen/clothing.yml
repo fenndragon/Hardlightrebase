@@ -1,0 +1,326 @@
+#NT hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseC2ContrabandUnredeemable ]
+  id: ClothingOuterHardsuitNT
+  name: Standard NT hardsuit
+  description: A lightweight hardsuit developed by Nanotrasen's research department for the Crew of the NSV Shield of Perseus
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/ntstandardsuit.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/ntstandardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  #- type: StaminaResistance
+  #  damageCoefficient: 0.75
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetNT
+#NT hardsuit helmet
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseC2ContrabandUnredeemable ]
+  id: ClothingHeadHelmetNT
+  name: NT Standard Hardsuit helmet
+  description: A pressure resistant and fireproof hood worn by special cleanup units.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/ntstandardhelm.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: _HL/Nanotrasen/ntstandardhelm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+
+#NT Satch and duffel
+- type: entity
+  id: ClothingBackpackSatchelNT
+  name: Nanotrasen satchel
+  parent: [ ClothingBackpackSatchel ]
+  description: A satchel produced by Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanosatchel.rsi
+
+- type: entity
+  id: ClothingBackpackDuffelNT
+  name: Nanotrasen duffel
+  parent: [ NFClothingDuffel ]
+  description: A duffelbag produced by Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenduff.rsi
+
+#NT Bottom clothes
+- type: entity
+  parent: ClothingNeckCollarBase
+  id: ClothingNeckCollarNT
+  name: NT collar
+  description: A cute Nanotrasen branded collar.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/collar_nano.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/collar_nano.rsi
+    clothingVisuals:
+      neck-quadborg:
+      - sprite: _HL/Clothing/Neck/QuadCollars/collar_nt_quad.rsi
+        state: equipped-NECK-quadborg
+
+- type: entity
+  parent: ClothingUniformBaseThongs
+  id: ClothingUniformNTThong
+  name: Nanotrasen thong
+  description: A Nanotrasen branded thong! but is this even considered a piece of clothing?
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenthong.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenthong.rsi
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsNTWarmers
+  name: Nanotrasen arm-warmers
+  description: A pair of rather nice Nanotrasen branded arm-warmers.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenwarmer.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenwarmer.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
+  - type: FingerprintMask
+
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingUnderSocksNT
+  name: Nanotrasen thigh-high socks
+  description: A pair of thigh-high socks.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasensocks.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasensocks.rsi
+#NT Winter clothes
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfNT
+  name: Nanotrasen blue scarf
+  description: A stylish Nanotrasen blue scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenscarf.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenscarf.rsi
+
+- type: entity
+  parent: [ ClothingShoesBaseWinterBoots ] # Frontier: BaseSecurityContraband<BaseC2ContrabandUnredeemable
+  id: ClothingShoesBootsWinterNT
+  name: Nanotrasen winter boots
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/winterbootsnano.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/winterbootsnano.rsi
+
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterNT
+  name: Nanotrasen winter coat
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanocoat.rsi
+    layers:
+    - state: icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanocoat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterNT
+
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterNT
+  categories: [ HideSpawnMenu ]
+  name: Nanotrasen winter coat hood
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/hoodnano.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/hoodnano.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleNT
+  name: Nanotrasen mantle
+  description: A soft Nanotrasen branded mantle, made with the same luxurious animal furs of the iconic winter coat.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenmantle.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenmantle.rsi
+
+#NT jumpsuit/skirt
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNT
+  name: Nanotrasen Crew uniform
+  description: A jumpsuit designed and produced by Nanotrasen factory workers. it feels soft.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenjumpsuit.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenjumpsuit.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtNT
+  name: Nanotrasen Crew jumpskirt
+  description: A jumpskirt designed and produced by Nanotrasen factory workers. it feels soft.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasenjumpskirt.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasenjumpskirt.rsi
+
+#NT Caps
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatNTBeret
+  name: NT beret
+  description: A NT beret, Usually worn by Gunnys.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/beret_nanotrasen.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/beret_nanotrasen.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase # Frontier: removed BaseCommandContraband
+  id: ClothingHeadHatNTCap
+  name: Nanotrasen Cap
+  description: A stylish NT cap.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanotrasen_cap.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanotrasen_cap.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase # Frontier: removed BaseCommandContraband
+  id: ClothingHeadHatNTBaseballCap
+  name: Nanotrasen Baseball Cap
+  description: A stylish NT Baseball cap.
+  components:
+  - type: Sprite
+    sprite: _HL/Nanotrasen/nanohat.rsi
+  - type: Clothing
+    sprite: _HL/Nanotrasen/nanohat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+## Recipes
+
+# Hats
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatNTBeret
+  result: ClothingHeadHatNTBeret
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatNTCap
+  result: ClothingHeadHatNTCap
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatNTBaseballCap
+  result: ClothingHeadHatNTBaseballCap
+
+# Jumpsuits/skirts
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitNT
+  result: ClothingUniformJumpsuitNT
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtNT
+  result: ClothingUniformJumpskirtNT
+
+# Scarfs
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckScarfNT
+  result: ClothingNeckScarfNT
+
+# Winter clothes
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterWinterNT
+  result: ClothingOuterWinterNT
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingShoesBootsWinterNT
+  result: ClothingShoesBootsWinterNT
+
+- type: latheRecipePack
+  id: ClothingNT
+  recipes:
+  - ClothingUniformJumpsuitNT
+  - ClothingUniformJumpskirtNT
+  - ClothingHeadHatNTBeret
+  - ClothingHeadHatNTCap
+  - ClothingHeadHatNTBaseballCap
+  - ClothingNeckScarfNT
+  - ClothingShoesBootsWinterNT
+  - ClothingOuterWinterNT

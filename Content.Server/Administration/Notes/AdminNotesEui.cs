@@ -3,9 +3,6 @@ using Content.Server.EUI;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;
 using Content.Shared.Eui;
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Database;
 using Robust.Shared.Network;
 using static Content.Shared.Administration.Notes.AdminNoteEuiMsg;
 
@@ -22,7 +19,7 @@ public sealed partial class AdminNotesEui : BaseEui
         IoCManager.InjectDependencies(this);
     }
 
-    private Guid NotedPlayer { get; set; }
+    private NetUserId NotedPlayer { get; set; }
     private string NotedPlayerName { get; set; } = string.Empty;
     private bool HasConnectedBefore { get; set; }
     private Dictionary<(int, NoteType), SharedAdminNote> Notes { get; set; } = new();
@@ -112,7 +109,7 @@ public sealed partial class AdminNotesEui : BaseEui
         }
     }
 
-    public async Task ChangeNotedPlayer(Guid notedPlayer)
+    public async Task ChangeNotedPlayer(NetUserId notedPlayer)
     {
         NotedPlayer = notedPlayer;
         await LoadFromDb();
@@ -120,7 +117,7 @@ public sealed partial class AdminNotesEui : BaseEui
 
     private void NoteModified(SharedAdminNote note)
     {
-        if (note.Player != NotedPlayer)
+        if (!note.Players.Contains(NotedPlayer))
             return;
 
         Notes[(note.Id, note.NoteType)] = note;
@@ -129,7 +126,7 @@ public sealed partial class AdminNotesEui : BaseEui
 
     private void NoteDeleted(SharedAdminNote note)
     {
-        if (note.Player != NotedPlayer)
+        if (!note.Players.Contains(NotedPlayer))
             return;
 
         Notes.Remove((note.Id, note.NoteType));
@@ -138,7 +135,7 @@ public sealed partial class AdminNotesEui : BaseEui
 
     private async Task LoadFromDb()
     {
-        var locatedPlayer = await _locator.LookupIdAsync((NetUserId) NotedPlayer);
+        var locatedPlayer = await _locator.LookupIdAsync((NetUserId)NotedPlayer);
         NotedPlayerName = locatedPlayer?.Username ?? string.Empty;
         HasConnectedBefore = locatedPlayer?.LastAddress is not null;
         Notes = (from note in await _notesMan.GetAllAdminRemarks(NotedPlayer)

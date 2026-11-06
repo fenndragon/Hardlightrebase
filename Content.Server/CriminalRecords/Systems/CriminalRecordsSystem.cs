@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Server.StationRecords.Systems;
@@ -7,7 +6,6 @@ using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Content.Server.GameTicking;
-using Content.Server.Station.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server._NF.SectorServices; // Frontier
@@ -130,7 +128,7 @@ public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem
             return false;
 
         var history = record.History[(int)index];
-        record.History.RemoveAt((int) index);
+        record.History.RemoveAt((int)index);
 
         var args = new CriminalHistoryRemovedEvent(history);
         var query = EntityQueryEnumerator<WantedListCartridgeComponent>();

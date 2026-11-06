@@ -20,7 +20,8 @@
         amount: 2
       - id: BungoSeeds
         amount: 2
-
+      - id: KelpSeed
+        amount: 2
 - type: entity
   id: CrateHydroponicsSeedsMedicinal
   parent: CrateHydroSecure
@@ -56,11 +57,9 @@
       - id: HydroponicsToolScythe
       - id: HydroponicsToolSpade
       - id: HydroponicsToolHatchet
-#      - id: ClothingOuterApronBotanist # Frontier
-#      - id: ClothingHandsGlovesLeather # Frontier
-      - id: HydroponicsToolClippers # Frontier
-      - id: HydroponicsToolSpade # Frontier
-      - id: EZNutrientChemistryBottle
+      # - id: ClothingOuterApronBotanist # Frontier
+      # - id: ClothingHandsGlovesLeather # Frontier
+      - id: ChemistryBottleEZNutrient
         amount: 2
 
 - type: entity
@@ -94,3 +93,14 @@
       - id: WatermelonSeeds
       - id: PeaSeeds
       - id: CherrySeeds
+      - id: PomegranateSeeds
+
+- type: entity
+  id: CrateHydroponicsTray
+  parent: CrateHydroponics
+  name: hydroponics tray crate
+  description: Contains a hydroponics tray flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsTrayFlatpack

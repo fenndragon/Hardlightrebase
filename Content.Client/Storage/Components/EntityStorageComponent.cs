@@ -1,5 +1,4 @@
-﻿using Content.Shared.Storage.Components;
-using Robust.Shared.GameStates;
+using Content.Shared.Storage.Components;
 
 namespace Content.Client.Storage.Components;
 

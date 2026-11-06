@@ -2,7 +2,6 @@ using Content.Server.Chemistry.TileReactions;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -40,7 +39,7 @@ public sealed partial class GunSystem
         if (entityProto.Components
             .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
         {
-            var p = (ProjectileComponent) projectile.Component;
+            var p = (ProjectileComponent)projectile.Component;
 
             if (!p.Damage.Empty)
             {

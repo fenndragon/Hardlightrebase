@@ -51,7 +51,7 @@ namespace Content.Shared.APC
         /// <summary>
         /// Bitfield indicating status of APC lock indicator.
         /// </summary>
-        Lock = (1<<0),
+        Lock = (1 << 0),
         /// <summary>
         /// Bit state indicating that the given APC lock is unlocked.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Content.Shared.APC
         /// <summary>
         /// Bit state indicating that the given APC lock is locked.
         /// </summary>
-        Locked = (1<<0),
+        Locked = (1 << 0),
 
         /// <summary>
         /// Bitmask for the full state for a given APC lock indicator.
@@ -68,7 +68,7 @@ namespace Content.Shared.APC
 
         /// <summary>
         /// The log 2 width in bits of the bitfields indicating the status of an APC lock indicator.
-        /// Used for bit shifting operations (Mask for the state for indicator i is (All << (i << LogWidth))).
+        /// Used for bit shifting operations (Mask for the state for indicator i is (All &lt;&lt; (i &lt;&lt; LogWidth))).
         /// </summary>
         LogWidth = 0,
     }
@@ -87,7 +87,7 @@ namespace Content.Shared.APC
         /// <summary>
         /// Bitfield indicating whether the APC is automatically regulating the given channel.
         /// </summary>
-        Control = (1<<0),
+        Control = (1 << 0),
         /// <summary>
         /// Bit state indicating that the APC has been set to automatically toggle the given channel depending on available power.
         /// </summary>
@@ -100,7 +100,7 @@ namespace Content.Shared.APC
         /// <summary>
         /// Bitfield indicating whether the APC is currently providing power on the given channel.
         /// </summary>
-        Power = (1<<1),
+        Power = (1 << 1),
         /// <summary>
         /// Bit state indicating that the APC is currently not providing power on the given channel.
         /// </summary>
@@ -134,7 +134,7 @@ namespace Content.Shared.APC
 
         /// <summary>
         /// The log 2 width in bits of the bitfields indicating the status of an APC power channel.
-        /// Used for bit shifting operations (Mask for the state for channel i is (All << (i << LogWidth))).
+        /// Used for bit shifting operations (Mask for the state for channel i is (All &lt;&lt; (i &lt;&lt; LogWidth))).
         /// </summary>
         LogWidth = 1,
     }
@@ -207,7 +207,7 @@ namespace Content.Shared.APC
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(MainBreaker, Power, (int) ApcExternalPower, Charge);
+            return HashCode.Combine(MainBreaker, Power, (int)ApcExternalPower, Charge);
         }
     }
 

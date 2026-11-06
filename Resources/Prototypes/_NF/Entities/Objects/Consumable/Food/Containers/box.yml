@@ -22,13 +22,13 @@
       orGroup: GiftPool
       prob: 0.05
   - type: StaticPrice
-    price: 1
+    price: 3 # HL: Price balancing
     vendPrice: 200 # Need this to not bug out the cardbox worth...
 
 - type: entity
   id: HappyHonkMcCargoFood
   parent: HappyHonkMcCargo
-  categories: [ HideSpawnMenu ]
+##  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:
@@ -274,6 +274,7 @@
     - tray4
     - tray5
     - tray6
+  - type: NFIngredient
 
 - type: entity
   parent: FoodBoxSushi
@@ -344,7 +345,7 @@
 - type: entity
   id: BoxMREEmpty
   parent: BoxMRE
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -352,7 +353,7 @@
 - type: entity
   id: HappyHonkEmpty
   parent: HappyHonk
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -360,7 +361,7 @@
 - type: entity
   id: HappyHonkMimeEmpty
   parent: HappyHonkMime
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -368,7 +369,7 @@
 - type: entity
   id: HappyHonkNukieEmpty
   parent: HappyHonkNukie
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -376,7 +377,7 @@
 - type: entity
   id: HappyHonkCluwneEmpty
   parent: HappyHonkCluwne
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -384,7 +385,7 @@
 - type: entity
   id: HappyHonkMcCargoEmpty
   parent: HappyHonkMcCargo
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -392,7 +393,7 @@
 - type: entity
   id: FoodBoxNuggetEmpty
   parent: FoodBoxNugget
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []
@@ -400,7 +401,7 @@
 - type: entity
   id: FoodContainerEggEmpty
   parent: FoodContainerEgg
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents: []

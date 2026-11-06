@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Server._NF.SectorServices;
 using Content.Server.Administration;
 using Content.Server.Station.Systems;
@@ -18,7 +17,7 @@ namespace Content.Server.AlertLevel.Commands
 
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
-            var levelNames = new string[] {};
+            var levelNames = new string[] { };
             var player = shell.Player;
             if (player?.AttachedEntity != null)
             {
@@ -88,10 +87,10 @@ namespace Content.Server.AlertLevel.Commands
             var sectorServiceUid = _entitySystems.GetEntitySystem<SectorServiceSystem>().GetServiceEntity();
             var entityManager = IoCManager.Resolve<IEntityManager>();
             if (!entityManager.TryGetComponent<AlertLevelComponent>(sectorServiceUid, out var alertLevelComp))
-                return new string[]{};
+                return new string[] { };
 
             if (alertLevelComp.AlertLevels == null)
-                return new string[]{};
+                return new string[] { };
 
             return alertLevelComp.AlertLevels.Levels.Keys.ToArray();
         }

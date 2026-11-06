@@ -1,0 +1,32 @@
+- type: vessel
+  id: Mayhem
+  parent: BaseVessel
+  name: TSF-SKR Mayhem
+  description: A corvette equipped with missiles and a small holding cell. This ship has a TSF-SKR IFF designation.
+  price: 132500 # HL: Rebalancing ship prices to 5% more than sell price (or using the MinPriceMarkup field)
+  category: Large
+  group: Security
+  access: Security
+  shuttlePath: /Maps/_HL/Shuttles/mayhem.yml
+  guidebookPage: Null
+  class:
+  - Pursuit
+  engine:
+  - Uranium
+
+- type: gameMap
+  id: Mayhem
+  mapName: 'Mayhem'
+  mapPath: /Maps/_HL/Shuttles/mayhem.yml
+  minPlayers: 0
+  stations:
+    Mayhem:
+      stationProto: StandardFrontierSecurityVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Mayhem TSF{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs: {}

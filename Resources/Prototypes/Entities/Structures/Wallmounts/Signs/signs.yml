@@ -4,6 +4,9 @@
   name: monkey painting
   description: Return to monky.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: PaintingMonkey
   - type: Sprite
     sprite: Structures/Wallmounts/signs.rsi #Mono
     state: monkey_painting
@@ -14,8 +17,12 @@
   id: BaseSignDirectional
   abstract: true
   components:
-    - type: Sprite
-      snapCardinals: false
+#  - type: Construction # HardLight
+#    graph: Sign
+#    node: BaseSignDirectional
+# HL: Node doesn't exist anyways so just delete it, it can't be crafted anyways
+  - type: Sprite
+    snapCardinals: false
 
 - type: entity
   parent: BaseSignDirectional
@@ -23,6 +30,9 @@
   name: atmos sign
   description: A direction sign, pointing out which way the Atmospherics department is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalAtmos
   - type: Sprite
     state: direction_atmos
 
@@ -32,6 +42,9 @@
   name: bar sign
   description: A direction sign, pointing out which way the bar is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalBar
   - type: Sprite
     state: direction_bar
 
@@ -41,6 +54,9 @@
   name: bridge sign
   description: A direction sign, pointing out which way the Bridge is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalBridge
   - type: Sprite
     state: direction_bridge
 
@@ -50,6 +66,9 @@
   name: brig sign
   description: A direction sign, pointing out which way the Brig is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalBrig
   - type: Sprite
     state: direction_brig
 
@@ -59,6 +78,9 @@
   name: chapel sign
   description: A direction sign, pointing out which way the Chapel is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalChapel
   - type: Sprite
     state: direction_chapel
 
@@ -68,6 +90,9 @@
   name: chemistry sign
   description: A direction sign, pointing out which way the chemistry lab is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalChemistry
   - type: Sprite
     state: direction_chemistry
 
@@ -77,6 +102,9 @@
   name: cryo sign
   description: A direction sign, pointing out the way to cryogenics.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalCryo
   - type: Sprite
     state: direction_cryo
 
@@ -86,6 +114,9 @@
   name: dorms sign
   description: A direction sign, pointing out which way the Dorms are.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalDorms
   - type: Sprite
     state: direction_dorms
 
@@ -95,6 +126,9 @@
   name: engineering sign
   description: A direction sign, pointing out which way the Engineering department is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalEng
   - type: Sprite
     state: direction_eng
 
@@ -104,6 +138,9 @@
   name: evac sign
   description: A direction sign, pointing out which way evac is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalEvac
   - type: Sprite
     state: direction_evac
 
@@ -113,6 +150,9 @@
   name: exam sign
   description: A direction sign, pointing out which way the examination room(s) are.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalExam
   - type: Sprite
     state: direction_exam
 
@@ -122,6 +162,9 @@
   name: food sign
   description: A direction sign, pointing out which way the kitchen is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalFood
   - type: Sprite
     state: direction_food
 
@@ -131,6 +174,9 @@
   name: gravity sign
   description: A direction sign, pointing out which way the gravity generator is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalGravity
   - type: Sprite
     state: direction_gravity
 
@@ -140,6 +186,9 @@
   name: hop sign
   description: A direction sign, pointing out which way the head of personnel's office is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalHop
   - type: Sprite
     state: direction_hop
 
@@ -149,6 +198,9 @@
   name: hydro sign
   description: A direction sign, pointing out which way hydroponics is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalHydro
   - type: Sprite
     state: direction_hydro
 
@@ -158,6 +210,9 @@
   name: icu sign
   description: A direction sign, pointing out which way the ICU is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalIcu
   - type: Sprite
     state: direction_icu
 
@@ -167,6 +222,9 @@
   name: janitor sign
   description: A direction sign, pointing out which way the janitor's closet is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalJanitor
   - type: Sprite
     state: direction_janitor
 
@@ -176,6 +234,9 @@
   name: library sign
   description: A direction sign, pointing out which way the library is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalLibrary
   - type: Sprite
     state: direction_library
 
@@ -185,6 +246,9 @@
   name: medical sign
   description: A direction sign, pointing out which way the Medical department is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalMed
   - type: Sprite
     state: direction_med
 
@@ -194,6 +258,9 @@
   name: salvage sign
   description: A direction sign, pointing out which way the Salvage department is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalSalvage
   - type: Sprite
     state: direction_salvage
 
@@ -203,6 +270,9 @@
   name: science sign
   description: A direction sign, pointing out which way the Science department is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalSci
   - type: Sprite
     state: direction_sci
 
@@ -212,6 +282,9 @@
   name: sec sign
   description: A direction sign, pointing out which way Security is.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalSec
   - type: Sprite
     state: direction_sec
 
@@ -221,6 +294,9 @@
   name: solars sign
   description: A direction sign, pointing out which way solars are.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalSolar
   - type: Sprite
     state: direction_solar
 
@@ -230,6 +306,9 @@
   name: supply sign
   description: A direction sign, pointing to some supplies.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalSupply
   - type: Sprite
     state: direction_supply
 
@@ -239,6 +318,9 @@
   name: washroom sign
   description: A direction sign, pointing to the way to a washroom.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalWash
   - type: Sprite
     state: direction_wash
 
@@ -248,6 +330,9 @@
   name: escape pods sign
   description: A direction sign, pointing out the way to an escape pod dock.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDirectionalEscapePod
   - type: Sprite
     state: direction_pods
 
@@ -259,6 +344,9 @@
   name: ai sign
   description: A sign, indicating an AI is present.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignAi
   - type: Sprite
     state: ai
 
@@ -268,8 +356,11 @@
   name: ai upload sign
   description: A sign, indicating an AI is present.
   components:
-    - type: Sprite
-      state: ai_upload
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignAiUpload
+  - type: Sprite
+    state: ai_upload
 
 - type: entity
   parent: BaseSign
@@ -277,6 +368,9 @@
   name: arcade sign
   description: A sign indicating the arcade.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignArcade
   - type: Sprite
     state: arcade
 
@@ -286,6 +380,9 @@
   name: armory sign
   description: A sign indicating the armory.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignArmory
   - type: Sprite
     state: armory
 
@@ -295,6 +392,9 @@
   name: tool storage sign
   description: A sign indicating the tool storage room.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignToolStorage
   - type: Sprite
     state: ass
 
@@ -304,6 +404,9 @@
   name: xenoarcheology lab sign
   description: A sign indicating the xenoarchaeology lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignAnomaly
   - type: Sprite
     state: xenoarch
 
@@ -313,6 +416,9 @@
   name: anomaly lab sign
   description: A sign indicating the anomalous research lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignAnomaly2
   - type: Sprite
     state: anomaly
 
@@ -322,6 +428,9 @@
   name: atmos sign
   description: A sign indicating the atmospherics area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignAtmos
   - type: Sprite
     state: atmos
 
@@ -331,6 +440,9 @@
   name: bar sign
   description: A sign indicating the bar.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBar
   - type: Sprite
     state: bar
 
@@ -340,6 +452,9 @@
   name: bathroom sign
   description: A sign indicating the bathroom.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBath
   - type: Sprite
     state: bath
 
@@ -349,6 +464,9 @@
   name: kitchen sign
   description: The heart of the home. And disease.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignKitchen
   - type: Sprite
     state: kitchen
 
@@ -358,6 +476,9 @@
   name: theater sign
   description: Would it even be Space Station without drama?
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignTheater
   - type: Sprite
     layers:
     - state: drama1
@@ -375,6 +496,9 @@
   name: barbershop sign
   description: A sign indicating the barbershop.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBarbershop
   - type: Sprite
     state: barbershop
 
@@ -384,6 +508,9 @@
   name: bio sign
   description: A sign indicating the biology lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBio
   - type: Sprite
     state: bio
 
@@ -393,6 +520,9 @@
   name: biohazard sign
   description: A sign indicating a biohazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBiohazard
   - type: Sprite
     state: biohazard
 
@@ -402,6 +532,9 @@
   name: bridge sign
   description: A sign indicating the bridge.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBridge
   - type: Sprite
     state: bridge
 
@@ -411,6 +544,9 @@
   name: canisters sign
   description: A sign warning the viewer about pressurised canisters.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCanisters
   - type: Sprite
     state: canisters
 
@@ -420,6 +556,9 @@
   name: cargo sign
   description: A sign indicating the cargo area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCargo
   - type: Sprite
     state: cargo
 
@@ -429,6 +568,9 @@
   name: cargo dock sign
   description: A sign indicating a cargo dock.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCargoDock
   - type: Sprite
     state: cargo_dock
 
@@ -438,6 +580,9 @@
   name: chapel sign
   description: A sign indicating the chapel.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignChapel
   - type: Sprite
     state: chapel
 
@@ -447,6 +592,9 @@
   name: chemistry sign
   description: A sign indicating the chemistry lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignChem
   - type: Sprite
     state: chem
 
@@ -456,6 +604,9 @@
   name: cloning sign
   description: A sign indicating the cloning lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCloning
   - type: Sprite
     state: cloning
 
@@ -465,6 +616,9 @@
   name: conference room sign
   description: Where work happens.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignConference
   - type: Sprite
     state: conference_room
 
@@ -474,6 +628,9 @@
   name: cryosleep sign
   description: Just like that? You're gonna chicken out?
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCryo
   - type: Sprite
     state: cryo
 
@@ -484,6 +641,9 @@
   name: disposal sign
   description: A sign indicating a disposal area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDisposalSpace
   - type: Sprite
     state: deathsposal
 
@@ -493,6 +653,9 @@
   name: doors sign
   description: A sign indicating doors.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDoors
   - type: Sprite
     state: doors
 
@@ -502,6 +665,9 @@
   name: restroom sign
   description: A sign indicating where you go to... What do you do here again?
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRestroom
   - type: Sprite
     state: restroom
 
@@ -511,6 +677,9 @@
   name: materials sign
   description: An omen to the juicy vault of steel, glass, and plastic that lays before you.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMaterials
   - type: Sprite
     state: mats
 
@@ -520,6 +689,9 @@
   name: power sign
   description: Where the powa happens.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignEngine
   - type: Sprite
     state: engine
 
@@ -529,6 +701,9 @@
   name: engineering sign
   description: A sign indicating the engineering area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignEngineering
   - type: Sprite
     state: eng
 
@@ -538,6 +713,9 @@
   name: escape pods sign
   description: A sign indicating the escape pods.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignEscapePods
   - type: Sprite
     state: pods
 
@@ -547,6 +725,9 @@
   name: EVA sign
   description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignEVA
   - type: Sprite
     state: eva
 
@@ -556,6 +737,9 @@
   name: electrical sign
   description: A sign indicating an electrical hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignElectrical
   - type: Sprite
     state: electrical
 
@@ -565,6 +749,9 @@
   name: examination room sign
   description: A sign indicating a medical examination room.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignExamroom
   - type: Sprite
     state: examroom
 
@@ -574,6 +761,9 @@
   name: fire sign
   description: A sign indicating a fire hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignFire
   - type: Sprite
     state: fire
 
@@ -583,6 +773,9 @@
   name: gravity sign
   description: A sign indicating the gravity generator.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignGravity
   - type: Sprite
     state: gravi
 
@@ -592,6 +785,9 @@
   name: head sign
   description: An official sign indicating the dwellings of a Nanotrasen-certified head of department.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignHead
   - type: Sprite
     state: commander
 
@@ -601,6 +797,9 @@
   name: hydro sign
   description: A sign indicating a hydroponics area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignHydro1
   - type: Sprite
     state: hydro
 
@@ -610,6 +809,9 @@
   name: interrogation sign
   description: A sign indicating an interrogation room.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignInterrogation
   - type: Sprite
     state: interrogation
 
@@ -619,6 +821,9 @@
   name: janitor sign
   description: A sign labelling an area where the janitor works.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignJanitor
   - type: Sprite
     state: janitor
 
@@ -628,6 +833,9 @@
   name: laundromat sign
   description: A sign indicating the laundromat.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignLaundromat
   - type: Sprite
     state: laundromat
 
@@ -637,6 +845,9 @@
   name: law sign
   description: A sign indicating the presence of the (typically absent) rule of law.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignLawyer
   - type: Sprite
     state: law
 
@@ -646,6 +857,9 @@
   name: library sign
   description: A sign indicating the library.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignLibrary
   - type: Sprite
     state: biblio
 
@@ -655,6 +869,9 @@
   name: mail sign
   description: A sign indicating mail.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMail
   - type: Sprite
     state: mail
 
@@ -664,6 +881,9 @@
   name: medbay sign
   description: A sign indicating the medical bay.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMedical
   - type: Sprite
     state: medbay
 
@@ -673,6 +893,9 @@
   name: morgue sign
   description: A sign indicating the morgue.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMorgue
   - type: Sprite
     state: morgue
 
@@ -682,6 +905,9 @@
   name: news sign
   description: A sign indicating where the Reporter works.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNews
   - type: Sprite
     state: news
 
@@ -691,8 +917,23 @@
   name: no smoking sign
   description: A sign indicating that smoking is not allowed in the vicinity.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNosmoking
   - type: Sprite
     state: nosmoking
+
+- type: entity
+  parent: BaseSign
+  id: SignGenpop
+  name: genpop sign
+  description: A sign indicating the genpop prison.
+  components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignGenpop
+  - type: Sprite
+    state: genpop
 
 - type: entity
   parent: BaseSign
@@ -700,6 +941,9 @@
   name: prison sign
   description: A sign indicating the prison.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignPrison
   - type: Sprite
     state: prison
 
@@ -709,6 +953,9 @@
   name: psychology sign
   description: A sign labelling an area where the Psychologist works.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignPsychology
   - type: Sprite
     state: psychology
 
@@ -718,6 +965,9 @@
   name: reception sign
   description: A sign indicating the reception.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignReception
   - type: Sprite
     state: reception
 
@@ -727,6 +977,9 @@
   name: research and development sign
   description: A sign indicating the research and development lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRND
   - type: Sprite
     state: rnd
 
@@ -736,6 +989,9 @@
   name: robo sign
   description: A sign indicating the robotics lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRobo
   - type: Sprite
     state: robo
 
@@ -745,6 +1001,9 @@
   name: salvage sign
   description: A sign indicating the salvage area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSalvage
   - type: Sprite
     state: salvage
 
@@ -754,6 +1013,9 @@
   name: science sign
   description: A sign indicating the science area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignScience
   - type: Sprite
     state: sci
 
@@ -763,6 +1025,9 @@
   name: server sign
   description: Ever heard of Big Data? This is it, chump. The biggest.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignServer
   - type: Sprite
     state: data
 
@@ -772,6 +1037,9 @@
   name: canisters sign
   description: A sign indicating the auspicious presence of gas canisters.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCans
   - type: Sprite
     state: cans
 
@@ -780,6 +1048,9 @@
   id: SignCansScience
   suffix: science
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCansScience
   - type: Sprite
     state: cans_sci
 
@@ -789,6 +1060,9 @@
   name: evac sign
   description: A sign indicating the where the evac shuttle will (likely) arrive.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignShipDock
   - type: Sprite
     state: dock
 
@@ -798,6 +1072,9 @@
   name: space sign
   description: A sign warning that the area ahead is nothing but cold, empty space.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSpace
   - type: Sprite
     state: space
 
@@ -807,6 +1084,9 @@
   name: surgery sign
   description: A sign indicating the operating theater.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSurgery
   - type: Sprite
     state: surgery
 
@@ -816,6 +1096,9 @@
   name: telecomms sign
   description: A sign indicating the telecommunications room.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignTelecomms
   - type: Sprite
     state: telecoms
 
@@ -825,6 +1108,9 @@
   name: toxins sign
   description: A sign indicating the toxin lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignToxins
   - type: Sprite
     state: toxins
 
@@ -834,6 +1120,9 @@
   name: vault sign
   description: A sign indicating the vault. Who knows what secrets lie inside?
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignVault
   - type: Sprite
     state: vault
 
@@ -843,6 +1132,9 @@
   name: virology sign
   description: A sign indicating the virology lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignVirology
   - type: Sprite
     state: virology
 
@@ -852,6 +1144,9 @@
   name: corrosives warning sign
   description: A sign indicating a corrosive materials hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCorrosives
   - type: Sprite
     state: corrosives
 
@@ -861,6 +1156,9 @@
   name: cryogenics warning sign
   description: A sign indicating a cryogenic materials hazard. Bring a jacket!
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCryogenics
   - type: Sprite
     state: cryogenics
 
@@ -870,6 +1168,9 @@
   name: danger warning sign
   description: A sign warning against some danger.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDanger
   - type: Sprite
     state: danger
 
@@ -879,6 +1180,9 @@
   name: explosives warning sign
   description: A sign indicating an explosive materials hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignExplosives
   - type: Sprite
     state: explosives
 
@@ -888,6 +1192,9 @@
   name: flammable warning sign
   description: A sign indicating a flammable materials hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignFlammable
   - type: Sprite
     state: flammable
 
@@ -897,6 +1204,9 @@
   name: laser warning sign
   description: A sign indicating a laser hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignLaser
   - type: Sprite
     state: laser
 
@@ -906,6 +1216,9 @@
   name: magnetics warning sign
   description: A sign indicating a magnetic materials hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMagnetics
   - type: Sprite
     state: magnetics
 
@@ -915,6 +1228,9 @@
   name: memetic warning sign
   description: A sign indicating a memetic hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMemetic
   - type: Sprite
     state: memetic
 
@@ -924,6 +1240,9 @@
   name: secure sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecure
   - type: Sprite
     state: secure
 
@@ -933,6 +1252,9 @@
   name: secure area sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecurearea
   - type: Sprite
     state: securearea
     snapCardinals: true
@@ -943,6 +1265,9 @@
   name: shock sign
   description: A sign indicating an electrical hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignShock
   - type: Sprite
     state: shock
 
@@ -952,6 +1277,9 @@
   name: optical warning sign
   description: A sign indicating an optical radiation hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignOptical
   - type: Sprite
     state: optical
 
@@ -961,6 +1289,9 @@
   name: oxidants warning sign
   description: A sign indicating an oxidizing agent hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignOxidants
   - type: Sprite
     state: oxidants
 
@@ -970,6 +1301,9 @@
   name: radiation warning sign
   description: A sign indicating an ionizing radiation hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRadiation
   - type: Sprite
     state: radiation
 
@@ -979,6 +1313,9 @@
   name: xenobio sign
   description: A sign indicating the xenobiology lab.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignXenobio
   - type: Sprite
     state: xenobio
 
@@ -988,6 +1325,9 @@
   name: zombie lab sign
   description: The final remains of a shut-down Nanotrasen research project that aimed to harness the powers of Romerol. I wonder how that went...
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignZomlab
   - type: Sprite
     state: zomlab
 
@@ -997,6 +1337,9 @@
   name: red secure sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecureMedRed
   - type: Sprite
     state: medium_secure_red
 
@@ -1006,6 +1349,9 @@
   name: small secure sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecureSmall
   - type: Sprite
     state: small_secure
 
@@ -1015,6 +1361,9 @@
   name: small red secure sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecureSmallRed
   - type: Sprite
     state: small_secure_red
 
@@ -1024,6 +1373,9 @@
   name: blank sign
   description: A blank sign.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBlankMed
   - type: Sprite
     state: medium_blank
 
@@ -1033,6 +1385,9 @@
   name: magnetics sign
   description: A sign indicating the use of magnets.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignMagneticsMed
   - type: Sprite
     state: medium_magnetics
 
@@ -1042,6 +1397,9 @@
   name: danger sign
   description: A sign warning against some form of danger.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignDangerMed
   - type: Sprite
     state: medium_danger
 
@@ -1051,6 +1409,9 @@
   name: explosives sign
   description: A sign indicating explosive materials.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: ExplosivesSignMed
   - type: Sprite
     state: medium_explosives
 
@@ -1060,6 +1421,9 @@
   name: cryogenics sign
   description: A sign indicating cryogenic materials.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignCryogenicsMed
   - type: Sprite
     state: medium_cryogenics
 
@@ -1069,6 +1433,9 @@
   name: electrical sign
   description: A sign indicating an electrical hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignElectricalMed
   - type: Sprite
     state: medium_electrical
 
@@ -1078,6 +1445,9 @@
   name: biohazard sign
   description: A sign indicating a biohazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignBiohazardMed
   - type: Sprite
     state: medium_biohazard
 
@@ -1087,6 +1457,9 @@
   name: radiation sign
   description: A sign indicating an ionizing radiation hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRadiationMed
   - type: Sprite
     state: medium_radiation
 
@@ -1096,6 +1469,9 @@
   name: flammable sign #when flammable component is done, this sign needs it
   description: A sign indicating flammable materials.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignFlammableMed
   - type: Sprite
     state: medium_flammable
 
@@ -1105,6 +1481,9 @@
   name: laser sign
   description: A sign indicating a laser hazard.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignLaserMed
   - type: Sprite
     state: medium_laser
 
@@ -1114,6 +1493,9 @@
   name: secure sign
   description: A sign indicating that the area ahead is a secure area.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecureMed
   - type: Sprite
     state: medium_secure
 
@@ -1124,6 +1506,9 @@
   name: vox area sign
   description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignVox
   - type: Sprite
     state: vox
 
@@ -1135,6 +1520,9 @@
   name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningAir
   - type: Sprite
     state: atmos_air
 
@@ -1144,6 +1532,9 @@
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningCO2
   - type: Sprite
     state: atmos_co2
 
@@ -1153,6 +1544,9 @@
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningN2
   - type: Sprite
     state: atmos_n2
 
@@ -1162,6 +1556,9 @@
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningN2O
   - type: Sprite
     state: atmos_n2o
 
@@ -1171,6 +1568,9 @@
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningO2
   - type: Sprite
     state: atmos_o2
 
@@ -1180,6 +1580,9 @@
   name: plasma waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningPlasma
   - type: Sprite
     state: atmos_plasma
 
@@ -1189,6 +1592,9 @@
   name: tritium waste sign
   description: WARNING! Tritium flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningTritium
   - type: Sprite
     state: atmos_tritium
 
@@ -1198,6 +1604,9 @@
   name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: WarningWaste
   - type: Sprite
     state: atmos_waste
 
@@ -1207,6 +1616,9 @@
   name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSmoking
   - type: Sprite
     state: nosmoking2
 
@@ -1216,6 +1628,9 @@
   name: old sign
   description: Technical information of some sort, shame it's too worn-out to read.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSomethingOld
   - type: Sprite
     state: something-old1
 
@@ -1225,6 +1640,9 @@
   name: old sign
   description: Looks like a planet crashing by some station above it. It's kinda scary.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSomethingOld2
   - type: Sprite
     state: something-old2
 
@@ -1234,8 +1652,21 @@
   name: security sign
   description: A sign depicting the security insignia.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSecurity
   - type: Sprite
     state: security
+
+# Hardlight Brigmedic
+- type: entity
+  parent: SignSecurity
+  id: SignBrigmedic
+  name: brigmedic sign
+  description: A sign indicating the brigmedic area.
+  components:
+  - type: Sprite
+    state: brigmed
 
 - type: entity
   parent: BaseSign
@@ -1243,6 +1674,9 @@
   name: golden plaque
   description: A prestigious golden plaque.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignPlaque
   - type: Sprite
     state: goldenplaque
 
@@ -1252,6 +1686,9 @@
   name: kiddie plaque
   description: A modest plaque.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignKiddiePlaque
   - type: Sprite
     state: kiddieplaque
 
@@ -1261,6 +1698,9 @@
   name: nanotrasen sign 1
   description: Part 1.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNanotrasen1
   - type: Sprite
     state: nanotrasen_sign1
     snapCardinals: false
@@ -1271,6 +1711,9 @@
   name: nanotrasen sign 2
   description: Part 2.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNanotrasen2
   - type: Sprite
     state: nanotrasen_sign2
     snapCardinals: false
@@ -1281,6 +1724,9 @@
   name: nanotrasen sign 3
   description: Part 3.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNanotrasen3
   - type: Sprite
     state: nanotrasen_sign3
     snapCardinals: false
@@ -1291,6 +1737,9 @@
   name: nanotrasen sign 4
   description: Part 4.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNanotrasen4
   - type: Sprite
     state: nanotrasen_sign4
     snapCardinals: false
@@ -1301,6 +1750,9 @@
   name: nanotrasen sign 5
   description: Part 5.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNanotrasen5
   - type: Sprite
     state: nanotrasen_sign5
     snapCardinals: false
@@ -1311,6 +1763,9 @@
   name: one sign
   description: A sign with a digit, one is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedOne
   - type: Sprite
     state: one
 
@@ -1320,6 +1775,9 @@
   name: two sign
   description: A sign with a digit, two is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedTwo
   - type: Sprite
     state: two
 
@@ -1329,6 +1787,9 @@
   name: three sign
   description: A sign with a digit, three is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedThree
   - type: Sprite
     state: three
 
@@ -1338,6 +1799,9 @@
   name: four sign
   description: A sign with a digit, four is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedFour
   - type: Sprite
     state: four
 
@@ -1347,6 +1811,9 @@
   name: five sign
   description: A sign with a digit, five is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedFive
   - type: Sprite
     state: five
 
@@ -1356,6 +1823,9 @@
   name: six sign
   description: A sign with a digit, six is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedSix
   - type: Sprite
     state: six
 
@@ -1365,6 +1835,9 @@
   name: seven sign
   description: A sign with a digit, seven is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedSeven
   - type: Sprite
     state: seven
 
@@ -1374,6 +1847,9 @@
   name: eight sign
   description: A sign with a digit, eight is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedEight
   - type: Sprite
     state: eight
 
@@ -1383,6 +1859,9 @@
   name: nine sign
   description: A sign with a digit, nine is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedNine
   - type: Sprite
     state: nine
 
@@ -1392,6 +1871,9 @@
   name: zero sign
   description: A sign with a digit, zero is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignRedZero
   - type: Sprite
     state: zero
 
@@ -1401,6 +1883,9 @@
   name: survival sign
   description: A sign. "Survival" is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignSurvival
   - type: Sprite
     state: survival
 
@@ -1410,5 +1895,8 @@
   name: mine sign
   description: A sign. "Mine" is written on it.
   components:
+  - type: Construction # HardLight
+    graph: Sign
+    node: SignNTMine
   - type: Sprite
     state: ntmining

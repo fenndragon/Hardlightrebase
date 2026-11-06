@@ -1,5 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
 using Robust.Shared.Network;
@@ -71,7 +70,7 @@ public abstract class ToolshedTest : IInvocationContext
     {
         InvokeCommand(command, out var res);
         Assert.That(res, Is.AssignableTo<T>());
-        return (T) res!;
+        return (T)res!;
     }
 
     protected void ParseCommand(string command, Type? inputType = null, Type? expectedType = null)

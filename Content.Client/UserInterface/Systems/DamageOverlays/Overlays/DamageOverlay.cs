@@ -5,6 +5,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
@@ -26,9 +27,9 @@ public sealed partial class DamageOverlay : Overlay
     /// <summary>
     /// Handles the red pulsing overlay
     /// </summary>
-    public float BruteLevel = 0f;
+    public float PainLevel = 0f;
 
-    private float _oldBruteLevel = 0f;
+    private float _oldPainLevel = 0f;
 
     /// <summary>
     /// Handles the darkening overlay.
@@ -50,10 +51,12 @@ public sealed partial class DamageOverlay : Overlay
     {
         // TODO: Replace
         IoCManager.InjectDependencies(this);
-        _oxygenShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
-        _critShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
-        _bruteShader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").InstanceUnique();
+        _oxygenShader = _prototypeManager.Index(GradientCircleMaskId).InstanceUnique();
+        _critShader = _prototypeManager.Index(GradientCircleMaskId).InstanceUnique();
+        _bruteShader = _prototypeManager.Index(GradientCircleMaskId).InstanceUnique();
     }
+
+    private static readonly ProtoId<ShaderPrototype> GradientCircleMaskId = "GradientCircleMask";
 
     protected override void Draw(in OverlayDrawArgs args)
     {
@@ -80,8 +83,8 @@ public sealed partial class DamageOverlay : Overlay
         var handle = args.WorldHandle;
         var distance = args.ViewportBounds.Width;
 
-        var time = (float) _timing.RealTime.TotalSeconds;
-        var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
+        var time = (float)_timing.RealTime.TotalSeconds;
+        var lastFrameTime = (float)_timing.FrameTime.TotalSeconds;
 
         // If they just died then lerp out the white overlay.
         if (State != MobState.Dead)
@@ -98,14 +101,14 @@ public sealed partial class DamageOverlay : Overlay
             DeadLevel = 0f;
         }
 
-        if (!MathHelper.CloseTo(_oldBruteLevel, BruteLevel, 0.001f))
+        if (!MathHelper.CloseTo(_oldPainLevel, PainLevel, 0.001f))
         {
-            var diff = BruteLevel - _oldBruteLevel;
-            _oldBruteLevel += GetDiff(diff, lastFrameTime);
+            var diff = PainLevel - _oldPainLevel;
+            _oldPainLevel += GetDiff(diff, lastFrameTime);
         }
         else
         {
-            _oldBruteLevel = BruteLevel;
+            _oldPainLevel = PainLevel;
         }
 
         if (!MathHelper.CloseTo(_oldOxygenLevel, OxygenLevel, 0.001f))
@@ -141,7 +144,7 @@ public sealed partial class DamageOverlay : Overlay
 
         // Makes debugging easier don't @ me
         float level = 0f;
-        level = _oldBruteLevel;
+        level = _oldPainLevel;
 
         // TODO: Lerping
         if (level > 0f && _oldCritLevel <= 0f)
@@ -171,7 +174,7 @@ public sealed partial class DamageOverlay : Overlay
         }
         else
         {
-            _oldBruteLevel = BruteLevel;
+            _oldPainLevel = PainLevel;
         }
 
         level = State != MobState.Critical ? _oldOxygenLevel : 1f;

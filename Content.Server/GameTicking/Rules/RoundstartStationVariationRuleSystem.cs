@@ -1,24 +1,23 @@
-﻿using Content.Server.GameTicking.Rules.Components;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Station.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
 /// <inheritdoc cref="RoundstartStationVariationRuleComponent"/>
-public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
+public sealed class RoundstartStationVariationRuleSystem : GameRuleSystem<RoundstartStationVariationRuleComponent>
 {
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new []{typeof(ShuttleSystem)});
+        SubscribeLocalEvent<StationPostInitEvent>(OnStationPostInit, after: new[] { typeof(ShuttleSystem) });
     }
 
     protected override void Added(EntityUid uid, RoundstartStationVariationRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -65,6 +64,6 @@ public sealed partial class RoundstartStationVariationRuleSystem : GameRuleSyste
 ///     Raised directed on game rule entities which are added and marked as <see cref="StationVariationPassRuleComponent"/>
 ///     when a new station is initialized that should be varied.
 /// </summary>
-/// <param name="Station">The new station that was added, and its config & grids.</param>
+/// <param name="Station">The new station that was added, and its config &amp; grids.</param>
 [ByRefEvent]
 public readonly record struct StationVariationPassEvent(Entity<StationDataComponent> Station);

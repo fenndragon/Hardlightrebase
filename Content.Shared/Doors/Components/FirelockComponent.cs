@@ -37,7 +37,7 @@ namespace Content.Shared.Doors.Components
         // temperature. This does mean a cold room will trigger hot-air pop-ups
 
         /// <summary>
-        /// If true, and if this door has an <see cref="AtmosAlarmableComponent"/>, then it will only auto-close if the
+        /// If true, and if this door has an AtmosAlarmableComponent, then it will only auto-close if the
         /// alarm is set to danger.
         /// </summary>
         [DataField("alarmAutoClose"), ViewVariables(VVAccess.ReadWrite)]
@@ -82,6 +82,52 @@ namespace Content.Shared.Doors.Components
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool Powered;
+
+        #endregion
+
+        #region Client animation
+
+        /// <summary>
+        /// The sprite state used to animate the airlock frame when the airlock opens.
+        /// </summary>
+        [DataField]
+        public string OpeningLightSpriteState = "opening_unlit";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock frame when the airlock closes.
+        /// </summary>
+        [DataField]
+        public string ClosingLightSpriteState = "closing_unlit";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock panel when the airlock opens.
+        /// </summary>
+        [DataField]
+        public string OpeningPanelSpriteState = "panel_opening";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock panel when the airlock closes.
+        /// </summary>
+        [DataField]
+        public string ClosingPanelSpriteState = "panel_closing";
+
+        /// <summary>
+        /// The sprite state used for the open airlock lights.
+        /// </summary>
+        [DataField]
+        public string OpenLightSpriteState = "open_unlit";
+
+        /// <summary>
+        /// The sprite state used for the closed airlock lights.
+        /// </summary>
+        [DataField]
+        public string WarningLightSpriteState = "closed_unlit";
+
+        /// <summary>
+        /// The sprite state used for the 'access denied' lights animation.
+        /// </summary>
+        [DataField]
+        public string DenySpriteState = "deny_unlit";
 
         #endregion
     }

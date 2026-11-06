@@ -10,7 +10,7 @@ namespace Content.Shared.Access.Systems
     }
 
     /// <summary>
-    /// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
+    /// Key representing which PlayerBoundUserInterface is currently open.
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
     /// </summary>
     [Serializable, NetSerializable]
@@ -20,7 +20,7 @@ namespace Content.Shared.Access.Systems
     }
 
     /// <summary>
-    /// Represents an <see cref="AgentIDCardComponent"/> state that can be sent to the client
+    /// Represents an AgentIDCardComponent state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class AgentIDCardBoundUserInterfaceState : BoundUserInterfaceState
@@ -28,12 +28,26 @@ namespace Content.Shared.Access.Systems
         public string CurrentName { get; }
         public string CurrentJob { get; }
         public string CurrentJobIconId { get; }
+        public uint? CurrentNumber { get; } // DeltaV
 
-        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId)
+        public AgentIDCardBoundUserInterfaceState(string currentName, string currentJob, string currentJobIconId, uint? currentNumber = null) // DeltaV - Added currentNumber
         {
             CurrentName = currentName;
             CurrentJob = currentJob;
             CurrentJobIconId = currentJobIconId;
+            CurrentNumber = currentNumber; // DeltaV
+        }
+    }
+
+    // DeltaV - Add number change message
+    [Serializable, NetSerializable]
+    public sealed class AgentIDCardNumberChangedMessage : BoundUserInterfaceMessage
+    {
+        public uint Number { get; }
+
+        public AgentIDCardNumberChangedMessage(uint number)
+        {
+            Number = number;
         }
     }
 

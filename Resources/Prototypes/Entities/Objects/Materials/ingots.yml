@@ -5,9 +5,9 @@
   description: A heavy, metal ingot.
   components:
   - type: Sprite
-    sprite: Objects/Materials/ingots.rsi
+    sprite: _Mono/Objects/Materials/ingots.rsi
   - type: Item
-    sprite: Objects/Materials/ingots.rsi
+    sprite: _Mono/Objects/Materials/ingots.rsi
     size: Normal
   # WOLFGATE(CargoLoad): ingots weigh down the ship carrying them
   - type: WFCargoMass
@@ -17,6 +17,8 @@
   - type: Tag
     tags:
     - Ingot
+    - ConstructionMaterial
+  - type: NotInsurable # HardLight
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

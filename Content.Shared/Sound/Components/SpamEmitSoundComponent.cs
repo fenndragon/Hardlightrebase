@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Sound.Components;
 
@@ -12,7 +13,7 @@ public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
     /// <summary>
     /// The time at which the next sound will play.
     /// </summary>
-    [DataField, AutoPausedField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan NextSound;
 
     /// <summary>
@@ -36,7 +37,7 @@ public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
 
     /// <summary>
     /// Whether the timer is currently running and sounds are being played.
-    /// Do not set this directly, use <see cref="EmitSoundSystem.SetEnabled"/>
+    /// Do not set this directly, use EmitSoundSystem.SetEnabled
     /// </summary>
     [DataField, AutoNetworkedField]
     [Access(typeof(SharedEmitSoundSystem))]

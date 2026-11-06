@@ -7,18 +7,27 @@
   defaultSkinTone: "#385878"
   markingLimits: MobArachnidMarkingLimits
   dollPrototype: MobArachnidDummy
-  skinColoration: Hues
-  maleFirstNames: names_arachnid_first
-  femaleFirstNames: names_arachnid_first
-  lastNames: names_arachnid_last
+  skinColoration: AnyColour # Hardlight
+  maleFirstNames: NamesArachnidFirst
+  femaleFirstNames: NamesArachnidFirst
+  lastNames: NamesArachnidLast
   sexes:
   - Unsexed
 
 - type: speciesBaseSprites
   id: MobArachnidSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking
+    TailOversuit: MobHumanoidAnyMarking
     Head: MobArachnidHead
     Snout: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
+    Genital: MobHumanoidAnyMarking
+    Penis: MobHumanoidAnyMarking
+    Breasts: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     UndergarmentTop: MobHumanoidAnyMarking # WOLFGATE(Genitals): underwear/genital layers ported from HardLight
     UndergarmentBottom: MobHumanoidAnyMarking # WOLFGATE(Genitals): underwear/genital layers ported from HardLight
@@ -39,6 +48,7 @@
     RLeg: MobArachnidRLeg
     LFoot: MobArachnidLFoot
     RFoot: MobArachnidRFoot
+    RArmExtension: MobHumanoidAnyMarking # Hardlight: enables harpy/bat wings
 
 - type: humanoidBaseSprite
   id: MobArachnidEyes
@@ -64,7 +74,7 @@
       points: 1
       required: false
     HeadSide:
-      points: 1
+      points: 3
       required: true
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:

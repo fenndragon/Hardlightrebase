@@ -66,6 +66,9 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (generator.Comp.Enabled)
             ChangeFieldVisualizer(generator);
+
+        // HardLight: Synchronize dynamic light state in case saved/loaded pointlight state is stale.
+        UpdateConnectionLights(generator);
     }
 
     /// <summary>
@@ -163,6 +166,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
                 QueueDel(field);
             }
             value.Item1.Comp.Connections.Remove(direction.GetOpposite());
+            UpdateConnectionLights(value.Item1); // HardLight
 
             if (value.Item1.Comp.Connections.Count == 0) //Change isconnected only if there's no more connections
             {
@@ -178,6 +182,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
         component.IsConnected = false;
         ChangeOnLightVisualizer(generator);
         ChangeFieldVisualizer(generator);
+        UpdateConnectionLights(generator); // HardLight
         _adminLogger.Add(LogType.FieldGeneration, LogImpact.Medium, $"{ToPrettyString(uid)} lost field connections"); // Ideally LogImpact would depend on if there is a singulo nearby
     }
 
@@ -188,7 +193,6 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
     /// <summary>
     /// Stores power in the generator. If it hits the threshold, it tries to establish a connection.
     /// </summary>
-    /// <param name="power">The power that this generator received from the collision in <see cref="HandleGeneratorCollide"/></param>
     public void ReceivePower(int power, Entity<ContainmentFieldGeneratorComponent> generator)
     {
         var component = generator.Comp;
@@ -199,7 +203,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.PowerBuffer >= component.PowerMinimum)
         {
             var directions = Enum.GetValues<Direction>().Length;
-            for (int i = 0; i < directions-1; i+=2)
+            for (int i = 0; i < directions - 1; i += 2)
             {
                 var dir = (Direction)i;
 
@@ -294,6 +298,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
 
         ChangeFieldVisualizer(generator);
         UpdateConnectionLights(generator);
+        UpdateConnectionLights(otherFieldGenerator); // HardLight
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), generator);
         return true;
     }
@@ -393,7 +398,7 @@ public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
     {
         _visualizer.SetData(generator, ContainmentFieldGeneratorVisuals.FieldLight, generator.Comp.Connections.Count switch
         {
-            >1 => FieldLevelVisuals.MultipleFields,
+            > 1 => FieldLevelVisuals.MultipleFields,
             1 => FieldLevelVisuals.OneField,
             _ => generator.Comp.Enabled ? FieldLevelVisuals.On : FieldLevelVisuals.NoLevel
         });

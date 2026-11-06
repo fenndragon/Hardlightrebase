@@ -19,14 +19,15 @@ public sealed class EntityUidConverter : AdminLogConverter<EntityUid>
     {
         writer.WriteStartObject();
 
-        writer.WriteNumber("id", (int) value);
+        writer.WriteNumber("id", (int)value);
 
         if (entities.TryGetComponent(value, out MetaDataComponent? metaData))
         {
             writer.WriteString("name", metaData.EntityName);
         }
 
-        if (entities.TryGetComponent(value, out ActorComponent? actor))
+        if (entities.TryGetComponent(value, out ActorComponent? actor)
+            && actor.PlayerSession != null)
         {
             writer.WriteString("player", actor.PlayerSession.UserId.UserId);
         }

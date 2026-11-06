@@ -5,11 +5,20 @@
   id: BaseMobDwarf
   abstract: true
   components:
+  # Starlight-start: Languages
+  - type: LanguageKnowledge
+    speaks:
+    - GalacticCommon
+    - SolCommon
+    understands:
+    - GalacticCommon
+    - SolCommon
+  # Starlight-end
   - type: Hunger
   - type: Thirst
   - type: Carriable # Carrying system from nyanotrasen.
   - type: Icon
-    sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
+    sprite: Mobs/Species/Human/parts.rsi
     state: full
   - type: Respirator
     damage:
@@ -59,13 +68,28 @@
     understands:
     - TauCetiBasic
   - type: HumanoidAppearance
-    species: Human
+    species: Dwarf
     hideLayersOnEquip:
     - Hair
     - Snout
+    # HL start: Hide genital markings on equip
+    - Genital
+    - Penis
+    - Breasts
+    # HL end
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      accessory1:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+      accessory2:
         sizeMaps:
           32:
             sprite: Mobs/Species/Human/displacement.rsi

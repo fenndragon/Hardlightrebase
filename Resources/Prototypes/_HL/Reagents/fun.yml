@@ -1,0 +1,46 @@
+- type: reagent
+  id: JuiceThatMakesYouBark
+  name: reagent-name-juice-that-makes-you-bark
+  desc: reagent-desc-juice-that-makes-you-bark
+  physicalDesc: reagent-physical-desc-vibrant
+  group: Toxins
+  flavor: woof
+  color: "#cd570e"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Bark
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: BarkJuiceFox
+        conditions:
+        # - !type:OrganType # Frontier
+        #   type: Animal # Frontier
+        #   shouldHave: false # Frontier
+        - !type:NFIsHumanoid # Frontier
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouBark
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
+
+- type: reagent
+  id: PrizeballJuice
+  name: reagent-name-prizeball-juice
+  desc: reagent-desc-prizeball-juice
+  physicalDesc: reagent-physical-desc-vibrant
+  group: Toxins
+  flavor: highscore
+  color: "#872420"
+  metabolisms:
+    Poison:
+      metabolismRate: 1          
+      effects:
+      - !type:Redeem

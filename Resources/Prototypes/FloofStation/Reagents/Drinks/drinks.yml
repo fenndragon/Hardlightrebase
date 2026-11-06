@@ -1,0 +1,45 @@
+- type: reagent
+  id: NikkosNaughtyNectar
+  name: reagent-name-NNN
+  parent: BaseDrink
+  desc: reagent-desc-NNN
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: nikkonectar
+  color: "#deebff"
+  recognizable: true
+  viscosity: 0.15
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Medicine:
+      metabolismRate : 0.5
+      effects:
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages:
+          - "reagent-effect-aphrodisiac-mild1"
+          - "reagent-effect-aphrodisiac-mild2"
+          - "reagent-effect-aphrodisiac-mild3"
+          - "reagent-effect-aphrodisiac-mild4"
+          - "reagent-effect-aphrodisiac-mild5"
+          - "reagent-effect-aphrodisiac-mild6"
+          - "reagent-effect-aphrodisiac-mild7"
+          - "reagent-effect-aphrodisiac-mild8"
+          - "reagent-effect-aphrodisiac-mild9"
+          - "reagent-effect-aphrodisiac-mild10"
+          - "reagent-effect-aphrodisiac-mild11"
+          - "reagent-effect-aphrodisiac-mild12"
+          - "reagent-effect-aphrodisiac-mild13"
+          - "reagent-effect-aphrodisiac-mild14"
+          - "reagent-effect-aphrodisiac-mild15"
+        probability: 0.02
+        conditions:
+          - !type:ReagentThreshold
+            max: 50
+  footstepSound:
+    collection: FootstepSticky
+    params:
+      volume: 3

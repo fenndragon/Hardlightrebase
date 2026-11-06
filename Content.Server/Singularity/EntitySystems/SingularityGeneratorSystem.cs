@@ -53,7 +53,7 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
             return;
 
         SetPower(uid, 0, comp);
-        EntityManager.SpawnEntity(comp.SpawnPrototype, Transform(uid).Coordinates);
+        Spawn(comp.SpawnPrototype, Transform(uid).Coordinates);
     }
 
     #region Getters/Setters
@@ -61,8 +61,6 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
     /// Setter for <see cref="SingularityGeneratorComponent.Power"/>
     /// If the singularity generator passes its threshold it also spawns a singularity.
     /// </summary>
-    /// <param name="comp">The singularity generator component.</param>
-    /// <param name="value">The new power level for the generator component to have.</param>
     public void SetPower(EntityUid uid, float value, SingularityGeneratorComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
@@ -81,8 +79,6 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
     /// Setter for <see cref="SingularityGeneratorComponent.Threshold"/>
     /// If the singularity generator has passed its new threshold it also spawns a singularity.
     /// </summary>
-    /// <param name="comp">The singularity generator component.</param>
-    /// <param name="value">The new threshold power level for the generator component to have.</param>
     public void SetThreshold(EntityUid uid, float value, SingularityGeneratorComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
@@ -109,12 +105,12 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
     /// <param name="args">The state of the beginning of the collision.</param>
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
-        if (!EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
+        if (!TryComp<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
             return;
 
         if (_timing.CurTime < _metadata.GetPauseTime(uid) + generatorComp.NextFailsafe && !generatorComp.FailsafeDisabled)
         {
-            EntityManager.QueueDeleteEntity(uid);
+            QueueDel(uid);
             return;
         }
 
@@ -152,14 +148,13 @@ public sealed partial class SingularityGeneratorSystem : SharedSingularityGenera
             );
         }
 
-        EntityManager.QueueDeleteEntity(uid);
+        QueueDel(uid);
     }
     #endregion Event Handlers
 
     /// <summary>
     /// Checks whether there's a containment field in a given direction away from the generator
     /// </summary>
-    /// <param name="transform">The transform component of the singularity generator.</param>
     /// <remarks>Mostly copied from <see cref="ContainmentFieldGeneratorSystem"/> </remarks>
     private bool CheckContainmentField(Direction dir, Entity<SingularityGeneratorComponent> generator, TransformComponent transform)
     {

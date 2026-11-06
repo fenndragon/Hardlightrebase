@@ -40,7 +40,8 @@ public sealed partial class StampCollection : Container
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        var random = new Random(PlacementSeed);
+        var random = new RobustRandom();
+        random.SetSeed(PlacementSeed);
         var r = (finalSize * 0.5f).Length();
         var dtheta = -MathHelper.DegreesToRadians(90);
         var theta0 = random.Next(0, 3) * dtheta;
@@ -53,7 +54,7 @@ public sealed partial class StampCollection : Container
         // orientation of the stamp into account.
         for (var i = 0; i < _stamps.Count; i++)
         {
-            var stampOrientation = MathHelper.DegreesToRadians((random.NextFloat() - 0.5f) * 10.0f) ;
+            var stampOrientation = MathHelper.DegreesToRadians((random.NextFloat() - 0.5f) * 10.0f);
             _stamps[i].Orientation = stampOrientation;
 
             var theta = theta0 + dtheta * 0.5f + dtheta * i + (i > 4 ? MathF.Log(1 + i / 4) * dtheta : 0); // There is probably a better way to lay these out, to minimize overlaps

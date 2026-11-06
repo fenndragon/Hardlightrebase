@@ -10,6 +10,7 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
+        cybernetic_anchor: OrganCrescentDummy
     torso:
       part: TorsoHarpy
       connections:
@@ -19,11 +20,12 @@
       - left leg
       - head # Shitmed Change
       organs:
-        heart: OrganHumanHeart
+        heart: OrganAnimalHeart
         lungs: OrganHarpyLungs
         stomach: OrganAnimalStomach
         liver:  OrganAnimalLiver
         kidneys: OrganAnimalKidneys
+        dermis: OrganCrescentDummy
     right arm:
       part: RightArmHarpy
       connections:

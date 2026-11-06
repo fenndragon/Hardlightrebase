@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [Clothing, RecyclableItemClothBasic] # Frontier: added RecyclableItemClothBasic
+  parent: [Clothing, RecyclableItemClothBasic, ClothingConcealsBody] # Frontier: added RecyclableItemClothBasic; # HardLight: Conceals full body
   id: UnsensoredClothingUniformBase
   components:
   - type: GenitalCoverage # WOLFGATE(Genitals): anatomy coverage
@@ -82,3 +82,14 @@
   - type: Clothing
     slots: [innerclothing]
     femaleMask: UniformTop
+
+- type: entity
+  abstract: true
+  id: ClothingUniformFoldableBase
+  components:
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb-clothing-jacket
+    foldVerbText: fold-verb-clothing-jacket
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

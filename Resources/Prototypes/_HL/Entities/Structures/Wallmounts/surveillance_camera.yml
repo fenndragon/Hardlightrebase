@@ -1,0 +1,155 @@
+- type: entity
+  abstract: true
+  parent: SurveillanceCameraBase
+  id: SurveillanceCameraArmouredBase
+  name: armoured camera
+  description: A heavily reinforced surveillance camera with enhanced optics and tamper-resistant construction. Built for high-security areas.
+  components:
+  - type: Wires
+    alwaysRandomize: true
+    layoutId: SurveillanceCameraArmoured
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+              params:
+                volume: -8
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredConstructed
+  name: armoured camera
+  suffix: Constructed
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wired
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+        - SurveillanceCameraEngineering
+        - SurveillanceCameraSecurity
+        - SurveillanceCameraService
+        - SurveillanceCameraSupply
+        - SurveillanceCameraScience
+        - SurveillanceCameraGeneral
+        - SurveillanceCameraMedical
+        - SurveillanceCameraCommand
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredEngineering
+  name: armoured camera
+  suffix: Engineering
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraEngineering
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredSecurity
+  name: armoured camera
+  suffix: Security
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredScience
+  name: armoured camera
+  suffix: Science
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraScience
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredSupply
+  name: armoured camera
+  suffix: Supply
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSupply
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredCommand
+  name: armoured camera
+  suffix: Command
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraCommand
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredService
+  name: armoured camera
+  suffix: Service
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraService
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredMedical
+  name: armoured camera
+  suffix: Medical
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraMedical
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true
+
+- type: entity
+  parent: SurveillanceCameraArmouredBase
+  id: SurveillanceCameraArmouredGeneral
+  name: armoured camera
+  suffix: General
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraGeneral
+    transmitFrequencyId: SurveillanceCamera
+  - type: SurveillanceCamera
+    networkSet: true

@@ -5,7 +5,7 @@
   name: bluespace crystal
   components:
   - type: Sprite
-    sprite: Nyanotrasen/Objects/Materials/materials.rsi
+    sprite: _HL/Nyanotrasen/Objects/Materials/materials.rsi
     layers:
       - state: bluespace_3
         map: ["base"]
@@ -18,6 +18,18 @@
     tags:
       - BluespaceCrystal
       - RawMaterial
+  - type: TriggerOnUse
+  - type: TriggerOnActivate
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Lightning/lightningbolt.ogg
+  - type: SpawnOnTrigger
+    proto: EffectFlashBluespace
+    mapCoords: true
+  - type: BluespacePulseOnTrigger
+    radius: 8
+  - type: UseDelay
+    delay: 5
   - type: Stack
     stackType: Bluespace
     baseLayer: base
@@ -40,6 +52,30 @@
       map: ["base"]
   - type: Stack
     count: 1
+
+- type: entity
+  parent: MaterialBluespace
+  id: MaterialBluespace3
+  suffix: 3
+  components:
+  - type: Sprite
+    layers:
+    - state: bluespace_2
+      map: ["base"]
+  - type: Stack
+    count: 3
+
+- type: entity
+  parent: MaterialBluespace
+  id: MaterialBluespace5
+  suffix: 5
+  components:
+  - type: Sprite
+    layers:
+    - state: bluespace_3
+      map: ["base"]
+  - type: Stack
+    count: 5
 
 - type: entity
   parent: BaseItem

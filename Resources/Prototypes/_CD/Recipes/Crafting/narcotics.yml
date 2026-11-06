@@ -1,0 +1,9 @@
+# Individual drug packaging recipes removed - EmptyPacket now uses verb-based packaging
+
+- type: construction
+  id: FoldSmugglerPackage
+  graph: FoldSmugglerPackage
+  startNode: start
+  targetNode: emptyPacket
+  category: construction-category-misc
+  objectType: Item

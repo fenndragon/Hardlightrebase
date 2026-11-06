@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using System.Numerics;
 
 namespace Content.Shared.Administration
@@ -27,7 +26,7 @@ namespace Content.Shared.Administration
         static AdminFlagsHelper()
         {
             var t = typeof(AdminFlags);
-            var flags = (AdminFlags[]) Enum.GetValues(t);
+            var flags = (AdminFlags[])Enum.GetValues(t);
             var allFlags = new List<AdminFlags>();
 
             foreach (var value in flags)
@@ -36,7 +35,7 @@ namespace Content.Shared.Administration
 
                 // If, in the future, somebody adds a combined admin flag or something for convenience,
                 // ignore it.
-                if (BitOperations.PopCount((uint) value) != 1)
+                if (BitOperations.PopCount((uint)value) != 1)
                 {
                     continue;
                 }
@@ -44,7 +43,7 @@ namespace Content.Shared.Administration
                 allFlags.Add(value);
                 Everything |= value;
                 NameFlagsMap.Add(name, value);
-                FlagsNameMap[BitOperations.Log2((uint) value)] = name;
+                FlagsNameMap[BitOperations.Log2((uint)value)] = name;
             }
 
             AllFlags = allFlags.ToArray();
@@ -94,13 +93,13 @@ namespace Content.Shared.Administration
         /// </summary>
         public static string[] FlagsToNames(AdminFlags flags)
         {
-            var array = new string[BitOperations.PopCount((uint) flags)];
-            var highest = BitOperations.LeadingZeroCount((uint) flags);
+            var array = new string[BitOperations.PopCount((uint)flags)];
+            var highest = BitOperations.LeadingZeroCount((uint)flags);
 
             var ai = 0;
             for (var i = 0; i < 32 - highest; i++)
             {
-                var flagValue = (AdminFlags) (1u << i);
+                var flagValue = (AdminFlags)(1u << i);
                 if ((flags & flagValue) != 0)
                 {
                     array[ai++] = FlagsNameMap[i];

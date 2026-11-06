@@ -46,6 +46,15 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: Psionic
+    removable: false
+    roller: false
+  - type: Dispellable
+  - type: InnatePsionicPowers
+    powersToAdd:
+      - TelepathyPower
+  - type: GlimmerSource
+    active: false
   - type: SecretDataAnomaly
     randomStartSecretMin: 0
     randomStartSecretMax: 2
@@ -115,6 +124,11 @@
     damage:
       types:
         Heat: 10
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-pyroclastic-feedback
 
 - type: entity
   id: AnomalyGravity
@@ -147,6 +161,11 @@
   - type: SingularityDistortion
     intensity: 1000
     falloffPower: 2.7
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-gravity-feedback
 
 - type: entity
   id: AnomalyElectricity
@@ -170,6 +189,11 @@
     castShadows: false
   - type: ElectricityAnomaly
   - type: Electrified
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-electricity-feedback
 
 - type: entity
   id: AnomalyFlesh
@@ -263,6 +287,11 @@
       - MobFleshClamp
       - MobFleshLover
       - FleshKudzu
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-flesh-feedback
 
 - type: entity
   id: AnomalyBluespace
@@ -310,6 +339,14 @@
       collection: RadiationPulse
       params:
         volume: 5
+    # anomalyContactDamage:
+    #   types:
+    #     Radiation: 10
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-bluespace-feedback
 
 - type: entity
   id: AnomalyIce
@@ -355,6 +392,11 @@
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
     spawnRadius: 0
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-ice-feedback
   - type: DamageOnInteract
     damage:
       types:
@@ -402,6 +444,11 @@
         maxAmount: 50
         maxRange: 12
       floor: FloorAsteroidTile
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-rock-feedback
 
 - type: entity
   id: AnomalyRockUranium
@@ -426,7 +473,7 @@
       - WallSpawnAsteroid
       - WallSpawnAsteroid
       - WallSpawnAsteroidUranium
-      - WallSpawnAsteroidUraniumCrab
+      - NFWallSpawnAsteroidUraniumCrab # Frontier: use NF variant
     - settings:
         spawnOnPulse: true
         maxAmount: 3
@@ -444,17 +491,14 @@
       - CrystalGreen
       - WallSpawnAsteroid
       - WallSpawnAsteroid
-      - WallSpawnAsteroidUraniumCrab
+      - NFWallSpawnAsteroidUraniumCrab # Frontier: use NF variant
     - settings:
         spawnOnSuperCritical: true
         minAmount: 6
         maxAmount: 10
         maxRange: 5
       spawns:
-      - MobSpawnCrabUranium
-  # - type: RadiationSource # Frontier: cherry-pick 35330 :^)
-  #   intensity: 0.2
-  #   slope: 0.1
+      - NFMobSpawnCrabUranium # Frontier: use NF variant
 
 - type: entity
   id: AnomalyRockQuartz
@@ -479,7 +523,7 @@
       - WallSpawnAsteroid
       - WallSpawnAsteroid
       - WallSpawnAsteroidQuartz
-      - WallSpawnAsteroidQuartzCrab
+      - NFWallSpawnAsteroidQuartzCrab # Frontier: use NF variant
     - settings:
         spawnOnPulse: true
         maxAmount: 3
@@ -497,14 +541,14 @@
       - CrystalGrey
       - WallSpawnAsteroid
       - WallSpawnAsteroid
-      - WallSpawnAsteroidQuartzCrab
+      - NFWallSpawnAsteroidQuartzCrab # Frontier: use NF variant
     - settings:
         spawnOnSuperCritical: true
         minAmount: 6
         maxAmount: 10
         maxRange: 5
       spawns:
-      - MobSpawnCrabQuartz
+      - NFMobSpawnCrabQuartz # Frontier: use NF variant
 
 - type: entity
   id: AnomalyRockSilver
@@ -529,7 +573,7 @@
       - WallSpawnAsteroid
       - WallSpawnAsteroid
       - WallSpawnAsteroidSilver
-      - WallSpawnAsteroidSilverCrab
+      - NFWallSpawnAsteroidSilverCrab # Frontier: use NF variant
     - settings:
         spawnOnPulse: true
         maxAmount: 3
@@ -547,14 +591,64 @@
       - CrystalCyan
       - WallSpawnAsteroid
       - WallSpawnAsteroid
-      - WallSpawnAsteroidSilverCrab
+      - NFWallSpawnAsteroidSilverCrab # Frontier: use NF variant
     - settings:
         spawnOnSuperCritical: true
         minAmount: 6
         maxAmount: 10
         maxRange: 5
       spawns:
-      - MobSpawnCrabSilver
+      - NFMobSpawnCrabSilver # Frontier: use NF variant
+
+- type: entity
+  id: AnomalyRockGold
+  parent: AnomalyRockBase
+  suffix: Rock, Gold
+  components:
+  - type: Sprite
+    color: "#e3ba70"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#e3ba70"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidGold
+      - NFWallSpawnAsteroidGoldCrab # Frontier: use NF variant
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalYellow
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalYellow
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - NFWallSpawnAsteroidGoldCrab # Frontier: use NF variant
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - NFMobSpawnCrabGold # Frontier: use NF variant
 
 - type: entity
   id: AnomalyRockIron
@@ -579,7 +673,7 @@
       - WallSpawnAsteroid
       - WallSpawnAsteroid
       - WallSpawnAsteroidIron
-      - WallSpawnAsteroidIronCrab
+      - NFWallSpawnAsteroidIronCrab # Frontier: use NF variant
     - settings:
         spawnOnPulse: true
         maxAmount: 3
@@ -597,14 +691,64 @@
       - CrystalOrange
       - WallSpawnAsteroid
       - WallSpawnAsteroid
-      - WallSpawnAsteroidIronCrab
+      - NFWallSpawnAsteroidIronCrab # Frontier: use NF variant
     - settings:
         spawnOnSuperCritical: true
         minAmount: 6
         maxAmount: 10
         maxRange: 5
       spawns:
-      - MobSpawnCrabIron
+      - NFMobSpawnCrabIron # Frontier: use NF variant
+
+- type: entity
+  id: AnomalyRockCoal
+  parent: AnomalyRockBase
+  suffix: Rock, Coal
+  components:
+  - type: Sprite
+    color: "#484848"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#484848"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidCoal
+      - NFWallSpawnAsteroidCoalCrab # Frontier: use NF variant
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalBlack
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalBlack
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - NFWallSpawnAsteroidCoalCrab # Frontier: use NF variant
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 6
+        maxAmount: 10
+        maxRange: 5
+      spawns:
+      - NFMobSpawnCrabCoal # Frontier: use NF variant
 
 - type: entity
   id: AnomalyFlora
@@ -661,6 +805,11 @@
         maxRange: 6
       spawns:
       - KudzuFlowerAngry
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-flora-feedback
 
 - type: entity
   id: AnomalyFloraBulb
@@ -817,6 +966,11 @@
     solution: anomaly
   - type: InjectableSolution
     solution: beaker
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-liquid-feedback
 
 - type: entity
   id: AnomalyShadow
@@ -870,6 +1024,11 @@
   - type: Tag
     tags:
       - SpookyFog
+  - type: Psionic
+    removable: false
+    roller: false
+    assayFeedback:
+      - anomaly-shadow-feedback
   - type: DamageOnInteract
     damage:
       types:

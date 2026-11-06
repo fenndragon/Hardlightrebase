@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Resist;
 using Content.Server.Storage.Components;
@@ -61,7 +60,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
                 if (curTimeTicks < effectTargetComponent.BluespaceEffectNextTime)
                     return;
 
-                effectTargetComponent.BluespaceEffectNextTime = curTimeTicks + (uint) (_timing.TickRate * effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval);
+                effectTargetComponent.BluespaceEffectNextTime = curTimeTicks + (uint)(_timing.TickRate * effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval);
             }
 
         Spawn(effectSourceComponent.BehaviorProperties.BluespaceEffectPrototype, effectTargetUid.ToCoordinates());
@@ -94,7 +93,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
             if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
                 foreach (var entity in target.Value.storageComponent.Contents.ContainedEntities.ToArray())
                 {
-                    if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                    if (HasComp<MindContainerComponent>(entity))
                     {
                         if (!component.BehaviorProperties.TransportSentient)
                             continue;
@@ -163,11 +162,11 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (lockerComponent.PickLinksFromSameMap &&
-            link.ToCoordinates().GetMapId(EntityManager) != locker.ToCoordinates().GetMapId(EntityManager))
+            _transformSystem.GetMapId(link.ToCoordinates()) != _transformSystem.GetMapId(locker.ToCoordinates()))
             return false;
 
         if (lockerComponent.PickLinksFromStationGrids &&
-            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(EntityManager)))
+            !HasComp<StationMemberComponent>(_transformSystem.GetGrid(link.ToCoordinates())))
             return false;
 
         if (lockerComponent.PickLinksFromResistLockers &&
@@ -234,7 +233,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
                                 targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
 
                             if (component.AutoLinksUseProperties)
-                                targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
+                                targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with { };
 
                             GetTarget(potentialLink, targetBluespaceComponent, true);
                             BluespaceEffect(potentialLink, targetBluespaceComponent, targetBluespaceComponent, true);
@@ -311,7 +310,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
-                if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                if (HasComp<MindContainerComponent>(entity))
                 {
                     if (!component.BehaviorProperties.TransportSentient)
                         continue;
@@ -392,7 +391,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
         switch (component.BehaviorProperties.DestroyType)
         {
             case BluespaceLockerDestroyType.Explode:
-                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager, _transformSystem),
+                _explosionSystem.QueueExplosion(_transformSystem.ToMapCoordinates(uid.ToCoordinates()),
                     ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, uid, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:

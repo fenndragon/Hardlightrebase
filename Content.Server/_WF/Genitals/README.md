@@ -436,13 +436,6 @@ examiners `CanExamine` allows. `MarkingSet` caps undergarments at one top and on
   - anatomy anchor, directly after gloves: exposed anatomy draws over the arms, hands and gloves but under shoes, belts, bags, hair, neckwear, outer clothing and tails
   - anatomy anchor, directly after outerClothing: the show-through-clothing set, still under the neck slots, hair and tails
   - drawn above the neck slots so cloaks do not cover the tail
-- [`Resources/Prototypes/_DV/Entities/Mobs/Species/vulpkanin.yml`](../../../Resources/Prototypes/_DV/Entities/Mobs/Species/vulpkanin.yml)
-  - split tail layers ported from HardLight/Floof
-  - anatomy anchor
-  - underwear/genital layers ported from HardLight
-  - anatomy anchor, directly after gloves: exposed anatomy draws over the arms, hands and gloves but under shoes, belts, bags, hair, neckwear, outer clothing and tails
-  - anatomy anchor, directly after outerClothing: the show-through-clothing set, still under the neck slots, hair and tails
-  - drawn above the neck slots so cloaks do not cover the tail
 - [`Resources/Prototypes/_DV/Species/avali.yml`](../../../Resources/Prototypes/_DV/Species/avali.yml): Genital marking points removed with the legacy genital markings (replaced by organ-based anatomy).
 - [`Resources/Prototypes/_DV/Species/chitinid.yml`](../../../Resources/Prototypes/_DV/Species/chitinid.yml)
   - underwear/genital layers ported from HardLight
@@ -579,7 +572,7 @@ examiners `CanExamine` allows. `MarkingSet` caps undergarments at one top and on
 - [`Resources/Prototypes/_Mono/Species/protogen.yml`](../../../Resources/Prototypes/_Mono/Species/protogen.yml)
   - underwear/genital layers ported from HardLight
   - split tail layers ported from HardLight/Floof
-- [`Resources/Prototypes/_NF/Species/goblin_species.yml`](../../../Resources/Prototypes/_NF/Species/goblin_species.yml)
+- [`Resources/Prototypes/_NF/Species/goblin.yml`](../../../Resources/Prototypes/_NF/Species/goblin.yml)
   - underwear/genital layers ported from HardLight
   - split tail layers ported from HardLight/Floof
 - [`Resources/Prototypes/_Obelisk/Entities/Mobs/Customization/Markings/hydrakin.yml`](../../../Resources/Prototypes/_Obelisk/Entities/Mobs/Customization/Markings/hydrakin.yml)

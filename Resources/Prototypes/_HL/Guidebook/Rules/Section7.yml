@@ -1,0 +1,60 @@
+# Section 7: Powergaming Rules
+
+- type: serverRule
+  id: ServerRule7_1
+  section: 7
+  code: 7.1
+  text: "Do not hide Antag objective items."
+
+- type: serverRule
+  id: ServerRule7_2
+  section: 7
+  code: 7.2
+  hardlit: Hardlit
+  text: "Do not make active use of known bugs in the game."
+
+- type: serverRule
+  id: ServerRule7_3
+  section: 7
+  code: 7.3
+  hardlit: Hardlit
+  text: "Do Not Powergame"
+  description: |-
+    Game mechanics exist to support roleplay. Do not take unreasonable steps to eliminate every failure and vulnerability at the cost of believability.
+
+    Utilize game mechanics as they were intended to be used, in a manner that is believable to their application. Do not combine them in unbelievable ways.
+
+- type: serverRule
+  id: ServerRule7_3_1
+  section: 7
+  code: 7.3.1
+  hardlit: Hardlit
+  text: "Equipment Restrictions"
+  description: |-
+    Do not take best-in-slot gear for every available slot.
+
+    Keep your loadout proportionate to your role, the current alert level, and the situation currently in progress.
+
+    Do not equip or utilize gear, chemicals, implants, or genetic modifications that your character has no logical, in-character reason to possess. Use of equipment must be plausible for your character and job role, regardless of what the game mechanics allow.
+
+    Do not treat hypothetical future danger as in-character justification. Equip in response to threats that have occurred or been announced.
+
+    • Acceptable: A salvager acquiring EVA gear, or an engineer obtaining radiation protection required for their work.
+    • Acceptable: A paramedic carrying a sidearm or less-lethal, and the tools of their trade.
+    • Prohibited: A non-security role equipping a combat loadout in anticipation of an alert that has not been called.
+    • Prohibited: The Head of Security walking around in a heavy tacsuit on green.
+
+- type: serverRule
+  id: ServerRule7_4
+  section: 7
+  code: 7.4
+  hardlit: Hardlit
+  text: "Do Not Validhunt"
+  description: |-
+    Do not seek out, chase, or attack a threat without a valid in-character reason. Attacking an entity solely because you know as a player that it is an antagonist is not acceptable.
+
+    Handling station threats is Security's responsibility. Non-security roles should only arm themselves or intervene if the situation reaches them in-character: a direct threat to themselves or their colleagues, an active distress call, a bounty, a Code Black, or an explicit request.
+
+    • Acceptable: A dragon carries off your colleague in front of you. Your character publicly vows to rescue or avenge them and spends the round pursuing that goal.
+    • Acceptable: Defending a direct imminent threat to yourself or another person.
+    • Prohibited: A research assistant arming themselves to hunt down a dragon they have no prior connection to.

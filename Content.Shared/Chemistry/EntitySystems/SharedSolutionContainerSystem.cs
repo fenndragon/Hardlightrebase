@@ -204,9 +204,11 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         return true;
     }
 
+    // WOLFGATE: close the malformed XML summary after merge
     /// <summary>
     /// Version of TryGetSolution that doesn't take or return an entity.
     /// Used for prototypes and with old code parity.
+    /// </summary>
     public bool TryGetSolution(SolutionContainerManagerComponent container,
         string name,
         [NotNullWhen(true)] out Solution? solution,
@@ -572,7 +574,8 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     /// <param name="targetUid">entity holding the target solution</param>
     /// <param name="source">source solution</param>
     /// <param name="target">target solution</param>
-    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
+    // WOLFGATE: keep the solution transfer parameter valid XML
+    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source and target roles are reversed.</param>
     public bool TryTransferSolution(Entity<SolutionComponent> soln, Solution source, FixedPoint2 quantity)
     {
         var (uid, comp) = soln;

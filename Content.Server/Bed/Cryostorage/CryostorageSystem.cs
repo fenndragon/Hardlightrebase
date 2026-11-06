@@ -7,7 +7,6 @@ using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Bed.Cryostorage;
@@ -170,13 +169,22 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         var comp = ent.Comp;
         var cryostorageEnt = ent.Comp.Cryostorage;
 
-        var station = _station.GetOwningStation(ent);
+        EntityUid? stationUid = _station.GetOwningStation(ent); // HardLight-edit
+        var isPlayer = TryComp<ActorComponent>(ent, out var actor) && actor != null && actor.PlayerSession != null;
         var name = Name(ent.Owner);
+
+        // HardLight-edit start
+        if (stationUid == null && cryostorageEnt is { } cryostorageUid)
+            stationUid = _station.GetOwningStation(cryostorageUid);
+
+        if (stationUid is not { } stationUidValue)
+            return;
+        // HardLight-edit end
 
         if (!TryComp<CryostorageComponent>(cryostorageEnt, out var cryostorageComponent))
             return;
 
-        // if we have a session, we use that to add back in all the job slots the player had.
+        // If we have a session, we use that to add back in all the job slots the player had.
         if (userId != null)
         {
             foreach (var uniqueStation in _station.GetStationsSet())
@@ -221,29 +229,31 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         UpdateCryostorageUIState((cryostorageEnt.Value, cryostorageComponent));
         AdminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent):player} was entered into cryostorage inside of {ToPrettyString(cryostorageEnt.Value)}");
 
-        if (!TryComp<StationRecordsComponent>(station, out var stationRecords))
-            return;
-
         var jobName = Loc.GetString("earlyleave-cryo-job-unknown");
-        var recordId = _stationRecords.GetRecordByName(station.Value, name);
+        var recordId = _stationRecords.GetRecordByName(stationUidValue, name); // HardLight: station.Value<stationUidValue
         if (recordId != null)
         {
-            var key = new StationRecordKey(recordId.Value, station.Value);
-            if (_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var entry, stationRecords))
+            var key = new StationRecordKey(recordId.Value, stationUidValue); // HardLight: station.Value<stationUidValue
+            if (_stationRecords.TryGetRecord<GeneralStationRecord>(key, out var entry)) // HardLight: Removed stationRecords
                 jobName = entry.JobTitle;
 
-            _stationRecords.RemoveRecord(key, stationRecords);
+            _stationRecords.RemoveRecord(key); // HardLight: Removed stationRecords
         }
 
-        _chatSystem.DispatchStationAnnouncement(station.Value,
-            Loc.GetString(
-                "earlyleave-cryo-announcement",
-                ("character", name),
-                ("entity", ent.Owner), // gender things for supporting downstreams with other languages
-                ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
-            ), Loc.GetString("earlyleave-cryo-sender"),
-            playDefaultSound: false
-        );
+        // HL START: Only popup if it's actually a player
+        if (isPlayer)
+        {
+            _chatSystem.DispatchGlobalAnnouncement(
+                Loc.GetString(
+                    "earlyleave-cryo-announcement",
+                    ("character", name),
+                    ("entity", ent.Owner), // gender things for supporting downstreams with other languages
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
+                ), Loc.GetString("earlyleave-cryo-sender"),
+                playSound: false
+            );
+        }
+        // HL END
     }
 
     private void HandleCryostorageReconnection(Entity<CryostorageContainedComponent> entity)
@@ -252,7 +262,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         if (!CryoSleepRejoiningEnabled || !IsInPausedMap(uid))
             return;
 
-        // how did you destroy these? they're indestructible.
+        // How did you destroy these? they're indestructible.
         if (comp.Cryostorage is not { } cryostorage ||
             TerminatingOrDeleted(cryostorage) ||
             !TryComp<CryostorageComponent>(cryostorage, out var cryostorageComponent))

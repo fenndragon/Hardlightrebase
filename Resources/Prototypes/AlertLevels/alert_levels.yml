@@ -21,6 +21,13 @@
       emergencyLightColor: Violet
       forceEnableEmergencyLights: true
       shuttleTime: 600
+    white:
+      announcement: alert-level-white-announcement
+      sound: /Audio/Misc/redalert.ogg
+      emergencyLightColor: "#F6CCF6"
+      color: White
+      forceEnableEmergencyLights: true
+      shuttleTime: 600
     yellow:
       announcement: alert-level-yellow-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -70,3 +77,21 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    omicron: # Goobstation
+      announcement: alert-level-omicron-announcement
+      selectable: false
+      sound:
+        path: /Audio/_Goobstation/Misc/omicron.ogg
+      disableSelection: true
+      color: Ivory
+      emergencyLightColor: Ivory
+      forceEnableEmergencyLights: true
+      shuttleTime: 2400
+    black:
+      announcement: alert-level-black-announcement
+      sound:
+        path: /Audio/_HL/Announcements/blackalert.ogg
+      color: "#555555"
+      emergencyLightColor: Black
+      forceEnableEmergencyLights: true
+      shuttleTime: 600

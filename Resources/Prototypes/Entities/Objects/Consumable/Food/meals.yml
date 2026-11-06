@@ -18,10 +18,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 36 # Frontier: 26<36
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 35
         - ReagentId: Flavorol
           Quantity: 10
 
@@ -98,10 +98,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 60
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: JuiceCarrot
-          Quantity: 20
+          Quantity: 10
 # Tastes like carrots, salt.
 
 - type: entity
@@ -124,10 +128,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 11
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: TableSalt
@@ -155,16 +161,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 3
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: TableSalt
           Quantity: 1
-        - ReagentId: Flavorol
-          Quantity: 5
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -189,15 +193,15 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30 # Frontier: 25<30
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: CapsaicinOil
           Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Flavorol
           Quantity: 5
 # Tastes like nachos, hot pepper.
 
@@ -237,14 +241,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Fruit
@@ -280,14 +284,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: CarpoToxin
           Quantity: 3
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - CubanCarp
@@ -310,14 +314,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -338,13 +342,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 17
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 35
         - ReagentId: Flavorol
+          Quantity: 10
+        - ReagentId: Vitamin
           Quantity: 5
   - type: Tag
     tags:
@@ -366,10 +370,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 10
+        - ReagentId: Flavorol
+          Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
   - type: Tag
@@ -395,16 +401,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Protein
           Quantity: 10
         - ReagentId: BbqSauce
           Quantity: 10
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -427,12 +433,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Flavorol
           Quantity: 5
   - type: Tag
@@ -453,14 +459,6 @@
   - type: Sprite
     state: omelette
   - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 9
-        - ReagentId: Flavorol
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -482,10 +480,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: TableSalt
           Quantity: 1
         - ReagentId: Blackpepper
@@ -523,9 +523,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
+          Quantity: 35
+        - ReagentId: Flavorol
           Quantity: 10
         - ReagentId: Allicin
           Quantity: 5
@@ -545,16 +547,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 9
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Water
           Quantity: 10
         - ReagentId: Blackpepper
           Quantity: 3
-        - ReagentId: Flavorol
-          Quantity: 5
 # Tastes awesome.
 
 - type: entity
@@ -587,12 +589,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: CarpoToxin
-          Quantity: 15
+          Quantity: 10
   - type: Tag
     tags:
     - Meat
@@ -613,14 +617,14 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 15
+          maxVol: 65
           reagents:
           - ReagentId: Nutriment
-            Quantity: 8
+            Quantity: 35
           - ReagentId: CapsaicinOil
             Quantity: 6
           - ReagentId: Flavorol
-            Quantity: 5
+            Quantity: 10
     - type: Tag
       tags:
       - Meat
@@ -680,9 +684,11 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 65
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 35
+        - ReagentId: Flavorol
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 4

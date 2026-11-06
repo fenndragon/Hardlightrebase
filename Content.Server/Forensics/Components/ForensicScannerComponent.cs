@@ -1,4 +1,3 @@
-using System.Threading;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;
@@ -23,7 +22,7 @@ namespace Content.Server.Forensics
         public List<string> Fibers = new();
 
         /// <summary>
-        /// DNA that the forensic scanner found from the <see cref="DNAComponent"/> on an entity.
+        /// DNA that the forensic scanner found from the DNAComponent on an entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly), DataField("dnas")]
         public List<string> TouchDNAs = new();

@@ -1,5 +1,4 @@
 using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Physics;
 using Content.Shared.Whitelist; // Frontier
@@ -89,8 +88,8 @@ namespace Content.Server.Explosion.Components
         /// </summary>
         [ViewVariables]
         [DataField("layer", customTypeSerializer: typeof(FlagSerializer<CollisionLayer>))]
-        public int Layer = (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable);
-        
+        public int Layer = (int)(CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable);
+
         /// <summary>
         /// Frontier: Use Whitelist to trigger
         /// </summary>

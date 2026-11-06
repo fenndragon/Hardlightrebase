@@ -17,15 +17,19 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// <summary>
     /// Maximum amount of orders a station is allowed, approved or not.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
+    [DataField]
     public int Capacity = 20;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
-    public List<CargoOrderData> Orders = new();
+    [ViewVariables]
+    public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
+
+    [DataField]
+    public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
 
     /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
+    [ViewVariables]
     public int NumOrdersCreated;
 
     // TODO: Can probably dump this

@@ -1,0 +1,139 @@
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
+  id: ClothingOuterArmorFireSuitPoc
+  name: modified fire suit
+  description: A modified emergency responder's fire suit with extra padding. Joints have been replaced and some parts removed for better range of motion and speed.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/modfire.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/modfire.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.8
+        Cold: 0.8
+        Caustic: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: GroupExamine
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+  - type: TemperatureProtection
+    heatingCoefficient: 0.005
+    coolingCoefficient: 0.05
+  - type: FireProtection
+    reduction: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: HLClothingOuterArmorClockwork
+  name: clockwork cuirass
+  description: A bulky cuirass made of brass.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/clockwork_cuirass.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/clockwork_cuirass.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: GroupExamine
+
+- type: entity
+  parent: [ BaseC1Contraband, ClothingOuterVestWebMercenary ]
+  id: ClothingOuterArmoredJacketPMCBlue
+  name: PMC armored jacket
+  description: A high-quality armored jacket made from a tough but flexible synthetic fiber. Gives the user a decent degree of stylish protection.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_blue.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_blue.rsi
+
+- type: entity
+  parent: [ BaseC1Contraband, ClothingOuterVestWebMercenary ]
+  id: ClothingOuterArmoredJacketPMCGreen
+  name: PMC armored jacket
+  description: A high-quality armored jacket made from a tough but flexible synthetic fiber. Gives the user a decent degree of stylish protection.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_green.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_green.rsi
+
+- type: entity
+  parent: [ BaseC1Contraband, ClothingOuterVestWebMercenary ]
+  id: ClothingOuterArmoredJacketPMCOlive
+  name: PMC armored jacket
+  description: A high-quality armored jacket made from a tough but flexible synthetic fiber. Gives the user a decent degree of stylish protection.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_olive.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/pmc_armored_jacket_olive.rsi
+
+- type: entity
+  parent: [ BaseC2Contraband, ClothingOuterVestWebMercenary ]
+  id: ClothingOuterArmoredVestInterdyne
+  name: Interdyne armored vest
+  description: A high-quality armored vest with ceramic plates and chemically resistant fabric.
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/interdynebodyarmor.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/interdynebodyarmor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.75
+        Heat: 0.8
+        Caustic: 0.7
+        
+- type: entity
+  parent: [ ClothingOuterBaseLarge, BaseC3ExpeditionContraband, AllowSuitStorageClothing ] # Frontier: BaseMajorContraband<BaseC3Contraband
+  id: ClothingOuterArmorAberrant
+  name: aberrant armor
+  description: Looks horrible. Smells even worse. But i guess armor is worth it?
+  components:
+  - type: Sprite
+    sprite: _HL/Clothing/OuterClothing/aberrantarmor.rsi
+  - type: Clothing
+    sprite: _HL/Clothing/OuterClothing/aberrantarmor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 1.4  # living flesh is hard to pierce, but easy to burn or something idk
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: Butcherable #I mean, its mostly just meat...
+    butcheringType: Knife
+    spawned:
+    - id: MaterialSheetMeat1
+      amount: 5
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: GroupExamine
+  - type: ProtectedFromStepTriggers
+    slots: WITHOUT_POCKET
+

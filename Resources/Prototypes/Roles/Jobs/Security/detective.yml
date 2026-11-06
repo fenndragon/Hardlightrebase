@@ -2,36 +2,36 @@
   id: Detective
   name: job-name-detective
   description: job-description-detective
-  playTimeTracker: JobDetectiveOld
+  playTimeTracker: JobDetective
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Security
-      time: 54000 # 15 hours
+  - !type:RoleTimeRequirement
+    role: JobSecurityOfficer
+    time: 18000 # 5 hrs
+  weight: 40 # HardLight
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
   canBeAntag: false
   ## Frontier: commented stuff out below
-  # access:
-  # - Security
-  # - Brig
-  # - Maintenance
-  # - Service
-  # - Detective
-  # - Cryogenics
-  # - External
-  # special:
-  # - !type:AddImplantSpecial
-  #   implants: [ MindShieldImplant ]
-  ## Frontier: commented stuff out above
-  setPreference: false # Frontier
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - Detective
+  - Cryogenics
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  setPreference: true
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
 - type: startingGear
   id: DetectiveGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
+    # eyes: ClothingEyesGlassesSecurity # HardLight: Add departmental NF-style loadouts
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltHolsterFilled
@@ -40,3 +40,4 @@
     - Flash
     - ForensicPad
     - ForensicScanner
+    - FrontierUplinkCoin10

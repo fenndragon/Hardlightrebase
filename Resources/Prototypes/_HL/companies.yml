@@ -1,0 +1,9 @@
+- type: company
+  id: LRSI
+  form: Protagonist
+  name: Lumi Reind Stellar Initiative
+  color: "#F5A9BB" # transflag pink
+  disabled: false
+  logins:
+  - ATRAC # Supreme Commander
+  - nggnyfbg55 # the reind in lumi reind

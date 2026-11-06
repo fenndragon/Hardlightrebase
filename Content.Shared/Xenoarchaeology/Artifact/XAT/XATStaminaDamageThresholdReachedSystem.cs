@@ -1,4 +1,4 @@
-using Content.Shared.Damage.Systems; // WOLFGATE(Xenoarch): BeforeStaminaDamageEvent is in Systems here
+using Content.Shared.Damage.Events; // WOLFGATE(Xenoarch): BeforeStaminaDamageEvent lives in Damage.Events
 using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;

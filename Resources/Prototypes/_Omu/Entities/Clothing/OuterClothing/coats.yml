@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCMOLabCoat
+  name: CMO's Splashproof Labcoat
+  description: A Heavy, splash resistant labcoat made out of a fabric inner layer and plastic outer layer. Practical and cozy!
+  components:
+  - type: Sprite
+    sprite: _Omu/Clothing/OuterClothing/Coats/CMOlabcoat.rsi
+  - type: Clothing
+    sprite: _Omu/Clothing/OuterClothing/Coats/CMOlabcoat.rsi
+  
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCMOLabCoat]
+  id: ClothingOuterCMOLabCoatOpened
+  name: chief medical officer's lab coat

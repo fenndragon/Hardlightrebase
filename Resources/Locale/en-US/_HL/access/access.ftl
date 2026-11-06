@@ -1,0 +1,13 @@
+id-card-access-level-nanotrasen = Nanotrasen
+id-card-access-level-nanotrasen-operative = Nanotrasen Operative
+id-card-access-level-arcadia = Arcadia
+id-card-access-level-cartel = Cartel
+id-card-access-level-cartel-lieutenant = Cartel Lieutenant
+id-card-access-level-nanotrasen-Gunny = Nanotrasen Gunnery Sergeant
+id-card-access-level-nanotrasen-lieutenant = Nanotrasen Lieutenant
+id-card-access-level-nanotrasen-senior-officer = Nanotrasen Senior Offier
+id-card-access-level-nanotrasen-admiral = Nanotrasen Admiral
+id-card-access-level-interdyne = Interdyne
+id-card-access-level-interdyne-head = Interdyne Head
+id-card-access-level-directorate = Directorate
+id-card-access-level-naval = Naval

@@ -9,3 +9,12 @@ metabolizer-type-plant = Plant
 metabolizer-type-dwarf = Dwarf
 metabolizer-type-moth = Moth
 metabolizer-type-arachnid = Arachnid
+metabolizer-type-vampiric = Vampiric
+# Starlight
+metabolizer-type-vampire = Vampire
+metabolizer-type-avali = Avali
+metabolizer-type-resomi = Resomi
+# HardLight
+metabolizer-type-synth = Synth
+metabolizer-type-dreadtalon = Dreadtalon
+metabolizer-type-succubus = Succubus

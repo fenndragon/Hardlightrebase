@@ -22,9 +22,17 @@
       - PaintingRedBlueYellow
       - PaintingHelloWorld
       - PaintingNightOfThePostGoblin
+      - PaintingCaladrius
       # Special halloween posters
       - PaintingSpookyIan
       - PaintingSpookyLady
+      - PaintingArcameDuelAtDusk
+      - PaintingDrDinoGothic
+      - PaintingFihSpecimine
+      - PaintingQuietShift
+      - PaintingShitshitshitfuckfuckfuck
+      - PaintingTitansAmongGiants
+      - PaintingUristesque
     chance: 1
     rarePrototypes:
       - PaintingSkeletonBoof

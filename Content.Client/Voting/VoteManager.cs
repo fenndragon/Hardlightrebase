@@ -1,20 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Voting;
 using Robust.Client;
 using Robust.Client.Audio;
 using Robust.Client.Console;
-using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Robust.Shared.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Sources;
-using Robust.Shared.ContentPack;
 
 
 namespace Content.Client.Voting
@@ -30,6 +22,9 @@ namespace Content.Client.Voting
         bool CanCallStandardVote(StandardVoteType type, out TimeSpan whenCan);
         event Action<bool> CanCallVoteChanged;
         event Action CanCallStandardVotesChanged;
+        event Action<MsgVoteAuditResponse>? VoteAuditResponseReceived;
+        void RequestVoteAuditList();
+        void RequestVoteAuditInspect(int voteId);
     }
 
     public sealed partial class VoteManager : IVoteManager
@@ -66,8 +61,27 @@ namespace Content.Client.Voting
 
             _netManager.RegisterNetMessage<MsgVoteData>(ReceiveVoteData);
             _netManager.RegisterNetMessage<MsgVoteCanCall>(ReceiveVoteCanCall);
+            _netManager.RegisterNetMessage<MsgVoteAuditRequest>();
+            _netManager.RegisterNetMessage<MsgVoteAuditResponse>(ReceiveVoteAuditResponse);
 
             _client.RunLevelChanged += ClientOnRunLevelChanged;
+        }
+
+        public event Action<MsgVoteAuditResponse>? VoteAuditResponseReceived;
+
+        public void RequestVoteAuditList()
+        {
+            _netManager.ClientSendMessage(new MsgVoteAuditRequest { WantInspect = false });
+        }
+
+        public void RequestVoteAuditInspect(int voteId)
+        {
+            _netManager.ClientSendMessage(new MsgVoteAuditRequest { WantInspect = true, VoteId = voteId });
+        }
+
+        private void ReceiveVoteAuditResponse(MsgVoteAuditResponse msg)
+        {
+            VoteAuditResponseReceived?.Invoke(msg);
         }
 
         private void ClientOnRunLevelChanged(object? sender, RunLevelChangedEventArgs e)
@@ -187,7 +201,7 @@ namespace Content.Client.Voting
             existingVote.DisplayVotes = message.DisplayVotes;
             existingVote.TargetEntity = message.TargetEntity;
 
-            // Logger.Debug($"{existingVote.StartTime}, {existingVote.EndTime}, {_gameTiming.RealTime}");
+            // Logger.GetSawmill(nameof(VoteManager)).($"{existingVote.StartTime}, {existingVote.EndTime}, {_gameTiming.RealTime}");
 
             for (var i = 0; i < message.Options.Length; i++)
             {
@@ -269,3 +283,4 @@ namespace Content.Client.Voting
         }
     }
 }
+

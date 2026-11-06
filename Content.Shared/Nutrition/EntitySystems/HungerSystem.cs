@@ -6,11 +6,9 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.StatusIcon;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -44,8 +42,8 @@ public sealed partial class HungerSystem : EntitySystem
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
     {
         var amount = _random.Next(
-            (int) component.Thresholds[HungerThreshold.Peckish] + 10,
-            (int) component.Thresholds[HungerThreshold.Okay]);
+            (int)component.Thresholds[HungerThreshold.Peckish] + 10,
+            (int)component.Thresholds[HungerThreshold.Okay]);
         SetHunger(uid, amount, component);
     }
 
@@ -120,6 +118,7 @@ public sealed partial class HungerSystem : EntitySystem
         entity.Comp.LastAuthoritativeHungerChangeTime = _timing.CurTime;
         entity.Comp.LastAuthoritativeHungerValue = ClampHungerWithinThresholds(entity.Comp, value);
         DirtyField(entity.Owner, entity.Comp, nameof(HungerComponent.LastAuthoritativeHungerChangeTime));
+        DirtyField(entity.Owner, entity.Comp, nameof(HungerComponent.LastAuthoritativeHungerValue));
     }
 
     private void UpdateCurrentThreshold(EntityUid uid, HungerComponent? component = null)
@@ -132,6 +131,7 @@ public sealed partial class HungerSystem : EntitySystem
             return;
 
         component.CurrentThreshold = calculatedHungerThreshold;
+        DirtyField(uid, component, nameof(HungerComponent.CurrentThreshold));
         DoHungerThresholdEffects(uid, component);
     }
 
@@ -160,10 +160,12 @@ public sealed partial class HungerSystem : EntitySystem
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
+            DirtyField(uid, component, nameof(HungerComponent.ActualDecayRate));
             SetAuthoritativeHungerValue((uid, component), GetHunger(component));
         }
 
         component.LastThreshold = component.CurrentThreshold;
+        DirtyField(uid, component, nameof(HungerComponent.LastThreshold));
     }
 
     private void DoContinuousHungerEffects(EntityUid uid, HungerComponent? component = null)

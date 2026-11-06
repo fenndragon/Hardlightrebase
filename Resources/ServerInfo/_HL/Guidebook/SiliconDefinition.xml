@@ -1,0 +1,161 @@
+<Document># Silicon Definition
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Silicons aboard Frontier stations generally fall into two categories: [bold]Free-Thinking Sophonts (FTS)[/bold] and [bold]Branded Silicons[/bold]. While both may possess synthetic bodies or artificial minds, their legal status differs significantly.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Quick Reference
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="2">
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Free-Thinking Sophonts (FTS)[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1b67a5">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Branded Silicons[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Independent individuals
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Organizational assets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Possess full free will
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Bound by active lawsets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Accountable for their own actions
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Expected to follow assigned directives
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Not governed by silicon laws
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Governed by authorized lawsets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treated as people under station policy
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Treated as both individuals and assets
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Examples: IPCs, Synths, Protogens, Unbranded Cyborgs
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23">
+    <Box>
+      Examples: Station AI, Colonial Command Cyborgs
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+<Box Orientation="Vertical" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#808080" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Note[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box Orientation="Vertical">
+      For simplicity, any Cyborg that loads in as a station role, such as Station AI, standard Cyborgs, or departmental Quadborgs, is considered a [bold]Branded Silicon[/bold].
+
+      Any cyborg that exists independently of Colonial Command, including Patreon-specific cyborg characters (if they decide), cyborgs owned or constructed by Freelancers, private individuals, or other non-Colonial Command entities, is generally considered an [bold]Unbranded Cyborg[/bold] and therefore a [bold]Free-Thinking Sophont (FTS)[/bold].
+
+      Cyborgs constructed, commissioned, or converted by station personnel during a round are not considered Free-Thinking Sophonts by default and are generally classified as Branded Silicons unless otherwise specified by administration or server lore.
+
+      This distinction applies only to cyborgs. IPCs, Synths, Protogens, and other recognized Free-Thinking Sophonts are considered independent individuals regardless of who manufactured their physical body.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+
+## One Universal Rule
+
+One thing remains true regardless of classification:
+
+[bold]A silicon's body may be replaceable, but its mind is not.[/bold]
+
+Whether a silicon is an independent sophont, a corporate asset, or something in between, the loss of a positronic mind, neural pattern, or personality matrix is generally considered the loss of an individual.
+
+Personnel should make every reasonable effort to preserve silicon minds whenever possible.
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#388c34" OutlineThickness="0">
+    <Box VerticalAlignment="Center">
+      [bold][color=#ffffff]Tip[/color][/bold]
+    </Box>
+  </ColorBox>
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      When in doubt, preserve the mind first and worry about the chassis later.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+
+# General Expectations
+
+- A synthetic body does not automatically make someone property.
+
+- Not all silicons are people.
+
+- Not all silicons are assets.
+
+- Free-Thinking Sophonts are independent individuals and are not governed by silicon lawsets.
+
+- Branded Silicons are organizational assets and are expected to follow their active lawset.
+
+- A silicon's mind should always be considered more valuable than the chassis containing it.
+
+- Always determine whether a silicon is an FTS or Branded Silicon before deciding how they should be treated regarding lawsets.
+
+- When in doubt, err on the side of preserving minds and avoiding irreversible harm.
+
+## Final Note
+
+The distinction between Free-Thinking Sophonts and Branded Silicons exists to determine legal status, responsibilities, and expectations. Regardless of classification, personnel should remember that most synthetic intelligences are far more than machines. Treat them according to their status, preserve their minds whenever possible, and exercise good judgment when dealing with synthetic life.
+
+</Document>

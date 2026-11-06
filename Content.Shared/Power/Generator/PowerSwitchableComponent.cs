@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Audio;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -9,7 +9,7 @@ namespace Content.Shared.Power.Generator;
 /// For generators this means changing output wires.
 /// </summary>
 /// <remarks>
-/// Must have <c>CableDeviceNode</c>s for each output in <see cref="Outputs"/>.
+/// Must have <c>CableDeviceNode</c>s for each output in Outputs.
 /// If its a generator <c>PowerSupplierComponent</c> is also required.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

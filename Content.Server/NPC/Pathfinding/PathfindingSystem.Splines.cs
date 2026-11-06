@@ -37,7 +37,7 @@ public sealed partial class PathfindingSystem
     /// <summary>
     /// Gets a spline path from start to end.
     /// </summary>
-    public SplinePathResult GetSplinePath(SplinePathArgs args, Random random)
+    public SplinePathResult GetSplinePath(SplinePathArgs args, IRobustRandom random)
     {
         var start = args.Args.Start;
         var end = args.Args.End;
@@ -92,7 +92,7 @@ public sealed partial class PathfindingSystem
                 pairs[i] = (pointA, splinePoint);
                 pairs.Insert(i + 1, (splinePoint, pointB));
 
-                i+= 2;
+                i += 2;
             }
         }
 

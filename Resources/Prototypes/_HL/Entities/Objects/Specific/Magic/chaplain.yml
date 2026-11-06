@@ -1,0 +1,45 @@
+
+- type: entity
+  name: Blessing
+  parent: BaseItem
+  id: MinorBlessing
+  suffix: 10
+  description: A reward from above or below.
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: phoron_gem_spent
+    size: Tiny
+  - type: Stack
+    count: 10
+    stackType: MinorBlessing
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 0
+  - type: Currency
+    price:
+      MinorBlessing: 1
+
+- type: entity
+  parent: MinorBlessing
+  id: MinorBlessing1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MinorBlessing
+  id: MinorBlessing5
+  suffix: 5
+  components:
+  - type: Stack
+    count: 5
+
+- type: stack
+  id: MinorBlessing
+  name: stack-blessing
+#  icon: { sprite: _NF/Objects/Misc/stock_parts.rsi, state: adv_capacitor }
+  spawn: MinorBlessing
+  maxCount: 10

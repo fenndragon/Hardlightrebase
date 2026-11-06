@@ -1,5 +1,4 @@
 using Content.Shared.Eui;
-using NetSerializer;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CrewManifest;
@@ -21,14 +20,12 @@ public sealed class RequestCrewManifestMessage : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class CrewManifestEuiState : EuiStateBase
+public sealed class CrewManifestEuiState : EuiStateBase // Coyote: Removed StationName
 {
-    public string StationName { get; }
     public CrewManifestEntries? Entries { get; }
 
-    public CrewManifestEuiState(string stationName, CrewManifestEntries? entries)
+    public CrewManifestEuiState(CrewManifestEntries? entries)
     {
-        StationName = stationName;
         Entries = entries;
     }
 }
@@ -71,4 +68,4 @@ public sealed class CrewManifestEntry
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class CrewManifestOpenUiMessage : BoundUserInterfaceMessage
-{}
+{ }

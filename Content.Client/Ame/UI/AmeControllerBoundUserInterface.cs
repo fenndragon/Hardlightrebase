@@ -25,14 +25,14 @@ namespace Content.Client.Ame.UI
         /// Update the ui each time new state data is sent from the server.
         /// </summary>
         /// <param name="state">
-        /// Data of the <see cref="SharedReagentDispenserComponent"/> that this ui represents.
+        /// Data of the SharedReagentDispenserComponent that this ui represents.
         /// Sent from the server.
         /// </param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
-            var castState = (AmeControllerBoundUserInterfaceState) state;
+            var castState = (AmeControllerBoundUserInterfaceState)state;
             _window?.UpdateState(castState); //Update window state
         }
 

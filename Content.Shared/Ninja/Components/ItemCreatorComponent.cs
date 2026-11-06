@@ -24,7 +24,7 @@ public sealed partial class ItemCreatorComponent : Component
     [DataField(required: true)]
     public EntProtoId<InstantActionComponent> Action = string.Empty;
 
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -47,6 +47,6 @@ public sealed partial class ItemCreatorComponent : Component
 }
 
 /// <summary>
-/// Action event to use an <see cref="ItemCreator"/>.
+/// Action event to use an ItemCreator.
 /// </summary>
 public sealed partial class CreateItemEvent : InstantActionEvent;

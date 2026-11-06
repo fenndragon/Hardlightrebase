@@ -17,9 +17,6 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab
         public ObjectsTabHeader()
         {
             RobustXamlLoader.Load(this);
-
-            ObjectNameLabel.OnKeyBindDown += ObjectNameClicked;
-            EntityIDLabel.OnKeyBindDown += EntityIDClicked;
         }
 
         public Label GetHeader(Header header)
@@ -66,15 +63,21 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab
             HeaderClicked(args, Header.EntityID);
         }
 
-        protected override void Dispose(bool disposing)
+        // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+        protected override void EnteredTree()
         {
-            base.Dispose(disposing);
+            base.EnteredTree();
+            ObjectNameLabel.OnKeyBindDown += ObjectNameClicked;
+            EntityIDLabel.OnKeyBindDown += EntityIDClicked;
+        }
+        // HL END
 
-            if (disposing)
-            {
-                ObjectNameLabel.OnKeyBindDown -= ObjectNameClicked;
-                EntityIDLabel.OnKeyBindDown -= EntityIDClicked;
-            }
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            ObjectNameLabel.OnKeyBindDown -= ObjectNameClicked;
+            EntityIDLabel.OnKeyBindDown -= EntityIDClicked;
         }
 
         public enum Header

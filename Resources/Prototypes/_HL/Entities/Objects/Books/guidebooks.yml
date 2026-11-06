@@ -1,0 +1,65 @@
+- type: entity
+  parent: BaseGuidebook
+  id: HLBookSpaceLaw
+  name: space law
+  description: A big book of laws for space courts.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/books.rsi
+    layers:
+    - state: law_space
+  - type: GuideHelp
+    guides:
+    - HLSpaceLaw
+    - SOP
+    # - Antagonists # Frontier: removed guidebook entry
+  - type: Tag
+    tags:
+    - Book
+    - BookSpaceLaw
+
+# HardLight Command SOP
+- type: entity
+  parent: BaseGuidebook
+  id: HLBookCommandSOP
+  name: command SOP
+  description: A big book of standard command operating procedures.
+  components:
+  - type: Sprite
+    sprite: _NF/Objects/Misc/books.rsi
+    layers:
+    - state: command_sop
+  - type: GuideHelp
+    guides:
+    - SOPCommand
+    - AlertLevels
+    # - Antagonists # Frontier: removed guidebook entry
+  - type: Tag
+    tags:
+    - Book
+
+- type: entity
+  id: HLBookSecurity
+  parent: BaseGuidebook
+  name: security 101
+  description: A book about security written by a washed-out TSF-NT detective. The book is stained with blood. It seems to have been used more as a weapon than reading material.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#159cab" # Hardlight security blue
+    - state: decor_wingette
+      color: "#349ae0" # Hardlight security blue
+    - state: icon_stunbaton
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    damage:
+      types:
+        Blunt: 6
+  - type: GuideHelp
+    guides:
+    - SOPSecurity
+    - AlertLevels
+    - HLSpaceLaw
+    # - Antagonists # Frontier: removed guidebook entry

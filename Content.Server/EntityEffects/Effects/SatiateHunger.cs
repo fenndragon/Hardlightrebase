@@ -1,5 +1,3 @@
-using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -29,7 +27,7 @@ namespace Content.Server.EntityEffects.Effects
                 return;
             if (args is EntityEffectReagentArgs reagentArgs)
             {
-                entman.System<HungerSystem>().ModifyHunger(reagentArgs.TargetEntity, NutritionFactor * (float) reagentArgs.Quantity, hunger);
+                entman.System<HungerSystem>().ModifyHunger(reagentArgs.TargetEntity, NutritionFactor * (float)reagentArgs.Quantity, hunger);
             }
             else
             {

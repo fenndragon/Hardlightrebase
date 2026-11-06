@@ -34,8 +34,9 @@ public sealed partial class FTLMapComponent : Component
     [DataField, AutoNetworkedField]
     public bool Beacons;
 
+    // WOLFGATE: replace the ampersand in XML documentation
     /// <summary>
-    /// Mono: used for ContentAudioSystem.AmbientMusic.cs & SpaceBiomeSystem.cs to communicate biome on FTL
+    /// Mono: used for ContentAudioSystem.AmbientMusic.cs and SpaceBiomeSystem.cs to communicate biome on FTL
     /// </summary>
     [DataField]
     public ProtoId<SpaceBiomePrototype> Biome = "BiomeFTL";

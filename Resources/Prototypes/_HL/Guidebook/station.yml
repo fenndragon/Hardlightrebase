@@ -1,0 +1,10 @@
+- type: guideEntry
+  id: StationAndShifts
+  name: guide-entry-ss14
+  text: "/ServerInfo/_HL/Guidebook/StationShifts.xml"
+  priority: -1
+  children:
+  - Jobs
+  - Antagonists
+  - NF14
+  - SiliconPolicy

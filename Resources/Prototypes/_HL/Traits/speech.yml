@@ -1,0 +1,536 @@
+- type: trait
+  id: HLRoboticVoice
+  name: hl-trait-robot-voice-name
+  description: hl-trait-robot-voice-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Pai
+    speechVerb: Robotic
+    allowedEmotes: ['Beep', 'Ping', 'Buzz', 'Buzz-Two', 'Chime', 'Honk']
+  - type: Vocal
+    sounds:
+      Male: UnisexSilicon
+      Female: UnisexSilicon
+      Unsexed: UnisexSilicon
+
+- type: trait
+  id: HLBorgVoice
+  name: hl-trait-borg-voice-name
+  description: hl-trait-borg-voice-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Borg
+    speechVerb: Robotic
+    allowedEmotes: ['Beep', 'Ping', 'Buzz', 'Buzz-Two', 'Chime', 'Honk']
+  - type: Vocal
+    sounds:
+      Male: UnisexSilicon
+      Female: UnisexSilicon
+      Unsexed: UnisexSilicon
+
+
+- type: trait
+  id: HLVoiceAvali
+  name: hl-trait-voice-avali-name
+  description: hl-trait-voice-avali-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: MaleAvali
+    speechVerb: Parrot
+    allowedEmotes: ['Chirp', 'Hiss', 'Purr', 'Growl', 'Trill', 'Scree', 'Call', 'Squawk'] # copied from the species
+  - type: Vocal
+    sounds:
+      Male: MaleAvali
+      Female: FemaleAvali
+      Unsexed: MaleAvali
+
+- type: trait
+  id: HLVoiceSyndieborg
+  name: hl-trait-voice-syndieborg-name
+  description: hl-trait-voice-syndieborg-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: SyndieBorg
+    speechVerb: Robotic
+    allowedEmotes: ['Beep', 'Ping', 'Buzz', 'Buzz-Two', 'Chime', 'Honk']
+  - type: Vocal
+    sounds:
+      Male: UnisexSiliconSyndicate
+      Female: UnisexSiliconSyndicate
+      Unsexed: UnisexSiliconSyndicate
+
+
+- type: trait
+  id: HLVoiceXenoborg
+  name: hl-trait-voice-xenoborg-name
+  description: hl-trait-voice-xenoborg-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Xenoborg
+    speechVerb: Robotic
+    allowedEmotes: ['Beep', 'Ping', 'Buzz', 'Buzz-Two', 'Chime', 'Honk']
+  - type: TypingIndicator
+    proto: xenoborg
+  - type: Vocal
+    sounds:
+      Male: UnisexSiliconSyndicate
+      Female: UnisexSiliconSyndicate
+      Unsexed: UnisexSiliconSyndicate
+    
+
+- type: trait
+  id: HLVoiceVulpkanin
+  name: hl-trait-voice-vulpkanin-name
+  description: hl-trait-voice-vulpkanin-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Pout', 'Howl', 'Growl', 'Yip', 'Awoo', 'Yap', 'Gekker', 'Purr' ] # copied from the species
+  - type: Vocal
+    sounds:
+      Male: MaleVulpkanin
+      Female: FemaleVulpkanin
+      Unsexed: MaleVulpkanin
+
+- type: trait
+  id: HLVoiceLizard
+  name: hl-trait-voice-lizard-name
+  description: hl-trait-voice-lizard-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Lizard
+    speechVerb: Reptilian
+    allowedEmotes: [ 'Hiss', 'Purr', 'RMCReptileRattle'] # copied from the species
+  - type: TypingIndicator
+    proto: lizard
+  - type: Vocal
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian
+
+- type: trait
+  id: HLVoiceSlime
+  name: hl-trait-voice-slime-name
+  description: hl-trait-voice-slime-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Slime
+    speechVerb: Slime
+    allowedEmotes: ['Squish', 'Bubble', 'Pop'] # copied from the species
+  - type: TypingIndicator
+    proto: slime
+  - type: Vocal
+    sounds:
+      Male: MaleSlime
+      Female: FemaleSlime
+      Unsexed: MaleSlime
+
+- type: trait
+  id: HLVoiceFox
+  name: hl-trait-voice-fox-name
+  description: hl-trait-voice-fox-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Fox
+    speechVerb: Canine
+    allowedEmotes: ['Growl', 'Squeak', 'Yip', 'Whine', 'Pout', 'Yap', 'Howl', 'Purr', 'Gekker'] # taken from the kitsune list
+  - type: Vocal
+    sounds:
+      Male: UnisexFox
+      Female: UnisexFox
+      Unsexed: UnisexFox
+
+- type: trait
+  id: HLVoiceDog
+  name: hl-trait-voice-dog-name
+  description: hl-trait-voice-dog-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Dog
+    speechVerb: Canine
+    allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Pout', 'Howl', 'Growl', 'Yip', 'Awoo', 'Yap', 'Gekker', 'Purr' ] # copied from vulp
+  - type: Vocal
+    sounds:
+      Male: MaleVulpkanin
+      Female: FemaleVulpkanin
+      Unsexed: MaleVulpkanin
+
+
+- type: trait
+  id: HLVoiceMoth
+  name: hl-trait-voice-moth-name
+  description: hl-trait-voice-moth-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceCat
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechVerb: Moth
+    speechSounds: Moth
+    allowedEmotes: ['Chitter', 'Squeak'] # copied from the species
+  - type: TypingIndicator
+    proto: moth
+  - type: Vocal
+    sounds:
+      Male: UnisexMoth
+      Female: UnisexMoth
+      Unsexed: UnisexMoth
+
+
+- type: trait
+  id: HLVoiceCat
+  name: hl-trait-voice-cat-name
+  description: hl-trait-voice-cat-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceResomi
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechSounds: Cat
+    speechVerb: Felinid
+    allowedEmotes: ['Hiss','Meow','Mew','Growl','Purr','Trill'] # copied from the species
+  - type: TypingIndicator
+    proto: felinid
+  - type: Vocal
+    wilhelm: "/Audio/Nyanotrasen/Voice/Felinid/cat_wilhelm.ogg"
+    sounds:
+      Male: MaleFelinid
+      Female: FemaleFelinid
+      Unsexed: MaleFelinid
+
+- type: trait
+  id: HLVoiceResomi
+  name: hl-trait-voice-resomi-name
+  description: hl-trait-voice-resomi-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceWawa
+  components:
+  - type: Speech
+    speechVerb: Parrot
+    speechSounds: UnisexResomi
+    allowedEmotes: ['Chirp', 'Hiss', 'Purr', 'Growl', 'Trill', 'Wurble', 'Scree', 'Call', 'Squawk'] # copied from the species
+  - type: Vocal
+    sounds:
+      Male: UnisexResomi
+      Unsexed: UnisexResomi
+      Female: UnisexResomi
+
+- type: trait
+  id: ScandinavianAccent
+  name: hl-trait-scandinavian-name
+  description: hl-trait-scandinavian-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ScandinavianAccent
+
+- type: trait
+  id: HLVoiceWawa
+  name: hl-trait-voice-wawa-name
+  description: hl-trait-voice-wawa-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  mutuallyExclusiveTraits:
+   - HLRoboticVoice
+   - HLBorgVoice
+   - HLVoiceAvali
+   - HLVoiceSyndieborg
+   - HLVoiceXenoborg
+   - HLVoiceVulpkanin
+   - HLVoiceLizard
+   - HLVoiceSlime
+   - HLVoiceFox
+   - HLVoiceDog
+   - HLVoiceMoth
+   - HLVoiceCat
+   - HLVoiceResomi
+  components:
+  - type: Speech
+    speechVerb: Wawa
+    speechSounds: Wawa
+  - type: TypingIndicator
+    proto: moth
+
+# Voice pitch: shift the pitch of emote sounds via EmotePitchComponent.
+
+- type: trait
+  id: LowVoice
+  name: trait-low-voice-name
+  description: trait-low-voice-desc
+  category: SpeechTraits
+  cost: 0
+  mutuallyExclusiveTraits:
+  - LowestVoice
+  - HighVoice
+  - HighestVoice
+  components:
+  - type: EmotePitch
+    semitones: -4
+
+- type: trait
+  id: LowestVoice
+  name: trait-lowest-voice-name
+  description: trait-lowest-voice-desc
+  category: SpeechTraits
+  cost: 0
+  mutuallyExclusiveTraits:
+  - LowVoice
+  - HighVoice
+  - HighestVoice
+  components:
+  - type: EmotePitch
+    semitones: -9
+
+- type: trait
+  id: HighVoice
+  name: trait-high-voice-name
+  description: trait-high-voice-desc
+  category: SpeechTraits
+  cost: 0
+  mutuallyExclusiveTraits:
+  - LowVoice
+  - LowestVoice
+  - HighestVoice
+  components:
+  - type: EmotePitch
+    semitones: 4
+
+- type: trait
+  id: HighestVoice
+  name: trait-highest-voice-name
+  description: trait-highest-voice-desc
+  category: SpeechTraits
+  cost: 0
+  mutuallyExclusiveTraits:
+  - LowVoice
+  - LowestVoice
+  - HighVoice
+  components:
+  - type: EmotePitch
+    semitones: 9
+
+
+- type: trait
+  id: RussianAccent
+  name: hl-trait-russian-name
+  description: hl-trait-russian-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: RussianAccent

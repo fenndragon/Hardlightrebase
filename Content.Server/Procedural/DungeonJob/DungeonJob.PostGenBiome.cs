@@ -1,10 +1,9 @@
-using System.Threading.Tasks;
 using Content.Server.Parallax;
 using Content.Shared.Maps;
-using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Map;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -14,7 +13,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
         if (!_prototype.TryIndex(dunGen.BiomeTemplate, out var indexedBiome))
             return;
@@ -31,7 +30,7 @@ public sealed partial class DungeonJob
 
             if (reservedTiles.Contains(node))
                 continue;
-            
+
             if (dunGen.TileMask is not null)
             {
                 if (!dunGen.TileMask.Contains(((ContentTileDefinition)_tileDefManager[tileRef.Value.Tile.TypeId]).ID))

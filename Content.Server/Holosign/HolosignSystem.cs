@@ -50,7 +50,7 @@ public sealed partial class HolosignSystem : EntitySystem
 
         // places the holographic sign at the click location, snapped to grid.
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
-        var holoUid = EntityManager.SpawnEntity(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
+        var holoUid = Spawn(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
         var xform = Transform(holoUid);
         if (!xform.Anchored)
             _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
@@ -63,7 +63,7 @@ public sealed partial class HolosignSystem : EntitySystem
         if (battery == null ||
             component.ChargeUse == 0f) return 0;
 
-        return (int) (battery.CurrentCharge / component.ChargeUse);
+        return (int)(battery.CurrentCharge / component.ChargeUse);
     }
 
     private int MaxUses(HolosignProjectorComponent component, BatteryComponent? battery = null)
@@ -71,6 +71,6 @@ public sealed partial class HolosignSystem : EntitySystem
         if (battery == null ||
             component.ChargeUse == 0f) return 0;
 
-        return (int) (battery.MaxCharge / component.ChargeUse);
+        return (int)(battery.MaxCharge / component.ChargeUse);
     }
 }

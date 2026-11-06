@@ -3,13 +3,18 @@
   name: job-name-botanist
   description: job-description-botanist
   playTimeTracker: JobBotanist
-  setPreference: false # Frontier
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 10800
+  setPreference: true # Frontier
+  weight: 50 # HardLight
   startingGear: BotanistGear
   icon: "JobIconBotanist"
-  supervisors: job-supervisors-hire # Frontier
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+  - Hydroponics
+  extendedAccess:
+  - Kitchen
+  - Bar
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -20,10 +25,10 @@
 - type: startingGear
   id: BotanistGear
   equipment:
-    shoes: ClothingShoesColorBrown
+    # shoes: ClothingShoesColorBrown # HardLight: Add NF-style departmental loadouts
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

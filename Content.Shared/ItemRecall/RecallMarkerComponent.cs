@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.ItemRecall;
 
@@ -13,6 +12,6 @@ public sealed partial class RecallMarkerComponent : Component
     /// <summary>
     /// The action that marked this item.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [AutoNetworkedField]
     public EntityUid? MarkedByAction;
 }

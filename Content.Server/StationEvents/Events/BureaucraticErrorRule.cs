@@ -1,9 +1,7 @@
-using System.Linq;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
-﻿using Content.Shared.GameTicking.Components;
-using Content.Shared.Roles;
+using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
@@ -23,7 +21,7 @@ public sealed partial class BureaucraticErrorRule : StationEventSystem<Bureaucra
 
         var jobList = _stationJobs.GetJobs(chosenStation.Value).Keys.ToList();
 
-        foreach(var job in component.IgnoredJobs)
+        foreach (var job in component.IgnoredJobs)
             jobList.Remove(job);
 
         if (jobList.Count == 0)
@@ -44,8 +42,8 @@ public sealed partial class BureaucraticErrorRule : StationEventSystem<Bureaucra
         }
         else
         {
-            var lower = (int) (jobList.Count * 0.20);
-            var upper = (int) (jobList.Count * 0.30);
+            var lower = (int)(jobList.Count * 0.20);
+            var upper = (int)(jobList.Count * 0.30);
             // Changing every role is maybe a bit too chaotic so instead change 20-30% of them.
             var num = RobustRandom.Next(lower, upper);
             for (var i = 0; i < num; i++)

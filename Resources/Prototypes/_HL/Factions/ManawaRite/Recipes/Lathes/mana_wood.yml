@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: MaterialManaWoodPlank
+  result: MaterialManaWoodPlank
+  completetime: 5
+  materials:
+    Wood: 5000

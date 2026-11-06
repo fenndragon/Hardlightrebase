@@ -4,6 +4,7 @@
   - PrizeBallRecipe
   - PlushieHampterRecipe
   - PlushieVulpRecipe
+  - PlushieMothRecipe
   - PlushieBeeRecipe
   - PlushieLizardRecipe
   - PlushieSpaceLizardRecipe
@@ -36,9 +37,9 @@
   - PlushieRounyRecipe
   - PlushieXenoRecipe
   - FoamCrossbowRecipe
-  - BoxDonkSoftBoxRecipe
-  - RevolverCapGunRecipe
-  - BoxCartridgeCapRecipe
+  - NFBoxDonkSoftBoxRecipe
+  - NFRevolverCapGunRecipe
+  - NFBoxCartridgeCapRecipe
   - ToyAmongPequenoRecipe
   - FoamCutlassRecipe
   - FoamBladeRecipe
@@ -84,6 +85,7 @@
   - PlushieCatTabbyRecipe
   - PlushieCatTuxedoRecipe
   - PlushieCatWhiteRecipe
+  - PrizeVendBoosterPackRecipe
 
 - type: latheRecipePack
   id: NFPrizeCounterEmag

@@ -3,32 +3,41 @@
   name: job-name-ce
   description: job-description-ce
   playTimeTracker: JobChiefEngineer
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
-  weight: 10
+    - !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 9000 # 2.5 hrs
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 18000 # 5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 36000 # 10 hrs
+  weight: 40 # HardLight: 10<40
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"
   supervisors: job-supervisors-captain
   canBeAntag: false
-  ## Frontier: commented everything below out
-  # access:
-  # - Maintenance
-  # - Engineering
-  # - Command
-  # - External
-  # - ChiefEngineer
-  # - Atmospherics
+  requireAdminNotify: true
+  access:
+  - Maintenance
+  - Engineering
+  - Command
+  - External
+  - ChiefEngineer
+  - Atmospherics
   # - Brig
   # - Cryogenics
-  # special:
-  # - !type:AddImplantSpecial
-  #   implants: [ MindShieldImplant ]
-  # - !type:AddComponentSpecial
-  #   components:
-  #     - type: CommandStaff
-  ## End Frontier: commented everything above out
+  # - Frontier
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+    - type: CommandStaff
+    - type: PsionicBonusChance # Nyano: Makes it more likely to become psionic.
+      flatBonus: 0.025
   accessGroups: # Frontier
   - GeneralAccess # Frontier
 
@@ -36,9 +45,10 @@
   id: ChiefEngineerGear
   equipment:
     id: CEPDA
-    eyes: ClothingEyesGlassesMeson
+    # eyes: ClothingEyesGlassesMeson # HardLight: Add departmental NF-style loadouts
     ears: ClothingHeadsetCE
     belt: ClothingBeltUtilityEngineering
+    pocket2: NFHyperlinkBookCommandSOP # HardLight
   storage:
     back:
     - Flash

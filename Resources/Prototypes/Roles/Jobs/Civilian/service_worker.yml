@@ -3,29 +3,30 @@
   name: job-name-serviceworker
   description: job-description-serviceworker
   playTimeTracker: JobServiceWorker
-  setPreference: false # Frontier
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 10800
+  - !type:DepartmentTimeRequirement
+    department: Service # Hardlight Civilian > Service
+    time: 1800 # 0.5 hr
+  weight: 20 # HardLight
   startingGear: ServiceWorkerGear
   icon: "JobIconServiceWorker"
   supervisors: job-supervisors-service
   accessGroups: # Frontier
   - GeneralAccess # Frontier
-  # access: # Frontier
-  # - Service # Frontier
-  # - Maintenance # Frontier
-  # - Bar # Frontier
-  # - Kitchen # Frontier
-  # extendedAccess: # Frontier
-  # - Hydroponics # Frontier
+  access: # Frontier
+  - Service # Frontier
+  - Maintenance # Frontier
+  - Bar # Frontier
+  - Kitchen # Frontier
+  extendedAccess: # Frontier
+  - Hydroponics # Frontier
 
 - type: startingGear
   id: ServiceWorkerGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    # shoes: ClothingShoesColorBlack # HardLight: Add NF-style departmental loadouts
     id: ServiceWorkerPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  # storage:
+  #   back:
+  #   - Stuff

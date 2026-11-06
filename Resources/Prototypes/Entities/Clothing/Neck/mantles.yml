@@ -12,8 +12,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCE
-  name: chief engineer's mantle
-  description: High visibility, check. RIG system, check. High capacity cell, check. Everything a chief engineer could need in a stylish mantle.
+  name: chief engineer's manica
+  description: A segmented arm covering for the experienced Chief Engineer, to signify the hazards of the job and the dangers faced to earn it.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/cemantle.rsi
@@ -24,7 +24,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckMantleCMO
   name: chief medical officer's mantle
-  description: For a CMO that has been in enough medbays to know that more PPE means less central command dry cleaning visits when the shift is over.
+  description: For a CMO that has been in enough medbays to know that more PPE means less Colonial Command dry cleaning visits when the shift is over.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/cmomantle.rsi

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -110,7 +109,7 @@ public sealed partial class ActionUpgradeSystem : EntitySystem
         return canLevel;
     }
 
-    private bool CanUpgrade(int newLevel, Dictionary<int, EntProtoId> levelDict,  [NotNullWhen(true)]out EntProtoId? newLevelProto)
+    private bool CanUpgrade(int newLevel, Dictionary<int, EntProtoId> levelDict, [NotNullWhen(true)] out EntProtoId? newLevelProto)
     {
         var canUpgrade = false;
         newLevelProto = null;

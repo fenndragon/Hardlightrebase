@@ -1,4 +1,4 @@
-﻿using Content.Server.Botany.Components;
+using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.Popups;
@@ -19,7 +19,6 @@ public sealed partial class PlantRestoreSeeds : EntityEffect
             || plantHolderComp.Seed == null
             || plantHolderComp.Dead
             || plantHolderComp.Seed.Immutable
-            || plantHolderComp.Seed.PermanentlySeedless // Frontier
         )
             return;
 

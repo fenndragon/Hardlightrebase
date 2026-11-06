@@ -15,7 +15,6 @@ using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.EntitySystems;
-using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mech.Components;
 using Content.Shared.Popups;
@@ -49,6 +48,9 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
+
+        SubscribeLocalEvent<PowerCellSlotComponent, GetChargeEvent>(OnGetCharge);
+        SubscribeLocalEvent<PowerCellSlotComponent, ChangeChargeEvent>(OnChangeCharge);
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
@@ -115,7 +117,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     /// <summary>
     /// Tries to use the <see cref="PowerCellDrawComponent.UseRate"/> for this entity.
     /// </summary>
-    /// <param name="user">Popup to this user with the relevant detail if specified.</param>
     public bool TryUseActivatableCharge(EntityUid uid, PowerCellDrawComponent? battery = null, PowerCellSlotComponent? cell = null, EntityUid? user = null)
     {
         // Default to true if we don't have the components.
@@ -150,7 +151,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
     /// </summary>
-    /// <param name="user">Popup to this user with the relevant detail if specified.</param>
     public bool HasCharge(EntityUid uid, float charge, PowerCellSlotComponent? component = null, EntityUid? user = null)
     {
         if (!TryGetBatteryFromSlot(uid, out var battery, component))
@@ -248,5 +248,38 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         {
             args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
         }
+    }
+
+    private void OnGetCharge(Entity<PowerCellSlotComponent> entity, ref GetChargeEvent args)
+    {
+        if (!TryGetBatteryFromSlot(entity, out var batteryUid, out _))
+            return;
+
+        RaiseLocalEvent(batteryUid.Value, ref args);
+    }
+
+    private void OnChangeCharge(Entity<PowerCellSlotComponent> entity, ref ChangeChargeEvent args)
+    {
+        if (!TryGetBatteryFromSlot(entity, out var batteryUid, out _))
+            return;
+
+        RaiseLocalEvent(batteryUid.Value, ref args);
+    }
+
+    /// <summary>
+    /// Enables or disables power draw updates for an entity with a PowerCellDrawComponent.
+    /// </summary>
+    public void SetPowerCellDrawEnabled(EntityUid uid, bool enabled, PowerCellDrawComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        if (component.Enabled == enabled)
+            return;
+
+        component.Enabled = enabled;
+        // Nudge next update so state is reflected promptly
+        component.NextUpdateTime = Timing.CurTime;
+        Dirty(uid, component);
     }
 }

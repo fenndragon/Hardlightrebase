@@ -1,4 +1,4 @@
-﻿using Content.Client.Administration.Managers;
+using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.ObjectsTab;
@@ -48,7 +48,7 @@ public sealed partial class AdminUIController : UIController,
     {
         var showDialog = _panicBunker == null && msg.Status.Enabled;
         _panicBunker = msg.Status;
-        _window?.PanicBunkerControl.UpdateStatus(msg.Status);
+        _window?.AdminToolsControl.PanicBunkerControl.UpdateStatus(msg.Status);
 
         if (showDialog)
         {
@@ -58,20 +58,16 @@ public sealed partial class AdminUIController : UIController,
 
     public void OnStateEntered(GameplayState state)
     {
-        EnsureWindow();
         AdminStatusUpdated();
     }
 
     public void OnStateEntered(LobbyState state)
     {
-        EnsureWindow();
         AdminStatusUpdated();
     }
 
     public void OnSystemLoaded(AdminSystem system)
     {
-        EnsureWindow();
-
         _admin.AdminStatusUpdated += AdminStatusUpdated;
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
             InputCmdHandler.FromDelegate(_ => Toggle()));
@@ -80,7 +76,10 @@ public sealed partial class AdminUIController : UIController,
     public void OnSystemUnloaded(AdminSystem system)
     {
         if (_window != null)
-            _window.Dispose();
+        {
+            _window.Close();
+            OnWindowDisposed();
+        }
 
         _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
@@ -89,23 +88,19 @@ public sealed partial class AdminUIController : UIController,
 
     private void EnsureWindow()
     {
-        if (_window is { Disposed: false })
+        if (_window != null)
             return;
-
-        if (_window?.Disposed ?? false)
-            OnWindowDisposed();
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
 
         if (_panicBunker != null)
-            _window.PanicBunkerControl.UpdateStatus(_panicBunker);
+            _window.AdminToolsControl.PanicBunkerControl.UpdateStatus(_panicBunker);
 
         _window.PlayerTabControl.OnEntryKeyBindDown += PlayerTabEntryKeyBindDown;
         _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
-        _window.OnDisposed += OnWindowDisposed;
     }
 
     public void UnloadButton()
@@ -151,7 +146,6 @@ public sealed partial class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
         _window.OnOpen -= OnWindowOpen;
         _window.OnClose -= OnWindowClosed;
-        _window.OnDisposed -= OnWindowDisposed;
         _window = null;
     }
 
@@ -168,19 +162,20 @@ public sealed partial class AdminUIController : UIController,
 
     private void Toggle()
     {
-        if (_window is {IsOpen: true})
+        if (_window is { IsOpen: true })
         {
             _window.Close();
         }
         else if (_conGroups.CanAdminMenu())
         {
+            EnsureWindow();
             _window?.Open();
         }
     }
 
     private void PlayerTabEntryKeyBindDown(GUIBoundKeyEventArgs args, ListData? data)
     {
-        if (data is not PlayerListData {Info: var info})
+        if (data is not PlayerListData { Info: var info })
             return;
 
         if (info.NetEntity == null)

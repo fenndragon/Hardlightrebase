@@ -35,7 +35,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: VehicleHoverbikeNF
+      - id: NFVehicleHoverbike
       - id: VehicleKeyHoverbikeNF
 
 - type: entity
@@ -48,6 +48,17 @@
   - type: StorageFill
     contents:
       - id: VehicleHoverbikePirate
+      - id: VehicleKeyHoverbikeNF
+
+- type: entity
+  id: CrateFunParamedBike
+  parent: CrateLivestock
+  name: paramedic hoverbike crate
+  description: Contains a paramedic retrofit hoverbike. Smells strongly of medicine.
+  components:
+  - type: StorageFill
+    contents:
+      - id: VehicleHoverbikeParamedic
       - id: VehicleKeyHoverbikeNF
 
 - type: entity
@@ -84,3 +95,14 @@
       - id: MicrophoneInstrument
         amount: 1
       - id: PaperWrittenPartyProcedure
+
+- type: entity
+  id: NFCrateFunSyndicateSegway
+  parent: CrateLivestock
+  name: Syndicate segway crate
+  description: A crate containing a two-wheeler that will help you escape from the security officers. Or not.
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleSyndicateSegway
+        - id: VehicleKeySyndicateSegway

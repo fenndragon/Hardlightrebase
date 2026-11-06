@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Magic;
 using Content.Shared.Magic.Events;
+using Content.Shared.Chat; // For InGameICChatType
 using Content.Shared.Mind;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -16,6 +17,8 @@ public sealed partial class MagicSystem : SharedMagicSystem
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 

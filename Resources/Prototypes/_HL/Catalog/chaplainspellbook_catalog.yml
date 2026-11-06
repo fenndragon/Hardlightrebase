@@ -1,0 +1,226 @@
+# Spells for chaplain specifically, allows for RP of blessings from whatsnames without needing admin help
+
+#MARK: Minor
+- type: listing
+  id: SpellbookItemRecallSwapChap
+  name: spellbook-item-recall-name
+  description: spellbook-item-recall-description
+  productAction: ActionItemRecall
+  cost:
+    MinorBlessing: 1
+  categories:
+  - STextBlessingsM
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemBread
+  name: spellbook-bread-name
+  description: spellbook-bread-description
+  productAction: ActionSummonBread
+  cost:
+    MinorBlessing: 1
+  categories:
+  - STextBlessingsM
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemWater
+  name: spellbook-water-name
+  description: spellbook-water-description
+  productAction: ActionSpawnWaterChap
+  cost:
+    MinorBlessing: 1
+  categories:
+  - STextBlessingsM
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemCleanup
+  name: spellbook-cleanup-name
+  description: spellbook-cleanup-description
+  productAction: ActionAttractTrash
+  cost:
+    MinorBlessing: 1
+  categories:
+  - STextBlessingsM
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemCleanLiquid
+  name: spellbook-cleaning-name
+  description: spellbook-cleaning-description
+  productAction: ActionCleaning
+  cost:
+    MinorBlessing: 1
+  categories:
+  - STextBlessingsM
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+#MARK: Lesser
+- type: listing
+  id: SpellbookItemSpareDying
+  name: spellbook-sparedead-name
+  description: spellbook-sparedead-description
+  productAction: ActionSpareDying
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemHorniness
+  name: spellbook-horniness-name
+  description: spellbook-horniness-description
+  productAction: ActionHornyBomb
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemDreamlings
+  name: spellbook-dreamling-name
+  description: spellbook-dreamling-description
+  productAction: ActionChapDreamlings
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookNightmareL
+  name: spellbook-nightmarel-name
+  description: spellbook-nightmarel-description
+  productAction: ActionChapNightmaresL
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookShadowMorph
+  name: spellbook-shadowf-name
+  description: spellbook-shadowf-description
+  productAction: ActionPolymorphChapShadow
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookChapShadow
+  name: spellbook-shadow-name
+  description: spellbook-shadow-description
+  productAction: ActionChapShadow
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookNightmareM
+  name: spellbook-nightmarem-name
+  description: spellbook-nightmarem-description
+  productAction: ActionChapNightmaresM
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookStars
+  name: spellbook-stars-name
+  description: spellbook-stars-description
+  productAction: ActionChapStars
+  cost:
+    MinorBlessing: 2
+  categories:
+  - STextBlessingsL
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+#MARK: Greater
+
+- type: listing
+  id: SpellbookItemRestore
+  name: spellbook-restore-name
+  description: spellbookrestore-description
+  productAction: ActionGreaterRestoration
+  cost:
+    MinorBlessing: 3
+  categories:
+  - STextBlessingsG
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookItemRestoreWide
+  name: spellbook-restore-wide-name
+  description: spellbookrestore-wide-description
+  productAction: ActionWideRestoration
+  cost:
+    MinorBlessing: 3
+  categories:
+  - STextBlessingsG
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookChapApplause
+  name: spellbook-teleport-name
+  description: spellbook-teleport-description
+  productAction: ActionVoidApplauseChap
+  cost:
+    MinorBlessing: 3
+  categories:
+  - STextBlessingsG
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: SpellbookBigSleep
+  name: spellbook-bigsleepy-name
+  description: spellbook-bigsleepy-description
+  productAction: ActionWideSleep
+  cost:
+    MinorBlessing: 3
+  categories:
+  - STextBlessingsG
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

@@ -20,6 +20,7 @@ public sealed partial class GatewayWindow : FancyWindow,
     private readonly IGameTiming _timing;
 
     public event Action<NetEntity>? OpenPortal;
+    public event Action<NetEntity>? SpawnDockingArm;
     private List<GatewayDestinationData> _destinations = new();
 
     public NetEntity Owner;
@@ -100,6 +101,8 @@ public sealed partial class GatewayWindow : FancyWindow,
             var name = dest.Name;
             var locked = dest.Locked && _nextUnlock > _timing.CurTime;
 
+            Logger.GetSawmill("gateway").Debug($"Gateway UI: Destination {name} - IsDockingArm: {dest.IsDockingArm}, Locked: {locked}");
+
             var box = new BoxContainer()
             {
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
@@ -142,24 +145,27 @@ public sealed partial class GatewayWindow : FancyWindow,
 
             var openButton = new Button()
             {
-                Text = Loc.GetString("gateway-window-open-portal"),
+                Text = Loc.GetString(dest.IsDockingArm ? "gateway-window-spawn-docking-arm" : "gateway-window-open-portal"),
                 Pressed = Pressable(),
-                ToggleMode = true,
-                Disabled = now < _nextReady || Pressable(),
+                ToggleMode = !dest.IsDockingArm,
+                Disabled = now < _nextReady || Pressable() || (dest.IsDockingArm && locked),
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
-                Visible = !locked,
+                Visible = !locked || dest.IsDockingArm,
                 SetHeight = 32f,
             };
 
             openButton.OnPressed += args =>
             {
-                OpenPortal?.Invoke(ent);
+                if (dest.IsDockingArm)
+                    SpawnDockingArm?.Invoke(ent);
+                else
+                    OpenPortal?.Invoke(ent);
             };
 
             if (Pressable())
             {
-                openButton.AddStyleClass(StyleBase.ButtonCaution);
+                openButton.AddStyleClass(StyleClass.Negative);
             }
 
             var buttonContainer = new BoxContainer()
@@ -217,7 +223,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             }
             else
             {
-                NextUnlockBar.Value = 1f - (float) (remaining.TotalSeconds / _unlockTime.TotalSeconds);
+                NextUnlockBar.Value = 1f - (float)(remaining.TotalSeconds / _unlockTime.TotalSeconds);
                 NextUnlockText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
             }
         }
@@ -244,7 +250,7 @@ public sealed partial class GatewayWindow : FancyWindow,
             }
             else
             {
-                NextReadyBar.Value = 1f - (float) (remaining.TotalSeconds / _cooldown.TotalSeconds);
+                NextReadyBar.Value = 1f - (float)(remaining.TotalSeconds / _cooldown.TotalSeconds);
                 NextCloseText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
             }
         }

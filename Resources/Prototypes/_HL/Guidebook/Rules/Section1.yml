@@ -1,0 +1,75 @@
+# Section 1: Behavior Rules
+
+- type: serverRule
+  id: ServerRule1_1
+  section: 1
+  code: 1.1
+  hardlit: ZeroTolerance
+  text: "Be respectful to others OOC."
+
+- type: serverRule
+  id: ServerRule1_2
+  section: 1
+  code: 1.2
+  hardlit: ZeroTolerance
+  text: "Don't use hate speech, racism, or bigoted comments."
+
+- type: serverRule
+  id: ServerRule1_3
+  section: 1
+  code: 1.3
+  hardlit: Hardlit
+  text: "Don't metagame."
+
+- type: serverRule
+  id: ServerRule1_4
+  section: 1
+  code: 1.4
+  text: "Don't spam or advertise."
+
+- type: serverRule
+  id: ServerRule1_5
+  section: 1
+  code: 1.5
+  hardlit: Hardlit
+  text: "Do not intentionally take actions that would negatively impact or disrupt others' enjoyment of the game."
+
+- type: serverRule
+  id: ServerRule1_6
+  section: 1
+  code: 1.6
+  text: "Avoid controversial topics such as self harm/rape in public."
+
+- type: serverRule
+  id: ServerRule1_7
+  section: 1
+  code: 1.7
+  hardlit: Hardlit
+  text: "Don't evade bans."
+
+- type: serverRule
+  id: ServerRule1_8
+  section: 1
+  code: 1.8
+  text: "Don't self-antag."
+
+- type: serverRule
+  id: ServerRule1_9
+  section: 1
+  code: 1.9
+  hardlit: Hardlit
+  text: "Don't ragequit/disconnect to avoid consequences."
+
+- type: serverRule
+  id: ServerRule1_10
+  section: 1
+  code: 1.10
+  hardlit: Hardlit
+  text: "Making use of cheats, exploits, or taking actions that may harm the server's integrity or stability is forbidden."
+
+- type: serverRule
+  id: ServerRule1_11
+  section: 1
+  code: 1.11
+  hardlit: Hardlit
+  text: "Respect others' OOC consent and preferences."

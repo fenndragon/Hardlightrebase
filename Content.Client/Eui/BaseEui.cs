@@ -1,5 +1,4 @@
-﻿using Content.Shared.Eui;
-using Robust.Shared.IoC;
+using Content.Shared.Eui;
 using Robust.Shared.Network;
 
 namespace Content.Client.Eui

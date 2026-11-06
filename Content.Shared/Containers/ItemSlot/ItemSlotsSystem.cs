@@ -103,7 +103,7 @@ namespace Content.Shared.Containers.ItemSlots
             {
                 if (existing.Local)
                     Log.Error(
-                        $"Duplicate item slot key. Entity: {EntityManager.GetComponent<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
+                        $"Duplicate item slot key. Entity: {Comp<MetaDataComponent>(uid).EntityName} ({uid}), key: {id}");
                 else
                     // server state takes priority
                     slot.CopyFrom(existing);
@@ -133,7 +133,7 @@ namespace Content.Shared.Containers.ItemSlots
             itemSlots.Slots.Remove(slot.ContainerSlot.ID);
 
             if (itemSlots.Slots.Count == 0)
-                EntityManager.RemoveComponent(uid, itemSlots);
+                RemComp(uid, itemSlots);
             else
                 Dirty(uid, itemSlots);
         }
@@ -207,7 +207,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
+            if (!TryComp(args.User, out HandsComponent? hands))
                 return;
 
             if (itemSlots.Slots.Count == 0)
@@ -284,8 +284,6 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Insert an item into a slot. This does not perform checks, so make sure to also use <see
         ///     cref="CanInsert"/> or just use <see cref="TryInsert"/> instead.
         /// </summary>
-        /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
-        /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid,
             ItemSlot slot,
             EntityUid item,
@@ -546,8 +544,6 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Eject an item from a slot. This does not perform checks (e.g., is the slot locked?), so you should
         ///     probably just use <see cref="TryEject"/> instead.
         /// </summary>
-        /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
-        /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
             bool? ejected = slot.ContainerSlot != null ? _containers.Remove(item, slot.ContainerSlot) : null;
@@ -708,7 +704,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
+                    : Comp<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new()
                 {
@@ -821,7 +817,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!component.Slots.TryGetValue(args.SlotId, out var slot))
                 return;
 
-            if (args.TryEject && slot.HasItem)
+            if (args.TryEject && slot.HasItem && !slot.DisableEject)
                 TryEjectToHands(uid, slot, args.Actor, true);
             else if (args.TryInsert && !slot.HasItem)
                 TryInsertFromHand(uid, slot, args.Actor);

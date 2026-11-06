@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2025 Ilya246
+// SPDX-FileCopyrightText: 2025 Redrover1760
+// SPDX-FileCopyrightText: 2025 Whatstone
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Server._NF.Solar.EntitySystems;
 
 namespace Content.Server._NF.Solar.Components;
@@ -27,7 +33,7 @@ public sealed partial class NFSolarPanelComponent : Component
 
     /// <summary>
     /// Current coverage of this panel (from 0 to 1).
-    /// This is updated by <see cref='PowerSolarSystem'/>.
+    /// This is updated by PowerSolarSystem.
     /// DO NOT WRITE WITHOUT CALLING UpdateSupply()!
     /// </summary>
     [ViewVariables]

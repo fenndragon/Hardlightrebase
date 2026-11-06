@@ -1,0 +1,223 @@
+# Separate from vanilla to not have a timer trigger built in
+- type: entity
+  abstract: true
+  parent: [BaseItem, RecyclableItemSteelSmall] # Frontier: added RecyclableItemSteelSmall
+  id: GrenadeBaseNoTimer
+  components:
+  - type: WeaponCaseInsertable # Frontier
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
+
+- type: entity
+  parent: GrenadeBase
+  id: SmokeGrenadeSilent
+  name: smonk
+  description: A tctical grende that relses a larg, long clud of smonke whn usd.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/smoke.rsi
+  - type: SmokeOnTrigger
+    duration: 30
+    spreadAmount: 50
+  - type: DeleteOnTrigger
+  - type: TimerTriggerVisuals
+
+- type: entity
+  name: molotov cocktail
+  description: A bottle filled with highly flammable liquids, stoppered with an oily rag and weaponised via a ripcord and match around the neck, removing the need for a lighter.
+  parent: GrenadeBaseNoTimer
+  id: ImpactGrenade
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    maxIntensity: 5
+    intensitySlope: 1
+    totalIntensity: 3
+    canCreateVacuum: false
+    maxTileBreak: 0
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Effects/cig_light.ogg
+  - type: ComponentToggler
+    components:
+    - type: DamageOnLand
+      ignoreResistances: true
+      damage:
+        types:
+          Blunt: 10
+    - type: TriggerOnBeingGibbed
+  - type: IgnitionSource
+    temperature: 400
+    ignited: false
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Grenades/molotov.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Grenades/molotov.rsi
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: InaprovalineGrenade
+  name: light
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 0
+    smokePrototype: FoamNoSpread
+    solution:
+      reagents:
+      - ReagentId: Inaprovaline
+        Quantity: 30
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: PhilterexGrenade
+  name: light
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 0
+    smokePrototype: FoamNoSpread
+    solution:
+      reagents:
+      - ReagentId: Philterex
+        Quantity: 10
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: RestorationGrenade
+  name: light
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 5
+    spreadAmount: 0
+    smokePrototype: FoamNoSpread
+    solution:
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 50
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: RestorationGrenadeWide
+  name: light
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 6
+    smokePrototype: FoamNoSlip
+    solution:
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 20
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: SleepGrenadeWide
+  name: the dreaming
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 20
+    spreadAmount: 8
+    smokePrototype: FoamNoSlipRain
+    solution:
+      reagents:
+      - ReagentId: Nocturine
+        Quantity: 35
+
+- type: entity
+  parent: SmokeGrenadeSilent
+  id: CleanGrenadeWide
+  name: light
+  components:
+  - type: ActiveTimerTrigger
+    timeRemaining: 0
+  - type: DeleteOnTrigger
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+  - type: SmokeOnTrigger
+    duration: 15
+    spreadAmount: 50
+    smokePrototype: FoamNoSlip
+    solution:
+      reagents:
+      - ReagentId: SpaceCleanerFast
+        Quantity: 30
+
+- type: entity
+  name: dephasing grenade
+  description: Causes localized instability in bluespace, dephasing things into real space if they are near enough to it.
+  parent: [ GrenadeBase, BaseC2ContrabandUnredeemable ]
+  id: GrenadeDePhase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/stingergrenade.rsi
+  - type: BluespacePulseOnTrigger
+    radius: 10
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/Lightning/lightningbolt.ogg"
+  - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: EffectFlashBluespace
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
+  - type: Tag
+    tags:
+    - HandGrenade

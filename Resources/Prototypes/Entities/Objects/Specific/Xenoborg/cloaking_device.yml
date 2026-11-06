@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseXenoborgContraband ]
   id: CloakingDevice
   name: cloaking device
   description: A device that allows Xenoborgs to go invisible.
@@ -26,7 +26,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMicroreactor
+        startingItem: PowerCellSmallNuclear
         disableEject: true
         swap: false
 

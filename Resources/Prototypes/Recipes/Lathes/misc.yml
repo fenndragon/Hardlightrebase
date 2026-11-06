@@ -160,6 +160,16 @@
     Bluespace: 200 #DeltaV
 
 - type: latheRecipe
+  id: ClothingShoesBootsJump
+  result: ClothingShoesBootsJump
+  completetime: 2
+  materials:
+    Steel: 1400
+    Plastic: 600
+    Silver: 200
+    Plasma: 200
+
+- type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
   completetime: 12
@@ -248,3 +258,35 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: SyntheticSwab
+  result: SyntheticSwab
+  completetime: 1
+  materials:
+    Plastic: 25
+    Glass: 25
+
+- type: latheRecipe
+  id: SwabApplicator
+  result: SwabApplicator
+  completetime: 3
+  materials:
+    Steel: 200
+    Plastic: 200
+    Glass: 100
+
+- type: latheRecipe
+  id: ClothingOuterVestTank
+  result: ClothingOuterVestTank
+  completetime: 2
+  materials:
+    Cloth: 400
+    Steel: 100
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 30

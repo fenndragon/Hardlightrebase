@@ -1,6 +1,7 @@
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.NameIdentifier;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Preferences;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
@@ -14,7 +15,8 @@ namespace Content.Client.Silicons.Borgs;
 [GenerateTypedNameReferences]
 public sealed partial class BorgMenu : FancyWindow
 {
-    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private readonly IEntityManager _entity = default!;
+    private readonly NameModifierSystem _nameModifier;
 
     public Action? BrainButtonPressed;
     public Action? EjectBatteryButtonPressed;
@@ -31,6 +33,8 @@ public sealed partial class BorgMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _nameModifier = _entity.System<NameModifierSystem>();
 
         _lastValidName = NameLineEdit.Text;
 
@@ -54,13 +58,7 @@ public sealed partial class BorgMenu : FancyWindow
             NameIdentifierLabel.Visible = true;
             NameIdentifierLabel.Text = nameIdentifierComponent.FullIdentifier;
 
-            var fullName = _entity.GetComponent<MetaDataComponent>(Entity).EntityName;
-            // Frontier: prevent exceptions
-            if (fullName.Contains(nameIdentifierComponent.FullIdentifier))
-                NameLineEdit.Text = fullName.Substring(0, fullName.Length - nameIdentifierComponent.FullIdentifier.Length - 1);
-            else
-                NameLineEdit.Text = fullName;
-            // End Frontier
+            NameLineEdit.Text = _nameModifier.GetBaseName(entity);
         }
         else
         {
@@ -74,7 +72,7 @@ public sealed partial class BorgMenu : FancyWindow
         base.FrameUpdate(args);
 
         AccumulatedTime += args.DeltaSeconds;
-        BorgSprite.OverrideDirection = (Direction) ((int) AccumulatedTime % 4 * 2);
+        BorgSprite.OverrideDirection = (Direction)((int)AccumulatedTime % 4 * 2);
     }
 
     public void UpdateState(BorgBuiState state)
@@ -82,7 +80,7 @@ public sealed partial class BorgMenu : FancyWindow
         EjectBatteryButton.Disabled = !state.HasBattery;
         ChargeBar.Value = state.ChargePercent;
         ChargeLabel.Text = Loc.GetString("borg-ui-charge-label",
-            ("charge", (int) MathF.Round(state.ChargePercent * 100)));
+            ("charge", (int)MathF.Round(state.ChargePercent * 100)));
 
         UpdateBrainButton();
         UpdateModulePanel();
@@ -96,14 +94,14 @@ public sealed partial class BorgMenu : FancyWindow
             BrainView.Visible = true;
             BrainView.SetEntity(brain);
             BrainButton.Disabled = false;
-            BrainButton.AddStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.AddStyleClass(StyleClass.ButtonOpenLeft);
         }
         else
         {
             BrainButton.Text = Loc.GetString("borg-ui-no-brain");
             BrainButton.Disabled = true;
             BrainView.Visible = false;
-            BrainButton.RemoveStyleClass(StyleBase.ButtonOpenLeft);
+            BrainButton.RemoveStyleClass(StyleClass.ButtonOpenLeft);
         }
     }
 
@@ -136,7 +134,7 @@ public sealed partial class BorgMenu : FancyWindow
         foreach (var module in chassis.ModuleContainer.ContainedEntities)
         {
             var moduleComponent = _entity.GetComponent<BorgModuleComponent>(module);
-            var control = new BorgModuleControl(module, _entity, true); // Mono - can remove even if default
+            var control = new BorgModuleControl(module, _entity, !moduleComponent.DefaultModule);
             control.RemoveButtonPressed += () =>
             {
                 RemoveModuleButtonPressed?.Invoke(module);

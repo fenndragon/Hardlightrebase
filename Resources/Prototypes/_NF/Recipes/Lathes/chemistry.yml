@@ -1,11 +1,4 @@
 - type: latheRecipe
-  id: BaseChemistryEmptyVial
-  result: BaseChemistryEmptyVial
-  completetime: 2
-  materials:
-    Glass: 50
-
-- type: latheRecipe
   id: JugBluespace
   result: JugBluespace
   parent: BluespaceBeaker # same size, 1:1 recipe
@@ -44,3 +37,19 @@
     Plastic: 400
     Steel: 100
     Silver: 25
+
+- type: latheRecipe
+  id: LiddedVial
+  result: LiddedVial
+  completetime: 2
+  materials:
+    Glass: 50 # HL: Make this use the same amount of glass as normal vials
+    Steel: 15
+
+- type: latheRecipe
+  id: LiddedBottle
+  result: LiddedBottle
+  completetime: 2
+  materials:
+    Glass: 50 # HL: Make this use the same amount of glass as normal bottles
+    Steel: 15

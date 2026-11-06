@@ -1,3 +1,5 @@
+# If you add a new trait, make sure to add the corresponding component to the whitelist in \Resources\Prototypes\Entities\Mobs\Player\clone.yml so it gets copied to clones correctly!
+
 # Free
 
 - type: trait
@@ -10,8 +12,10 @@
   - type: Accentless
     removes:
     - type: GoblinAccent # Frontier
+    - type: ScandinavianAccent # Hardlight
     - type: LizardAccent
     - type: MothAccent
+    - type: OwOAccent # HL: lets felionoids opt out of cat-flavored speech
     - type: ReplacementAccent
       accent: dwarf
 
@@ -72,6 +76,15 @@
   cost: 1
   components:
   - type: FrenchAccent
+
+- type: trait
+  id: NeoFrenchAccent
+  name: trait-neo-french-name
+  description: trait-neo-french-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: NeoFrenchAccent
 
 - type: trait
   id: SpanishAccent

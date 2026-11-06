@@ -209,7 +209,7 @@ public sealed partial class AbsorbentSystem : SharedAbsorbentSystem
     }
 
     /// <summary>
-    ///     Logic for an transferring contaminants to a non-empty refillable & reabsorbing water if any available.
+    ///     Logic for an transferring contaminants to a non-empty refillable &amp; reabsorbing water if any available.
     /// </summary>
     private bool TryTwoWayAbsorbentRefillableTransfer(
         EntityUid user,

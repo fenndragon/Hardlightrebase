@@ -1,7 +1,4 @@
-﻿using System;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -21,11 +18,12 @@ namespace Content.Server.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            ((IDbContextOptionsBuilderInfrastructure) options).AddOrUpdateExtension(new SnakeCaseExtension());
+            ((IDbContextOptionsBuilderInfrastructure)options).AddOrUpdateExtension(new SnakeCaseExtension());
 
             options.ConfigureWarnings(x =>
             {
                 x.Ignore(CoreEventId.ManyServiceProvidersCreatedWarning);
+                x.Ignore(RelationalEventId.PendingModelChangesWarning);
 #if DEBUG
                 // for tests
                 x.Ignore(CoreEventId.SensitiveDataLoggingEnabledWarning);
@@ -55,13 +53,7 @@ namespace Content.Server.Database
             );
 
             modelBuilder
-                .Entity<ServerBan>()
-                .Property(e => e.Address)
-                .HasColumnType("TEXT")
-                .HasConversion(ipMaskConverter);
-
-            modelBuilder
-                .Entity<ServerRoleBan>()
+                .Entity<BanAddress>()
                 .Property(e => e.Address)
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
@@ -93,7 +85,8 @@ namespace Content.Server.Database
             return AdminLog.Count();
         }
 
-        private static string InetToString(IPAddress address, int mask) {
+        private static string InetToString(IPAddress address, int mask)
+        {
             if (address.IsIPv4MappedToIPv6)
             {
                 // Fix IPv6-mapped IPv4 addresses
@@ -104,7 +97,8 @@ namespace Content.Server.Database
             return $"{address}/{mask}";
         }
 
-        private static NpgsqlInet StringToInet(string inet) {
+        private static NpgsqlInet StringToInet(string inet)
+        {
             var idx = inet.IndexOf('/', StringComparison.Ordinal);
             return new NpgsqlInet(
                 IPAddress.Parse(inet.AsSpan(0, idx)),
@@ -115,7 +109,7 @@ namespace Content.Server.Database
         private static string JsonDocumentToString(JsonDocument document)
         {
             using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false });
 
             document.WriteTo(writer);
             writer.Flush();
@@ -136,7 +130,7 @@ namespace Content.Server.Database
             }
 
             using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false });
 
             document.WriteTo(writer);
             writer.Flush();

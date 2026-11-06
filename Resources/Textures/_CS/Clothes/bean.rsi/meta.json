@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": " Taken coyote-frontier which is from Coyote Bayou",
+  "copyright": "Unknown",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bean"
+    }
+  ]
+}

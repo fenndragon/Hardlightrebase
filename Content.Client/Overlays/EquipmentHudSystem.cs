@@ -1,4 +1,3 @@
-using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Client.Player;
@@ -33,8 +32,8 @@ public abstract partial class EquipmentHudSystem<T> : EntitySystem where T : ICo
 
         SubscribeLocalEvent<T, RefreshEquipmentHudEvent<T>>(OnRefreshComponentHud);
         SubscribeLocalEvent<T, InventoryRelayedEvent<RefreshEquipmentHudEvent<T>>>(OnRefreshEquipmentHud);
-
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        /*
+                SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart); */
     }
 
     private void Update(RefreshEquipmentHudEvent<T> ev)
@@ -87,10 +86,10 @@ public abstract partial class EquipmentHudSystem<T> : EntitySystem where T : ICo
         RefreshOverlay();
     }
 
-    private void OnRoundRestart(RoundRestartCleanupEvent args)
-    {
-        Deactivate();
-    }
+    /*     private void OnRoundRestart(RoundRestartCleanupEvent args)
+        {
+            Deactivate();
+        } */
 
     protected virtual void OnRefreshEquipmentHud(Entity<T> ent, ref InventoryRelayedEvent<RefreshEquipmentHudEvent<T>> args)
     {

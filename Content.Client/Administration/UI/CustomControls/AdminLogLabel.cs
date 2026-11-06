@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -11,8 +11,9 @@ public sealed class AdminLogLabel : RichTextLabel
         Log = log;
         Separator = separator;
 
-        SetMessage($"{log.Date:HH:mm:ss}: {log.Message}");
-        OnVisibilityChanged += VisibilityChanged;
+        var localTime = log.Date.ToLocalTime();
+
+        SetMessage($"{localTime:HH:mm:ss}: {log.Message}");
     }
 
     public SharedAdminLog Log { get; }
@@ -24,9 +25,17 @@ public sealed class AdminLogLabel : RichTextLabel
         Separator.Visible = Visible;
     }
 
-    protected override void Dispose(bool disposing)
+    // HL START: Move Event Listeners in ExitedTree from Constructor to EnteredTree so they're re-registered correctly
+    protected override void EnteredTree()
     {
-        base.Dispose(disposing);
+        base.EnteredTree();
+        OnVisibilityChanged += VisibilityChanged;
+    }
+    // HL END
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
 
         OnVisibilityChanged -= VisibilityChanged;
     }

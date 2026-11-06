@@ -1,0 +1,25 @@
+<Document>
+# Xenoborgs
+
+<Box Orientation="Vertical" HorizontalAlignment="Stretch" Margin="5">
+<Table Columns="1">
+  <ColorBox Color="#1a1b23" OutlineThickness="0">
+    <Box>
+      Xenoborgs occupy a unique position among silicon life.
+    </Box>
+  </ColorBox>
+</Table>
+</Box>
+
+## Expectations
+
+- Xenoborgs are collective entities and should be roleplayed accordingly.
+
+- While occupying a Xenoborg chassis and connected to the Collective, Xenoborgs are considered hostile entities and enemies of Colonial Command.
+
+- Xenoborgs should pursue the goals and interests of the Collective rather than acting as independent individuals.
+
+- Most Xenoborgs originated as previously independent sophonts, and in some circumstances those minds may be recoverable through deconversion or extraction procedures.
+
+- A Xenoborg should only be considered a Xenoborg while occupying a Xenoborg chassis and acting as part of the Collective.
+</Document>

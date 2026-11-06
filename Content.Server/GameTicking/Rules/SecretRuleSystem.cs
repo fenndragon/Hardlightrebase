@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.GameTicking.Components;
@@ -12,22 +10,25 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
+using Content.Server._NF.Roles.Systems; // Hardlight
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
+public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IConfigurationManager _configurationManager = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IComponentFactory _compFact = default!;
+    [Dependency] private readonly JobTrackingSystem _jobs = default!; // Hardlight
 
     private string _ruleCompName = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _ruleCompName = Factory.GetComponentName<GameRuleComponent>();
+        _ruleCompName = _compFact.GetComponentName(typeof(GameRuleComponent));
     }
 
     protected override void Added(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -164,6 +165,13 @@ public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponen
 
             if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
                 return false;
+
+            // Hardlight: require jobs to run gamerule
+            foreach (var (jobProtoId, numJobs) in ruleComp.RequiredJobs)
+            {
+                if (_jobs.GetNumberOfActiveRoles(jobProtoId, false) < numJobs)
+                    return false;
+            }
         }
 
         return true;

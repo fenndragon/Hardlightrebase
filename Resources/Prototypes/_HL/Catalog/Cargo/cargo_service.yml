@@ -1,0 +1,49 @@
+- type: cargoProduct
+  id: CondimentRestockCrate
+  icon:
+    sprite: Objects/Consumable/Drinks/generic_jug.rsi
+    state: icon
+  product: CrateCondiments
+  cost: 2000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: VinylsNulb
+  icon:
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinyls.rsi
+    state: red-vinyl-disk
+  product: CrateVinylsNulb
+  cost: 8000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: VinylsDeltarisk
+  icon:
+    sprite: _Goobstation/Objects/Misc/RadioStation/vinyls.rsi
+    state: blue-vinyl-disk
+  product: CrateVinylsDeltarisk
+  cost: 8000
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: Grooveman
+  icon:
+    sprite: _HL/Objects/Devices/grooveman.rsi
+    state: empty
+  product: VinylPlayerPortable
+  cost: 6750
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: VinylsTKJazz
+  icon:
+    sprite: _HL/Objects/Misc/RadioStation/vinylsleeves.rsi
+    state: jazz-vinyl-sleeve
+  product: CrateVinylsTKJazz
+  cost: 10000
+  category: cargoproduct-category-name-service
+  group: market

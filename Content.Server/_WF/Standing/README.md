@@ -39,6 +39,7 @@ lost to the hug.
 
 - [`Content.Server/_White/Standing/LayingDownSystem.cs`](../../_White/Standing/LayingDownSystem.cs): a client only answers for its own body
 - [`Content.Shared/Stunnable/SharedStunSystem.cs`](../../../Content.Shared/Stunnable/SharedStunSystem.cs)
+  - bind stuns to the imported laying-down system
   - WFHelpUpSystem handles helping up, including through a hug
   - only the server sends this; a client sent one for every knockdown it saw
 

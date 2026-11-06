@@ -35,6 +35,11 @@
   - ClothingHeadHatHopcap
   - ClothingUniformJumpsuitHoP
   - ClothingUniformJumpskirtHoP
+  # Generic
+  - ClothingHeadHatBeretCommand
+  - ClothingHeadHatCommandSoft
+  - ClothingUniformJumpskirtCommandGeneric
+  - ClothingUniformJumpsuitCommandGeneric
 
 - type: latheRecipePack
   id: ClothingEngineering
@@ -213,7 +218,7 @@
   - CarpetWhite
 
 - type: latheRecipePack
-  id: ClothingCentComm
+  id: ClothingColComm
   recipes:
   - ClothingHeadHatCentcomcap
   - ClothingHeadHatCentcom
@@ -242,3 +247,22 @@
   - ClothingOuterWinterSyndie
   - ClothingOuterWinterSyndieCap
   - BedsheetSyndie
+  - ClothingUniformJumpsuitParamedicSyndieNF # Frontier
+  - ClothingUniformJumpsuitRepairmanSyndieNF # Frontier
+  - ClothingOuterCoatSyndieCap # Frontier
+  - ClothingShoesBootsWinterSyndicate # Frontier
+  - PillowVeryLargeSyndicate # HL
+
+- type: latheRecipePack # HL
+  id: PillowsStandard
+  recipes:
+  - PillowSmallWhite
+  - PillowLongWhite
+  - PillowLumpBlue
+  - PillowLumpRed
+  - PillowLumpWhite
+  - PillowSmallBlue
+  - PillowSmallRed
+  - PillowSquareBlue
+  - PillowSquareRed
+  - PillowSquareWhite

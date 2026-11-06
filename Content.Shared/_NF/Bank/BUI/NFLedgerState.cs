@@ -37,6 +37,7 @@ public enum LedgerEntryType : byte
     MedicalSales,
     // Mono end
     BluespaceReward,
+    PowerTransmission,
     AntiSmugglingBonus,
     MedicalBountyTax,
     StationDepositFines,

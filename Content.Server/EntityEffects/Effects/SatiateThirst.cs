@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -28,5 +27,5 @@ public sealed partial class SatiateThirst : EntityEffect
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-satiate-thirst", ("chance", Probability), ("relative",  HydrationFactor / DefaultHydrationFactor));
+        => Loc.GetString("reagent-effect-guidebook-satiate-thirst", ("chance", Probability), ("relative", HydrationFactor / DefaultHydrationFactor));
 }

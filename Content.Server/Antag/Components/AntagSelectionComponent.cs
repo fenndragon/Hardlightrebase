@@ -14,10 +14,16 @@ namespace Content.Server.Antag.Components;
 public sealed partial class AntagSelectionComponent : Component
 {
     /// <summary>
-    /// Has the primary selection of antagonists finished yet?
+    /// Has the primary assignment of antagonists finished yet?
     /// </summary>
     [DataField]
-    public bool SelectionsComplete;
+    public bool AssignmentComplete;
+
+    /// <summary>
+    /// Has the antagonists been preselected but yet to be fully assigned?
+    /// </summary>
+    [DataField]
+    public bool PreSelectionsComplete;
 
     /// <summary>
     /// The definitions for the antagonists
@@ -26,10 +32,10 @@ public sealed partial class AntagSelectionComponent : Component
     public List<AntagSelectionDefinition> Definitions = new();
 
     /// <summary>
-    /// The minds and original names of the players selected to be antagonists.
+    /// The minds and original names of the players assigned to be antagonists.
     /// </summary>
     [DataField]
-    public List<(EntityUid, string)> SelectedMinds = new();
+    public List<(EntityUid, string)> AssignedMinds = new();
 
     /// <summary>
     /// When the antag selection will occur.
@@ -38,10 +44,16 @@ public sealed partial class AntagSelectionComponent : Component
     public AntagSelectionTime SelectionTime = AntagSelectionTime.PostPlayerSpawn;
 
     /// <summary>
+    /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
+    /// </summary>
+    [DataField]
+    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>> PreSelectedSessions = new();
+
+    /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
     /// Is not serialized.
     /// </summary>
-    public HashSet<ICommonSession> SelectedSessions = new();
+    public HashSet<ICommonSession> AssignedSessions = new();
 
     /// <summary>
     /// Locale id for the name of the antag.
@@ -49,6 +61,23 @@ public sealed partial class AntagSelectionComponent : Component
     /// </summary>
     [DataField]
     public LocId? AgentName;
+
+    /// <summary>
+    /// If the player is pre-selected but fails to spawn in (e.g. due to only having antag-immune jobs selected),
+    /// should they be removed from the pre-selection list?
+    /// </summary>
+    [DataField]
+    public bool RemoveUponFailedSpawn = true;
+
+    // HardLight start
+    /// <summary>
+    /// With round persistence most players stay in-game between rounds, so the round-start lobby pool is tiny.
+    /// If true, any antag slots left unfilled by round-start selection are topped up from players already in the round.
+    /// Only use this for antags that are applied to a player's existing body (e.g. traitor, thief), not spawning antags (e.g. wizard or nukie).
+    /// </summary>
+    [DataField]
+    public bool FillFromInGamePlayers;
+    // HardLight end
 }
 
 [DataDefinition]
@@ -113,7 +142,7 @@ public partial struct AntagSelectionDefinition()
     /// If true, players that latejoin into a round have a chance of being converted into antagonists.
     /// </summary>
     [DataField]
-    public bool LateJoinAdditional = false;
+    public bool LateJoinAdditional = true;
 
     //todo: find out how to do this with minimal boilerplate: filler department, maybe?
     //public HashSet<ProtoId<JobPrototype>> JobBlacklist = new()
@@ -122,7 +151,7 @@ public partial struct AntagSelectionDefinition()
     /// Mostly just here for legacy compatibility and reducing boilerplate
     /// </remarks>
     [DataField]
-    public bool AllowNonHumans = false;
+    public bool AllowNonHumans = true;
 
     /// <summary>
     /// A whitelist for selecting which players can become this antag.

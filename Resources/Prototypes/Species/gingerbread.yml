@@ -6,12 +6,14 @@
   sprites: MobGingerbreadSprites
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobGingerbreadDummy
-  skinColoration: HumanToned
+  skinColoration: AnyColour # Hardlight
   defaultSkinTone: "#9a7c5a"
 
 - type: speciesBaseSprites
   id: MobGingerbreadSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking
+    TailOversuit: MobHumanoidAnyMarking
     Head: MobGingerbreadHead
     HeadTop: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking # WOLFGATE(Genitals): split tail layers ported from HardLight/Floof

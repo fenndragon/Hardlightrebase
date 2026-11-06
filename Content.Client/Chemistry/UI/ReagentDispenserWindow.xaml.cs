@@ -11,7 +11,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Chemistry.UI
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="ReagentDispenserComponent"/>.
+    /// Client-side UI used to control a ReagentDispenserComponent.
     /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class ReagentDispenserWindow : FancyWindow
@@ -20,6 +20,7 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private IEntityManager _entityManager = default!;
         public event Action<string>? OnDispenseReagentButtonPressed;
         public event Action<string>? OnEjectJugButtonPressed;
+        public event Action? OnToggleValveButtonPressed; // Starlight-edit: Plumbing valve
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -29,6 +30,7 @@ namespace Content.Client.Chemistry.UI
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+            ValveButton.OnPressed += _ => OnToggleValveButtonPressed?.Invoke(); // Starlight-edit: Plumbing valve
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data sent by the server.</param>
         public void UpdateState(BoundUserInterfaceState state)
         {
-            var castState = (ReagentDispenserBoundUserInterfaceState) state;
+            var castState = (ReagentDispenserBoundUserInterfaceState)state;
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
 
@@ -70,6 +72,11 @@ namespace Content.Client.Chemistry.UI
             ClearButton.Disabled = castState.OutputContainer is null;
             EjectButton.Disabled = castState.OutputContainer is null;
 
+            // Starlight start: update valve button
+            ValveButton.Text = Loc.GetString(castState.ValveOpen
+                ? "reagent-dispenser-window-valve-open"
+                : "reagent-dispenser-window-valve-closed");
+            // Starlight-end
             AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
         }
 
@@ -78,7 +85,6 @@ namespace Content.Client.Chemistry.UI
         /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
-        /// or null if no button is being hovered.</param>
         public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state)
         {
             ContainerInfo.Children.Clear();
@@ -106,7 +112,7 @@ namespace Content.Client.Chemistry.UI
                 var quantityLabel = new Label
                 {
                     Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity)),
-                    StyleClasses = { StyleNano.StyleClassLabelSecondaryColor },
+                    StyleClasses = { StyleClass.LabelWeak },
                 };
 
                 ContainerInfo.Children.Add(new BoxContainer

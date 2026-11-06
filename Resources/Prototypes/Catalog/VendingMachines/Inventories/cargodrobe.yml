@@ -12,10 +12,12 @@
     ClothingHandsGlovesFingerless: 3
     ClothingHeadHatCargosoft: 3
     ClothingHeadBandBrown: 3
-    ClothingHeadsetCargo: 3
-    EncryptionKeyCargo: 10
+    #ClothingHeadsetCargo: 3
+    #EncryptionKeyCargo: 10
     ClothingOuterWinterCargo: 2
     ClothingShoesBootsWinterCargo: 2
+    ClothingNeckCollarLogi: 2 # Floofstation - Collar addition
+    # MailBag: 2 # Frontier
     # Frontier
     ClothingNeckScarfStripedBrown: 3
     # WOLFGATE(MeridianClothing) START: Meridian Rift clothing, written by Tools/_WF/MeridianClothing/port.py
@@ -78,15 +80,26 @@
     ClothingBeltSalvageWebbing: 2
     ClothingUniformJumpsuitSalvageSpecialist: 2
     ClothingOuterWinterMiner: 2
+    ClothingOuterWindbreakerCargo: 2 # Starlight
     ClothingShoesBootsWinterMiner: 2
-    ClothingHeadsetMining: 2
+    #ClothingHeadsetMining: 2
     ClothingShoesBootsSalvage: 2
     ClothingMaskGasExplorer: 2
     ClothingNeckCloakMiner: 2
 # QM:
-    ClothingHeadsetAltCargo: 1
-    RubberStampQm: 1
+    #ClothingHeadsetAltCargo: 1
+    #RubberStampQm: 1
     # End Frontier
+    ClothingHandsLogisWarmers: 3
+    ClothingUnderSocksLogis: 3
+    ClothingUniformLogisThong: 3
+    ClothingHandsCourierWarmers: 3
+    ClothingUnderSocksCourier: 3
+    ClothingUniformCourierThong: 3
+    ClothingHandsLOLogisWarmers: 3
+    ClothingUnderSocksLOLogis: 3
+    ClothingUniformLOLogisThong: 3
+    CargoVendBoosterPack: 2 # HL
   contrabandInventory:
     ClothingHeadHatCargosoftFlipped: 1 # Frontier
     ClothingNeckCloakHerald: 1 # Frontier

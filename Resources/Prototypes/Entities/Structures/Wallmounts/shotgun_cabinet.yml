@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: FireAxeCabinet
   id: ShotGunCabinet
   name: shotgun cabinet
@@ -41,7 +41,7 @@
   - type: ContainerFill
     containers:
       ItemCabinet:
-      - WeaponShotgunKammerer
+      - NFWeaponShotgunKammerer # Frontier: use NF version
 
 - type: entity
   parent: [ShotGunCabinetFilled, ShotGunCabinetOpen]

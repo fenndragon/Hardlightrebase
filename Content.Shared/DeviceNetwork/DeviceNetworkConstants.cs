@@ -62,16 +62,16 @@ namespace Content.Shared.DeviceNetwork
         /// Either returns the localized name representation of the corresponding <see cref="DeviceNetworkComponent.DeviceNetIdDefaults"/>
         /// or converts the id to string
         /// </summary>
-        public static string DeviceNetIdToLocalizedName(this int id)
+        public static string DeviceNetIdToLocalizedName(this int id, ILocalizationManager localeMan)
         {
 
             if (!Enum.IsDefined(typeof(DeviceNetworkComponent.DeviceNetIdDefaults), id))
                 return id.ToString();
 
-            var result = ((DeviceNetworkComponent.DeviceNetIdDefaults) id).ToString();
+            var result = ((DeviceNetworkComponent.DeviceNetIdDefaults)id).ToString();
             var resultKebab = "device-net-id-" + CaseConversion.PascalToKebab(result);
 
-            return !Loc.TryGetString(resultKebab, out var name) ? result : name;
+            return !localeMan.TryGetString(resultKebab, out var name) ? result : name;
         }
 
         #endregion

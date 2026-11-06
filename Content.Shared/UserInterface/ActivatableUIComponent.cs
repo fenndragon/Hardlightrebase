@@ -1,4 +1,4 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
@@ -32,7 +32,7 @@ namespace Content.Shared.UserInterface
         ///     Whether you need to be able to do complex interactions to operate this UI.
         /// </summary>
         /// <remarks>
-        ///     This should probably be true for most machines & computers, but there will still be UIs that represent a
+        ///     This should probably be true for most machines &amp; computers, but there will still be UIs that represent a
         ///     more generic interaction / configuration that might not require complex.
         /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -66,6 +66,15 @@ namespace Content.Shared.UserInterface
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public bool RequireActiveHand = true;
+
+        /// <summary>
+        /// If true, the UI will not be forcibly closed when the item is unequipped
+        /// or the active hand is changed. Useful for devices where the UI should
+        /// remain open (e.g. anomaly scanner, plant analyzer).
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public bool KeepOpenWhenUnequipped = false;
 
         /// <summary>
         ///     The client channel currently using the object, or null if there's none/not single user.

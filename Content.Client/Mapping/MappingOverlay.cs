@@ -1,8 +1,6 @@
-﻿using Robust.Client.GameObjects;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Content.Client.Mapping.MappingState;
@@ -15,6 +13,8 @@ public sealed partial class MappingOverlay : Overlay
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
 
+    private readonly SpriteSystem _sprite;
+
     // 1 off in case something else uses these colors since we use them to compare
     private static readonly Color PickColor = new(1, 255, 0);
     private static readonly Color DeleteColor = new(255, 1, 0);
@@ -23,6 +23,7 @@ public sealed partial class MappingOverlay : Overlay
 
     private readonly MappingState _state;
     private readonly ShaderInstance _shader;
+    private static readonly ProtoId<ShaderPrototype> UnshadedShaderId = "unshaded";
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -30,8 +31,10 @@ public sealed partial class MappingOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
 
+        _sprite = _entities.System<SpriteSystem>();
+
         _state = state;
-        _shader = _prototypes.Index<ShaderPrototype>("unshaded").Instance();
+        _shader = _prototypes.Index(UnshadedShaderId).Instance();
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -42,7 +45,7 @@ public sealed partial class MappingOverlay : Overlay
                 continue;
 
             if (sprite.Color == DeleteColor || sprite.Color == PickColor)
-                sprite.Color = color;
+                _sprite.SetColor((id, sprite), color);
         }
 
         _oldColors.Clear();
@@ -56,27 +59,27 @@ public sealed partial class MappingOverlay : Overlay
         switch (_state.State)
         {
             case CursorState.Pick:
-            {
-                if (_state.GetHoveredEntity() is { } entity &&
-                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
-                    _oldColors[entity] = sprite.Color;
-                    sprite.Color = PickColor;
-                }
+                    if (_state.GetHoveredEntity() is { } entity &&
+                        _entities.TryGetComponent(entity, out SpriteComponent? sprite))
+                    {
+                        _oldColors[entity] = sprite.Color;
+                        _sprite.SetColor((entity, sprite), PickColor);
+                    }
 
-                break;
-            }
+                    break;
+                }
             case CursorState.Delete:
-            {
-                if (_state.GetHoveredEntity() is { } entity &&
-                    _entities.TryGetComponent(entity, out SpriteComponent? sprite))
                 {
-                    _oldColors[entity] = sprite.Color;
-                    sprite.Color = DeleteColor;
-                }
+                    if (_state.GetHoveredEntity() is { } entity &&
+                        _entities.TryGetComponent(entity, out SpriteComponent? sprite))
+                    {
+                        _oldColors[entity] = sprite.Color;
+                        _sprite.SetColor((entity, sprite), DeleteColor);
+                    }
 
-                break;
-            }
+                    break;
+                }
         }
 
         handle.UseShader(null);

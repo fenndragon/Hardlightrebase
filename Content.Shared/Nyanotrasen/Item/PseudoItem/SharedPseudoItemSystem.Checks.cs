@@ -1,4 +1,4 @@
-﻿using Content.Shared.Item;
+using Content.Shared.Item;
 using Content.Shared.Storage;
 
 namespace Content.Shared.Nyanotrasen.Item.PseudoItem;
@@ -16,7 +16,7 @@ public partial class SharedPseudoItemSystem
         if (!Resolve(itemEnt, ref itemEnt.Comp) || !Resolve(storageEnt, ref storageEnt.Comp))
             return false;
 
-        if (!TryComp<MetaDataComponent>(itemEnt, out var metadata))
+        if (!HasComp<MetaDataComponent>(itemEnt))
             return false;
 
         TryComp<ItemComponent>(itemEnt, out var item);
@@ -24,7 +24,6 @@ public partial class SharedPseudoItemSystem
         // The fake component is never actually added to the entity
         item ??= new ItemComponent
         {
-            Owner = itemEnt,
             Shape = itemEnt.Comp.Shape,
             Size = itemEnt.Comp.Size,
             StoredOffset = itemEnt.Comp.StoredOffset

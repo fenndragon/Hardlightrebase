@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.UserInterface.Controls;
 
@@ -10,7 +9,7 @@ public sealed class HandsContainer : ItemSlotUIContainer<HandButton>
     public int ColumnLimit { get => _grid.Columns; set => _grid.Columns = value; }
     public int MaxButtonCount { get; set; } = 0;
 
-    public int MaxButtonsPerRow { get; set;  }= 6;
+    public int MaxButtonsPerRow { get; set; } = 6;
 
     /// <summary>
     ///     Indexer. This is used to reference a HandsContainer from the

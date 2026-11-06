@@ -1,9 +1,5 @@
-﻿using Content.Shared.Beeper.Components;
-using Content.Shared.Item.ItemToggle;
-using Content.Shared.Pinpointer;
+using Content.Shared.Beeper.Components;
 using Content.Shared.ProximityDetection;
-using Content.Shared.ProximityDetection.Components;
-using Content.Shared.ProximityDetection.Systems;
 
 namespace Content.Shared.Beeper.Systems;
 
@@ -31,7 +27,12 @@ public sealed partial class ProximityBeeperSystem : EntitySystem
             return;
         }
 
-        _beeper.SetIntervalScaling(owner, args.Distance / args.Detector.Range, beeper);
+        // Frontier: minimum range for beeper
+        if (args.Distance <= proxBeeper.MinRange)
+            _beeper.SetIntervalScaling(owner, 0, beeper);
+        else
+            _beeper.SetIntervalScaling(owner, (args.Distance - proxBeeper.MinRange) / (args.Detector.Range - proxBeeper.MinRange), beeper);
+        // End Frontier
         _beeper.SetMute(owner, false, beeper);
     }
 

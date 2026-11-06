@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos.Components
 {
@@ -9,7 +10,10 @@ namespace Content.Server.Atmos.Components
     public sealed partial class AtmosFixMarkerComponent : Component
     {
         // See FixGridAtmos for more details
-        [DataField("mode")]
+        [DataField]
         public int Mode { get; set; } = 0;
+
+        [DataField]
+        public GasMixture? GasMix = default!;
     }
 }

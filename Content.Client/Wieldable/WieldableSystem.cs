@@ -29,7 +29,10 @@ public sealed partial class WieldableSystem : SharedWieldableSystem
             return;
 
         if (_gameTiming.IsFirstTimePredicted)
+        {
             cursorOffsetComp.CurrentPosition = Vector2.Zero;
+            cursorOffsetComp.TargetPosition = Vector2.Zero;
+        }
     }
 
     public void OnGetEyeOffset(Entity<CursorOffsetRequiresWieldComponent> entity, ref HeldRelayedEvent<GetEyeOffsetRelayedEvent> args)
@@ -38,6 +41,9 @@ public sealed partial class WieldableSystem : SharedWieldableSystem
             return;
 
         if (!wieldableComp.Wielded)
+            return;
+
+        if (TryComp(entity.Owner, out EyeCursorOffsetComponent? eyeOffsetComp) && !eyeOffsetComp.Enabled)
             return;
 
         var offset = _eyeOffset.OffsetAfterMouse(entity.Owner, null);

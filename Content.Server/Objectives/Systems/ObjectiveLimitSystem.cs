@@ -17,7 +17,7 @@ public sealed class ObjectiveLimitSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (Prototype(ent)?.ID is not {} proto)
+        if (Prototype(ent)?.ID is not { } proto)
         {
             Log.Error($"ObjectiveLimit used for non-prototyped objective {ent}");
             return;
@@ -50,7 +50,7 @@ public sealed class ObjectiveLimitSystem : EntitySystem
     /// </summary>
     public bool HasObjective(EntityUid mindId, string proto, MindComponent? mind = null)
     {
-        if (!Resolve(mindId, ref mind))
+        if (!Resolve(mindId, ref mind, false))
             return false;
 
         foreach (var objective in mind.Objectives)

@@ -1,0 +1,97 @@
+# Section 6: Roleplay Rules
+
+- type: serverRule
+  id: ServerRule6_1
+  section: 6
+  code: 6.1
+  text: "Your character is a separate entity from you, the player. Your character's actions, feelings, and knowledge in-game should be based solely on the character's experiences rather than your own as the player."
+
+- type: serverRule
+  id: ServerRule6_2
+  section: 6
+  code: 6.2
+  hardlit: ZeroTolerance
+  text: "Do not play excessively hostile or provocative characters. Playing a character accurately should never result in rulebreaks. - Ahelp for any questions relating to this."
+
+- type: serverRule
+  id: ServerRule6_3
+  section: 6
+  code: 6.3
+  text: "If you choose a job on shift, you are required to participate in the round as said job when necessary."
+
+- type: serverRule
+  id: ServerRule6_4
+  section: 6
+  code: 6.4
+  text: "Do not intentionally break roleplay to gain an unfair advantage while someone is typing."
+
+- type: serverRule
+  id: ServerRule6_5
+  section: 6
+  code: 6.5
+  hardlit: ZeroTolerance
+  text: "Respect other people's consent, dignity and boundaries. IF SOMEBODY ASKS YOU TO STOP BOTHERING THEM LOOC (local-out-of-character), do so. If this rule is abused, Ahelp right away."
+
+- type: serverRule
+  id: ServerRule6_6
+  section: 6
+  code: 6.6
+  text: "Do not dismantle key portions of station infrastructure (IE. escape pods.)"
+
+- type: serverRule
+  id: ServerRule6_7
+  section: 6
+  code: 6.7
+  hardlit: ZeroTolerance
+  text: "Roleplaying an underage character is strictly forbidden. So is talk of such activities."
+
+- type: serverRule
+  id: ServerRule6_8
+  section: 6
+  code: 6.8
+  hardlit: Hardlit
+  text: "Roleplay Standard"
+  description: |-
+    This is a Medium Roleplay server. Your character must be played as a believable person. Play them in a way that generates roleplay opportunities. See [textlink="Roleplay Expectations" link="RoleplayExpectations"] for the roleplay guidelines this standard is built on.
+
+    Competence, efficiency, planning, and stealth are permitted.
+
+    Winning or completing mechanical objectives (greentext) does not justify low-effort, disruptive, or non-roleplay behavior. Antagonist objectives exist to drive stories and do not grant immunity. Players are expected to handle conflict gracefully and do the least harm necessary.
+
+    Actions should make sense from the perspective of your character, not simply an optimal strategy for you as a player.
+
+    • Acceptable: Playing as the Chief Engineer one round, and the Chief Medical Officer the next - role expectations exist for the specific round only.
+    • Acceptable: Failing an objective because you prioritized character interaction.
+    • Acceptable: Killing a target quietly and efficiently, where your character had reason to do so and other players had some means of noticing, investigating, or responding.
+    • Prohibited: Structuring a round so that no other player has an opportunity to respond - eliminating a target with no buildup and then destroying the body or evidence specifically to foreclose any investigation, or killing every witness to avoid in-character consequence.
+    • Prohibited: Justifying disruptive or low-effort play with "I had to, it was my objective."
+
+- type: serverRule
+  id: ServerRule6_8_1
+  section: 6
+  code: 6.8.1
+  hardlit: Hardlit
+  text: "Reaction to Consequences"
+  description: |-
+    Your character continues to exist after the round's events. Do not resist or evade authorities in a way disproportionate to the offense committed.
+
+    Security who witnesses disruptive conduct that begins as in-character actions but leads to evasion beyond reasonable means should seek Colonial Command intervention via fax or ahelp.
+
+    Admin guidelines will include steps to take - such as bluespace EMP or other creative measures to bring offenders to justice.
+
+- type: serverRule
+  id: ServerRule6_9
+  section: 6
+  code: 6.9
+  hardlit: Hardlit
+  text: "Respect Round Start"
+  description: |-
+    For the first thirty (30) minutes of a shift, undertake preparatory actions only. Purchase equipment, construct, position, gather information, engage in social play.
+
+    Prohibited during this window:
+    • Breaking into secured departments. (With the exception of non-antagonists genuinely interested in station success, such as a Freelancer powering on the AME - understanding potential IC consequences.)
+    • Theft of secured or high-value objectives.
+    • Objective aligned attacks/killings.
+    • Destruction of station infrastructure.
+
+    This window only exists for round-start antagonists such as thieves, traitors, and nuclear operatives. Its purpose is so that personnel can respond to activity realistically.

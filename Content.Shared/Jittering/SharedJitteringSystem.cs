@@ -25,7 +25,7 @@ namespace Content.Shared.Jittering
 
         private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
         {
-            EntityManager.RemoveComponentDeferred<JitteringComponent>(uid);
+            RemCompDeferred<JitteringComponent>(uid);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Content.Shared.Jittering
         /// </summary>
         /// <remarks>
         ///     If the entity is already jittering, the jitter values will be updated but only if they're greater
-        ///     than the current ones and <see cref="forceValueChange"/> is false.
+        ///     than the current ones and forceValueChange is false.
         /// </remarks>
         /// <param name="uid">Entity in question.</param>
         /// <param name="time">For how much time to apply the effect.</param>
@@ -54,9 +54,9 @@ namespace Content.Shared.Jittering
 
             if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, refresh, status))
             {
-                var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
+                var jittering = Comp<JitteringComponent>(uid);
 
-                if(forceValueChange || jittering.Amplitude < amplitude)
+                if (forceValueChange || jittering.Amplitude < amplitude)
                     jittering.Amplitude = amplitude;
 
                 if (forceValueChange || jittering.Frequency < frequency)

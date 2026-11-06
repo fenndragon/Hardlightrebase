@@ -16,7 +16,7 @@ public sealed partial class CryoPodComponent : Component
     public string PortName { get; set; } = "port";
 
     /// <summary>
-    /// Specifies the name of the atmospherics port to draw gas from.
+    /// Specifies the name of the slot that holds beaker with medicine.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("solutionContainerName")]
@@ -30,7 +30,7 @@ public sealed partial class CryoPodComponent : Component
     public float BeakerTransferTime = 1f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("nextInjectionTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField("nextInjectionTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextInjectionTime;
 
     /// <summary>

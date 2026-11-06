@@ -1,15 +1,13 @@
 - type: entity
-  parent: [BaseMob, StripableInventoryBase]
-  id: BaseBorgChassis
+  parent: [ BaseMob, StripableInventoryBase, BaseSiliconLanguages ] # Starlight: Languages
+  id: BaseBorgChassisNotIonStormable
   name: cyborg
-  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+  description: A synthetic that assists in station activity. They love being asked to state their laws over and over. #HL Edit. We have positronics, BORIS modules, and straight up AI's here. These aren't MMI-exclusive.
   save: false
   abstract: true
   components:
-  - type: SurgerySpeedModifier # Mono
-  - type: Stripping # Mono
-  - type: SurgeryTarget # Mono
-  - type: Sanitized # Mono
+  - type: Body
+    prototype: Borg
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -29,7 +27,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 300
+        density: 150
         mask:
         - MobMask
         layer:
@@ -38,7 +36,9 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
-    sprite: Mobs/Silicon/chassis.rsi
+    sprite: Mobs/Silicon/Chassis/generic/default.rsi
+  - type: StatusIcon
+    bounds: -0.5,-0.5,0.5,0.5
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -49,8 +49,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Critical # Monolith
-      300: Dead # Monolith
+      100: Critical
+      200: Dead
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -77,49 +77,35 @@
       # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
       enum.BorgSwitchableTypeUiKey.SelectBorgType:
         type: BorgSelectTypeUserInterface
-      enum.RadarConsoleUiKey.Key: # Mono
-        type: RadarConsoleBoundUserInterface
+      enum.SurgeryUIKey.Key:
+        type: SurgeryBui
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
+  - type: Targeting # Shitmed
+  - type: SurgeryTarget # HardLight: Necessary for Cyborgs to perform surgery.
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
     - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
+  - type: BankAccount
   - type: SiliconLawProvider
     laws: Crewsimov
-  - type: IonStormTarget
   - type: Inventory
-    templateId: borg
+    templateId: borgnorm # Hardlight: Edits regular borgs to use our inventories.
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
     canBeStripped: false
   - type: ComplexInteraction
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Traffic
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Traffic
-    - Common
-    - Science
-  - type: CollectiveMind
-    channels:
-    - Binary
-    defaultChannel: Binary
   - type: ZombieImmune
-  - type: Repairable
-    doAfterDelay: 10
-    allowSelfRepair: true
+  - type: WeldingHealable # HardLight
   - type: BorgChassis
   - type: LockingWhitelist
     blacklist:
       components:
+      # - BorgChassis Hardlight if quads can do it then so can we damn it.
       - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
@@ -131,6 +117,34 @@
       cell_slot: !type:ContainerSlot { }
       borg_module: !type:Container { }
       part-container: !type:Container
+      key_slots: !type:Container # HardLight: Added a slot for encryption keys
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    examineWhileLocked: false
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Science
+    - Common
+    - Faction
+  # HardLight end
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
@@ -138,16 +152,7 @@
     onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
-  #- type: ItemTogglePointLight # Mono - Light removal PR: Borg Adjustments
-  - type: NightVision # Gen 3 wide-quadtube
-    relayOverlay: false
-    goggleEffect: true
-    viewCircleRadius: 450
-    viewCircleCount: 4
-    viewCircleSpacing: 280
-    action: ActionToggleNightVision
-    phosphorColor: "#00FF00"
-    lightingColor: "#FFFFFF32"
+  - type: ItemTogglePointLight
   - type: AccessToggle
   # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
   # TODO: or just have sentient speedboots be fast idk
@@ -158,7 +163,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-  - type: Body
   - type: StatusEffects
     allowed:
     - Stun
@@ -170,14 +174,11 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Borg
-    allowedEmotes: # Goobstation - Cyborg emote sounds
-    - Laugh
-    - Sigh
-    - Crying
-    - Whistle
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
+    wilhelmProbability: 0
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
@@ -195,12 +196,11 @@
   - type: LockedWiresPanel
   - type: Damageable
     damageContainer: Silicon
-    damageModifierSet: BaseBorgChassis
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100 # Monolith
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -209,7 +209,7 @@
             volume: 5
     - trigger:
         !type:DamageTrigger
-         damage: 400 # Monolith
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -221,83 +221,87 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  #- type: HandheldLight # Mono - Light removal PR: Borg Adjustments
-  #  toggleOnInteract: false
-  #  wattage: 0.2
-  #  blinkingBehaviourId: blinking
-  #  radiatingBehaviourId: radiating
-  #- type: LightBehaviour
-  #  behaviours:
-  #  - !type:FadeBehaviour
-  #    id: radiating
-  #    maxDuration: 2.0
-  #    startValue: 3.0
-  #    endValue: 2.0
-  #    isLooped: true
-  #    reverseWhenFinished: true
-  #  - !type:PulseBehaviour
-  #    id: blinking
-  #    interpolate: Nearest
-  #    maxDuration: 1.0
-  #    minValue: 0.1
-  #    maxValue: 2.0
-  #    isLooped: true
-  #- type: ToggleableVisuals
-  #- type: PointLight
-  #  enabled: false
-  #  mask: /Textures/Effects/LightMasks/cone.png
-  #  autoRot: true
-  #  radius: 4
-  #  netsync: false
+  - type: HandheldLight
+    toggleOnInteract: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 4
+    netsync: false
   - type: Pullable
   - type: Puller
     needsHands: false
   - type: StandingState
+  - type: Buckle
+  - type: CanEnterCryostorage
   - type: Tag
     tags:
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - SiliconEmotes
+    - SiliconMob
   - type: Emoting
   - type: GuideHelp
     guides:
     - Cyborgs
     - Robotics
-  - type: LanguageKnowledge # Einstein Engines - Languages
-    speaks:
-    - TauCetiBasic
-    - RobotTalk
-    understands:
-    - TauCetiBasic
-    - RobotTalk
   - type: ProtectedFromStepTriggers
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: PreventDropOnDowned # Frontier: borgs don't drop items when falling (e.g. critical/dead)
-  # <Mono>
-  - type: ToggleableSignature
-    blip:
-      radarColor: CornflowerBlue
-      scale: 0.5
-  - type: Magboots
-  - type: AccessGrantable
-  - type: MovementAlwaysTouching
-  - type: IntrinsicUI
-    uis:
-      enum.RadarConsoleUiKey.Key:
-        toggleAction: ActionObserverShowRadar
-  - type: RadarConsole
-    followEntity: true
-    noRotate: true
-  - type: DetectionRangeMultiplier # same as mass scanner
-    infraredMultiplier: 0.5
-    visualMultiplier: 0.75
-  - type: ShipNpcTarget
-    needGrid: NoGrid
-  - type: RetroMonitorView
-  # </Mono>
+  # region Starlight
+  # - type: CyborgSparkEffect # Hardlight we don't have these yet...
+  # - type: StationAIShunt # Starlight allow shunting into all borgs # Hardlight TOO SOON
+  # - type: Crawler # Hardlight TOO SOON
+  # end region starlight
+  - type: BorgSwitchableSubtype # CD change
+  - type: BypassLock
+    openWiresPanel: true
+  - type: BypassLockRequiresMobState
+    requiredMobState:
+    - Critical
+    - Dead
+  - type: PreventDropOnDowned # Frontier: borgs don't drop items when falling
+  - type: InteractionPopup   # Hardlight: should be able to pet the borgs now
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Blindable
+  - type: EyeProtection
+  - type: Stripping
+  - type: Vore
+
+- type: entity
+  abstract: true
+  parent: BaseBorgChassisNotIonStormable
+  id: BaseBorgChassis
+  components:
+  - type: IonStormTarget
+  - type: RetroMonitorView # Mono - #3902
 
 - type: entity
   abstract: true
@@ -322,26 +326,24 @@
   # explosion does most of its damage in the center and less at the edges
   - type: Explosive
     explosionType: Minibomb
-    deleteAfterExplosion: false # let damage threshold gib the borg
+    deleteAfterExplosion: true # let damage threshold gib the borg
     totalIntensity: 30
     intensitySlope: 20
     maxIntensity: 20
     canCreateVacuum: false # its for killing the borg not the station
 
-# Xenoborg Transponder
 - type: entity
   abstract: true
   parent: BaseBorgTransponder
   id: BaseXenoborgTransponder
   components:
   - type: DeviceNetwork
-    receiveFrequencyId: Xenoborgs
+    receiveFrequencyId: Xenoborg
     transmitFrequencyId: Mothership
   - type: SurveillanceCamera # they act like cameras for the mothership
     networkSet: true
     nameSet: True
     id: Xenoborg
-    useEntityNameAsCameraId: true
   - type: Explosive
     explosionType: Minibomb
     deleteAfterExplosion: false # let damage threshold gib the borg
@@ -357,21 +359,18 @@
   components:
   - type: RandomMetadata
     nameSegments:
-      # - names_borg # Frontier
-      - NFNamesBorgUnlocalized # Frontier
+      - NFNamesBorg # Frontier: use NF variant
   - type: NpcFactionMember
     factions:
     - NanoTrasen
   - type: Access
+    enabled: true
+    groups:
+    - AllAccess
     tags:
-     - External # Mono
-     - Mercenary # Mono
-     - Borg
-    enabled: false
-#   groups:
-#    - AllAccess # Mono
-#  - type: AccessReader
-#    access: [["Command"], ["Research"]]
+    - Borg
+  - type: AccessReader
+    access: [["Command"], ["Research"], ["Mercenary"]] # Hardlight allow freelancers to unlock borgs.
   - type: ShowJobIcons
   - type: InteractionPopup
     interactSuccessSound:
@@ -394,38 +393,39 @@
   - type: SiliconLawProvider
     laws: SyndicateStatic
     subverted: true
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    examineWhileLocked: false
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+    - Syndicate
   - type: IntrinsicRadioTransmitter
-    channels:
-    - Traffic
-    - Common
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
     - Syndicate
   - type: ActiveRadio
-    channels:
-    - Common
-    - Traffic
-    - Syndicate
-  - type: CollectiveMind
-    channels:
+    intrinsicChannels:
     - Binary
-    defaultChannel: Binary
+    - Trinary # Hardlight
+    - Syndicate
+  # HardLight end
   - type: ShowSyndicateIcons
   - type: MovementAlwaysTouching
   - type: Speech
     speechSounds: SyndieBorg
     allowedEmotes:
     - Laugh
-    # Goobstation - Cyborg emote sounds
-    - Sigh
-    - Crying
-    - Whistle
-    # end Goobstation - Cyborg emote sounds
   - type: Vocal
     sounds:
       Unsexed: UnisexSiliconSyndicate
-  #- type: PointLight Mono - Light removal PR: Borg Adjustments
-  #  color: "#dd200b"
-  - type: ExplosionResistance # Mono - Borg buffs
-    damageCoefficient: 0.50
+  - type: PointLight
+    color: "#dd200b"
+  - type: BypassLock
+    bypassDelay: 15 # We don't want people to easily be able to remove syndieborg brains.
 
 - type: entity
   id: BaseBorgChassisDerelict
@@ -436,16 +436,171 @@
     factions:
     - NanoTrasen #The seemingly best fit. It was a regular NT cyborg once, after all.
   - type: Access
-    tags:
-     - External # Mono
-     - Mercenary # Mono
     enabled: false
-  # groups:
-  #   - AllAccess # Mono
-  # - type: AccessReader # Frontier
-  #   access: [["Command"], ["Research"]] # Frontier
-  - type: StartIonStormed
-    ionStormAmount: 3
+    groups:
+    - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
+  - type: AccessReader
+    access: [["Command"], ["Research"]]
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    examineWhileLocked: false
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+  - type: IntrinsicRadioTransmitter
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+  - type: ActiveRadio
+    intrinsicChannels:
+    - Binary
+    - Trinary # Hardlight
+  # HardLight end
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
+
+- type: entity
+  parent: BaseBorgChassisNotIonStormable
+  id: BaseXenoborgChassis
+  name: xenoborg
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.
+  save: false
+  abstract: true
+  components:
+  - type: Body
+    prototype: Borg
+  - type: Inventory
+    templateId: borgquad #Hardlight - Changes Quadborgs over to use our armor slots
+  - type: RandomMetadata
+    nameSegments:
+    - NamesXenoborg
+  - type: NameIdentifier
+    group: Xenoborg
+  - type: Sprite
+    sprite: Mobs/Silicon/Chassis/xeno_engi.rsi
+  - type: MobThresholds
+    thresholds: # slightly tankier than a normal borg
+      0: Alive
+      125: Critical
+      250: Dead
+  - type: EmagSiliconLaw # should xenoborgs be emagable?
+    stunTime: 5
+  - type: SiliconLawProvider
+    laws: XenoborgLawset # custom laws here
+  # HardLight start: Added encryption key slots in addition to intrinsic radio channels.
+  - type: EncryptionKeyHolder
+    keySlots: 10
+    preserveExistingChannels: true
+    examineWhileLocked: false
+    intrinsicChannels:
+    - Xenoborg
+    - Binary
+    - Trinary # Hardlight
+  - type: IntrinsicRadioTransmitter # can only use binary and xenoborg channel
+    intrinsicChannels:
+    - Xenoborg
+    - Binary
+    - Trinary # Hardlight
+  - type: ActiveRadio # but can hear the mothership channel
+    intrinsicChannels:
+    - Mothership
+    - Xenoborg
+    - Binary
+    - Trinary # Hardlight
+  # HardLight end
+  - type: BorgChassis
+    maxModules: 10
+    hasMindState: robot_e
+    noMindState: robot_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+  - type: TypingIndicator
+    proto: xenoborg
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Xenoborg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconXenoborg
+    wilhelmProbability: 0
+  - type: DamagedSiliconAccent
+  - type: BankAccount
+  - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepXenoborg
+  # - type: SpamEmitSound # makes a creppy noise randomly
+  #   minInterval: 30
+  #   maxInterval: 45
+  #   sound:
+  #     path: /Audio/Machines/genetics.ogg
+  #     params:
+  #       volume: -8
+  #       maxDistance: 5
+  #       variation: 0.05
+  - type: NpcFactionMember
+    factions:
+    - Xenoborg
+  - type: Hands
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 90
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 375
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PinpointerMothership: # drop a pinpointer to the mothership upon being destructed
+            min: 1
+            max: 1
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    color: "#0033ff"
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+    - Xenoborgs
+  - type: Access
+    enabled: false
+    tags:
+    - Xenoborg
+  - type: AccessReader
+    access: [["Xenoborg"]]
+  - type: ShowJobIcons # not sure if it is needed
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Xenoborg
+  - type: BypassLock
+    bypassDelay: 15 # We don't want people to easily be able to remove xenoborg brains.
+  - type: Brainwasher
+    bypassMindshield: true
+    chardingDuration: 10
+    configureText: Configure Brainwashing Module
+    engageSound:
+      path: /Audio/Machines/warning_buzzer_xenoborg.ogg

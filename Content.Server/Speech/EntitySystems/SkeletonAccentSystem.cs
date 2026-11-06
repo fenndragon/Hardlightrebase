@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Robust.Shared.Random;
 
@@ -36,7 +36,7 @@ public sealed partial class SkeletonAccentSystem : EntitySystem
         msg = _replacement.ApplyReplacements(msg, "skeleton");
 
         // Suffix:
-        if (_random.Prob(component.ackChance))
+        if (_random.Prob(component.AckChance))
         {
             msg += (" " + Loc.GetString("skeleton-suffix")); // e.g. "We only want to socialize. ACK ACK!"
         }

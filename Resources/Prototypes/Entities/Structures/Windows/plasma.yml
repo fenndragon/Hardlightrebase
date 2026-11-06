@@ -60,7 +60,7 @@
     scalingType: Linear
     scalingPower: 0.0005
   - type: StaticPrice
-    price: 50 # Frontier: 100<50
+    price: 100 # HL: Price balancing
   - type: RadiationBlocker
     resistance: 2
   - type: HitscanDiffractTarget # Mono - Causes diffraction
@@ -129,7 +129,7 @@
     minPressureDelta: 12500
     scalingType: Threshold
   - type: StaticPrice
-    price: 25 # Frontier:50<25
+    price: 50 # HL: Price balancing
   - type: RadiationBlocker
     resistance: 1
   - type: HitscanDiffractTarget # Mono - Causes diffraction
@@ -153,6 +153,8 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
+    - WeldbotFixableStructure
   - type: IconSmooth
     mode: Diagonal
     key: walls # Mono

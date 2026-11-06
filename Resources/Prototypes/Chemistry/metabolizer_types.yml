@@ -10,6 +10,10 @@
   name: metabolizer-type-bloodsucker
 
 - type: metabolizerType
+  id: Vampiric
+  name: metabolizer-type-vampiric
+
+- type: metabolizerType
   id: Dragon
   name: metabolizer-type-dragon
 
@@ -20,6 +24,14 @@
 - type: metabolizerType
   id: Slime
   name: metabolizer-type-slime
+
+- type: metabolizerType #🌟Starlight🌟
+  id: Avali
+  name: metabolizer-type-avali
+
+- type: metabolizerType #🌟Starlight🌟
+  id: Resomi
+  name: metabolizer-type-resomi
 
 - type: metabolizerType
   id: Vox
@@ -44,3 +56,15 @@
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+- type: metabolizerType # HardLight
+  id: Synth
+  name: metabolizer-type-synth
+
+- type: metabolizerType # HardLight
+  id: Dreadtalon
+  name: metabolizer-type-dreadtalon
+
+- type: metabolizerType # HardLight
+  id: Succubus
+  name: metabolizer-type-succubus

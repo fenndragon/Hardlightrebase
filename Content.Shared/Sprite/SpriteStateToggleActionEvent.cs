@@ -1,0 +1,10 @@
+using Content.Shared.Actions;
+
+namespace Content.Shared.Sprite;
+
+/// <summary>
+/// Dedicated action event used exclusively by SpriteStateToggleComponent to avoid cross-talk with other Toggle systems.
+/// </summary>
+public sealed partial class SpriteStateToggleActionEvent : InstantActionEvent
+{
+}

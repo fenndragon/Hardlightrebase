@@ -1,0 +1,39 @@
+- type: flavor
+  id: woof
+  flavorType: Base
+  description: flavor-woof
+
+- type: flavor
+  id: highscore
+  flavorType: Base
+  description: flavor-highscore
+
+- type: flavor
+  id: thaslop
+  flavorType: complex
+  description: flavor-complex-tha-slop
+
+- type: flavor
+  id: old-socks
+  flavorType: complex
+  description: flavor-complex-old-socks
+
+- type: flavor
+  id: liquid-suffering
+  flavorType: complex
+  description: flavor-complex-liquid-suffering
+
+- type: flavor
+  id: nebuladream
+  flavorType: Complex
+  description: flavor-complex-nebula-dream
+
+- type: flavor
+  id: breast-milk
+  flavorType: complex
+  description: flavor-complex-breast-milk
+
+- type: flavor
+  id: piss
+  flavorType: complex
+  description: flavor-complex-piss

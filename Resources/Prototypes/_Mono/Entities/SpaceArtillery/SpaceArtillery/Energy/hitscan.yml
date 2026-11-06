@@ -1,0 +1,157 @@
+# Ship energy weapon hitscan prototypes to satisfy HitscanBatteryAmmoProvider refs
+
+- type: hitscan
+  id: PhalanxLaser
+  maxLength: 400
+  damage:
+    types:
+      Heat: 35
+      Structural: 50
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_beam_heavy
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_heavy
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_beam_heavy
+
+- type: hitscan
+  id: ApolloLaser
+  maxLength: 600
+  damage:
+    types:
+      Heat: 80
+      Structural: 35
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_beam_heavy2
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_heavy2
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_beam_heavy2
+
+- type: hitscan
+  id: PrometheusLaser
+  maxLength: 1000
+  damage:
+    types:
+      Heat: 120
+      Structural: 125
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_beam_heavy2
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam_heavy2
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_beam_heavy2
+
+- type: hitscan
+  id: TachyonLaser
+  maxLength: 500
+  damage:
+    types:
+      Heat: 150
+      Structural: 200
+  muzzleFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: muzzle_superheavy_prefrac
+  travelFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: Beam_SuperHeavy_prefrac
+  impactFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: impact_superheavy_prefrac
+
+- type: hitscan
+  id: SunderLaser
+  maxLength: 900
+  damage:
+    types:
+      Heat: 35
+      Structural: 150
+  muzzleFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: proton_muzzle
+  travelFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: proton_beam
+  impactFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: proton_impact
+
+- type: hitscan
+  id: GaussRound
+  maxLength: 500
+  damage:
+    types:
+      Piercing: 25
+      Heat: 5
+      Structural: 75
+  muzzleFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_muzzle
+  travelFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_trail
+  impactFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_impact
+
+- type: hitscan
+  id: ShredderRound
+  maxLength: 500
+  damage:
+    types:
+      Piercing: 25
+      Heat: 5
+      Structural: 50
+  muzzleFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_muzzle
+  travelFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_trail
+  impactFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: gauss_impact
+
+- type: hitscan
+  id: ExplosiveLaser
+  maxLength: 500
+  damage:
+    types:
+      Heat: 10
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+
+- type: hitscan
+  id: ShipGlassingBeamPlasmaProjectile
+  maxLength: 500
+  damage:
+    types:
+      Radiation: 70
+      Structural: 175
+      Heat: 50
+      Ion: 50
+  muzzleFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: muzzle_superheavy_prefrac
+  travelFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: Beam_SuperHeavy_prefrac
+  impactFlash:
+    sprite: _Mono/Objects/Weapons/Guns/Projectiles/ship_lasers.rsi
+    state: impact_superheavy_prefrac

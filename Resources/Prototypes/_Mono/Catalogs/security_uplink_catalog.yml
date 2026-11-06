@@ -1,0 +1,143 @@
+- type: listing
+  id: UplinkSecurityAnnie
+  name:  uplink-security-annie-name
+  description: uplink-security-annie-desc
+  productEntity: WeaponRifleAnnie
+  cost:
+    FrontierUplinkCoin: 15
+  categories:
+    - UplinkSecurityWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityEg4
+  name:  uplink-security-eg4-name
+  description: uplink-security-eg4-desc
+  productEntity: WeaponEnergyRevolver
+  cost:
+    FrontierUplinkCoin: 7
+  categories:
+  - UplinkSecurityWeapons
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+- type: listing
+  id: UplinkSecuritySurgeryDuffel
+  name:  uplink-security-surgery-duffel-name
+  description: uplink-security-surgery-duffel-desc
+  productEntity: ClothingBackpackDuffelSurgeryAdvancedFilled
+  icon: { sprite: Objects/Specific/Medical/Surgery/scalpel.rsi, state: laser }
+  cost:
+    FrontierUplinkCoin: 4
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+#  - !type:BuyerJobCondition Hardlight
+#    whitelist:
+#      - Brigmedic
+#      - Bailiff
+#      - Sheriff
+
+
+- type: listing
+  id: UplinkSecurityPortableRecharger
+  name:  uplink-security-portable-recharger-name
+  description: uplink-security-portable-recharger-desc
+  productEntity: PortableRecharger
+  cost:
+    FrontierUplinkCoin: 7
+  categories:
+  - UplinkSecurityUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityCash45000 # HL starts : Changes the cash from 75k to using 45k
+  name: uplink-security-cash45000-name
+  description: uplink-security-cash45000-desc
+  productEntity: SpaceCashExpeditionT5 # HL ends
+  icon: { sprite: Objects/Economy/cash.rsi, state: cash_100000 } # HardLight: removed _NF; upstream rebase
+  cost:
+    FrontierUplinkCoin: 10
+  categories:
+    - UplinkSecurityUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityMagazineSubsonic
+  name:  uplink-subsonic-mag-name
+  description: uplink-subsonic-mag-desc
+  productEntity: Magazine762x39mmSubsonic
+  cost:
+    FrontierUplinkCoin: 1
+  categories:
+  - UplinkSecurityAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+- type: listing
+  id: UplinkSecurityBoxSubsonic
+  name:  uplink-subsonic-box-name
+  description: uplink-subsonic-box-desc
+  productEntity: AmmoBox762x39mmSubsonic
+  cost:
+    FrontierUplinkCoin: 3
+  categories:
+  - UplinkSecurityAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - SecurityUplink
+
+#- type: listing
+#  id: UplinkSecurityCCOfficerSword
+#  name:  uplink-security-ccofficersword-name # Hardlight renamed
+#  description: uplink-security-ccofficersword-desc # Hardlight renamed
+#  productEntity: ClothingBeltOrnateSheathFilled # Hardlight New sprite and belt
+#  icon: { sprite: _Goobstation/Objects/Weapons/Melee/ccsabre.rsi, state: icon } # HardLight point it to the correct sprite location
+#  cost:
+#    FrontierUplinkCoin: 1000 # Hardlight Silly number for testing reasons, but definitely feels like should be near to or higher than 500
+#  categories:
+#    - UplinkSecurityWeapons
+#  conditions:
+#    - !type:StoreWhitelistCondition
+#      whitelist:
+#        tags:
+#          - SecurityUplink
+
+# - type: listing
+#   id: UplinkSecurityAuroraExosuit
+#   name:  uplink-exosuit-aurora-name
+#   description: uplink-exosuit-aurora-desc
+#   productEntity: ClothingOuterExosuitAurora
+#   cost:
+#     FederationMilitaryCredit: 25
+#   categories:
+#   - UplinkSecurityHardsuits
+#   conditions:
+#   - !type:StoreWhitelistCondition
+#     whitelist:
+#       tags:
+#       - SecurityUplink

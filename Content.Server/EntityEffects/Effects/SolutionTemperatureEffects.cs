@@ -1,4 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Robust.Shared.Prototypes;
 
@@ -75,7 +74,7 @@ public sealed partial class AdjustSolutionTemperatureEffect : EntityEffect
             if (solution == null || solution.Volume == 0)
                 return;
 
-            var deltaT = _scaled ? _delta * (float) reagentArgs.Quantity : _delta;
+            var deltaT = _scaled ? _delta * (float)reagentArgs.Quantity : _delta;
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
 
             return;
@@ -126,7 +125,7 @@ public sealed partial class AdjustSolutionThermalEnergyEffect : EntityEffect
 
             var heatCap = solution.GetHeatCapacity(null);
             var deltaT = _scaled
-                ? _delta / heatCap * (float) reagentArgs.Quantity
+                ? _delta / heatCap * (float)reagentArgs.Quantity
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);

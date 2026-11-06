@@ -5,7 +5,7 @@
   name: punk bundle
   description: Loot boxes? Here?
   abstract: true
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   suffix: NPC Loot
   components:
   - type: Sprite
@@ -45,7 +45,7 @@
   parent: PunkMessengerGiftBox
   id: ClothingBackpackPunkLootA
   name: punk gear bundle
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: SpawnItemsOnUse
     items:
@@ -85,7 +85,7 @@
 - type: entity
   parent: ClothingBackpackPunkLootA
   id: ClothingBackpackPunkLootB
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: SpawnItemsOnUse
     items:
@@ -129,13 +129,15 @@
       prob: 0.7
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.3
+    - id: MercCoin1
+      prob: 1
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   parent: ClothingBackpackPunkLootA
   id: ClothingBackpackPunkLootC
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: SpawnItemsOnUse
     items:
@@ -178,13 +180,15 @@
       prob: 0.5
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.4
+    - id: MercCoin1
+      prob: 1
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   parent: ClothingBackpackPunkLootA
   id: ClothingBackpackPunkLootD
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: SpawnItemsOnUse
     items:
@@ -233,13 +237,15 @@
       prob: 0.5
     - id: SpawnDungeonLootToolsAdvancedEngineering
       prob: 0.4
+    - id: MercCoin1
+      prob: 1
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   parent: ClothingBackpackPunkLootA
   id: ClothingBackpackPunkLootBoss
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: SpawnItemsOnUse
     items:
@@ -289,5 +295,9 @@
       prob: 0.7
     - id: SpawnDungeonLootVaultGuns
       prob: 0.4
+    - id: MercCoin1
+      prob: 1
+    - id: MysteryVendBoosterPack
+      prob: 0.5
     sound:
       path: /Audio/Items/jumpsuit_equip.ogg

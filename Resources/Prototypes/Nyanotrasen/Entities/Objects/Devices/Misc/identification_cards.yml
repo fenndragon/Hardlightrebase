@@ -21,7 +21,7 @@
 
 - type: entity
   parent: IDCardStandard
-  id: PrisonerIDCard
+  id: NFPrisonerIDCard # Frontier: move to NF
   name: prisoner ID card
   components:
   - type: Sprite
@@ -58,3 +58,15 @@
       state: nyanoprisonguard
   - type: PresetIdCard
     job: PrisonGuard
+
+- type: entity
+  parent: IDCardStandard
+  id: ForensicMantisIDCard
+  name: mantis ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idscientist
+  - type: PresetIdCard
+    job: ForensicMantis

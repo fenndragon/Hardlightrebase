@@ -23,31 +23,24 @@ using Content.Shared.Zombies;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Station.Components;
-using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Store.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
+public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private EmergencyShuttleSystem _emergency = default!;
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private PopupSystem _popupSystem = default!;
-    [Dependency] private RoundEndSystem _roundEndSystem = default!;
-    [Dependency] private StoreSystem _store = default!;
-    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergency = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
-    private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal"; // Mono - cleanup
+    private static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = new("Telecrystal");
 
-    private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = "NukeOpsUplink"; // Mono - cleanup
-
-    // Mono start
-    private static readonly ProtoId<TagPrototype> TsfStationTagPrototype = "TsfStation";
-    private static readonly ProtoId<TagPrototype> PdvStationTagPrototype = "PdvStation";
-    // Mono end
+    private static readonly ProtoId<TagPrototype> NukeOpsUplinkTagPrototype = new("NukeOpsUplink");
 
     public override void Initialize()
     {
@@ -107,15 +100,14 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
             args.AddLine(text);
         }
 
-        /*
-        args.AddLine(Loc.GetString("nukeops-list-start")); // Mono - Unneeded. Lazy.
+        args.AddLine(Loc.GetString("nukeops-list-start"));
 
-        var antags =_antag.GetAntagIdentifiers(uid);
+        var antags = _antag.GetAntagIdentifiers(uid);
 
         foreach (var (_, sessionData, name) in antags)
         {
             args.AddLine(Loc.GetString("nukeops-list-name-user", ("name", name), ("user", sessionData.UserName)));
-        }*/ // Mono - Unneeded. Lazy.
+        }
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
@@ -125,24 +117,6 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         {
             if (ev.OwningStation != null)
             {
-                if (TryComp<TagComponent>(ev.OwningStation, out var tags))
-                {
-                    if(_tag.HasTag(tags, PdvStationTagPrototype))
-                    {
-                        nukeops.WinConditions.Add(WinCondition.NukeExplodedOnTSFStation);
-                        SetWinType((uid, nukeops), WinType.TSFMajor);
-                        _roundEndSystem.EndRound();
-                        return;
-                    }
-                    if(_tag.HasTag(tags, TsfStationTagPrototype))
-                    {
-                        nukeops.WinConditions.Add(WinCondition.NukeExplodedOnPDVStation);
-                        SetWinType((uid, nukeops), WinType.PDVMajor);
-                        _roundEndSystem.EndRound();
-                        return;
-                    }
-                }
-
                 if (ev.OwningStation == GetOutpost(uid))
                 {
                     nukeops.WinConditions.Add(WinCondition.NukeExplodedOnNukieOutpost);
@@ -176,7 +150,7 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
                 nukeops.WinConditions.Add(WinCondition.NukeExplodedOnIncorrectLocation);
             }
 
-            // _roundEndSystem.EndRound(); // Mono - comment out; we have 2 nukes and a end timer at 4 hours
+            _roundEndSystem.EndRound();
         }
     }
 
@@ -198,12 +172,8 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         if (ent.Comp.WinType == WinType.OpsMajor || ent.Comp.WinType == WinType.CrewMajor)
             return;
 
-        // Mono - ignore if TSF/PDV major or neutral. I don't care where my disk is.
-        if (ent.Comp.WinType == WinType.PDVMajor || ent.Comp.WinType == WinType.TSFMajor || ent.Comp.WinType == WinType.Neutral)
-            return;
-
         var nukeQuery = AllEntityQuery<NukeComponent, TransformComponent>();
-        var centcomms = _emergency.GetCentcommMaps();
+        var colcomms = _emergency.GetColcommMaps();
 
         while (nukeQuery.MoveNext(out var nuke, out var nukeTransform))
         {
@@ -211,9 +181,9 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
                 continue;
 
             // UH OH
-            if (nukeTransform.MapUid != null && centcomms.Contains(nukeTransform.MapUid.Value))
+            if (nukeTransform.MapUid != null && colcomms.Contains(nukeTransform.MapUid.Value))
             {
-                ent.Comp.WinConditions.Add(WinCondition.NukeActiveAtCentCom);
+                ent.Comp.WinConditions.Add(WinCondition.NukeActiveAtColCom);
                 SetWinType((ent, ent), WinType.OpsMajor);
                 return;
             }
@@ -238,39 +208,35 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         if (_antag.AllAntagsAlive(ent.Owner))
         {
             SetWinType(ent, WinType.OpsMinor);
-            // ent.Comp.WinConditions.Add(WinCondition.AllNukiesAlive); // Mono - Unneeded. Lazy.
+            ent.Comp.WinConditions.Add(WinCondition.AllNukiesAlive);
             return;
         }
 
-        /*
         ent.Comp.WinConditions.Add(_antag.AnyAliveAntags(ent.Owner)
             ? WinCondition.SomeNukiesAlive
             : WinCondition.AllNukiesDead);
-        */// Mono - Unneeded. Lazy.
 
-        var diskAtCentCom = false;
+        var diskAtColCom = false;
         var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
         while (diskQuery.MoveNext(out var diskUid, out _, out var transform))
         {
-            diskAtCentCom = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
-            diskAtCentCom |= _emergency.IsTargetEscaping(diskUid);
+            diskAtColCom = transform.MapUid != null && colcomms.Contains(transform.MapUid.Value);
+            diskAtColCom |= _emergency.IsTargetEscaping(diskUid);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
             break;
         }
 
-        // If the disk is currently at Central Command, the crew wins - just slightly.
+        // If the disk is currently at Colonial Command, the crew wins - just slightly.
         // This also implies that some nuclear operatives have died.
-        /*
         SetWinType(ent,
-            diskAtCentCom
+            diskAtColCom
             ? WinType.CrewMinor
             : WinType.OpsMinor);
-        ent.Comp.WinConditions.Add(diskAtCentCom
-            ? WinCondition.NukeDiskOnCentCom
-            : WinCondition.NukeDiskNotOnCentCom);
-        */// Mono - Unneeded. Lazy.
+        ent.Comp.WinConditions.Add(diskAtColCom
+            ? WinCondition.NukeDiskOnColCom
+            : WinCondition.NukeDiskNotOnColCom);
     }
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)

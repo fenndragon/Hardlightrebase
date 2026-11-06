@@ -1,0 +1,117 @@
+- type: entity
+  name: sawn-off triple-barrel shotgun (12 gauge)
+  parent: [BaseWeaponShotgun, BaseC2ExpeditionContraband]
+  id: WeaponShotgunTripleSawn
+  description: A doubly modified civilian grade shotgun with a third barrel welded to the top of the mechanism. More is better, right?
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Clothing
+    sprite: _DV/Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Item
+    size: Small
+    sprite: _DV/Objects/Weapons/Guns/Shotguns/sawn.rsi
+  - type: Gun
+    fireRate: 3
+  - type: BallisticAmmoProvider
+    capacity: 3
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 8
+
+- type: entity
+  name: Vortex-12
+  parent: [ WeaponShotgunBulldog, BaseGunMeleeBlunt, BaseC2ExpeditionContraband ]
+  id: WeaponShotgunVortex
+  description: Designed by SESWC. A semi-automatic magazine-fed shotgun for close-quarters combat #with an auto magazine ejector
+  components:
+  - type: NFWeaponDetails
+    manufacturer: weapon-details-manufacturer-SESWC-consortium
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/vortex.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
+    size: Large
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/vortex.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AltFireMelee # Not using the gun melee based because this is a different damage type and need different rotation
+    attackType: Light
+  - type: MeleeRequiresWield
+  - type: AmmoCounter
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun  # Have to do this to reduce the firerate
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Contraband # Try to do parent but bulldog override it thus This
+    severity: Class1
+    # Pretty much everyone.
+    allowedDepartments: [ Civilian, Security, Command, Frontier, CentralCommand ]  #IF we had a merc department we can expand on it
+  #- type: ChamberMagazineAmmoProvider
+  #  autoEject: true
+
+- type: entity
+  name: Forged Rambler Shotgun
+  parent: [BaseGunWieldable, BaseWeaponRevolver, BaseC1Contraband]
+  id: WeaponRamblerShotgun
+  description: A ramshackle semi-automatic shotgun fed by revolving clamps. A curious mixture of shotgun and revolver, it reminds you of old subway tunnels for some reason.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/forgedrambler.rsi
+    scale: 0.7, 0.7
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-5
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,5,2
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/forgedrambler_inhand.rsi
+  - type: Clothing
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/forgedrambler.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: RevolverAmmoProvider
+    capacity: 6
+    whitelist:
+      tags:
+        - ShellShotgun12_gauge
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    mayTransfer: true # Frontier
+    proto: null
+  - type: MagazineVisuals
+    magState: mag
+    sprite: _HL/Objects/Weapons/Guns/Shotguns/forgedrambler.rsi
+    steps: 6
+    zeroVisible: true

@@ -2,7 +2,12 @@
   id: UltraVision
   name: trait-ultravision-name
   description: trait-ultravision-desc
-  category: Disabilities
+  category: Physical
+  cost: 0
+  mutuallyExclusiveTraits:
+    - DogVision
+    - DogVisionNoBypass
+    - UltraVisionNoBypass
   components:
     - type: UltraVision
 
@@ -10,6 +15,11 @@
   id: DogVision
   name: trait-deuteranopia-name
   description: trait-deuteranopia-desc
-  category: Disabilities
+  category: Physical
+  cost: 0
+  mutuallyExclusiveTraits:
+    - UltraVision
+    - UltraVisionNoBypass
+    - DogVisionNoBypass
   components:
     - type: DogVision

@@ -1,6 +1,4 @@
 #nullable enable
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
 using Content.Server.GameTicking;
@@ -17,7 +15,7 @@ namespace Content.IntegrationTests.Tests.GameRules;
 public sealed class AntagPreferenceTest
 {
     [Test]
-    [Ignore("Antag role selection isn't used on Frontier.")] // Frontier
+    // [Ignore("Antag role selection isn't used on Frontier.")] // Frontier // HardLight: re-enabled, HL uses antag selection
     public async Task TestLobbyPlayersValid()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings

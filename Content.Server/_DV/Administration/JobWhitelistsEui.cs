@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -8,7 +7,6 @@ using Content.Shared._DV.Administration;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles; // Frontier
 using Content.Shared.Roles;
-using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
@@ -29,7 +27,6 @@ public sealed partial class JobWhitelistsEui : BaseEui
 
     public HashSet<ProtoId<JobPrototype>> Whitelists = new();
     public HashSet<ProtoId<GhostRolePrototype>> GhostRoleWhitelists = new(); // Frontier
-    public bool GlobalWhitelist = false;
 
     public JobWhitelistsEui(NetUserId playerId, string playerName)
     {
@@ -52,14 +49,12 @@ public sealed partial class JobWhitelistsEui : BaseEui
                 GhostRoleWhitelists.Add(id); // Frontier
         }
 
-        GlobalWhitelist = await _db.GetWhitelistStatusAsync(PlayerId); // Frontier: get global whitelist
-
         StateDirty();
     }
 
     public override EuiStateBase GetNewState()
     {
-        return new JobWhitelistsEuiState(PlayerName, Whitelists, GhostRoleWhitelists, GlobalWhitelist);
+        return new JobWhitelistsEuiState(PlayerName, Whitelists, GhostRoleWhitelists);
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -111,22 +106,6 @@ public sealed partial class JobWhitelistsEui : BaseEui
                 {
                     _jobWhitelist.RemoveWhitelist(PlayerId, ghostRoleArgs.Role);
                     GhostRoleWhitelists.Remove(ghostRoleArgs.Role);
-                }
-                break;
-            case SetGlobalWhitelistMessage:
-                var globalArgs = (SetGlobalWhitelistMessage)msg;
-
-                added = globalArgs.Whitelisting;
-                role = "all roles";
-                if (added)
-                {
-                    _jobWhitelist.AddGlobalWhitelist(PlayerId);
-                    GlobalWhitelist = true;
-                }
-                else
-                {
-                    _jobWhitelist.RemoveGlobalWhitelist(PlayerId);
-                    GlobalWhitelist = false;
                 }
                 break;
             default:

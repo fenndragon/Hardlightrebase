@@ -1,7 +1,4 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.Decals;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
@@ -20,7 +17,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using IDunGenLayer = Content.Shared.Procedural.IDunGenLayer;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -52,11 +48,12 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     private readonly EntityUid _gridUid;
     private readonly MapGridComponent _grid;
+    private Entity<MapGridComponent> GridEntity => (_gridUid, _grid);
 
     private readonly EntityCoordinates? _targetCoordinates;
 
     private readonly ISawmill _sawmill;
-    private readonly string _genId; // Frontier: add ID
+    private readonly string _genID; // Frontier: add ID
 
     public DungeonJob(
         ISawmill sawmill,
@@ -104,13 +101,12 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         _seed = seed;
         _position = position;
         _targetCoordinates = targetCoordinates;
-        _genId = genID; // Frontier
+        _genID = genID; // Frontier
     }
 
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
     private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfig config,
@@ -118,14 +114,14 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         List<IDunGenLayer> layers,
         HashSet<Vector2i> reservedTiles,
         int seed,
-        Random random)
+        IRobustRandom random)
     {
         var dungeons = new List<Dungeon>();
         var count = random.Next(config.MinCount, config.MaxCount + 1);
 
         for (var i = 0; i < count; i++)
         {
-            position += random.NextPolarVector2(config.MinOffset, config.MaxOffset).Floored();
+            position += random.NextVector2(config.MinOffset, config.MaxOffset).Floored();
 
             foreach (var layer in layers)
             {
@@ -150,10 +146,11 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
     protected override async Task<List<Dungeon>?> Process()
     {
-        _sawmill.Info($"Generating dungeon {_genId} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}"); // Frontier: _gen<_genId
+        _sawmill.Info($"Generating dungeon {_genID} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}"); // Frontier: _gen<_genID
         _grid.CanSplit = false;
-        var random = new Random(_seed);
-        var position = (_position + random.NextPolarVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
+        var random = new RobustRandom() as IRobustRandom;
+        random.SetSeed(_seed);
+        var position = (_position + random.NextVector2(_gen.MinOffset, _gen.MaxOffset)).Floored();
 
         // Tiles we can no longer generate on due to being reserved elsewhere.
         var reservedTiles = new HashSet<Vector2i>();
@@ -192,7 +189,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         IDunGenLayer layer,
         HashSet<Vector2i> reservedTiles,
         int seed,
-        Random random)
+        IRobustRandom random)
     {
         _sawmill.Debug($"Doing postgen {layer.GetType()} for {_gen} with seed {_seed}");
 
@@ -273,7 +270,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case PrototypeDunGen prototypo:
                 var groupConfig = _prototype.Index(prototypo.Proto);
-                position = (position + random.NextPolarVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
+                position = (position + random.NextVector2(groupConfig.MinOffset, groupConfig.MaxOffset)).Floored();
 
                 var dataCopy = groupConfig.Data.Clone();
                 dataCopy.Apply(data);
@@ -325,5 +322,13 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             return;
 
         await SuspendIfOutOfTime();
+    }
+
+    private void SpawnEntities(EntityCoordinates coords, List<string> protoNames)
+    {
+        for (var i = 0; i < protoNames.Count; i++)
+        {
+            _entManager.SpawnAttachedTo(protoNames[i], coords);
+        }
     }
 }

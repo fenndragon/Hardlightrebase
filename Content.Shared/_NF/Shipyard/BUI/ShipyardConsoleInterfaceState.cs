@@ -1,5 +1,8 @@
 using Robust.Shared.Serialization;
 
+// Suppress naming style rule for the _NF namespace prefix (project convention)
+#pragma warning disable IDE1006
+
 namespace Content.Shared._NF.Shipyard.BUI;
 
 [NetSerializable, Serializable]
@@ -17,6 +20,8 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
     public readonly string ShipyardName;
     public readonly bool FreeListings;
     public readonly float SellRate;
+
+    // Docked grids section removed from Shipyard console
 
     public ShipyardConsoleInterfaceState(
         int balance,
@@ -43,4 +48,5 @@ public sealed class ShipyardConsoleInterfaceState : BoundUserInterfaceState
         FreeListings = freeListings;
         SellRate = sellRate;
     }
+
 }

@@ -3,24 +3,34 @@
   name: job-name-qm
   description: job-description-qm
   playTimeTracker: JobQuartermaster
-  setPreference: false # Frontier
+  setPreference: true
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
-  weight: 10
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 1800 # 5 hrs
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 9000 # 2.5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600 # 10 hours
+  weight: 20 # HardLight: 10<20
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"
   supervisors: job-supervisors-captain
+  requireAdminNotify: true
   canBeAntag: false
-  # access: # Frontier
-  # - Cargo # Frontier
-  # - Salvage # Frontier
-  # - Quartermaster # Frontier
-  # - Maintenance # Frontier
-  # - External # Frontier
-  # - Command # Frontier
-  # - Brig # Frontier
-  # - Cryogenics # Frontier
+  access:
+  - Cargo
+  - Salvage
+  - Mail # Nyanotrasen: MailCarrier, see Resources/Prototypes/Nyanotrasen/Roles/Jobs/Cargo/mail-carrier.yml
+  - Quartermaster
+  - Maintenance
+  - Command
+  - Frontier
+  # - Orders # DeltaV: Orders, see Resources/Prototypes/DeltaV/Access/cargo.yml Frontier/ Removed because seems deprecated
+  - External # DeltaV: For promoting salvage specialists
+  - Cryogenics
   accessGroups: # Frontier
   - GeneralAccess # Frontier
   special:
@@ -28,7 +38,7 @@
     implants: [ MindShieldImplant ]
   - !type:AddComponentSpecial
     components:
-      - type: CommandStaff
+    - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear
@@ -37,6 +47,7 @@
     ears: ClothingHeadsetQM
     belt: BoxFolderClipboard
     pocket1: AppraisalTool
+    pocket2: NFHyperlinkBookCommandSOP # HardLight
   storage:
     back:
     - Flash

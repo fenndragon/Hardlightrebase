@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
@@ -26,8 +25,10 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
-    private readonly List<string> _roleBans = new();
+    private readonly List<ProtoId<JobPrototype>> _jobBans = new();
+    private readonly List<ProtoId<AntagPrototype>> _antagBans = new();
     private readonly List<string> _jobWhitelists = new();
+    private bool _playTimesLoaded;
 
     private ISawmill _sawmill = default!;
 
@@ -52,17 +53,21 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
         {
             // Reset on disconnect, just in case.
             _roles.Clear();
+            _playTimesLoaded = false;
             _jobWhitelists.Clear();
-            _roleBans.Clear();
+            _jobBans.Clear();
+            _antagBans.Clear();
         }
     }
 
     private void RxRoleBans(MsgRoleBans message)
     {
-        _sawmill.Debug($"Received roleban info containing {message.Bans.Count} entries.");
+        _sawmill.Debug($"Received roleban info containing {message.JobBans.Count + message.AntagBans.Count} entries.");
 
-        _roleBans.Clear();
-        _roleBans.AddRange(message.Bans);
+        _jobBans.Clear();
+        _jobBans.AddRange(message.JobBans);
+        _antagBans.Clear();
+        _antagBans.AddRange(message.AntagBans);
         Updated?.Invoke();
     }
 
@@ -75,6 +80,8 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
         {
             _roles[tracker] = time;
         }
+
+        _playTimesLoaded = true;
 
         /*var sawmill = Logger.GetSawmill("play_time");
         foreach (var (tracker, time) in _roles)
@@ -95,7 +102,7 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
     {
         reason = null;
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+        if (_jobBans.Contains(new ProtoId<JobPrototype>(job.ID)))
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
             return false;
@@ -167,11 +174,7 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
         if (!_cfg.GetCVar(CCVars.GameRoleWhitelist))
             return true;
 
-        // DeltaV - blanket whitelist check in client
-        //if (_whitelisted)
-        //    return true;
-
-        if (job.Whitelisted && !_jobWhitelists.Contains(job.ID) && !_whitelisted) // Frontier: add _whitelisted
+        if (job.Whitelisted && !_jobWhitelists.Contains(job.ID)) // Frontier: add _whitelisted
         {
             reason = FormattedMessage.FromUnformatted(Loc.GetString("role-not-whitelisted"));
             return false;
@@ -198,9 +201,27 @@ public sealed partial class JobRequirementsManager : ISharedPlaytimeManager
         }
     }
 
+    public bool TryGetPlayTimes(ICommonSession session, [NotNullWhen(true)] out IReadOnlyDictionary<string, TimeSpan>? playTimes)
+    {
+        playTimes = null;
+
+        if (session != _playerManager.LocalSession || !_playTimesLoaded)
+        {
+            return false;
+        }
+
+        playTimes = _roles;
+        return true;
+    }
+
     public IReadOnlyDictionary<string, TimeSpan> GetPlayTimes(ICommonSession session)
     {
         if (session != _playerManager.LocalSession)
+        {
+            return new Dictionary<string, TimeSpan>();
+        }
+
+        if (!_playTimesLoaded)
         {
             return new Dictionary<string, TimeSpan>();
         }

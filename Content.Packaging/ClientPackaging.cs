@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO.Compression;
 using Robust.Packaging;
 using Robust.Packaging.AssetProcessing;
 using Robust.Packaging.AssetProcessing.Passes;
 using Robust.Packaging.Utility;
 using Robust.Shared.Timing;
+using System.Threading;
 
 namespace Content.Packaging;
 
@@ -67,7 +68,7 @@ public static class ClientPackaging
         };
         dropSvgPass.AddDependency(graph.Input).AddBefore(graph.PresetPasses);
 
-        AssetGraph.CalculateGraph([pass, dropSvgPass, ..graph.AllPasses], logger);
+        AssetGraph.CalculateGraph([pass, dropSvgPass, .. graph.AllPasses], logger);
 
         var inputPass = graph.Input;
 
@@ -97,6 +98,22 @@ public static class ClientPackaging
                 inputPass.InjectFileFromDisk(licenseFile, fullPath);
         }
         // WOLFGATE END
+
+        foreach (var licenseFile in new[]
+                 {
+                     // Hardcoded lists bug the piss out of me, but we have to get specifically these things into the package.
+                     "LICENSE-AGPLv3.txt",
+                     "LICENSE-MIT.TXT",
+                     "LICENSE-MPL.txt",
+                     "LICENSE-Starlight.TXT",
+                     "LEGAL.md",
+                     "README.md",
+                 })
+        {
+            var fullPath = Path.Combine(contentDir, licenseFile);
+            if (File.Exists(fullPath))
+                inputPass.InjectFileFromDisk(licenseFile, fullPath);
+        }
 
         inputPass.InjectFinished();
     }

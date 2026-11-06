@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -48,7 +45,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
 
                 foreach (var document in yamlStream.Documents)
                 {
-                    var root = (YamlSequenceNode) document.RootNode;
+                    var root = (YamlSequenceNode)document.RootNode;
 
                     foreach (var node in root.Cast<YamlMappingNode>())
                     {

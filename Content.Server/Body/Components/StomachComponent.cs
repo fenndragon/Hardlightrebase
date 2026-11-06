@@ -45,6 +45,7 @@ namespace Content.Server.Body.Components
         ///     A whitelist for what special-digestible-required foods this stomach is capable of eating.
         /// </summary>
         [DataField]
+        [Access(Other = AccessPermissions.ReadWriteExecute)] // Floofstation
         public EntityWhitelist? SpecialDigestible = null;
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Content.Server.Body.Components
         public readonly List<ReagentDelta> ReagentDeltas = new();
 
         /// <summary>
-        ///     Used to track quantity changes when ingesting & digesting reagents
+        ///     Used to track quantity changes when ingesting &amp; digesting reagents
         /// </summary>
         public sealed class ReagentDelta
         {

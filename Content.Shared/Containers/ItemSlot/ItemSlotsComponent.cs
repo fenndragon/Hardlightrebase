@@ -21,7 +21,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
         ///     cref="ItemSlotsSystem"/>.
         /// </summary>
-        [DataField(readOnly:true)]
+        [DataField(readOnly: true)]
         public Dictionary<string, ItemSlot> Slots = new();
 
         // There are two ways to use item slots:
@@ -230,7 +230,7 @@ namespace Content.Shared.Containers.ItemSlots
         public EntityUid? Item => ContainerSlot?.ContainedEntity;
 
         /// <summary>
-        ///     Priority for use with the eject & insert verbs for this slot.
+        ///     Priority for use with the eject &amp; insert verbs for this slot.
         /// </summary>
         [DataField]
         public int Priority = 0;

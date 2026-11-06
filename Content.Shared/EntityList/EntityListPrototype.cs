@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;
 

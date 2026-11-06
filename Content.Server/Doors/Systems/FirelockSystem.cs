@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
@@ -73,6 +72,8 @@ namespace Content.Server.Doors.Systems
                     _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
                     firelock.Temperature = fire;
                     firelock.Pressure = pressure;
+                    _appearance.SetData(uid, FirelockVisuals.PressureWarning, pressure, appearance);
+                    _appearance.SetData(uid, FirelockVisuals.TemperatureWarning, fire, appearance);
                     Dirty(uid, firelock);
 
                     if (pointLightQuery.TryComp(uid, out var pointLight))
@@ -126,10 +127,12 @@ namespace Content.Server.Doors.Systems
                 return (false, false);
             }
 
-            if (!HasComp<GridAtmosphereComponent>(xform.ParentUid))
+            if (!HasComp<GridAtmosphereComponent>(xform.ParentUid)
+                || xform.MapUid == null
+                || TryComp<MapAtmosphereComponent>(xform.MapUid.Value, out var mapAtmos) && !mapAtmos.Space
+                || !TryComp<MapGridComponent>(xform.ParentUid, out var grid))
                 return (false, false);
 
-            var grid = Comp<MapGridComponent>(xform.ParentUid);
             var pos = _mapping.CoordinatesToTile(xform.ParentUid, grid, xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;

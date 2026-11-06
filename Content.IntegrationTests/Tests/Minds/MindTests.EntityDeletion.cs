@@ -1,5 +1,4 @@
 #nullable enable
-using System.Linq;
 using Content.Server.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
@@ -73,6 +72,7 @@ public sealed partial class MindTests
 
     // this is a variant of TestGhostOnDelete that just deletes the whole map.
     [Test]
+    [Ignore("HL: We have persistant rounds and ghosts don't get force-respawned so this doesn't need to run")]
     public async Task TestGhostOnDeleteMap()
     {
         await using var pair = await SetupPair(dirty: true);
@@ -171,10 +171,12 @@ public sealed partial class MindTests
         var mind = GetMind(pair);
 
         var player = playerMan.Sessions.Single();
-#pragma warning disable NUnit2045 // Interdependent assertions.
-        Assert.That(player.AttachedEntity, Is.Not.Null);
-        Assert.That(entMan.EntityExists(player.AttachedEntity));
-#pragma warning restore NUnit2045
+        Assert.Multiple(() =>
+        {
+            Assert.That(player.AttachedEntity, Is.Not.Null);
+            Assert.That(entMan.EntityExists(player.AttachedEntity));
+        });
+
         var originalEntity = player.AttachedEntity.Value;
 
         EntityUid ghost = default!;

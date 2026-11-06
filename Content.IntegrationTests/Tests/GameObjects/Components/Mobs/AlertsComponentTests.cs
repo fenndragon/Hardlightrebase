@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.UserInterface.Systems.Alerts.Controls;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
@@ -85,7 +84,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 // we should be seeing 3 alerts - our health, and the 2 debug alerts, in a specific order.
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(3));
-                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
+                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl)c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
                 var expectedIDs = new[] { "Debug1", "Debug2" };
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));
@@ -102,7 +101,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // we should be seeing 2 alerts now because one was cleared
                 Assert.That(clientAlertsUI.AlertContainer.ChildCount, Is.GreaterThanOrEqualTo(2));
-                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl) c);
+                var alertControls = clientAlertsUI.AlertContainer.Children.Select(c => (AlertControl)c);
                 var alertIDs = alertControls.Select(ac => ac.Alert.ID).ToArray();
                 var expectedIDs = new[] { "Debug2" };
                 Assert.That(alertIDs, Is.SupersetOf(expectedIDs));

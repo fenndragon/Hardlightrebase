@@ -51,8 +51,8 @@
     - WeaponCrusherDagger
     - WeaponCrusher
     - WeaponCrusherGlaive
-    - WeaponProtoKineticAccelerator
-    - WeaponProtoKineticAcceleratorSawn
+    - NFWeaponPka
+    - NFWeaponPkaSawn
     - OreBag
     - RadioHandheldNF
     - HandheldGPSBasic
@@ -64,6 +64,7 @@
     chance: 0.9
     offset: 0.0
     rarePrototypes:
+    - NFWeaponPka
     - OreBagOfHolding
     - HandHeldMassScanner
     - SpawnDungeonLootHardsuitsSalvage
@@ -128,6 +129,7 @@
     offset: 0.0
     rarePrototypes:
     - ClothingOuterHardsuitMaximPrototype
+    - ClothingOuterHardsuitMaxim
     rareChance: 0.05
 
 # Lockers
@@ -249,8 +251,9 @@
     offset: 0.0
     rarePrototypes:
     - VendingMachineSyndieContraband
-    - VendingMachineSyndieDrobe
+    # - VendingMachineSyndieDrobe # A bit less Syndicate loot
     - VendingMachineArcadia
+    - VendingMachineRMCDrobe
     rareChance: 0.01
 
 # Other
@@ -272,7 +275,7 @@
   - type: RandomSpawner
     prototypes:
     # Computers
-    - ComputerIFFCircuitboard
+    #- ComputerIFFCircuitboard
     # Lathes
     - SalvageTechFabCircuitboardNF
     - AutolatheMachineCircuitboard
@@ -294,7 +297,7 @@
     - AmmoTechFabCircuitboard
     - ShuttleGunSvalinnMachineGunCircuitboard
     #- SecurityTechFabCircuitboard
-    - ComputerIFFCircuitboard
+    #- ComputerIFFCircuitboard
     rareChance: 0.03
 
 - type: entity

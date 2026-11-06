@@ -1,0 +1,551 @@
+- type: entity
+  parent: BasePlushie
+  id: PlushieSgaeyl
+  name: Sgaeyl Plushie
+  description: An elegant and beloved scientist of the Hardlight Sector, now in short (er) and marketable form. Eminates an unmistakable aura of bird rage.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: SgaeylUpdated
+    scale: 0.8, 0.8
+  - type: Clothing
+    quickEquip: false
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    equippedPrefix: PlushSgaeyl
+    slots:
+    - HEAD
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_scree_1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry_2.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry_2.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieVytian
+  name: Vytian Plushie
+  description:
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: VytianPlush
+    scale: 0.8, 0.8
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieKinetic
+  name: Kinetic Plushie
+  description: The rough and rugged Kinetic... but softer! Now with a less-than-lethal marr.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: KineticPlush
+    scale: 0.8, 0.8
+  - type: Clothing
+    quickEquip: false
+    sprite: _HL/Objects/Fun/HLtoys.rsi
+    equippedPrefix: KineticPlush
+    slots:
+    - HEAD
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Shadekin/marr.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLoming
+  name: Loming Plushie
+  description:
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: LomingPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Shadekin/wurble.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry_3.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp2.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_scree_2.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieXTalal
+  name: 100% real best captain ever Plushie!
+  description: It yearns for the communications console.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: AspenPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/Emotes/parp1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Announcements/announce.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Effects/Emotes/parp1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieNova
+  name: Green bird creature Plushie
+  description: This avali plushie looks like is going to fall apart on its own.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: NovaPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_RMC14/Voice/Felinid/cat_purr1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieKabuki
+  name: Vesca Plushie
+  description: An adorable plushie resembling a blue Avali in a light blue flower kimono. Its dark blue eyes and anxious little expression make it feel like it is watching once you look away. It seems shy. Somehow.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      internals:
+        maxVol: 10
+  - type: InjectableSolution
+    solution: internals
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: VescaPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_RMC14/Voice/Felinid/cat_purr1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieEinalia
+  name: Einalia Plushie
+  description: A marketable plushie of the Colonial Logistics Division's most annoying officer. It appears to have a perpetual scowl on it's face. Toy "Cycler" shotgun not included.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: EinaliaPlush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Avali/avali_2.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_squawk_1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_cry_2.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMrBones
+  name: Mr. Bones Plushie
+  description: He is coming to steal your calcium.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: MrBonesPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushiePetal
+  name: Krapari Plushie
+  description: The local jail bird.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: PetalPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Vox/voxcoo2.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Voice/Vox/voxhiss.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Vox/vox_chitter.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Voice/Vox/shriek1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRosemane
+  name: Rosemane Plushie
+  description: A plushie of Rose Mane back during her Captain days with Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: RosemanePlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieSkrag
+  name: Skrag Plushie
+  description: The very pettable hyena, now in plush form!
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: SkragPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Floof/Voice/Vulpkanin/gekker.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Floof/Voice/Vulpkanin/gekker.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Floof/Voice/Vulpkanin/gekker.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Floof/Voice/Vulpkanin/gekker.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/Floof/Voice/Vulpkanin/gekker.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieENFORCER
+  name: ENFORCER Plushie
+  description: Everyone's favourite CCQ, in plushie form! Probably won't steal your brain in your sleep.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: ENFORCERPlush
+    scale: 1, 1
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_EE/Voice/IPC/whirr1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_EE/Voice/IPC/whirr1.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_EE/Voice/IPC/whirr1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_EE/Voice/IPC/whirr1.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_EE/Voice/IPC/whirr1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCinder
+  name: Does-The-Paperwork Plushie
+  description: A plushie of Does-The-Paperwork, works as an insufficient pen storage device. Only stores a maximum of one pen, just like the real deal!
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: CinderPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieKusa
+  name: Kusa Plushie
+  description: Much more portable than the real thing. Looksss very busssy.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: GixxPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Toys/rattle.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieKazzi
+  name: Eeka Tin Plushie
+  description: Friend-shaped friend and cutest of cutebolds!
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: KazziPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Items/Toys/hew.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Toys/hew.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieXiv3n
+  name: Cheep, Servicewing Pack Plushie
+  description: Why is this cute bird trying to offer you drugs?
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: Xiv3nPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Avali/avali_laugh.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Starlight/Voice/Avali/avali_cry.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_chirp3.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieMsepic
+  name: Deep Blue Avali plushie
+  description: An avali plush that has a red feather embedded into its chest.. The black feathers are somewhat rubbery to the touch, and a whirring can be heard from within, odd.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: MsepicPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_scree_1.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_purr1.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Voice/Felionoid/cat_trill2.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Starlight/Voice/Resomi/resomi_scree_1.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieRlJSA
+  name: Raku Iridas Plushie
+  description: A plushie of Raku Iridas, you can bully him all you'd like, or dunk him reactor coolant. Although he probably wouldn't like that.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: Rl-JSAPlush
+    scale: 0.8, 0.8
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_RMC14/Voice/Avali/avali_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/gib2.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Items/Mining/pickaxe.ogg
+
+- type: entity
+  parent: PlushieCinder
+  id: PlushieCinderCCO
+  description: Plush of the bureaucratic reptilian CCO, please don't ask why the pens are sticky.
+  components:
+  - type: Sprite
+    state: CinderPlushCCO
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Items/Toys/weh.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/pen_click.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Animals/lizard_happy.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieLydia
+  name: Suspicious Protogen Plushie
+  description: A suspicious pink looking protogen plushie commonly seen roaming the station almost everywhere, perfect for cuddling when you feel upset at something.
+  components:
+  - type: Sprite
+    sprite: _HL/Objects/Fun/patreon_plushies.rsi
+    state: LydiaPlush
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_HL/Voice/mggaow.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_HL/Voice/mggaow.ogg
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_HL/Voice/dwoop.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_HL/Voice/dwoop.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_HL/Voice/mggaow.ogg
