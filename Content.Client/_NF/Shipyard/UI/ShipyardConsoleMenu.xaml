@@ -1,34 +1,15 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           SetSize="640 680"
-                           Resizable="False">
-    <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="0 8 0 2">
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BorderThickness="7" BorderColor="#252525" BackgroundColor="#3d474d"/>
-        </PanelContainer.PanelOverride>
-        <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="4 4 4 4">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#181818"/>
-            </PanelContainer.PanelOverride>
+                           SetSize="900 500"
+                           MinSize="900 300">
     <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
-        <PanelContainer VerticalExpand="False" HorizontalExpand="True" Margin="0 8 0 2">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#141414"/>
-            </PanelContainer.PanelOverride>
-            <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
-        <BoxContainer Orientation="Horizontal">
-            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" >
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'bank-atm-menu-balance-label'}"
                     StyleClasses="LabelKeyText" />
                 <Label Name="BalanceLabel"
                     Text="{Loc 'shipyard-console-no-bank'}" />
-            </BoxContainer>
-            <BoxContainer Margin="2 0 4 0" Orientation="Horizontal" HorizontalExpand="True" HorizontalAlignment="Right" Name="CashSlotControls">
-                <Label Text="{Loc 'vending-machine-menu-cash-slot-label'}"
-                       StyleClasses="LabelKeyText" />
-                <Label Name="CashSlotLabel"
-                       Text="$0" />
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical">
@@ -39,55 +20,21 @@
                     Text="{Loc 'shipyard-console-no-deed'}" />
             </BoxContainer>
         </BoxContainer>
-            </BoxContainer>
-        </PanelContainer>
         <BoxContainer Orientation="Horizontal">
-            <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="0 8 0 2">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#333333" BackgroundColor="#141414"/>
-                </PanelContainer.PanelOverride>
-            <controls:StripeBack MinSize="48 48">
             <LineEdit Name="SearchBar"
                       PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
-                      Margin="2 2 2 2"
                       HorizontalExpand="True" />
-            </controls:StripeBack>
-            </PanelContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <PanelContainer VerticalExpand="True" HorizontalExpand="True" Margin="0 8 0 2">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#333333" BackgroundColor="#333333"/>
-                </PanelContainer.PanelOverride>
-                <PanelContainer Margin="1 1 1 1">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#636363" BackgroundColor="#141414"/>
-                    </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Horizontal">
             <OptionButton Name="Categories"
                           Prefix="{Loc 'shipyard-console-menu-size-label'}"
-                          StyleClasses="ButtonSquare"
-                          Margin="2 2 2 2"
                           HorizontalExpand="True" />
             <OptionButton Name="Classes"
                           Prefix="{Loc 'shipyard-console-menu-class-label'}"
-                          StyleClasses="ButtonSquare"
-                          Margin="2 2 2 2"
                           HorizontalExpand="True" />
             <OptionButton Name="Engines"
                           Prefix="{Loc 'shipyard-console-menu-engine-label'}"
-                          StyleClasses="ButtonSquare"
-                          Margin="2 2 2 2"
                           HorizontalExpand="True" />
-            <!-- WOLFGATE(OldVessels): classic ships filter, hidden when the listing has none -->
-            <OptionButton Name="ClassicFilter"
-                          Prefix="{Loc 'wf-shipyard-classic-filter-label'}"
-                          StyleClasses="ButtonSquare"
-                          Margin="2 2 2 2"
-                          HorizontalExpand="True" />
-                    </BoxContainer>
-                </PanelContainer>
-            </PanelContainer>
         </BoxContainer>
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
@@ -99,26 +46,19 @@
                 <!-- Vessels get added here by code -->
             </BoxContainer>
         </ScrollContainer>
-        <PanelContainer VerticalExpand="True" HorizontalExpand="False" Margin="0 8 0 2">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#333333" BackgroundColor="#333333"/>
-            </PanelContainer.PanelOverride>
-            <PanelContainer Margin="1 1 1 1">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BorderThickness="3" BorderColor="#636363" BackgroundColor="#141414"/>
-                </PanelContainer.PanelOverride>
-        <GridContainer Columns="4" HorizontalExpand="True" Margin="2 2 2 2">
-            <Button Name="TargetIdButton" Access="Public"
-                    StyleClasses="ButtonSquare"/>
-            <controls:ConfirmButton Name="SellShipButton"
+        <GridContainer Columns="3" HorizontalExpand="True" Margin="0 8 0 2">
+            <Button Name="TargetIdButton" Access="Public"/>
+            <Button Name="SellShipButton"
                 Text="Sell"
-                ConfirmationText="{Loc 'shipyard-console-confirm-unassign'}"
-                StyleClasses="ButtonSquare"
-                Disabled="True" />
-            <controls:ConfirmButton Name="UnassignDeedButton"
-                Text="{Loc 'shipyard-console-unassign-deed'}"
-                ConfirmationText="{Loc 'shipyard-console-confirm-unassign'}"
-                StyleClasses="ButtonSquare"
+                Disabled="True"
+                StyleClasses="ButtonCaution" />
+
+            <Button Name="SaveShipButton"
+                Text="Save Ship"
+                Disabled="True"
+                StyleClasses="ButtonCaution" />
+            <Button Name="LoadShipButton"
+                Text="Load Ship"
                 Disabled="True" />
             <BoxContainer Orientation="Vertical">
                 <Label Text="{Loc 'shipyard-console-deed-label'}" />
@@ -126,30 +66,17 @@
                     Text=""/>
             </BoxContainer>
         </GridContainer>
-            </PanelContainer>
-        </PanelContainer>
-        <BoxContainer Orientation="Horizontal" Margin="0 2 0 2" Name="RenameContainer" Visible="False">
-            <LineEdit Name="RenameLineEdit"
-                      PlaceHolder="Name"
-                      MinWidth="140"
-                      Editable="False" />
-            <Button Name="RenameButton"
-                    Text="Rename"
-                    Disabled="True" />
-        </BoxContainer>
 
-        <!-- Footer -->
-        <BoxContainer Orientation="Vertical" Margin="0 5 0 0" >
-            <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 0" />
-            <BoxContainer Orientation="Horizontal" Margin="10 5 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'shipyard-menu-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'apc-menu-flavor-right'}" StyleClasses="WindowFooterText"
-                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
-            </BoxContainer>
+        <!-- Docked grids deed creation is intentionally not available on Shipyard console -->
+
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 8 0 2">
+            <Label Text="Saved Ships:" />
+            <ItemList Name="SavedShipsList"
+                      MinSize="0 100"
+                      HorizontalExpand="True" />
+            <Button Name="ReloadShipsButton"
+                Text="Reload Saved Ships"
+                Margin="0 4 0 0" />
         </BoxContainer>
     </BoxContainer>
-        </PanelContainer>
-    </PanelContainer>
 </controls:FancyWindow>

@@ -10,14 +10,29 @@ using Content.Server.Station.Systems;
 using Content.Shared._NF.Shipyard.Components;
 using Content.Shared._NF.Shipyard;
 using Content.Shared.GameTicking;
+using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Content.Shared._NF.CCVar;
 using Content.Shared.HL.CCVar; // HardLight
 using Robust.Shared.Configuration;
 using System.Diagnostics.CodeAnalysis;
-// HardLight
+using System.Linq;
 using System.Numerics;
+using Content.Shared._NF.Shipyard.Events;
+using Content.Shared.Mobs.Components;
+using Robust.Shared.Containers;
+using Content.Server._NF.Station.Components;
+using Content.Server.Storage.Components;
+using Content.Shared._Mono.Shipyard;
+using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Utility;
+using Content.Shared.Doors.Components;
+using Robust.Shared.Map.Components;
+using Content.Shared.Shuttles.Components; // For IFFComponent
+using Content.Shared.Timing;
+using Robust.Shared.Physics;
+using Robust.Shared.EntitySerialization;
 using System.Reflection;
 using System.Text; // HardLight
 using System.Text.RegularExpressions; // HardLight
@@ -26,16 +41,6 @@ using Robust.Shared.Serialization.Markdown; // HardLight
 using Robust.Shared.Serialization.Markdown.Mapping; // HardLight
 using Robust.Shared.Serialization.Markdown.Sequence; // HardLight
 using Robust.Shared.Serialization.Markdown.Value; // HardLight
-using Content.Shared._NF.Shipyard.Events;
-using Content.Shared.Mobs.Components;
-using Robust.Shared.EntitySerialization;
-using Robust.Shared.Containers;
-using Content.Server._NF.Station.Components;
-using Robust.Shared.EntitySerialization.Systems;
-using Robust.Shared.Utility;
-using Content.Shared.Shuttles.Components; // For IFFComponent
-using Content.Shared.Timing;
-using Robust.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components; // For GravitySystem
 using Robust.Shared.Map.Events; // HardLight
@@ -71,16 +76,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         "~",
         "0",
     };
-
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly DockingSystem _docking = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-    [Dependency] private readonly ShuttleSystem _shuttle = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly MapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!; // For safe container removal before deletion
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -96,6 +91,17 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     private EntityQuery<UseDelayComponent> _useDelayQuery;
     private EntityQuery<MetaDataComponent> _metaQuery;
     //private EntityQuery<InsuredItemComponent> _insuredItemQuery; // HardLight
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private DockingSystem _docking = default!;
+    [Dependency] private PricingSystem _pricing = default!;
+    [Dependency] private ShuttleSystem _shuttle = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private MapLoaderSystem _mapLoader = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private MapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ShipOwnershipSystem _shipOwnership = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public MapId? ShipyardMap { get; private set; }
     private float _shuttleIndex;
@@ -137,7 +143,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     public override void Initialize()
     {
         base.Initialize();
-
         _transformQuery = GetEntityQuery<TransformComponent>();
         // HardLight: queries reused by the ship-load sanitize pass.
         _containerManagerQuery = GetEntityQuery<ContainerManagerComponent>();
@@ -156,8 +161,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         SubscribeLocalEvent<ShipyardConsoleComponent, ComponentStartup>(OnShipyardStartup);
         SubscribeLocalEvent<ShipyardConsoleComponent, BoundUIOpenedEvent>(OnConsoleUIOpened);
         SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsoleSellMessage>(OnSellMessage);
-        // Docked-grid deed creation is handled in Shuttle Records, not Shipyard
         SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsolePurchaseMessage>(OnPurchaseMessage);
+        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsoleUnassignDeedMessage>(OnUnassignDeedMessage);
+        SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsoleRenameMessage>(OnRenameMessage);
         // Ship saving/loading functionality
         SubscribeLocalEvent<ShipyardConsoleComponent, ShipyardConsoleLoadMessage>(OnLoadMessage);
         SubscribeLocalEvent<ShipyardConsoleComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
@@ -167,7 +173,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         SubscribeLocalEvent<BeforeEntityReadEvent>(OnBeforeEntityRead); // HardLight
         InitializeShuttleLifecycleCleanup(); // HardLight
     }
-
     public override void Shutdown()
     {
         _configManager.UnsubValueChanged(NFCCVars.Shipyard, SetShipyardEnabled);
@@ -186,9 +191,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         _lastLoadCharge.Clear(); // HardLight
         CleanupShipyard();
     }
-
-    // HardLight: Injects deleted prototype IDs into a temporary set used during ship load to allow YAML loads to succeed by ignoring missing prototypes,
-    // while still logging their absence for debugging and future cleanup.
     private void OnBeforeEntityRead(BeforeEntityReadEvent ev)
     {
         if (_activeLoadDeletedPrototypes == null || _activeLoadDeletedPrototypes.Count == 0)
@@ -212,7 +214,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         else
             CleanupShipyard();
     }
-
     // HardLight: drain the deferred UseDelay reset queue at a budgeted rate so a freshly loaded
     // capital ship doesn't fire hundreds of Dirty() notifications on the load tick.
     public override void Update(float frameTime)
@@ -244,70 +245,61 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 _useDelay.ResetAllDelays((uid, useDelay));
         }
     }
-
     private void SetShipyardSellRate(float value)
     {
         _baseSaleRate = Math.Clamp(value, 0.0f, 1.0f);
     }
 
-    // Docked-grid deed creation logic removed from Shipyard; use Shuttle Records console instead
-
     /// <summary>
-    /// Purchases a shuttle and docks it to the grid the console is on, independent of station data.
+    /// Adds a ship to the shipyard, calculates its price, and attempts to ftl-dock it to the given station
     /// </summary>
-    /// <param name="consoleUid">The entity of the shipyard console to dock to its grid</param>
+    /// <param name="stationUid">The ID of the station to dock the shuttle to</param>
     /// <param name="shuttlePath">The path to the shuttle file to load. Must be a grid file!</param>
     /// <param name="shuttleEntityUid">The EntityUid of the shuttle that was purchased</param>
-    public bool TryPurchaseShuttle(EntityUid consoleUid, ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
+    public bool TryPurchaseShuttle(EntityUid stationUid, ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
     {
-        // Get the grid the console is on
-        if (!_transformQuery.TryComp(consoleUid, out var consoleXform) || consoleXform.GridUid == null)
+        if (!TryComp<StationDataComponent>(stationUid, out var stationData)
+            || !TryAddShuttle(shuttlePath, out var shuttleGrid)
+            || !TryComp<ShuttleComponent>(shuttleGrid, out var shuttleComponent))
         {
             shuttleEntityUid = null;
             return false;
         }
 
-        if (!TryAddShuttle(shuttlePath, out var shuttleGrid))
-        {
-            shuttleEntityUid = null;
-            return false;
-        }
-
+        var price = _pricing.AppraiseGrid(shuttleGrid.Value, null);
+        var targetGrid = _station.GetLargestGrid((stationUid, stationData));
         var grid = shuttleGrid.Value;
-
         if (!TryComp<ShuttleComponent>(grid, out var shuttleComponent))
         {
+            QueueDel(shuttleGrid);
+            shuttleEntityUid = null;
+            return false;
+        }
+        if (targetGrid == null) //how are we even here with no station grid
+        {
+            QueueDel(shuttleGrid);
             shuttleEntityUid = null;
             return false;
         }
 
-        var targetGrid = consoleXform.GridUid.Value;
-
-        //_sawmill.Info($"Shuttle {shuttlePath} was purchased at {ToPrettyString(consoleUid)} for {price:f2}");
-
-        // Ensure required components for docking and identification
-        EnsureComp<Robust.Shared.Physics.Components.PhysicsComponent>(grid);
-        EnsureComp<ShuttleComponent>(grid);
-        var iff = EnsureComp<IFFComponent>(grid);
+        _sawmill.Info($"Shuttle {shuttlePath} was purchased at {ToPrettyString(stationUid)} for {price:f2}");
+        EnsureComp<Robust.Shared.Physics.Components.PhysicsComponent>(shuttleGrid);
+        EnsureComp<ShuttleComponent>(shuttleGrid);
+        var iff = EnsureComp<IFFComponent>(shuttleGrid);
         // Add new grid to the same station as the console's grid (for IFF / ownership), if any
         if (TryComp<StationMemberComponent>(consoleXform.GridUid, out var stationMember))
         {
-            _station.AddGridToStation(stationMember.Station, grid);
+            _station.AddGridToStation(stationMember.Station, shuttleGrid);
         }
-
-        TryFTLDockForPurchase(grid, shuttleComponent, targetGrid); // HardLight: capped dock search on purchase
+        var ev = new ShipBoughtEvent();
+        RaiseLocalEvent(shuttleGrid.Value, ev);
+        //can do TryFTLDock later instead if we need to keep the shipyard map paused
+        _shuttle.TryFTLDock(shuttleGrid.Value, shuttleComponent, targetGrid.Value);
         QueueShipyardMapCleanupIfEmpty(); // HardLight
-        shuttleEntityUid = grid;
+        shuttleEntityUid = shuttleGrid;
         return true;
     }
 
-    /// <summary>
-    /// Loads a shuttle from a file and docks it to the grid the console is on, like ship purchases.
-    /// This is used for loading saved ships.
-    /// </summary>
-    /// <param name="consoleUid">The entity of the shipyard console to dock to its grid</param>
-    /// <param name="shuttlePath">The path to the shuttle file to load. Must be a grid file!</param>
-    /// <param name="shuttleEntityUid">The EntityUid of the shuttle that was loaded</param>
     public bool TryPurchaseShuttleFromFile(EntityUid consoleUid, ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
     {
         if (!TryAddShuttle(shuttlePath, out var shuttleGrid)) // HardLight
@@ -320,8 +312,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     }
 
     /// <summary>
-    /// Loads a shuttle into the shipyard staging map from a grid file.
+    /// Loads a shuttle into the ShipyardMap from a file path
     /// </summary>
+    /// <param name="shuttlePath">The path to the grid file to load. Must be a grid file!</param>
     /// <returns>Returns the EntityUid of the shuttle</returns>
     private bool TryAddShuttle(ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleGrid)
     {
@@ -332,7 +325,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         if (!_mapLoader.TryLoadGrid(ShipyardMap.Value, shuttlePath, out var grid, offset: new Vector2(500f + _shuttleIndex, 1f)))
         {
-            //_sawmill.Error($"Unable to spawn shuttle {shuttlePath}");
+            _sawmill.Error($"Unable to spawn shuttle {shuttlePath}");
             return false;
         }
 
@@ -343,8 +336,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     }
 
     /// <summary>
-    /// Loads shuttle YAML straight from memory so ship loads do not have to bounce through a temp file.
+    /// Checks a shuttle to make sure that it is docked to the given station, and that there are no lifeforms aboard. Then it teleports tagged items on top of the console, appraises the grid, outputs to the server log, and deletes the grid
     /// </summary>
+    /// <param name="stationUid">The ID of the station that the shuttle is docked to</param>
+    /// <param name="shuttleUid">The grid ID of the shuttle to be appraised and sold</param>
+    /// <param name="consoleUid">The ID of the console being used to sell the ship</param>
     private bool TryAddShuttleFromYamlData(string yamlData, string fileName, [NotNullWhen(true)] out EntityUid? shuttleGrid)
     {
         shuttleGrid = null;
@@ -549,7 +545,101 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return false;
         }
     }
+    public ShipyardSaleResult TrySellShuttle(EntityUid stationUid, EntityUid shuttleUid, EntityUid consoleUid, out int bill)
+    {
+        ShipyardSaleResult result = new ShipyardSaleResult();
+        bill = 0;
 
+        // WOLFGATE(Companies) START: company hangar ships belong to the company and can't be sold
+        if (HasComp<Content.Server._WF.Companies.WFCompanyHangarShipComponent>(shuttleUid))
+        {
+            result.Error = ShipyardSaleError.InvalidShip;
+            return result;
+        }
+        // WOLFGATE END
+
+        if (!TryComp<StationDataComponent>(stationUid, out var stationGrid)
+            || !HasComp<ShuttleComponent>(shuttleUid)
+            || !TryComp(shuttleUid, out TransformComponent? xform)
+            || ShipyardMap == null)
+        {
+            result.Error = ShipyardSaleError.InvalidShip;
+            return result;
+        }
+
+        var targetGrid = _station.GetLargestGrid((stationUid, stationGrid));
+
+        if (targetGrid == null)
+        {
+            result.Error = ShipyardSaleError.InvalidShip;
+            return result;
+        }
+
+        var gridDocks = _docking.GetDocks(targetGrid.Value);
+        var shuttleDocks = _docking.GetDocks(shuttleUid);
+        var isDocked = false;
+
+        foreach (var shuttleDock in shuttleDocks)
+        {
+            foreach (var gridDock in gridDocks)
+            {
+                if (shuttleDock.Comp.DockedWith == gridDock.Owner)
+                {
+                    isDocked = true;
+                    break;
+                }
+            }
+            if (isDocked)
+                break;
+        }
+
+        if (!isDocked)
+        {
+            _sawmill.Warning($"shuttle is not docked to that station");
+            result.Error = ShipyardSaleError.Undocked;
+            return result;
+        }
+
+        var mobQuery = GetEntityQuery<MobStateComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        var charName = FoundOrganics(shuttleUid, mobQuery, xformQuery);
+        if (charName is not null)
+        {
+            _sawmill.Warning($"organics on board");
+            result.Error = ShipyardSaleError.OrganicsAboard;
+            result.OrganicName = charName;
+            return result;
+        }
+
+        //just yeet and delete for now. Might want to split it into another function later to send back to the shipyard map first to pause for something
+        //also superman 3 moment
+        if (_station.GetOwningStation(shuttleUid) is { Valid: true } shuttleStationUid)
+        {
+            _station.DeleteStation(shuttleStationUid);
+        }
+
+        if (TryComp<ShipyardConsoleComponent>(consoleUid, out var comp))
+        {
+            CleanGrid(shuttleUid, consoleUid);
+        }
+
+        bill = (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp);
+
+        // WOLFGATE(Shipyard) START: last look at the grid, with its deed, before it goes. See _WF/Shipyard.
+        var soldEv = new _WF.Shipyard.ShipSoldEvent(shuttleUid, consoleUid, stationUid, bill);
+        RaiseLocalEvent(ref soldEv);
+        // WOLFGATE END
+
+        QueueDel(shuttleUid);
+        _sawmill.Info($"Sold shuttle {shuttleUid} for {bill}");
+
+        // Update all record UI (skip records, no new records)
+        _shuttleRecordsSystem.RefreshStateForAll(true);
+
+        result.Error = ShipyardSaleError.Success;
+        return result;
+    }
     // Finish wiring up a loaded shuttle without letting setup failures abort the whole load.
     private bool TryFinalizeLoadedShuttle(EntityUid consoleUid, EntityUid grid, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
     {
@@ -1329,8 +1419,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         {
             RemComp<JointComponent>(uid);
 
-            /* if (_insuredItemQuery.TryComp(uid, out var insured))
-                _itemInsurance.PruneLoadedInsuredItem(uid, insured); */
+            if (_insuredItemQuery.TryComp(uid, out var insured))
+                _itemInsurance.PruneLoadedInsuredItem(uid, insured);
 
             if (_containerManagerQuery.TryComp(uid, out var manager))
                 prunedContainers += PruneInvalidContainerContents(uid, manager);
@@ -1420,81 +1510,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 return 0;
         }
     }
-
-    /// <summary>
-    /// Sells a shuttle, checking that it is docked to the grid the console is on, and not to a station.
-    /// </summary>
-    /// <param name="shuttleUid">The grid ID of the shuttle to be appraised and sold</param>
-    /// <param name="consoleUid">The ID of the console being used to sell the ship</param>
-    /// <param name="bill">The amount the shuttle is sold for</param>
-    public ShipyardSaleResult TrySellShuttle(EntityUid shuttleUid, EntityUid consoleUid, out int bill)
-    {
-        ShipyardSaleResult result = new ShipyardSaleResult();
-        bill = 0;
-
-        if (!HasComp<ShuttleComponent>(shuttleUid)
-            || !_transformQuery.TryComp(shuttleUid, out var xform)
-            || !_transformQuery.TryComp(consoleUid, out var consoleXform)
-            || consoleXform.GridUid == null) // HardLight
-        {
-            result.Error = ShipyardSaleError.InvalidShip;
-            return result;
-        }
-
-        var targetGrid = consoleXform.GridUid.Value;
-        var gridDocks = _docking.GetDocks(targetGrid);
-        var shuttleDocks = _docking.GetDocks(shuttleUid);
-        var isDocked = false;
-
-        foreach (var shuttleDock in shuttleDocks)
-        {
-            foreach (var gridDock in gridDocks)
-            {
-                if (shuttleDock.Comp.DockedWith == gridDock.Owner)
-                {
-                    isDocked = true;
-                    break;
-                }
-            }
-            if (isDocked)
-                break;
-        }
-
-        if (!isDocked)
-        {
-            //_sawmill.Warning($"shuttle is not docked to the console's grid");
-            result.Error = ShipyardSaleError.Undocked;
-            return result;
-        }
-
-        var mobQuery = GetEntityQuery<MobStateComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
-        var charName = FoundOrganics(shuttleUid, mobQuery, xformQuery);
-        if (charName is not null)
-        {
-            //_sawmill.Warning($"organics on board");
-            result.Error = ShipyardSaleError.OrganicsAboard;
-            result.OrganicName = charName;
-            return result;
-        }
-
-        if (TryComp<ShipyardConsoleComponent>(consoleUid, out var comp))
-        {
-            CleanGrid(shuttleUid, consoleUid);
-        }
-
-        bill = (int)AppraiseGridForShipyardSale(shuttleUid);
-        QueueDel(shuttleUid);
-        //_sawmill.Info($"Sold shuttle {shuttleUid} for {bill}");
-
-        // Update all record UI (skip records, no new records)
-        _shuttleRecordsSystem.RefreshStateForAll(true);
-
-        result.Error = ShipyardSaleError.Success;
-        return result;
-    }
-
     private void CleanGrid(EntityUid grid, EntityUid destination)
     {
         var xform = Transform(grid);
@@ -1521,7 +1536,14 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             output.Add(entity);
             return;
         }
-        else if (TryComp<ContainerManagerComponent>(entity, out var containers))
+        if (TryComp<EntityStorageComponent>(entity, out var storageComp))
+        {
+            // Make storage containers delete their contents when they are deleted during ship sale
+            storageComp.DeleteContentsOnDestruction = true;
+            Dirty(entity, storageComp);
+        }
+
+        if (TryComp<ContainerManagerComponent>(entity, out var containers))
         {
             foreach (var container in containers.Containers.Values)
             {
@@ -1538,96 +1560,15 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     {
         return !TryComp<ShipyardSellConditionComponent>(uid, out var comp) || comp.PreserveOnSale == false;
     }
-
-    // Shipyard appraisal should not trigger price hooks that mutate game state.
-    // Normal ship contents still count. The only special cases here are items that
-    // manufacture value during pricing or depend on outside reward systems.
-    private bool IsSafeForShipyardAppraisal(EntityUid uid)
-    {
-        return !HasComp<SpawnItemsOnUseComponent>(uid)
-               && !HasComp<CargoBountyLabelComponent>(uid);
-    }
-
-    private bool IsSafeForShipyardSaleAppraisal(EntityUid uid)
-    {
-        return LacksPreserveOnSaleComp(uid) && IsSafeForShipyardAppraisal(uid);
-    }
-
-    private double AppraiseGridForShipyard(EntityUid gridUid)
-    {
-        return AppraiseGridForShipyard(gridUid, saleMode: false);
-    }
-
-    private double AppraiseGridForShipyardSale(EntityUid gridUid)
-    {
-        return AppraiseGridForShipyard(gridUid, saleMode: true);
-    }
-
-    private double AppraiseGridForShipyard(EntityUid gridUid, bool saleMode)
-    {
-        Func<EntityUid, bool> predicate = saleMode ? IsSafeForShipyardSaleAppraisal : IsSafeForShipyardAppraisal;
-        var price = _pricing.AppraiseGrid(gridUid, predicate);
-
-        VisitEntityAndDescendants(gridUid, uid =>
-        {
-            if (saleMode && !LacksPreserveOnSaleComp(uid))
-                return;
-
-            price += GetShipyardSpecialCaseAppraisal(uid);
-        });
-
-        return price;
-    }
-
-    private double GetShipyardSpecialCaseAppraisal(EntityUid uid)
-    {
-        if (TryComp<SpawnItemsOnUseComponent>(uid, out var spawnItems))
-            return GetEstimatedSpawnItemsOnUsePrice(spawnItems);
-
-        return 0.0;
-    }
-
-    private double GetEstimatedSpawnItemsOnUsePrice(SpawnItemsOnUseComponent component)
-    {
-        var price = 0.0;
-        var ungrouped = EntitySpawnCollection.CollectOrGroups(component.Items, out var orGroups);
-
-        foreach (var entry in ungrouped)
-        {
-            if (entry.PrototypeId is not { } prototypeId || !_prototypeManager.TryIndex<EntityPrototype>(prototypeId, out var prototype))
-                continue;
-
-            price += _pricing.GetEstimatedPrice(prototype) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
-        }
-
-        foreach (var group in orGroups)
-        {
-            foreach (var entry in group.Entries)
-            {
-                if (entry.PrototypeId is not { } prototypeId || !_prototypeManager.TryIndex<EntityPrototype>(prototypeId, out var prototype))
-                    continue;
-
-                price += _pricing.GetEstimatedPrice(prototype)
-                         * (entry.SpawnProbability / group.CumulativeProbability)
-                         * entry.GetAmount(getAverage: true);
-            }
-        }
-
-        return price;
-    }
-
     private void CleanupShipyard()
     {
         if (ShipyardMap == null || !_map.MapExists(ShipyardMap.Value))
         {
             ShipyardMap = null;
-            _shuttleIndex = 0f; // HardLight
             return;
         }
 
         _map.DeleteMap(ShipyardMap.Value);
-        ShipyardMap = null; // HardLight
-        _shuttleIndex = 0f; // HardLight
     }
 
     public void SetupShipyardIfNeeded()
@@ -1635,40 +1576,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (ShipyardMap != null && _map.MapExists(ShipyardMap.Value))
             return;
 
-        var shipyardMapUid = _map.CreateMap(out var shipyardMap); // HardLight
+        _map.CreateMap(out var shipyardMap);
         ShipyardMap = shipyardMap;
-        _metaData.SetEntityName(shipyardMapUid, "Shipyard"); // HardLight
 
         _map.SetPaused(ShipyardMap.Value, false);
-    }
-
-    /// <summary>
-    /// Cleans up the shipyard staging map once it no longer has any grids on it.
-    /// </summary>
-    private void QueueShipyardMapCleanupIfEmpty(int attempt = 0)
-    {
-        if (ShipyardMap == null || !_map.MapExists(ShipyardMap.Value))
-        {
-            ShipyardMap = null;
-            _shuttleIndex = 0f;
-            return;
-        }
-
-        var shipyardMap = ShipyardMap.Value;
-        var gridQuery = AllEntityQuery<MapGridComponent, TransformComponent>();
-        while (gridQuery.MoveNext(out _, out _, out var xform))
-        {
-            if (xform.MapID == shipyardMap)
-            {
-                if (attempt >= 24)
-                    return;
-
-                Timer.Spawn(TimeSpan.FromSeconds(5), () => QueueShipyardMapCleanupIfEmpty(attempt + 1));
-                return;
-            }
-        }
-
-        CleanupShipyard();
     }
 
     // <summary>
@@ -1684,16 +1595,33 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         var shuttle = shuttleDeed.ShuttleUid;
         if (shuttle != null
-             && TryGetEntity(shuttle.Value, out var shuttleEntity)
-             && _station.GetOwningStation(shuttleEntity.Value) is { Valid: true } shuttleStation)
+             && _station.GetOwningStation(shuttle.Value) is { Valid: true } shuttleStation)
         {
+            // Update the primary deed
             shuttleDeed.ShuttleName = newName;
             shuttleDeed.ShuttleNameSuffix = newSuffix;
             Dirty(uid, shuttleDeed);
 
+            // Find and update all other deeds for the same ship
+            var query = EntityQueryEnumerator<ShuttleDeedComponent>();
+            while (query.MoveNext(out var deedEntity, out var deed))
+            {
+                // Skip the deed we already updated
+                if (deedEntity == uid)
+                    continue;
+
+                // Update deeds that reference the same shuttle
+                if (deed.ShuttleUid == shuttle)
+                {
+                    deed.ShuttleName = newName;
+                    deed.ShuttleNameSuffix = newSuffix;
+                    Dirty(deedEntity, deed);
+                }
+            }
+
             var fullName = GetFullName(shuttleDeed);
             _station.RenameStation(shuttleStation, fullName, loud: false);
-            _metaData.SetEntityName(shuttleEntity.Value, fullName);
+            _metaData.SetEntityName(shuttle.Value, fullName);
             _metaData.SetEntityName(shuttleStation, fullName);
         }
         else
@@ -1703,8 +1631,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
 
         //TODO: move this to an event that others hook into.
-        if (shuttleDeed.ShuttleUid != null &&
-            _shuttleRecordsSystem.TryGetRecord(shuttleDeed.ShuttleUid.Value, out var record))
+        if (TryGetNetEntity(shuttleDeed.ShuttleUid, out var shuttleNetEntity) &&
+            _shuttleRecordsSystem.TryGetRecord(shuttleNetEntity.Value, out var record))
         {
             record.Name = newName ?? "";
             record.Suffix = newSuffix ?? "";
@@ -1724,7 +1652,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     }
 
     /// <summary>
-    /// Attempts to extract ship name from YAML data
+    /// Mono: Adds ShipAccessReaderComponent to all doors and lockers on a ship grid.
     /// </summary>
     private string? ExtractShipNameFromYaml(string yamlData)
     {
@@ -1764,5 +1692,29 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             _sawmill.Warning($"Failed to extract ship name from YAML: {ex}");
         }
         return null;
+    }
+    private void AddShipAccessToEntities(EntityUid gridUid)
+    {
+        // Get the grid bounds to find all entities on the grid
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            return;
+
+        var gridBounds = grid.LocalAABB;
+        var gridEntities = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, gridEntities);
+
+        foreach (var entity in gridEntities)
+        {
+            // Add ship access to doors
+            if (EntityManager.HasComponent<DoorComponent>(entity))
+            {
+                EntityManager.EnsureComponent<ShipAccessReaderComponent>(entity);
+            }
+            // Add ship access to entity storage (lockers, crates, etc.)
+            else if (EntityManager.HasComponent<EntityStorageComponent>(entity))
+            {
+                EntityManager.EnsureComponent<ShipAccessReaderComponent>(entity);
+            }
+        }
     }
 }
