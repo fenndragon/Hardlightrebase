@@ -1,4 +1,6 @@
 using Content.Client.UserInterface.Controls;
+using System.Linq;
+using Content.Client._Mono.Shipyard;
 using Content.Shared._NF.Bank;
 using Content.Shared._NF.Shipyard.BUI;
 using Content.Shared._NF.Shipyard.Prototypes;
@@ -17,6 +19,10 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
 
     public event Action<ButtonEventArgs>? OnSellShip;
     public event Action<ButtonEventArgs>? OnSaveShip;
+    public event Action<ButtonEventArgs>? OnUnassignDeed;
+    public event Action<string>? OnRenameShip;
+    public event Action<ButtonEventArgs>? OnPreviewShip;
+    private readonly ShipyardConsoleBoundUserInterface _menu;
     public event Action<ButtonEventArgs>? OnOrderApproved;
     public event Action<ButtonEventArgs>? OnReloadShips;
     private readonly List<VesselSize> _categoryStrings = new();
@@ -31,16 +37,31 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
     private bool _freeListings = false;
     private bool _validId = false;
 
-    public ShipyardConsoleMenu()
+    public ShipyardConsoleMenu(ShipyardConsoleBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _menu = owner;
         Title = Loc.GetString("shipyard-console-menu-title");
         SearchBar.OnTextChanged += OnSearchBarTextChanged;
         Categories.OnItemSelected += OnCategoryItemSelected;
         Classes.OnItemSelected += OnClassItemSelected;
         Engines.OnItemSelected += OnEngineItemSelected;
+        InitClassicFilter(); // WOLFGATE(OldVessels): classic ships filter
         SellShipButton.OnPressed += (args) => { OnSellShip?.Invoke(args); };
+        UnassignDeedButton.OnPressed += (args) => { OnUnassignDeed?.Invoke(args); };
+        RenameButton.OnPressed += OnRenameButtonPressed;
+    }
+
+    // WOLFGATE(Traders) START: an NPC dealer only sells ships; the server refuses these two anyway.
+    public void HideSellControls()
+    {
+        SellShipButton.Visible = false;
+        UnassignDeedButton.Visible = false;
+
+        // A dealer has no slot: the cash readout is what lies on its counter.
+        if (CashSlotControls.ChildCount > 0 && CashSlotControls.GetChild(0) is Label cashTitle)
+            cashTitle.Text = Loc.GetString("trader-shipyard-counter-cash-label");
         SaveShipButton.OnPressed += (args) => { OnSaveShip?.Invoke(args); };
         ReloadShipsButton.OnPressed += (args) => { OnReloadShips?.Invoke(args); };
     }
@@ -51,7 +72,21 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         SetCategoryText(args.Id);
         PopulateProducts(_lastAvailableProtos, _lastUnavailableProtos, _freeListings, _validId);
     }
+    private void OnRenameButtonPressed(ButtonEventArgs args)
+    {
+        var newName = RenameLineEdit.Text.Trim();
+        if (string.IsNullOrEmpty(newName))
+            return;
 
+        // Validate length (30 characters max, matching ShuttleDeedComponent.MaxNameLength)
+        if (newName.Length > 30)
+        {
+            newName = newName[..30];
+        }
+
+        OnRenameShip?.Invoke(newName);
+        RenameLineEdit.Text = "";
+    }
     private void OnClassItemSelected(OptionButton.ItemSelectedEventArgs args)
     {
         SetClassText(args.Id);
@@ -131,12 +166,18 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
                 continue;
             if (_engine != null && !prototype!.Engines.Contains(_engine.Value))
                 continue;
+            // WOLFGATE(OldVessels) START: classic ships filter
+            if (!PassesClassicFilter(prototype!))
+                continue;
+            // WOLFGATE END
             if (search.Length > 0 && !prototype!.Name.ToLowerInvariant().Contains(search))
                 continue;
 
             string priceText;
             if (free)
                 priceText = Loc.GetString("shipyard-console-menu-listing-free");
+            else if (prototype != null && !prototype.Purchasable) // Mono
+                priceText = Loc.GetString("shipyard-console-menu-listing-voucher");
             else
                 priceText = BankSystemExtensions.ToSpesoString(prototype!.Price);
 
@@ -144,11 +185,14 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
             {
                 Vessel = prototype,
                 VesselName = { Text = prototype!.Name },
+                VesselDescription = { Text = prototype!.Description }, // Mono
                 Purchase = { Text = Loc.GetString("shipyard-console-purchase-available"), Disabled = !canPurchase },
                 Guidebook = { Disabled = prototype.GuidebookPage is null, TooltipDelay = 0.2f, ToolTip = prototype.Description },
                 Price = { Text = priceText },
             };
+            MarkClassic(vesselEntry); // WOLFGATE(OldVessels): marks a classic ship
             vesselEntry.Purchase.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+            vesselEntry.Preview.OnPressed += (args) => { OnPreviewShip?.Invoke(args); };
             Vessels.AddChild(vesselEntry);
         }
     }
@@ -279,12 +323,20 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
     public void UpdateState(ShipyardConsoleInterfaceState state)
     {
         BalanceLabel.Text = BankSystemExtensions.ToSpesoString(state.Balance);
+        CashSlotLabel.Text = BankSystemExtensions.ToSpesoString(state.CashBalance);
         var shipPrice = 0;
         if (!state.FreeListings)
             shipPrice = state.ShipSellValue;
 
         ShipAppraisalLabel.Text = $"{BankSystemExtensions.ToSpesoString(shipPrice)} ({state.SellRate * 100.0f:F1}%)";
         SellShipButton.Disabled = state.ShipDeedTitle == null;
+         UnassignDeedButton.Disabled = state.ShipDeedTitle == null;
+
+        // Show/hide and enable/disable rename controls based on whether there's a ship deed
+        var hasShipDeed = state.ShipDeedTitle != null;
+        RenameContainer.Visible = hasShipDeed;
+        RenameLineEdit.Editable = hasShipDeed;
+        RenameButton.Disabled = !hasShipDeed;
         SaveShipButton.Disabled = !state.IsTargetIdPresent;  // Enable save button when ID card is present
         LoadShipButton.Disabled = !state.IsTargetIdPresent;
         LoadShipButton.ToolTip = state.IsTargetIdPresent

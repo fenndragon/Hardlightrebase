@@ -27,12 +27,14 @@ using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
+using Content.Shared.Shuttles.Components;
 using Prometheus;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Audio;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -43,6 +45,7 @@ using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.FixedPoint;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking
 {
@@ -76,6 +79,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables]
         private GameRunLevel _runLevel;
+        private bool _endingRound; // guard to prevent duplicate EndRound execution
 
         private RoundEndMessageEvent.RoundEndPlayerInfo[]? _replayRoundPlayerInfo;
 
@@ -1212,6 +1216,18 @@ namespace Content.Server.GameTicking
             var ev = new RoundRestartCleanupEvent();
             RaiseLocalEvent(ev);
 
+            var stationQuery = EntityQueryEnumerator<StationDataComponent>();
+            var stationsToDelete = new List<EntityUid>();
+
+            while (stationQuery.MoveNext(out var stationUid, out _))
+            {
+                stationsToDelete.Add(stationUid);
+            }
+            // HL: We use a List here so that we aren't destroying entities in the middle of the enumerator
+            foreach (var s in stationsToDelete)
+            {
+                Del(s);
+            }
             // So clients' entity systems can clean up too...
             //RaiseNetworkEvent(ev);
 
