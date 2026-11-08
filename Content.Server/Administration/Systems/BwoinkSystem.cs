@@ -33,7 +33,7 @@ using Content.Server.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Access.Components;
-using Content.Shared._HL.Rescue.Rescue;
+//using Content.Shared._HL.Rescue.Rescue;
 using Content.Server.Shuttles.Save;
 using Content.Server.Access.Systems;
 using JetBrains.Annotations;
@@ -83,7 +83,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly TurfSystem _turf = default!;
         [Dependency] private readonly ShipSaveSystem _shipSave = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        //[Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly SharedIdCardSystem _idCard = default!;
 
@@ -2762,7 +2762,7 @@ namespace Content.Server.Administration.Systems
 
             var grids = new List<Entity<MapGridComponent>>();
             var circle = new PhysShapeCircle(ftlBuffer + SharedShuttleSystem.FTLBufferRange, position);
-            _mapManager.FindGridsIntersecting(mapId, circle, Robust.Shared.Physics.Transform.Empty,
+            /* _mapManager.FindGridsIntersecting(mapId, circle, Robust.Shared.Physics.Transform.Empty,
                 ref grids, includeMap: false);
 
             foreach (var grid in grids)
@@ -2770,7 +2770,7 @@ namespace Content.Server.Administration.Systems
                 if (grid.Owner == shuttleUid)
                     continue;
                 return false;
-            }
+            } */
 
             return true;
         }
@@ -2802,11 +2802,11 @@ namespace Content.Server.Administration.Systems
             coords = EntityCoordinates.Invalid;
             var possiblePositions = new List<EntityCoordinates>();
 
-            var beacons = EntityQueryEnumerator<RescueBeaconComponent, TransformComponent>();
+            /* var beacons = EntityQueryEnumerator<RescueBeaconComponent, TransformComponent>();
             while (beacons.MoveNext(out _, out _, out var xform))
             {
                 possiblePositions.Add(xform.Coordinates);
-            }
+            } */
 
             if (possiblePositions.Count == 0)
                 return false;
@@ -3062,14 +3062,14 @@ namespace Content.Server.Administration.Systems
             coords = EntityCoordinates.Invalid;
             var possiblePositions = new List<EntityCoordinates>();
 
-            var beacons = EntityQueryEnumerator<RescueBeaconComponent, TransformComponent>();
+            /* var beacons = EntityQueryEnumerator<RescueBeaconComponent, TransformComponent>();
             while (beacons.MoveNext(out var uid, out _, out var xform))
             {
                 if (_station.GetOwningStation(uid, xform) != station)
                     continue;
 
                 possiblePositions.Add(xform.Coordinates);
-            }
+            } */
 
             if (possiblePositions.Count == 0)
                 return false;
