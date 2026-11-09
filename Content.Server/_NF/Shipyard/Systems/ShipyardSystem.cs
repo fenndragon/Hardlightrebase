@@ -52,6 +52,7 @@ using Content.Shared.Storage;
 using YamlDotNet.Core; // HardLight
 using YamlDotNet.RepresentationModel; // HardLight
 using Timer = Robust.Shared.Timing.Timer;
+using System.IO;
 
 namespace Content.Server._NF.Shipyard.Systems;
 
@@ -1419,8 +1420,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         {
             RemComp<JointComponent>(uid);
 
-            if (_insuredItemQuery.TryComp(uid, out var insured))
-                _itemInsurance.PruneLoadedInsuredItem(uid, insured);
+            //if (_insuredItemQuery.TryComp(uid, out var insured))
+            //    _itemInsurance.PruneLoadedInsuredItem(uid, insured);
 
             if (_containerManagerQuery.TryComp(uid, out var manager))
                 prunedContainers += PruneInvalidContainerContents(uid, manager);
@@ -1588,6 +1589,31 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     //
     // Null name parts are promptly ignored.
     // </summary>
+    private void QueueShipyardMapCleanupIfEmpty(int attempt = 0)
+    {
+        if (ShipyardMap == null || !_map.MapExists(ShipyardMap.Value))
+        {
+            ShipyardMap = null;
+            _shuttleIndex = 0f;
+            return;
+        }
+
+        var shipyardMap = ShipyardMap.Value;
+        var gridQuery = AllEntityQuery<MapGridComponent, TransformComponent>();
+        while (gridQuery.MoveNext(out _, out _, out var xform))
+        {
+            if (xform.MapID == shipyardMap)
+            {
+                if (attempt >= 24)
+                    return;
+
+                Timer.Spawn(TimeSpan.FromSeconds(5), () => QueueShipyardMapCleanupIfEmpty(attempt + 1));
+                return;
+            }
+        }
+
+        CleanupShipyard();
+    }
     public bool TryRenameShuttle(EntityUid uid, ShuttleDeedComponent? shuttleDeed, string? newName, string? newSuffix)
     {
         if (!Resolve(uid, ref shuttleDeed))

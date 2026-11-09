@@ -33,6 +33,7 @@ namespace Content.Client.Administration.Systems
         public AhelpAdminConfigState? CurrentAhelpAdminConfig { get; private set; }
         public SharedAdminMacroState[] CurrentSharedAdminMacros { get; private set; } = Array.Empty<SharedAdminMacroState>();
         private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
+        private AHelpCategory category;
 
         public override void Initialize()
         {
@@ -297,7 +298,7 @@ namespace Content.Client.Administration.Systems
             PlayerAhelpItemSpawned?.Invoke(message);
         }
 
-        public void Send(NetUserId channelId, string text, bool playSound, bool adminOnly)
+        public void Send(NetUserId channelId, string text, bool playSound, bool adminOnly, AHelpCategory aHelpCategory)
         {
             // Reuse the channel ID as the 'true sender'.
             // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.

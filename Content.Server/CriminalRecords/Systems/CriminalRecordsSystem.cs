@@ -111,6 +111,19 @@ public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// <summary>
     /// Creates and tries to add a history entry using the current time.
     /// </summary>
+    public void ClearTransientStateOnGrid(EntityUid gridUid)
+    {
+        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var console, out var xform))
+        {
+            if (xform.GridUid != gridUid)
+                continue;
+
+            console.ActiveKey = null;
+            console.Filter = null;
+            console.FilterStatus = SecurityStatus.None;
+        }
+    }
     public bool TryAddHistory(StationRecordKey key, string line, string? initiatorName = null)
     {
         var entry = new CrimeHistory(_ticker.RoundDuration(), line, initiatorName);

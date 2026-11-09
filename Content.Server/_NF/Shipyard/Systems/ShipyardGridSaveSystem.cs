@@ -52,7 +52,8 @@ using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 using Content.Shared.Ghost;
 using System.Threading.Tasks;
-using System.IO; // Hardlight
+using System.IO;
+using Content.Shared.Power.Components; // Hardlight
 
 namespace Content.Server._NF.Shipyard.Systems;
 
@@ -455,7 +456,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             RemoveSavingContrabandEntitiesOnGrid(gridUid);
 
             // HardLight: Preserve spray-painted visual prototype by copying runtime appearance data into a serialized component field.
-            StampSprayPaintedPrototypesOnGrid(gridUid);
+            //StampSprayPaintedPrototypesOnGrid(gridUid);
 
             //_sawmill.Info($"Serializing ship grid {gridUid} as '{shipName}' after transient purge using direct serialization");
 
@@ -979,7 +980,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
     }
 
     // HardLight start: Scans painted entities on a grid and copies current paint appearance into SprayPainted.PaintedPrototype before save.
-    private void StampSprayPaintedPrototypesOnGrid(EntityUid gridUid)
+    /* private void StampSprayPaintedPrototypesOnGrid(EntityUid gridUid)
     {
         var query = _entityManager.EntityQueryEnumerator<SprayPaintedComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var painted, out var xform))
@@ -993,7 +994,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
                 Dirty(uid, painted);
             }
         }
-    }
+    } */
     // HardLight end
 
     /// <summary>

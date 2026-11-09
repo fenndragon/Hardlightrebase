@@ -4,6 +4,7 @@ using Content.Shared.Containers.ItemSlots;//hl
 // WOLFGATE(ShipPreview): the Wolfgate ship previewer replaces the Mono preview-map flow for this button.
 using Content.Client._WF.ShipPreview.UI;
 using Content.Shared._WF.Traders; // WOLFGATE(Traders)
+using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Client.UserInterface;//hl
 using Content.Shared._NF.Shipyard.BUI;
@@ -242,6 +243,16 @@ public sealed class ShipyardConsoleBoundUserInterface : BoundUserInterface
         SendMessage(new ShipyardConsoleSellMessage());
     }
 
+    private void SaveShip(ButtonEventArgs args)
+    {
+        // Send message to server to save the ship associated with the current deed
+        SendMessage(new ShipyardConsoleSaveMessage());
+    }
+
+    private void ReloadShips(ButtonEventArgs args)
+    {
+        _shipFileManagementSystem.ReloadSavedShips();
+    }
     private void UnassignDeed(ButtonEventArgs args)
     {
         SendMessage(new ShipyardConsoleUnassignDeedMessage());
