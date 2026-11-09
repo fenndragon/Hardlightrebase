@@ -1,82 +1,121 @@
-<controls:FancyWindow xmlns="https://spacestation14.io"
-                           xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                           SetSize="900 500"
-                           MinSize="900 300">
-    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
-        <BoxContainer Orientation="Vertical">
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'bank-atm-menu-balance-label'}"
-                    StyleClasses="LabelKeyText" />
-                <Label Name="BalanceLabel"
-                    Text="{Loc 'shipyard-console-no-bank'}" />
-            </BoxContainer>
-        </BoxContainer>
-        <BoxContainer Orientation="Vertical">
-            <BoxContainer Orientation="Horizontal">
-                <Label Text="{Loc 'shipyard-console-appraisal-label'}"
-                    StyleClasses="LabelKeyText" />
-                <Label Name="ShipAppraisalLabel"
-                    Text="{Loc 'shipyard-console-no-deed'}" />
-            </BoxContainer>
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <LineEdit Name="SearchBar"
-                      PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
-                      HorizontalExpand="True" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <OptionButton Name="Categories"
-                          Prefix="{Loc 'shipyard-console-menu-size-label'}"
-                          HorizontalExpand="True" />
-            <OptionButton Name="Classes"
-                          Prefix="{Loc 'shipyard-console-menu-class-label'}"
-                          HorizontalExpand="True" />
-            <OptionButton Name="Engines"
-                          Prefix="{Loc 'shipyard-console-menu-engine-label'}"
-                          HorizontalExpand="True" />
-        </BoxContainer>
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="6">
-            <BoxContainer Name="Vessels"
-                          Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <!-- Vessels get added here by code -->
-            </BoxContainer>
-        </ScrollContainer>
-        <GridContainer Columns="3" HorizontalExpand="True" Margin="0 8 0 2">
-            <Button Name="TargetIdButton" Access="Public"/>
-            <Button Name="SellShipButton"
-                Text="Sell"
-                Disabled="True"
-                StyleClasses="ButtonCaution" />
+<DefaultWindow
+    MinSize="1400 800"
+    SetSize="1400 800"
+    Title="{Loc 'shipyard-title'}">
 
-            <Button Name="SaveShipButton"
-                Text="Save Ship"
-                Disabled="True"
-                StyleClasses="ButtonCaution" />
-            <Button Name="LoadShipButton"
-                Text="Load Ship"
-                Disabled="True" />
-            <BoxContainer Orientation="Vertical">
-                <Label Text="{Loc 'shipyard-console-deed-label'}" />
-                <Label Name="DeedTitle"
-                    Text=""/>
-            </BoxContainer>
-        </GridContainer>
+    <BoxContainer Orientation="Horizontal">
 
-        <!-- Docked grids deed creation is intentionally not available on Shipyard console -->
+        <!-- LEFT FILTER PANEL -->
 
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 8 0 2">
-            <Label Text="Saved Ships:" />
-            <ItemList Name="SavedShipsList"
-                      MinSize="0 100"
-                      HorizontalExpand="True" />
-            <Button Name="ReloadShipsButton"
-                Text="Reload Saved Ships"
-                Margin="0 4 0 0" />
-        </BoxContainer>
+        <PanelContainer MinSize="250 0">
+            <MarginContainer Margin="8">
+                <BoxContainer Orientation="Vertical" SeparationOverride="6">
+
+                    <Label Text="{Loc 'shipyard-filters'}" />
+
+                    <LineEdit Name="SearchFilter"
+                              PlaceHolder="{Loc 'shipyard-search'}" />
+
+                    <HSeparator />
+
+                    <Label Text="{Loc 'shipyard-role'}" />
+
+                    <VBoxContainer Name="RoleContainer">
+
+                        <CheckBox Name="CargoFilter"
+                                  Text="{Loc 'shipyard-role-cargo'}" />
+
+                        <CheckBox Name="MiningFilter"
+                                  Text="{Loc 'shipyard-role-mining'}" />
+
+                        <CheckBox Name="ScienceFilter"
+                                  Text="{Loc 'shipyard-role-science'}" />
+
+                        <CheckBox Name="SecurityFilter"
+                                  Text="{Loc 'shipyard-role-security'}" />
+
+                        <CheckBox Name="MedicalFilter"
+                                  Text="{Loc 'shipyard-role-medical'}" />
+
+                    </VBoxContainer>
+
+                    <HSeparator />
+
+                    <Label Text="{Loc 'shipyard-size'}" />
+
+                    <OptionButton Name="SizeFilter" />
+
+                    <Label Text="{Loc 'shipyard-max-price'}" />
+
+                    <LineEdit Name="PriceFilter" />
+
+                </BoxContainer>
+            </MarginContainer>
+        </PanelContainer>
+
+        <!-- SHIP LIST -->
+
+        <PanelContainer HorizontalExpand="True">
+            <MarginContainer Margin="8">
+                <ScrollContainer HorizontalExpand="True"
+                                 VerticalExpand="True">
+
+                    <VBoxContainer Name="VesselList"
+                                   SeparationOverride="4" />
+
+                </ScrollContainer>
+            </MarginContainer>
+        </PanelContainer>
+
+        <!-- DETAILS PANEL -->
+
+        <PanelContainer MinSize="450 0">
+            <MarginContainer Margin="8">
+                <BoxContainer Orientation="Vertical"
+                              SeparationOverride="6">
+
+                    <TextureRect Name="ShipPreview"
+                                 MinSize="420 240"
+                                 Stretch="KeepCentered" />
+
+                    <Label Name="ShipName"
+                           StyleClasses="LabelHeading" />
+
+                    <RichTextLabel Name="ShipDescription"
+                                   VerticalExpand="True" />
+
+                    <GridContainer Columns="2">
+
+                        <Label Text="{Loc 'shipyard-price'}" />
+                        <Label Name="PriceLabel" />
+
+                        <Label Text="{Loc 'shipyard-crew'}" />
+                        <Label Name="CrewLabel" />
+
+                        <Label Text="{Loc 'shipyard-class'}" />
+                        <Label Name="ClassLabel" />
+
+                        <Label Text="{Loc 'shipyard-manufacturer'}" />
+                        <Label Name="ManufacturerLabel" />
+
+                    </GridContainer>
+
+                    <HSeparator />
+
+                    <BoxContainer Orientation="Horizontal">
+
+                        <Button Name="PurchaseButton"
+                                Text="{Loc 'shipyard-purchase'}"
+                                HorizontalExpand="True" />
+
+                        <Button Name="CompareButton"
+                                Text="{Loc 'shipyard-compare'}" />
+
+                    </BoxContainer>
+
+                </BoxContainer>
+            </MarginContainer>
+        </PanelContainer>
+
     </BoxContainer>
-</controls:FancyWindow>
+</DefaultWindow>
