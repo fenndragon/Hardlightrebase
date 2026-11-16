@@ -22,8 +22,8 @@
   - type: ContainerFill
     containers:
       key_slots:
+      - WFAsfEncryptionKey # first key's default channel wins
       - EncryptionKeyCommon
-      - WFAsfEncryptionKey
 
 - type: entity
   parent: DoorElectronics
@@ -135,6 +135,8 @@
     - WFAsfBulwark
     - WFAsfGuardian
     - WFAsfLodestar
+    - WFAsfRevelation
+    - WFAsfSurveyor
   # Checked by company, not ID: a buyer's only ID card is in the console's slot while they buy.
   - type: CompanyAccessReader
     requiredCompanies:

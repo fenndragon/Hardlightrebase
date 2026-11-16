@@ -6,13 +6,16 @@ using Content.Shared._WF.Wolfmed.Consciousness;
 using Content.Shared._WF.Wolfmed.Reagents;
 using Content.Shared._WF.Wolfmed.Wounds;
 using Content.Shared.Body.Part;
+using Content.Shared.CCVar;
 using Content.Shared.Alert;
 using Content.Shared.Chat;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Traits.Assorted;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -35,6 +38,7 @@ public sealed partial class WolfmedConditionAlertSystem : EntitySystem
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private INetConfigurationManager _netConfig = default!;
     [Dependency] private MobThresholdSystem _thresholds = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private WolfmedConsciousnessSystem _consciousness = default!;
@@ -159,11 +163,13 @@ public sealed partial class WolfmedConditionAlertSystem : EntitySystem
     private void ShowHealth(EntityUid body, ProtoId<AlertPrototype> alert, AlertPrototype prototype)
     {
         var level = CompOrNull<WolfmedConsciousnessComponent>(body)?.DownLevel ?? 0f;
+        // Numb: the doll reads healthy, as the trait promises.
+        if (HasComp<PainNumbnessComponent>(body))
+            level = 0f;
+
         var severity = (short) MathF.Round(MathHelper.Lerp(prototype.MinSeverity, prototype.MaxSeverity,
             Math.Clamp(level, 0f, 1f)));
 
-        // BeforeAlertSeverityCheckEvent is not raised: its one reader, pain numbness, pins the doll at full
-        // health, which would hide blood loss too. Numbness already zeroes pain in these inputs.
         _alerts.ShowAlert(body, alert, severity);
     }
 
@@ -409,14 +415,19 @@ public sealed partial class WolfmedConditionAlertSystem : EntitySystem
         return state != WolfmedConsciousness.Up && BlockerLine(body.Comp) is { } blockers ? $"{line} {blockers}" : line;
     }
 
-    /// <summary>A popup over the body for its own player, and the same line in their chat to read back.</summary>
+    /// <summary>
+    /// A popup over the body for its own player, and the same line in their chat to read back, unless their client
+    /// already copies popups into chat.
+    /// </summary>
     public void Tell(Entity<WolfmedConsciousnessComponent> body, string line, PopupType type = PopupType.MediumCaution)
     {
         body.Comp.LastConditionLine = line;
         body.Comp.ConditionLineCount++;
         _popup.PopupEntity(line, body, body, type);
 
-        if (!TryComp(body, out ActorComponent? actor))
+        // A client that logs popups in chat already has the line there.
+        if (!TryComp(body, out ActorComponent? actor)
+            || _netConfig.GetClientCVar(actor.PlayerSession.Channel, CCVars.LogInChat))
             return;
 
         var wrapped = Loc.GetString("wolfmed-condition-chat", ("message", FormattedMessage.EscapeText(line)));

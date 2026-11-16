@@ -54,6 +54,8 @@
   - SurgeryInsertLiver
   - SurgeryRemoveStomach
   - SurgeryInsertStomach
+  - WFSurgeryRemoveKidneys
+  - WFSurgeryInsertKidneys
   - SurgeryInsertPump
   - WFSurgeryAlienEmbryoRemoval
   - WFSurgeryBurstChestRepair
@@ -78,6 +80,9 @@
   - WFSurgeryHealEyes
   - WFSurgeryRepairCore
   - WFSurgeryRepairSynthCore
+  - WFSurgeryRepairChassisEyes
+  - WFSurgeryRepairChassisPump
+  - WFSurgeryRepairSynthPump
 
 - type: autodocCategory
   id: WFWolfmedAutodocCategoryLimbs

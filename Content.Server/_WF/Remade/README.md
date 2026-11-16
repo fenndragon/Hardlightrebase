@@ -6,9 +6,19 @@ hunts the crew. Names are Wolfgate's own: Marker is Monolith, necromorph is Rema
 is the Crescendo.
 
 **What players do.** Wrench a Scion onto HV cable, stand a Tap within 4 m and set the draw. Drag a corpse onto the Tap to
-take 5 off resonance, the only way down. A quiet Scion (under 15 resonance) sells at a cargo pallet for 5,000,000; past
-that no buyer takes it. Corpses on corruption turn after 90 seconds, and one with no head never turns. Fire kills
+take 5 off resonance, the only way down. Only Caelestinus Central buys a Scion: it sells only from a pallet on a main
+station, for 5,000,000 plus as much again scaled by resonance (double at the Crescendo). The Lattice's hex field turns
+any Scion back, so selling one means bringing an anchor down first. Corpses on corruption turn after 90 seconds, and one with no head never turns. Fire kills
 corruption, and breaking a Scion (3000 damage) kills its corruption and starves its Remade.
+
+**The siege** (`Siege/`, `WFSiegeSystem`). A Scion that reaches Harvest sends flesh ships against the reality anchors:
+the first after 3 minutes, then one every 15 minutes, two a third sooner at Rapture, three twice as often at the Crescendo,
+at most 7 alive. Each is a Choir-crewed `WFEncounterNecroticFleet` hull overgrown with corruption, carrying Remade, set
+on the standing primary anchor nearest the Scion. Within 900 m it bleeds the anchor's shield, then its core once the
+shield is down, and puts two Remade on the station every minute; the anchor's lances and drones answer it. When its anchor
+falls it moves on to the next. Waves stop with the Unstringing. Tuning is in `WFSiegeCVars` (`wf.remade.siege.*`).
+Inside a sealed hex field nothing of a Monolith outside it reaches anyone, and the hex counts as a sanctuary (see the
+Lattice README); a standing anchor's ward keeps corruption off nearby grids (`WFCorruptionSystem.IsWarded`).
 
 **Admins.** Spawn `WFMonolithScion` and `WFMonolithTap`, or `WFMonolithSplinter` for an outbreak on one ship. Set `Resonance` on `WFMonolithComponent` with VV to skip ahead:
 15 Hymn, 35 Growth, 55 Harvest, 80 Rapture, 100 Crescendo.
@@ -17,6 +27,11 @@ corruption, and breaking a Scion (3000 damage) kills its corruption and starves 
 `WFCorruptionSystem`, `WFRemadeConversionSystem` (rules from DS13-1.0's `conversion.dm`, each mob's cost and weights in its `wfRemadeMob`
 prototype), `WFRemadeDirectorSystem` (phases Quiet, Stalk, Peak, Relax; sleeps with no crew in 64 m). Assets come from
 `Tools/_WF/Remade/port_assets.py`, which holds the whole DS13-2.0 roster; only the slasher and infector have mobs so far.
+
+**How they hit.** A Remade has no aim of its own, so each blow lands on a random part of its victim, by the victim's own
+odds. Their claws hit hard enough for Wolfmed's deep-cut rules: a slasher's 24 slash can open an artery (22) and cut a
+tendon (16) in one swing, so they bleed people out and take them apart rather than scratching. Giving them `Targeting`
+would also change how damage they take is routed, which the Undying and the Crescendo tests catch.
 
 **Limbs and abilities.** A Remade built of limbs (`WFRemadeLimbs`, Shared) shares each hit between its limbs by weight, or by a
 player's targeting aim, and the torso takes only a fraction, so shooting it barely works. Slash and piercing sever easily, blunt and
@@ -67,7 +82,7 @@ its Scion is quiet, and roots into small patches of corruption once its Scion re
 Matter, Flesh and Reach at full, and a sanctuary grid bars every Gift.
 
 Sector (`Sector/`). `WFRemadeDiscoveryRule`, carried by the Contested Sector and Escalation presets and gated by
-`wf.encounters.enabled` and `wf.remade.sector.enabled`, now and then starts a `wfRemadeSite`: a hidden, unlabelled hulk with a dormant
+`wf.encounters.enabled` and `wf.remade.sector.enabled`, now and then starts a `wfRemadeSite`: an unlabelled hulk, marked on the sector map, with a dormant
 Scion wrenched to its deck, bare or guarded by the Choir (`WFChoir`, friendly to the Remade, with a ship that holds beside the hulk). A
 garbled radio line gives a rough position. One wild Scion at a time, and none soon after one is lost or sold. A Scion that is moved,
 unwrenched or drawn on shows on every radar and the sector map, wider with resonance (`WFRemadeSignalSystem`); the Choir hunt the ship
@@ -86,8 +101,9 @@ Counterplay (`Counterplay/`). Corruption burned away leaves its tile scorched fo
 (`WFScorchSystem`, through `WFCorruptionGrowAttemptEvent`). Necrotoxin (`WFNecrotoxin`: mercury, sulfur and ammonia, or a
 `WFNecrotoxinPen`) poisons Remade through their blood whatever their armour and barely hurts crew; a corpse with a unit of it in the
 blood can't turn. The plasma cutter (`WFRemadeCutter`, autolathe) throws a short arc that takes limbs off in a few shots. A Monolith
-rooted at the Crescendo becomes the Prime (`WFPrimeSystem`): heavy armour that only blasts and heavy cutting get through, mending when
-left alone, a verse every 10 minutes that announces and feeds the Director, and a warrant on the PDA board paid out by damage dealt.
+rooted at the Crescendo becomes the Prime (`WFPrimeSystem`): nothing harms it but a nuclear detonation within twice the payload's
+erase radius plus 16 m (`WFNuclearDetonatedEvent`, from the Warheads module), a verse every 10 minutes that announces and feeds the
+Director, and a warrant on the PDA board paid to whoever set the nuke off, or shared among those nearby.
 Destroying any Monolith leaves a husk and turns its Remade feral (`WFFeralSystem`). The Tap is an autolathe flatpack. Guidebook pages
 are in `Resources/ServerInfo/_WF/Remade/Guidebook/`.
 
@@ -169,6 +185,17 @@ near the focus (from Harvest, sometimes with a Remade behind it), scraping that 
 someone is watching, and lights stuttering before each wave. Each stage climb plays a sting to every player in the round, at most one
 per 45 s; the stings are mixed by `Tools/_WF/Remade/make_stage_stings.py` from a tgstation checkout.
 
+The mender (`WFRemadeMender`, `WFReclaimSystem`, `mender.rsi` from `Tools/_WF/Remade/make_mender.py`) is a bleached hunter that
+grows nothing back. Its limbs fly a few metres when they come off, and with three off it goes down. After 3 s thin tentacles
+(`WFReclaimTentacleOverlay`, client) reach out to every severed limb within 6 m and drag it back at about a metre a second; each knits
+back on, and once whole it gets up. A limb burnt to ash or blown apart, or held or carried out of reach for 8 s, leaves it down for
+good, as does burning the body while it lies there. Severed limbs of any Remade now burn. It is a rare Rapture elite, one at a time.
+
+The torment smite (`Torment/`) is an admin toggle under Smite on any mob: the player gets every whisper, glimpse, voice, warp, false
+sense, mind trick, the bed and the full score as if a Crescendo stone stood beside them, wherever they are, and nobody else does.
+Biohazard lockdown, beside it under Smite or `wf_remade lockdown <player or uid> [seconds] [range]`, bolts the powered doors round them
+(9 m, a minute by default) under the biohazard alarm, the Director's lockdown with no stone needed.
+
 Outbreaks, splinters and clearing (`Outbreaks/`, `splinter.yml`, `Sector/WFRemadeClearSystem.cs`). A stone at the Crescendo breaks
 out on another crewed ship every two to three and a half minutes: two or three hoppers and slashers come out of an unseen vent near
 someone aboard, and a shard of the stone roots there, so the dead aboard turn too. It all goes with the stone. `WFMonolithSplinter`
@@ -230,6 +257,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Blood.cs`](Corruption/WFCorruptionSystem.Blood.cs)
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.cs`](Corruption/WFCorruptionSystem.cs)
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Doors.cs`](Corruption/WFCorruptionSystem.Doors.cs)
+- [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Loose.cs`](Corruption/WFCorruptionSystem.Loose.cs)
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Nodes.cs`](Corruption/WFCorruptionSystem.Nodes.cs)
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Sanctuary.cs`](Corruption/WFCorruptionSystem.Sanctuary.cs)
 - [`Content.Server/_WF/Remade/Corruption/WFCorruptionSystem.Smoothing.cs`](Corruption/WFCorruptionSystem.Smoothing.cs)
@@ -277,6 +305,8 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Server/_WF/Remade/Elites/WFFlingOnHitComponent.cs`](Elites/WFFlingOnHitComponent.cs)
 - [`Content.Server/_WF/Remade/Elites/WFReanimateHasteComponent.cs`](Elites/WFReanimateHasteComponent.cs)
 - [`Content.Server/_WF/Remade/Elites/WFReanimateHasteSystem.cs`](Elites/WFReanimateHasteSystem.cs)
+- [`Content.Server/_WF/Remade/Elites/WFReclaimComponent.cs`](Elites/WFReclaimComponent.cs)
+- [`Content.Server/_WF/Remade/Elites/WFReclaimSystem.cs`](Elites/WFReclaimSystem.cs)
 - [`Content.Server/_WF/Remade/Elites/WFRegenComponent.cs`](Elites/WFRegenComponent.cs)
 - [`Content.Server/_WF/Remade/Elites/WFRegenSystem.cs`](Elites/WFRegenSystem.cs)
 - [`Content.Server/_WF/Remade/Elites/WFRemadeLimbsSystem.Regrow.cs`](Elites/WFRemadeLimbsSystem.Regrow.cs)
@@ -326,6 +356,9 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Server/_WF/Remade/Sector/WFRemadeSiteComponent.cs`](Sector/WFRemadeSiteComponent.cs)
 - [`Content.Server/_WF/Remade/Sector/WFRemadeSiteSystem.cs`](Sector/WFRemadeSiteSystem.cs)
 - [`Content.Server/_WF/Remade/Sector/WFScionSignalComponent.cs`](Sector/WFScionSignalComponent.cs)
+- [`Content.Server/_WF/Remade/Siege/WFSiegeComponents.cs`](Siege/WFSiegeComponents.cs)
+- [`Content.Server/_WF/Remade/Siege/WFSiegeCVars.cs`](Siege/WFSiegeCVars.cs)
+- [`Content.Server/_WF/Remade/Siege/WFSiegeSystem.cs`](Siege/WFSiegeSystem.cs)
 - [`Content.Server/_WF/Remade/Signals/WFAbilitySystem.Signals.cs`](Signals/WFAbilitySystem.Signals.cs)
 - [`Content.Server/_WF/Remade/Signals/WFRemadeDirectorSystem.Signals.cs`](Signals/WFRemadeDirectorSystem.Signals.cs)
 - [`Content.Server/_WF/Remade/Signals/WFSignalComponents.cs`](Signals/WFSignalComponents.cs)
@@ -341,6 +374,8 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Server/_WF/Remade/Structures/WFMawSystem.cs`](Structures/WFMawSystem.cs)
 - [`Content.Server/_WF/Remade/Structures/WFNestSystem.cs`](Structures/WFNestSystem.cs)
 - [`Content.Server/_WF/Remade/Structures/WFSnareSystem.cs`](Structures/WFSnareSystem.cs)
+- [`Content.Server/_WF/Remade/Torment/WFTormentedComponent.cs`](Torment/WFTormentedComponent.cs)
+- [`Content.Server/_WF/Remade/Torment/WFTormentSystem.cs`](Torment/WFTormentSystem.cs)
 - [`Content.Server/_WF/Remade/Variants/WFStuckBreakerComponent.cs`](Variants/WFStuckBreakerComponent.cs)
 - [`Content.Server/_WF/Remade/Variants/WFStuckBreakerSystem.cs`](Variants/WFStuckBreakerSystem.cs)
 - [`Content.Server/_WF/Remade/Vents/WFAbilitySystem.Ambush.cs`](Vents/WFAbilitySystem.Ambush.cs)
@@ -369,6 +404,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Shared/_WF/Remade/Signals/WFSignalMath.cs`](../../../Content.Shared/_WF/Remade/Signals/WFSignalMath.cs)
 - [`Content.Shared/_WF/Remade/Structures/WFGrowthShared.cs`](../../../Content.Shared/_WF/Remade/Structures/WFGrowthShared.cs)
 - [`Content.Shared/_WF/Remade/Ward/WFWardFieldComponent.cs`](../../../Content.Shared/_WF/Remade/Ward/WFWardFieldComponent.cs)
+- [`Content.Shared/_WF/Remade/WFHeavyPull.cs`](../../../Content.Shared/_WF/Remade/WFHeavyPull.cs)
 - [`Content.Shared/_WF/Remade/WFMonolithMath.cs`](../../../Content.Shared/_WF/Remade/WFMonolithMath.cs)
 - [`Content.Shared/_WF/Remade/WFMonolithTapComponent.cs`](../../../Content.Shared/_WF/Remade/WFMonolithTapComponent.cs)
 - [`Content.Shared/_WF/Remade/WFMonolithTapDropSystem.cs`](../../../Content.Shared/_WF/Remade/WFMonolithTapDropSystem.cs)
@@ -392,6 +428,8 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.Client/_WF/Remade/Dread/WFDreadOverlay.cs`](../../../Content.Client/_WF/Remade/Dread/WFDreadOverlay.cs)
 - [`Content.Client/_WF/Remade/Dread/WFDreadVisionSystem.cs`](../../../Content.Client/_WF/Remade/Dread/WFDreadVisionSystem.cs)
 - [`Content.Client/_WF/Remade/Dread/WFRemadeClearSystem.cs`](../../../Content.Client/_WF/Remade/Dread/WFRemadeClearSystem.cs)
+- [`Content.Client/_WF/Remade/Limbs/WFReclaimTentacleOverlay.cs`](../../../Content.Client/_WF/Remade/Limbs/WFReclaimTentacleOverlay.cs)
+- [`Content.Client/_WF/Remade/Limbs/WFReclaimTentacleSystem.cs`](../../../Content.Client/_WF/Remade/Limbs/WFReclaimTentacleSystem.cs)
 - [`Content.Client/_WF/Remade/Limbs/WFRemadeLimbVisualizerSystem.cs`](../../../Content.Client/_WF/Remade/Limbs/WFRemadeLimbVisualizerSystem.cs)
 - [`Content.Client/_WF/Remade/Signals/WFSignalHud.cs`](../../../Content.Client/_WF/Remade/Signals/WFSignalHud.cs)
 - [`Content.Client/_WF/Remade/Signals/WFSignalOverlay.cs`](../../../Content.Client/_WF/Remade/Signals/WFSignalOverlay.cs)
@@ -418,13 +456,17 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Content.IntegrationTests/Tests/_WF/Remade/EnvironmentTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/EnvironmentTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/GiftsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/GiftsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/LimbsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/LimbsTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Remade/MenderTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/MenderTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/OmensTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/OmensTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/OpenItemsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/OpenItemsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/OutbreakTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/OutbreakTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/RosterTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/RosterTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/SectorTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/SectorTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Remade/SiegeTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/SiegeTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/SignalsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/SignalsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/StructuresTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/StructuresTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Remade/SyntheticConversionTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/SyntheticConversionTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Remade/TormentTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/TormentTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/VariantsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/VariantsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/WardTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/WardTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Remade/WFRemadeDirectorTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Remade/WFRemadeDirectorTest.cs)
@@ -452,6 +494,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Resources/Prototypes/_WF/Remade/openitems.yml`](../../../Resources/Prototypes/_WF/Remade/openitems.yml)
 - [`Resources/Prototypes/_WF/Remade/roster.yml`](../../../Resources/Prototypes/_WF/Remade/roster.yml)
 - [`Resources/Prototypes/_WF/Remade/sector.yml`](../../../Resources/Prototypes/_WF/Remade/sector.yml)
+- [`Resources/Prototypes/_WF/Remade/siege.yml`](../../../Resources/Prototypes/_WF/Remade/siege.yml)
 - [`Resources/Prototypes/_WF/Remade/signals.yml`](../../../Resources/Prototypes/_WF/Remade/signals.yml)
 - [`Resources/Prototypes/_WF/Remade/sounds.yml`](../../../Resources/Prototypes/_WF/Remade/sounds.yml)
 - [`Resources/Prototypes/_WF/Remade/splinter.yml`](../../../Resources/Prototypes/_WF/Remade/splinter.yml)
@@ -475,6 +518,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Resources/Locale/en-US/_WF/Remade/remade.ftl`](../../../Resources/Locale/en-US/_WF/Remade/remade.ftl)
 - [`Resources/Locale/en-US/_WF/Remade/roster.ftl`](../../../Resources/Locale/en-US/_WF/Remade/roster.ftl)
 - [`Resources/Locale/en-US/_WF/Remade/sector.ftl`](../../../Resources/Locale/en-US/_WF/Remade/sector.ftl)
+- [`Resources/Locale/en-US/_WF/Remade/siege.ftl`](../../../Resources/Locale/en-US/_WF/Remade/siege.ftl)
 - [`Resources/Locale/en-US/_WF/Remade/signals.ftl`](../../../Resources/Locale/en-US/_WF/Remade/signals.ftl)
 - [`Resources/Locale/en-US/_WF/Remade/structures.ftl`](../../../Resources/Locale/en-US/_WF/Remade/structures.ftl)
 - [`Resources/Locale/en-US/_WF/Remade/variants.ftl`](../../../Resources/Locale/en-US/_WF/Remade/variants.ftl)
@@ -506,6 +550,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 - [`Resources/Textures/_WF/Remade/Mobs/leaper_enhanced.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/leaper_enhanced.rsi/)
 - [`Resources/Textures/_WF/Remade/Mobs/lurker.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/lurker.rsi/)
 - [`Resources/Textures/_WF/Remade/Mobs/lurker_malo.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/lurker_malo.rsi/)
+- [`Resources/Textures/_WF/Remade/Mobs/mender.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/mender.rsi/)
 - [`Resources/Textures/_WF/Remade/Mobs/puker.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/puker.rsi/)
 - [`Resources/Textures/_WF/Remade/Mobs/puker_flayed.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/puker_flayed.rsi/)
 - [`Resources/Textures/_WF/Remade/Mobs/slasher.rsi/`](../../../Resources/Textures/_WF/Remade/Mobs/slasher.rsi/)
@@ -1132,6 +1177,7 @@ does on its own. `wf_remade outbreak [uid]` forces an outbreak.
 
 ### Tools
 
+- [`Tools/_WF/Remade/make_mender.py`](../../../Tools/_WF/Remade/make_mender.py)
 - [`Tools/_WF/Remade/make_stage_stings.py`](../../../Tools/_WF/Remade/make_stage_stings.py)
 - [`Tools/_WF/Remade/port_assets.py`](../../../Tools/_WF/Remade/port_assets.py)
 - [`Tools/_WF/Remade/port_betrayal.py`](../../../Tools/_WF/Remade/port_betrayal.py)

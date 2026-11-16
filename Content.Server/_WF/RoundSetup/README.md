@@ -67,6 +67,7 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Content.Server/_WF/RoundSetup/WFPlayerCrewRadioComponent.cs`](WFPlayerCrewRadioComponent.cs)
 - [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.Broadcast.cs`](WFRoundSetupSystem.Broadcast.cs)
 - [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.Companies.cs`](WFRoundSetupSystem.Companies.cs)
+- [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.Contracts.cs`](WFRoundSetupSystem.Contracts.cs)
 - [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.cs`](WFRoundSetupSystem.cs)
 - [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.Demo.cs`](WFRoundSetupSystem.Demo.cs)
 - [`Content.Server/_WF/RoundSetup/WFRoundSetupSystem.Factions.cs`](WFRoundSetupSystem.Factions.cs)
@@ -165,6 +166,7 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Burst.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Burst.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Comms.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Comms.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Cyborg.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Cyborg.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Factions.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Factions.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Live.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Live.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Payments.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Payments.cs)
@@ -184,6 +186,7 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Resources/Prototypes/_WF/RoundSetup/crash.yml`](../../../Resources/Prototypes/_WF/RoundSetup/crash.yml)
 - [`Resources/Prototypes/_WF/RoundSetup/crash_effects.yml`](../../../Resources/Prototypes/_WF/RoundSetup/crash_effects.yml)
 - [`Resources/Prototypes/_WF/RoundSetup/doomed.yml`](../../../Resources/Prototypes/_WF/RoundSetup/doomed.yml)
+- [`Resources/Prototypes/_WF/RoundSetup/loadout_groups.yml`](../../../Resources/Prototypes/_WF/RoundSetup/loadout_groups.yml)
 - [`Resources/Prototypes/_WF/RoundSetup/radio.yml`](../../../Resources/Prototypes/_WF/RoundSetup/radio.yml)
 - [`Resources/Prototypes/_WF/RoundSetup/ship.yml`](../../../Resources/Prototypes/_WF/RoundSetup/ship.yml)
 
@@ -256,5 +259,9 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Content.Server/Station/Systems/StationJobsSystem.cs`](../../Station/Systems/StationJobsSystem.cs): private scenario stations stay out of the late-join job list
 - [`Content.Shared/CCVar/CCVars.Game.cs`](../../../Content.Shared/CCVar/CCVars.Game.cs): give players six minutes to configure and join scenario lobbies.
 - [`Resources/ConfigPresets/_Mono/monolithCore.toml`](../../../Resources/ConfigPresets/_Mono/monolithCore.toml): keep the Monolith preset's pregame setup window at six minutes.
+- [`Resources/Prototypes/Loadouts/role_loadouts.yml`](../../../Resources/Prototypes/Loadouts/role_loadouts.yml)
+  - hardsuits in the same group as the coats, so only one fills the slot
+  - HUD glasses in the same group as the plain ones
+  - ship crews take this job, so it also gets the survival box
 
 <!-- WOLFGATE-GENERATED END -->

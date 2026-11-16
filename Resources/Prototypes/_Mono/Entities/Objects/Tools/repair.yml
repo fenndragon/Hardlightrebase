@@ -6,14 +6,15 @@
   abstract: true
   components:
   - type: ShipRepairTool
+# WOLFGATE(Resprites) START: SRD uses the shipyard RCD sprite
   - type: Sprite
-    scale: 0.8, 0.8
-    sprite: _Mono/Objects/Tools/repair_device_item.rsi
-    state: item
+    sprite: _WF/Resprites/_WF/Objects/Tools/rcdshipyard.rsi
+    state: icon
   - type: Item
-    sprite: _Mono/Objects/Tools/repair_device.rsi
     size: Normal
   - type: Clothing
+    sprite: _WF/Resprites/_WF/Objects/Tools/rcdshipyard.rsi
+# WOLFGATE END
     quickEquip: false
     slots:
     - Belt
@@ -32,11 +33,11 @@
 
 - type: entity
   id: ShipRepairDevice
-  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 300 charges.
+  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 350 charges.
   parent: ShipRepairDeviceBase
   components:
   - type: LimitedCharges
-    maxCharges: 300
+    maxCharges: 350
     charges: 100
 
 - type: entity
@@ -49,13 +50,13 @@
 
 - type: entity
   id: ShipRepairDeviceRecharging
-  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 300 charges and slowly recharges.
+  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 350 charges and slowly recharges.
   parent: ShipRepairDeviceBase
   suffix: Recharging
   components:
   - type: LimitedCharges
-    maxCharges: 300
-    charges: 50
+    maxCharges: 350
+    charges: 350 # WOLFGATE(Cyborgs): was 50, a 20 minute wait before a cyborg's first real repair
   - type: AutoRecharge
     rechargeDuration: 5
 
@@ -83,6 +84,10 @@
     scale: 0.6, 0.6
     sprite: _Mono/Objects/Tools/repair_device_item.rsi
     state: prefracture
+# WOLFGATE(Resprites) START: keep the old SRD inhands, the base now uses the shipyard RCD
+  - type: Item
+    sprite: _Mono/Objects/Tools/repair_device.rsi
+# WOLFGATE END
   - type: LimitedCharges
     maxCharges: 800
     charges: 50
@@ -105,10 +110,10 @@
       tags:
       - ShipRepairTool
   - type: Sprite
-    sprite: _NF/Objects/Tools/rcd.rsi
-    state: ammo-shipyard
+    sprite: _WF/Resprites/_WF/Objects/Tools/rcdshipyard.rsi # WOLFGATE(Resprites): SRD uses the shipyard RCD sprite
+    state: ammo # WOLFGATE(Resprites): SRD uses the shipyard RCD sprite
   - type: Item
-    heldPrefix: ammo-shipyard
+    heldPrefix: ammo # WOLFGATE(Resprites): SRD uses the shipyard RCD sprite
   - type: PhysicalComposition
     materialComposition:
       Steel: 100

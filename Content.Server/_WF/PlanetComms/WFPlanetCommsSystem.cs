@@ -182,6 +182,12 @@ public sealed partial class WFPlanetCommsSystem : EntitySystem
         return !Gates(channel) || IsHandheld(radio) || HasComp<GhostComponent>(radio) || IsCommsUp(radio);
     }
 
+    /// <summary>Whether a radio stands on a planet whose mass transceiver relays in place of a telecom server.</summary>
+    public bool RelaysTelecom(EntityUid radio)
+    {
+        return NetworkOf(Transform(radio).MapUid) is { } network && (!_enabled || IsNetworkUp(network));
+    }
+
     private void OnRadioSend(ref RadioSendAttemptEvent args)
     {
         if (args.Cancelled || CanTransmit(args.Channel, args.RadioSource))
@@ -234,7 +240,8 @@ public sealed partial class WFPlanetCommsSystem : EntitySystem
         if (_dirty || _builtTick != _timing.CurTick)
         {
             _upNetworks.Clear();
-            var query = EntityQueryEnumerator<WFMassTransceiverComponent, ApcPowerReceiverComponent, TransformComponent>();
+            // A transceiver the site stash has paused keeps the power state it slept with, so it still carries.
+            var query = AllEntityQuery<WFMassTransceiverComponent, ApcPowerReceiverComponent, TransformComponent>();
             while (query.MoveNext(out _, out var transceiver, out var power, out var xform))
             {
                 if (!transceiver.Broken && power.Powered && NetworkOf(xform.MapUid) is { } up)

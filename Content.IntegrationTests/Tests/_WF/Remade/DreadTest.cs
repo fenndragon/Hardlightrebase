@@ -261,13 +261,14 @@ public sealed class DreadTest
         var quiet = await CountOver(pair, 5f, sameMap: true, away: 3f, seconds: 120f);
         Assert.That(quiet, Is.EqualTo((0, 0, 0)), "a quiet stone troubled a player.");
 
-        var hymn = await CountOver(pair, 20f, sameMap: true, away: 3f, seconds: 120f);
-        var crescendo = await CountOver(pair, 100f, sameMap: true, away: 3f, seconds: 120f);
+        // Six minutes each: in two the Crescendo's ~10 whispers fell to 5 or fewer about one run in twenty.
+        var hymn = await CountOver(pair, 20f, sameMap: true, away: 3f, seconds: 360f);
+        var crescendo = await CountOver(pair, 100f, sameMap: true, away: 3f, seconds: 360f);
         var hymnTotal = hymn.Whispers + hymn.Glimpses + hymn.Pulses;
         var crescendoTotal = crescendo.Whispers + crescendo.Glimpses + crescendo.Pulses;
         Assert.That(crescendoTotal, Is.GreaterThan(hymnTotal * 2 + 8), $"the Hymn gave {hymnTotal} and the Crescendo only {crescendoTotal}.");
         Assert.That(crescendo.Glimpses, Is.GreaterThan(2), "the Crescendo showed almost no glimpses.");
-        Assert.That(crescendo.Whispers, Is.GreaterThan(5));
+        Assert.That(crescendo.Whispers, Is.GreaterThan(12));
         await pair.CleanReturnAsync();
     }
 
@@ -393,8 +394,9 @@ public sealed class DreadTest
         var far = await CountShard(pair, 70f, 15f);
         Assert.That(far, Is.EqualTo((0, 0, 0, 0, 0f)), "a shard 15 m off troubled the player.");
 
-        var near = await CountShard(pair, 70f, 1f);
-        Assert.That(Total(near), Is.GreaterThan(0), "a player 1 m from a Harvest shard felt nothing in two minutes.");
+        // About 2.6 events a minute at 1 m: two minutes drew none once in ~180 runs, four make that ~1 in 30,000.
+        var near = await CountShard(pair, 70f, 1f, seconds: 240f);
+        Assert.That(Total(near), Is.GreaterThan(0), "a player 1 m from a Harvest shard felt nothing in four minutes.");
         Assert.That(near.Bed, Is.GreaterThan(0f), "the whisper bed never started beside a Harvest shard.");
 
         var carried = await CountShard(pair, 70f, 0f, carried: true);
@@ -424,12 +426,13 @@ public sealed class DreadTest
             scion = SpawnScion(entMan, At(map, 0, 0), 100f);
             crewman = WFRemadeDirectorTest.SpawnCrewman(pair, At(map, 3, 0));
         });
-        await pair.RunSeconds(60f);
+        // Three minutes: about 16 a minute come on average, and one minute fell to 8 or fewer about one run in a hundred.
+        await pair.RunSeconds(180f);
 
         await server.WaitAssertion(() =>
         {
             var subject = entMan.GetComponent<WFDreadSubjectComponent>(crewman);
-            Assert.That(subject.Whispers + subject.Murmurs, Is.GreaterThan(8), $"{subject.Whispers} whispers and {subject.Murmurs} murmurs in a minute at the Crescendo.");
+            Assert.That(subject.Whispers + subject.Murmurs, Is.GreaterThan(24), $"{subject.Whispers} whispers and {subject.Murmurs} murmurs in three minutes at the Crescendo.");
             Assert.That(subject.Murmurs, Is.GreaterThan(subject.Whispers / 2), "murmurs don't add to the whispers.");
             entMan.DeleteEntity(scion);
         });

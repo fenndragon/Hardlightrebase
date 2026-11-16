@@ -84,6 +84,9 @@ public sealed partial class WFDrydockSystem
 
     private void OnBreak(EntityUid uid, WFDrydockConsoleComponent comp, WFDrydockBreakMessage args)
     {
+        if (WalkInLocked(uid, comp, args.Actor))
+            return;
+
         if (TryGetWorkableShip(uid, comp, args.Actor, out var ship))
             TryStartBreak(uid, comp, ship, args.Actor);
     }
@@ -177,7 +180,7 @@ public sealed partial class WFDrydockSystem
         if (IsShipyardGrid(console, comp, ship))
             return Loc.GetString("drydock-console-own-grid");
 
-        if (IsOutpost(ship))
+        if (IsOutpost(ship) || HasComp<WFDrydockUnbreakableComponent>(ship))
             return Loc.GetString("drydock-console-break-station");
 
         // A company hangar ship is relaunched free each round, so breaking it would print money.
@@ -629,7 +632,7 @@ public sealed partial class WFDrydockSystem
 
         LiftTiles(job);
         if (!TerminatingOrDeleted(ship))
-            QueueDel(ship);
+            EntityManager.System<Content.Server._WF.Performance.WFGridDeleteSystem>().QueueDel(ship);
     }
 
     /// <summary>Lifts a break's finished tiles in one change.</summary>

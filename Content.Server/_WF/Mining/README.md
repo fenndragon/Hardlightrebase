@@ -14,8 +14,8 @@ Paces the material economy so the faction voucher ladder takes about 150 minutes
   far more gas; plasteel and plasma also cost more gas.
 - Research: the capital ships (Luda, Flyssa, Saturn) sit behind `WFTsfCapitalVouchers` and `WFPdvCapitalVouchers`,
   so each faction's top tier costs 585k research points. Research datafarm boards take 8 research disks.
-- Hokkaido: the gas sale console pays MMC industrial credits, and the bounty board buys PDV composite
-  (`WFMMCBountyPdvComposite`). Fissile uranium sells for 10,000 per sheet instead of 25,000.
+- Hokkaido: the gas sale console pays MMC industrial credits. Fissile uranium sells for 10,000 per sheet instead of
+  25,000.
 
 `GasDepositSystem.Wolfgate.cs` handles gas sales: a gas sale console that pays another currency appraises in it
 ("N MIC"), and a sale that would pay nothing is refused, leaving the gas in the sale points. `MarketModifier`'s
@@ -43,14 +43,12 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
 
 ### Prototypes
 
-- [`Resources/Prototypes/_WF/Mining/bounties.yml`](../../../Resources/Prototypes/_WF/Mining/bounties.yml)
 - [`Resources/Prototypes/_WF/Mining/materials.yml`](../../../Resources/Prototypes/_WF/Mining/materials.yml)
 - [`Resources/Prototypes/_WF/Mining/research.yml`](../../../Resources/Prototypes/_WF/Mining/research.yml)
 - [`Resources/Prototypes/_WF/Mining/tags.yml`](../../../Resources/Prototypes/_WF/Mining/tags.yml)
 
 ### Localization
 
-- [`Resources/Locale/en-US/_WF/Mining/bounties.ftl`](../../../Resources/Locale/en-US/_WF/Mining/bounties.ftl)
 - [`Resources/Locale/en-US/_WF/Mining/gas.ftl`](../../../Resources/Locale/en-US/_WF/Mining/gas.ftl)
 - [`Resources/Locale/en-US/_WF/Mining/research.ftl`](../../../Resources/Locale/en-US/_WF/Mining/research.ftl)
 
@@ -67,7 +65,7 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
 - [`Content.Shared/_NF/Atmos/BUI/GasSaleConsoleBoundUserInterfaceState.cs`](../../../Content.Shared/_NF/Atmos/BUI/GasSaleConsoleBoundUserInterfaceState.cs): the appraisal shows the payout currency
 - [`Content.Shared/_NF/Bank/Components/MarketModifierComponent.cs`](../../../Content.Shared/_NF/Bank/Components/MarketModifierComponent.cs): a console can state its rate in its description instead
 - [`Content.Shared/_NF/Bank/MarketModifierSystem.cs`](../../../Content.Shared/_NF/Bank/MarketModifierSystem.cs): some consoles state their rate in their description instead
-- [`Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl`](../../../Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl): one fissile plate, matching the crate fill
+- [`Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl`](../../../Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl): two fissile plates, 10 plastitanium, matching the crate
 - [`Resources/Prototypes/_DV/Entities/Objects/Tools/lathe_upgrade_kits.yml`](../../../Resources/Prototypes/_DV/Entities/Objects/Tools/lathe_upgrade_kits.yml)
   - kits don't fit ore processors
   - the hyper-convection kit is the one kit that fits ore processors, so it drops the base kit's tag blacklist
@@ -81,12 +79,11 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
   - drone plastitanium 10 -> 4 sheets
   - drone plastitanium 20 -> 8 sheets
   - drone plastitanium 40 -> 16 sheets
-- [`Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml`](../../../Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml): exotic crate fissile, 3 -> 1
+- [`Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml`](../../../Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml): exotic crate fissile, 3 -> 2
 - [`Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml`](../../../Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml): plastitanium is uncommon in the rare materials group (weight 0.6), so scrap doesn't undercut the crystallizer
 - [`Resources/Prototypes/_Mono/Entities/Materials/materials.yml`](../../../Resources/Prototypes/_Mono/Entities/Materials/materials.yml)
   - fissile 25000 -> 10000 per sheet, so the centrifuge isn't the best credit faucet
   - depleted uranium priced as its comment says, 20 -> 2.5
-  - the Hokkaido composite bounty matches it
 - [`Resources/Prototypes/_Mono/Entities/Objects/Economy/EconomyMaterials/ore_stacks.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Economy/EconomyMaterials/ore_stacks.yml)
   - lithium paces mining, 1-3 -> 1-2
   - copper 1-5 -> 1-3
@@ -94,7 +91,6 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
 - [`Resources/Prototypes/_Mono/Entities/World/Biome/basic.yml`](../../../Resources/Prototypes/_Mono/Entities/World/Biome/basic.yml)
   - rich rocks (sand, chromite) at each size's basalt probability
   - andesite leaves the 9 km ring; sand and chromite stay at half weight and also spawn in the Wilds
-- [`Resources/Prototypes/_Mono/PointsOfInterest/hokkaido.yml`](../../../Resources/Prototypes/_Mono/PointsOfInterest/hokkaido.yml): Hokkaido buys PDV composite
 - [`Resources/Prototypes/_Mono/Research/Rogue/rogue_misc.yml`](../../../Resources/Prototypes/_Mono/Research/Rogue/rogue_misc.yml): Saturn moves to WFPdvCapitalVouchers
 - [`Resources/Prototypes/_Mono/Research/TSF/tsf_misc.yml`](../../../Resources/Prototypes/_Mono/Research/TSF/tsf_misc.yml)
   - Luda moves to WFTsfCapitalVouchers

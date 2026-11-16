@@ -8,6 +8,8 @@
   - ShipyardTakeaway
   - ShipyardMotleyAnne
   - WFShipPa # WOLFGATE(ShipPa)
+  - WFShipyardAsfRevelation # WOLFGATE(Asf)
+  - WFShipyardAsfSurveyor # WOLFGATE(Asf)
 
 - type: guideEntry
   id: ShipyardTakeaway

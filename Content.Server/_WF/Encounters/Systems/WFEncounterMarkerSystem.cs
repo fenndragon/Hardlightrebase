@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._WF.Encounters.Systems;
 
-/// <summary>Tells every player where the ships of the visible, unresolved encounters are, for the sector markers on radars.</summary>
+/// <summary>Tells every player where the ships of the visible encounters whose zones still stand are, for the sector markers on radars.</summary>
 public sealed partial class WFEncounterMarkerSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -32,7 +32,6 @@ public sealed partial class WFEncounterMarkerSystem : EntitySystem
     };
 
     private TimeSpan _next;
-    private bool _sentAny;
 
     public override void Update(float frameTime)
     {
@@ -45,7 +44,8 @@ public sealed partial class WFEncounterMarkerSystem : EntitySystem
         var query = EntityQueryEnumerator<WFEncounterComponent>();
         while (query.MoveNext(out var uid, out var encounter))
         {
-            if (encounter.Hidden || encounter.Resolution != null)
+            // A decided battle's winner still guards its zones, so its rings stay on the scope until it is cleaned up.
+            if (encounter.Hidden || WFEncounterZoneSystem.Stood(encounter))
                 continue;
 
             // A marker per ship, each at its centre of mass: the velocity belongs to that point, not to the grid origin.
@@ -84,12 +84,8 @@ public sealed partial class WFEncounterMarkerSystem : EntitySystem
         var collect = new WFEncounterCollectMarkersEvent(ev.Markers);
         RaiseLocalEvent(ref collect);
 
-        // One empty update after the last marker goes, then silence.
-        if (ev.Markers.Count == 0 && !_sentAny)
-            return;
-
-        _sentAny = ev.Markers.Count > 0;
-        RaiseNetworkEvent(ev, Filter.Broadcast());
+        // Sent when it changes, and to players who joined since (WFEncounterMarkerSystem.NetTraffic.cs).
+        WfSendMarkers(ev);
     }
 
     /// <summary>

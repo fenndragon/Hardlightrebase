@@ -6,6 +6,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Radio.Components;
 using Content.Shared._Mono.Radio;
 using Content.Shared._WF.ChatFont; // WOLFGATE(ChatFont)
+using Content.Shared._WF.Modsuits.Modules; // WOLFGATE(Modsuits)
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared._EinsteinEngines.Language;
@@ -103,9 +104,10 @@ public sealed partial class RadioSystem : EntitySystem
         EntityUid radioSource,
         int? frequency = null,
         LanguagePrototype? language = null,
-        bool escapeMarkup = true) // Frontier: added frequency
+        bool escapeMarkup = true,// Frontier: added frequency
+        bool jammable = true) // Mono: added jammable
     {
-        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, frequency: frequency, escapeMarkup: escapeMarkup, language: language); // Frontier: added frequency / Einstein Engines - Language
+        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, frequency: frequency, escapeMarkup: escapeMarkup, language: language, jammable: jammable); // Frontier: added frequency / Einstein Engines - Language / Mono: jammable
     }
 
     /// <summary>
@@ -120,13 +122,15 @@ public sealed partial class RadioSystem : EntitySystem
         EntityUid radioSource,
         int? frequency = null,
         LanguagePrototype? language = null,
-        bool escapeMarkup = true) // Nuclear-14: add frequency
+        bool escapeMarkup = true, // Nuclear-14: add frequency
+        bool jammable = true)  // Mono: add jammable
     {
         // Einstein Engines - Language begin
         if (language == null)
             language = _language.GetLanguage(messageSource);
 
-        if (!language.SpeechOverride.AllowRadio)
+        if (!language.SpeechOverride.AllowRadio
+            && !LanguageRadioOverride(messageSource, ref language)) // WOLFGATE(Modsuits): glove translator
             return;
         // Einstein Engines - Language end
 
@@ -161,6 +165,9 @@ public sealed partial class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after escape (so ~ replacement doesn't corrupt tags)
+        content = ChatSystem.ConvertCustomEmphasisToBBCode(content);
+
         // Frontier: append frequency if the channel requests it
         string channelText;
         if (channel.ShowFrequency)
@@ -177,7 +184,7 @@ public sealed partial class RadioSystem : EntitySystem
         //     ("channel", channelText), // Frontier: $"\\[{channel.LocalizedName}\\]"<channelText
         //     ("name", name),
         //     ("message", content));
-        var wrappedMessage = WrapRadioMessage(messageSource, channel, name, content, language); // Einstein Engines - Language
+        var wrappedMessage = WrapRadioMessage(messageSource, channel, name, content, language, false); // Einstein Engines - Language
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
         // var chat = new ChatMessage(
@@ -193,7 +200,9 @@ public sealed partial class RadioSystem : EntitySystem
 
         // Einstein Engines - Language begin
         var obfuscated = _language.ObfuscateSpeech(content, language);
-        var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language);
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation
+        obfuscated = ChatSystem.ConvertCustomEmphasisToBBCode(obfuscated);
+        var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language, true);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
         var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
         // Einstein Engines - Language end
@@ -203,7 +212,8 @@ public sealed partial class RadioSystem : EntitySystem
         var sendAttemptEv = new RadioSendAttemptEvent(
             channel,
             radioSource,
-            transmitFrequency);
+            transmitFrequency,
+            jammable); // Mono
 
         RaiseLocalEvent(ref sendAttemptEv);
         RaiseLocalEvent(radioSource, ref sendAttemptEv);
@@ -211,7 +221,11 @@ public sealed partial class RadioSystem : EntitySystem
         var canSend = !sendAttemptEv.Cancelled;
 
         var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        // WOLFGATE(PlanetComms) START: planets have no telecom server; a working mass transceiver relays instead
+        // var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID)
+            || EntityManager.System<Content.Server._WF.PlanetComms.WFPlanetCommsSystem>().RelaysTelecom(radioSource);
+        // WOLFGATE END
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
@@ -276,7 +290,8 @@ public sealed partial class RadioSystem : EntitySystem
         RadioChannelPrototype channel,
         string name,
         string message,
-        LanguagePrototype language)
+        LanguagePrototype language,
+        bool obfuscated)
     {
         // TODO: code duplication with ChatSystem.WrapMessage
         var speech = _chat.GetSpeechVerb(source, message);
@@ -285,24 +300,29 @@ public sealed partial class RadioSystem : EntitySystem
         if (language.SpeechOverride.Color is { } colorOverride)
             languageColor = Color.InterpolateBetween(Color.White, colorOverride, colorOverride.A); // Changed first param to Color.White so it shows color correctly.
 
-        var languageDisplay = language.IsVisibleLanguage
-            ? Loc.GetString("chat-manager-language-prefix", ("language", language.ChatName))
-            : "";
+        var namestring = name; // Starlight: Language icons
+        if (_language.GetLanguageIcon(language, obfuscated))
+            namestring = $"[icon src=\"{language.Icon}\" tooltip=\"{language.Name}\"] {name}";
+
+        // WOLFGATE(ChatFont) START: a language's font, then the speaker's picked font, then the speech font
+        // var fonttype = language.SpeechOverride.FontId ?? speech.FontId;
+        // if ((language.SpeechOverride.ObfuscationFont ?? false) && !obfuscated)
+        //     fonttype = speech.FontId;
+        var languageFont = language.SpeechOverride.FontId;
+        if ((language.SpeechOverride.ObfuscationFont ?? false) && !obfuscated)
+            languageFont = null;
+        var chatFont = languageFont == null ? CompOrNull<WFChatFontComponent>(source) : null;
+        // WOLFGATE END
 
         return Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
             ("languageColor", languageColor),
-            ("fontType", language.SpeechOverride.FontId ?? CompOrNull<WFChatFontComponent>(source)?.Font ?? speech.FontId), // WOLFGATE(ChatFont): the speaker's picked font, under a language's own
-            // WOLFGATE(ChatFont) START: the picked font's size scale, unless a language's own font wins
-            // ("fontSize", language.SpeechOverride.FontSize ?? speech.FontSize),
-            ("fontSize", WFChatFontRules.ScaleSize(language.SpeechOverride.FontSize ?? speech.FontSize,
-                language.SpeechOverride.FontId == null ? CompOrNull<WFChatFontComponent>(source) : null)),
-            // WOLFGATE END
+            ("fontType", languageFont ?? chatFont?.Font ?? speech.FontId), // WOLFGATE(ChatFont): the speaker's picked font, under a language's own
+            ("fontSize", WFChatFontRules.ScaleSize(language.SpeechOverride.FontSize ?? speech.FontSize, chatFont)), // WOLFGATE(ChatFont): the picked font's size scale
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("channel", $"\\[{WFCrewChannelName(source, channel)}\\]"), // WOLFGATE(RoundSetup): show the private crew channel name
-            ("name", name),
-            ("message", message),
-            ("language", languageDisplay));
+            ("name", namestring),
+            ("message", message));
     }
     // Einstein Engines - Language end
 
@@ -321,4 +341,19 @@ public sealed partial class RadioSystem : EntitySystem
         }
         return false;
     }
+
+    // WOLFGATE(Modsuits) START: the glove translator lets the suit relay a language radio would otherwise drop.
+    private bool LanguageRadioOverride(EntityUid speaker, ref LanguagePrototype language)
+    {
+        var ev = new LanguageRadioAttemptEvent(language.ID);
+        RaiseLocalEvent(speaker, ref ev);
+        if (!ev.Allowed)
+            return false;
+
+        if (ev.TranslateTo != null && _prototype.TryIndex<LanguagePrototype>(ev.TranslateTo, out var translated))
+            language = translated;
+
+        return true;
+    }
+    // WOLFGATE END
 }

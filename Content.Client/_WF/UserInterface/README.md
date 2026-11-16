@@ -25,6 +25,7 @@ Client controls other Wolfgate UI is built from.
 - [`Content.Client/_WF/UserInterface/WindowPopout/WindowPopoutUIController.cs`](WindowPopout/WindowPopoutUIController.cs)
 - [`Content.Client/_WF/UserInterface/WindowPopout/WolfgatePopoutButton.cs`](WindowPopout/WolfgatePopoutButton.cs)
 - [`Content.Client/_WF/UserInterface/WindowPopout/WolfgatePopoutWindow.cs`](WindowPopout/WolfgatePopoutWindow.cs)
+- [`Content.Client/_WF/UserInterface/WindowPopout/WolfgateSaveButton.cs`](WindowPopout/WolfgateSaveButton.cs)
 
 ### Integration tests
 
@@ -41,6 +42,7 @@ Client controls other Wolfgate UI is built from.
 - [`Resources/Textures/_WF/UserInterface/Interface/Window/attributions.yml`](../../../Resources/Textures/_WF/UserInterface/Interface/Window/attributions.yml)
 - [`Resources/Textures/_WF/UserInterface/Interface/Window/dock.png`](../../../Resources/Textures/_WF/UserInterface/Interface/Window/dock.png)
 - [`Resources/Textures/_WF/UserInterface/Interface/Window/popout.png`](../../../Resources/Textures/_WF/UserInterface/Interface/Window/popout.png)
+- [`Resources/Textures/_WF/UserInterface/Interface/Window/save.png`](../../../Resources/Textures/_WF/UserInterface/Interface/Window/save.png)
 
 ## Non-modular edits
 
@@ -48,5 +50,6 @@ Client controls other Wolfgate UI is built from.
 - [`Content.Client/Humanoid/MarkingPicker.xaml.cs`](../../Humanoid/MarkingPicker.xaml.cs): swatches + sliders
 - [`Content.Client/Humanoid/SingleMarkingPicker.xaml.cs`](../../Humanoid/SingleMarkingPicker.xaml.cs): swatches + sliders
 - [`Content.Client/Lobby/UI/HumanoidProfileEditor.xaml.cs`](../../Lobby/UI/HumanoidProfileEditor.xaml.cs): swatches + sliders
+- [`Content.Client/UserInterface/Screens/SeparatedChatGameScreen.xaml.cs`](../../UserInterface/Screens/SeparatedChatGameScreen.xaml.cs): let the menu buttons shrink to their icons so the chat panel can be narrower.
 
 <!-- WOLFGATE-GENERATED END -->

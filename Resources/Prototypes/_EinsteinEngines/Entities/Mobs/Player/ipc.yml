@@ -32,7 +32,10 @@
     bloodReagent: WFWolfmedHydraulicFluid # WOLFGATE(Wolfmed): playtest 3 IPC 2: was Oil, lamp oil a lit welder set alight in its own puddle
     bloodMaxVolume: 250
     bloodRefreshAmount: 0.5 # WOLFGATE(Synthetics): slow hydraulic regeneration, as the synthetic biotype overlay
-    chemicalMaxVolume: 0
+    # WOLFGATE(Synthetics) START: room for contaminants; WFChassisFilter flushes everything the pump can't process
+    # chemicalMaxVolume: 0
+    chemicalMaxVolume: 30
+    # WOLFGATE END
     # WOLFGATE(Wolfmed): fluid loss deals an IPC no damage.
     # An IPC never takes Airloss-group damage: Bloodloss reads as oxygen loss on the analyzer, and it does not
     # breathe. WFSiliconWolfmed no longer accepts Bloodloss either.
@@ -57,6 +60,7 @@
     understands:
     - TauCetiBasic
     - RobotTalk
+    - Machine # WOLFGATE(Synthetics): synths and IPCs understand each other
   - type: HarpySinger
   - type: Instrument
     allowPercussion: true
@@ -86,6 +90,9 @@
         locked: true
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+        blacklist: #Mono
+          tags:
+          - PowerCage
   - type: BatterySlotRequiresLock
     itemSlot: cell_slot
   - type: EncryptionHolderRequiresLock
@@ -189,7 +196,9 @@
   - type: EmitBuzzWhileDamaged
   - type: CanHostGuardian
   - type: WeldingHealable
+  - type: WFChassisFilter # WOLFGATE(Synthetics): only contaminants stay in the chemical stream
   - type: RetroMonitorView # Mono
+  - type: DamagedSiliconAccent
 
 - type: entity
   save: false

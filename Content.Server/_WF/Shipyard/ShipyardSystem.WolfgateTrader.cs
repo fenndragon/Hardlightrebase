@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Server._Mono.Shuttles.Components;
 using Content.Server._WF.ShipAccess;
+using Content.Server._WF.ShipCommand;
 using Content.Server.Physics.Controllers;
 using Content.Server.Shuttles.Components;
 using Content.Server.StationEvents.Components;
@@ -100,6 +101,13 @@ public sealed partial class ShipyardSystem
     /// </summary>
     public void ClearHostedConsole(EntityUid host)
     {
+        // Removing the console shuts its card slot down, which would delete a card still in it.
+        if (TryComp<ShipyardConsoleComponent>(host, out var console) && console.TargetIdSlot.HasItem)
+        {
+            _wfItemSlots.SetLock(host, console.TargetIdSlot, false);
+            _wfItemSlots.TryEject(host, console.TargetIdSlot, null, out _);
+        }
+
         RemComp<ShipyardConsoleComponent>(host);
         RemComp<ShipyardListingComponent>(host);
         RemComp<AccessReaderComponent>(host);
@@ -241,7 +249,10 @@ public sealed partial class ShipyardSystem
             state.ShipyardPrototypes,
             state.ShipyardName,
             state.FreeListings,
-            state.SellRate));
+            state.SellRate)
+        {
+            PriceMultiplier = state.PriceMultiplier,
+        });
     }
 
     #endregion
@@ -253,7 +264,7 @@ public sealed partial class ShipyardSystem
     /// </summary>
     public int GetShipAppraisal(EntityUid shuttle)
     {
-        return (int) _pricing.AppraiseGrid(shuttle, LacksPreserveOnSaleComp);
+        return _wfShipServices.ResaleValue(shuttle, (int) _pricing.AppraiseGrid(shuttle, LacksPreserveOnSaleComp));
     }
 
     /// <summary>
@@ -312,6 +323,9 @@ public sealed partial class ShipyardSystem
 
         // A hull on the lot is not at general quarters; the PA ensures this again with its defaults.
         RemComp<ShipAlertComponent>(grid);
+
+        // The buyer pays the lot's price for it, so the seller's bargain doesn't come with it.
+        RemComp<WFBargainComponent>(grid);
     }
 
     /// <summary>

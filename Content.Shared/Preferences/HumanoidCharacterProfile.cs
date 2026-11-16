@@ -52,6 +52,7 @@ using Content.Shared._Mono.Company;
 using Content.Shared._NF.Bank;
 using Content.Shared._WF.Biotype; // WOLFGATE(Biotype)
 using Content.Shared._WF.ChatFont; // WOLFGATE(ChatFont)
+using Content.Shared._WF.CombatMusic; // WOLFGATE(CombatMusic)
 using Content.Shared._WF.TypingBubble; // WOLFGATE(TypingBubble)
 using Content.Shared._WF.BloodColour; // WOLFGATE(BloodColour)
 using Content.Shared._WF.EmoteVoices; // WOLFGATE(EmoteVoices)
@@ -314,6 +315,7 @@ namespace Content.Shared.Preferences
             BloodColor = other.BloodColor; // WOLFGATE(BloodColour)
             MessageSound = other.MessageSound; // WOLFGATE(EmoteVoices)
             SpeechVoice = other.SpeechVoice; // WOLFGATE(Voice)
+            CombatMusic = new(other.CombatMusic); // WOLFGATE(CombatMusic)
         }
 
         /// <summary>Copy constructor</summary>
@@ -356,6 +358,7 @@ namespace Content.Shared.Preferences
             BloodColor = other.BloodColor; // WOLFGATE(BloodColour)
             MessageSound = other.MessageSound; // WOLFGATE(EmoteVoices)
             SpeechVoice = other.SpeechVoice; // WOLFGATE(Voice)
+            CombatMusic = new(other.CombatMusic); // WOLFGATE(CombatMusic)
         }
 
         /// <summary>
@@ -705,6 +708,7 @@ namespace Content.Shared.Preferences
             if (ScreamVoice != other.ScreamVoice || LaughVoice != other.LaughVoice) return false; // WOLFGATE(EmoteVoices)
             if (MessageSound != other.MessageSound) return false; // WOLFGATE(EmoteVoices)
             if (!Equals(SpeechVoice, other.SpeechVoice)) return false; // WOLFGATE(Voice)
+            if (!CombatMusicEqual(other)) return false; // WOLFGATE(CombatMusic)
             if (!Flags.SequenceEqual(other.Flags)) return false; // Mono
             if (!Components.SequenceEqual(other.Components)) return false; // Mono
             if (!Items.SequenceEqual(other.Items)) return false; // Mono
@@ -791,9 +795,10 @@ namespace Content.Shared.Preferences
 
             name = name.Trim();
 
-            if (configManager.GetCVar(CCVars.RestrictedNames) && Species != "IPC")
+            if (configManager.GetCVar(CCVars.RestrictedNames) && Species != "IPC" && Species != "Synth") // WOLFGATE: Synths name themselves like IPCs
             {
-                name = Regex.Replace(name, @"[^\u0041-\u005A,\u0061-\u007A,\u00C0-\u00D6,\u00D8-\u00F6,\u00F8-\u00FF,\u0100-\u017F, -]", string.Empty);
+                // WOLFGATE: digits are allowed in names, as the validation regex above already allows them
+                name = Regex.Replace(name, @"[^\u0030-\u0039,\u0041-\u005A,\u0061-\u007A,\u00C0-\u00D6,\u00D8-\u00F6,\u00F8-\u00FF,\u0100-\u017F, -]", string.Empty);
                 /*
                  * 0041-005A  Basic Latin: Uppercase Latin Alphabet
                  * 0061-007A  Basic Latin: Lowercase Latin Alphabet
@@ -919,6 +924,7 @@ namespace Content.Shared.Preferences
             ChatFont = WFChatFontRules.Validate(ChatFont, prototypeManager); // WOLFGATE(ChatFont): an unknown font becomes the default
             TypingIndicator = WFTypingBubbleRules.Validate(TypingIndicator, prototypeManager); // WOLFGATE(TypingBubble): an unknown or hidden bubble becomes the species' own
             BloodColor = WFBloodColourRules.Validate(BloodColor); // WOLFGATE(BloodColour)
+            CombatMusic = WFCombatMusicRules.Validate(CombatMusic, prototypeManager); // WOLFGATE(CombatMusic): unknown and repeated tracks are dropped
 
             // Check if the company exists, if not set to "None"
             if (!string.IsNullOrEmpty(Company) &&
@@ -1089,6 +1095,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(LaughVoice); // WOLFGATE(EmoteVoices)
             hashCode.Add(MessageSound); // WOLFGATE(EmoteVoices)
             hashCode.Add(SpeechVoice); // WOLFGATE(Voice)
+            foreach (var track in CombatMusic) hashCode.Add(track); // WOLFGATE(CombatMusic)
             return hashCode.ToHashCode();
         }
 

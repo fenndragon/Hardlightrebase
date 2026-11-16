@@ -71,6 +71,7 @@ namespace Content.Shared.Damage
         [Dependency] private IConfigurationManager _config = default!;
         [Dependency] private SharedChemistryGuideDataSystem _chemistryGuideData = default!;
         [Dependency] private SharedExplosionSystem _explosion = default!;
+        [Dependency] private Content.Shared._WF.NetTraffic.WFDamageNetSystem _wfDamageNet = default!; // WOLFGATE(NetTraffic)
 
         private EntityQuery<AppearanceComponent> _appearanceQuery;
         private EntityQuery<DamageableComponent> _damageableQuery;
@@ -146,6 +147,15 @@ namespace Content.Shared.Damage
             {
                 // Initialize damage dictionary, using the types and groups from the damage
                 // container prototype
+                // WOLFGATE(Performance) START: size the dictionary once instead of growing it from empty on every spawn
+                var wfCapacity = damageContainerPrototype.SupportedTypes.Count;
+                foreach (var groupId in damageContainerPrototype.SupportedGroups)
+                {
+                    wfCapacity += _prototypeManager.Index<DamageGroupPrototype>(groupId).DamageTypes.Count;
+                }
+
+                component.Damage.DamageDict.EnsureCapacity(wfCapacity);
+                // WOLFGATE END
                 foreach (var type in damageContainerPrototype.SupportedTypes)
                 {
                     component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
@@ -163,6 +173,7 @@ namespace Content.Shared.Damage
             else
             {
                 // No DamageContainerPrototype was given. So we will allow the container to support all damage types
+                component.Damage.DamageDict.EnsureCapacity(_prototypeManager.Count<DamageTypePrototype>()); // WOLFGATE(Performance): size once
                 foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
                     component.Damage.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);
@@ -198,9 +209,11 @@ namespace Content.Shared.Damage
         {
             component.Damage.GetDamagePerGroup(_prototypeManager, component.DamagePerGroup);
             component.TotalDamage = component.Damage.GetTotal();
+            var wfDeferred = _wfDamageNet.Defer(uid); // WOLFGATE(NetTraffic): a structure's damage is sent at most once an interval.
+            if (!wfDeferred) // WOLFGATE(NetTraffic)
             Dirty(uid, component);
 
-            if (_appearanceQuery.TryGetComponent(uid, out var appearance) && damageDelta != null)
+            if (!wfDeferred && _appearanceQuery.TryGetComponent(uid, out var appearance) && damageDelta != null) // WOLFGATE(NetTraffic): sent with the deferred damage.
             {
                 var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
                 _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);

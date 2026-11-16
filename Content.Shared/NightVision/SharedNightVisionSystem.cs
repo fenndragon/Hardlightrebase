@@ -35,7 +35,12 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentRemove args)
     {
         if (ent.Comp.RelayOverlay)
+        {
+            // WOLFGATE: clear the wearer's overlay when a removal takes the component away
+            ent.Comp.Enabled = false;
+            RefreshOverlay(Transform(ent.Owner).ParentUid);
             return;
+        }
 
         RefreshOverlay(ent);
         _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
@@ -55,7 +60,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
             return;
 
         ent.Comp.Enabled = false; // mono
-        RefreshOverlay(ent);
+        RefreshOverlay(args.Equipee); // WOLFGATE(Feedback): clear the wearer's overlay, not the clothing's
     }
     protected virtual void OnRefreshEquipmentHud(Entity<NightVisionComponent> ent, ref InventoryRelayedEvent<RefreshNightVisionEvent> args)
     {

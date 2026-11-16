@@ -52,7 +52,7 @@ public sealed class WFRemadeSliceTest
     }
 
     [Test]
-    public async Task BuyersOnlyTakeAQuietScion()
+    public async Task OnlyCentralBuysAScion()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = false });
         var server = pair.Server;
@@ -64,16 +64,19 @@ public sealed class WFRemadeSliceTest
         await pair.RunSeconds(2f);
         await server.WaitAssertion(() =>
         {
-            Assert.That(entMan.HasComponent<CargoSellBlacklistComponent>(uid), Is.False);
+            Assert.That(entMan.HasComponent<CargoSellBlacklistComponent>(uid), Is.True, "a Scion sells away from a main station.");
             Assert.That(entMan.System<PricingSystem>().GetPrice(uid), Is.GreaterThanOrEqualTo(5_000_000d));
+            entMan.AddComponent<WFRemadeSanctuaryComponent>(map.Grid);
         });
 
+        // On a main station it sells at any stage, for more the further it has climbed.
         await server.WaitPost(() => entMan.GetComponent<WFMonolithComponent>(uid).Resonance = 20f);
-        await pair.RunSeconds(2f);
+        await pair.RunSeconds(6f);
         await server.WaitAssertion(() =>
         {
             Assert.That(entMan.GetComponent<WFMonolithComponent>(uid).Stage, Is.EqualTo(WFMonolithStage.Hymn));
-            Assert.That(entMan.HasComponent<CargoSellBlacklistComponent>(uid), Is.True);
+            Assert.That(entMan.HasComponent<CargoSellBlacklistComponent>(uid), Is.False, "a Scion on a main station won't sell.");
+            Assert.That(entMan.System<PricingSystem>().GetPrice(uid), Is.GreaterThanOrEqualTo(5_900_000d));
             entMan.DeleteEntity(uid);
         });
         await pair.CleanReturnAsync();
@@ -152,10 +155,12 @@ public sealed class WFRemadeSliceTest
         var server = pair.Server;
         var map = await pair.CreateTestMap();
         var entMan = server.EntMan;
+        EntityUid limb = default;
 
         await server.WaitPost(() =>
         {
             var remade = entMan.SpawnEntity("WFRemadeSlasher", map.GridCoords);
+            limb = entMan.SpawnEntity("WFRemadeSeveredLimb", map.GridCoords);
             entMan.System<WFRemadeDirectorSystem>().Enlist(remade, null);
             entMan.System<Content.Server.Body.Systems.BodySystem>().GibBody(remade, gibOrgans: true);
         });
@@ -165,6 +170,7 @@ public sealed class WFRemadeSliceTest
         {
             Assert.That(entMan.EntityQuery<Content.Shared.Body.Organ.OrganComponent>().Any(), Is.False, "a gibbed Remade spilled organs.");
             Assert.That(entMan.EntityQuery<Content.Shared.Body.Part.BodyPartComponent>().Any(), Is.False, "a gibbed Remade spilled body parts.");
+            Assert.That(entMan.Deleted(limb) || entMan.IsQueuedForDeletion(limb), Is.False, "a severed limb on the floor went with the gib.");
         });
         await pair.CleanReturnAsync();
     }

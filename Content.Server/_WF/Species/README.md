@@ -267,7 +267,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - HardLight circle squeeze fields
   - unused once sneak state moved onto the networked component fields directly
 - [`Content.Shared/_DV/Abilities/SharedCrawlUnderObjectsSystem.cs`](../../../Content.Shared/_DV/Abilities/SharedCrawlUnderObjectsSystem.cs): rewritten as a shared, predicted system with HardLight's squeeze geometry
-- [`Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs`](../../../Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs): ported from HardLight/Starlight, needed by the Avali "Scratch" language
+- [`Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs`](../../../Content.Shared/_EinsteinEngines/Language/ObfuscationMethods.cs): the message is upper-cased first, so lower-case chars never matched and nothing scrambled
 - [`Content.Shared/_FarHorizons/Damage/HealModifyEvent.cs`](../../../Content.Shared/_FarHorizons/Damage/HealModifyEvent.cs): heal modifiers, ported from HardLight
 - [`Content.Shared/_FarHorizons/Damage/UniversalHealModifierComponent.cs`](../../../Content.Shared/_FarHorizons/Damage/UniversalHealModifierComponent.cs): heal modifiers, ported from HardLight
 - [`Content.Shared/_FarHorizons/Damage/UniversalHealModifierSystem.cs`](../../../Content.Shared/_FarHorizons/Damage/UniversalHealModifierSystem.cs): heal modifiers, ported from HardLight
@@ -425,6 +425,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Locale/en-US/_Starlight/accessories/avali-crest.ftl`](../../../Resources/Locale/en-US/_Starlight/accessories/avali-crest.ftl): ported from HardLight
 - [`Resources/Locale/en-US/_Starlight/Avali/stasis.ftl`](../../../Resources/Locale/en-US/_Starlight/Avali/stasis.ftl): ported from HardLight
 - [`Resources/Locale/en-US/_Starlight/chat/managers/chat-manager.ftl`](../../../Resources/Locale/en-US/_Starlight/chat/managers/chat-manager.ftl): ported from HardLight (Thaven speech verb)
+- [`Resources/Locale/en-US/_Starlight/Language/languages.ftl`](../../../Resources/Locale/en-US/_Starlight/Language/languages.ftl): Scratch's strings live in _WF/Species, where Avali share it
 - [`Resources/Locale/en-US/_Starlight/markings/avali.ftl`](../../../Resources/Locale/en-US/_Starlight/markings/avali.ftl): ported from HardLight
 - [`Resources/Locale/en-US/_Starlight/markings/shadekin.ftl`](../../../Resources/Locale/en-US/_Starlight/markings/shadekin.ftl): ported from HardLight
 - [`Resources/Locale/en-US/_Starlight/markings/vulpkanin.ftl`](../../../Resources/Locale/en-US/_Starlight/markings/vulpkanin.ftl): ported from HardLight
@@ -468,16 +469,23 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_DV/Species/chitinid.yml`](../../../Resources/Prototypes/_DV/Species/chitinid.yml)
   - tails are optional so players can go without one
   - was 1, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/_DV/Species/feroxi.yml`](../../../Resources/Prototypes/_DV/Species/feroxi.yml)
   - was 3, more marking slots
+  - was 8, more marking slots
   - tails are optional so players can go without one
 - [`Resources/Prototypes/_DV/Species/harpy.yml`](../../../Resources/Prototypes/_DV/Species/harpy.yml)
   - tails are optional so players can go without one
+  - the head tuft is optional, so removing it in the editor sticks
   - was 1, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/_DV/Species/rodentia.yml`](../../../Resources/Prototypes/_DV/Species/rodentia.yml)
   - tails are optional so players can go without one
+  - was 8, more marking slots
   - was 2, more marking slots
-- [`Resources/Prototypes/_DV/Species/shadekin.yml`](../../../Resources/Prototypes/_DV/Species/shadekin.yml): tails are optional so players can go without one
+- [`Resources/Prototypes/_DV/Species/shadekin.yml`](../../../Resources/Prototypes/_DV/Species/shadekin.yml)
+  - tails are optional so players can go without one
+  - was 10, more marking slots
 - [`Resources/Prototypes/_DV/Species/skrell.yml`](../../../Resources/Prototypes/_DV/Species/skrell.yml)
   - ported from HardLight (Skrell)
   - tails are optional so players can go without one
@@ -489,6 +497,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - tails are optional so players can go without one
   - was VulpTail; Starlight's tail for Starlight's body
   - was 3, more marking slots
+  - was 8, more marking slots
   - was VulpEar; Starlight's ears for Starlight's body
 - [`Resources/Prototypes/_DV/Voice/speech_emote_sounds.yml`](../../../Resources/Prototypes/_DV/Voice/speech_emote_sounds.yml)
   - upstream's vulpkanin scream; was MaleScreams
@@ -515,6 +524,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - was MobHumanoidMarkingMatchSkin; hair colour is the player's pick
   - chassis parts get their own budget, the body categories are for markings
   - was 3, more marking slots
+  - was 8, more marking slots
   - chassis part, was a Head, Chest, Arms or Legs marking
 - [`Resources/Prototypes/_EinsteinEngines/Voice/speech_emotes.yml`](../../../Resources/Prototypes/_EinsteinEngines/Voice/speech_emotes.yml): was the default scream icon
 - [`Resources/Prototypes/_FarHorizons/Entities/Mobs/Customization/protogen.yml`](../../../Resources/Prototypes/_FarHorizons/Entities/Mobs/Customization/protogen.yml)
@@ -527,7 +537,6 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro.yml`](../../../Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro.yml): ported from HardLight
 - [`Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro_ears.yml`](../../../Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro_ears.yml): ported from HardLight
 - [`Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro_tails.yml`](../../../Resources/Prototypes/_Floof/Entities/Mobs/Customization/Markings/anthro_tails.yml): ported from HardLight
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml): not every helmet has these states; the generic layer picks them up where it does
 - [`Resources/Prototypes/_Goobstation/Species/tajaran.yml`](../../../Resources/Prototypes/_Goobstation/Species/tajaran.yml)
   - tails are optional so players can go without one
   - was 1, more marking slots
@@ -595,7 +604,9 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_Impstation/Flavors/flavors.yml`](../../../Resources/Prototypes/_Impstation/Flavors/flavors.yml): ported from HardLight
 - [`Resources/Prototypes/_Impstation/InventoryTemplates/thaven_inventory_template.yml`](../../../Resources/Prototypes/_Impstation/InventoryTemplates/thaven_inventory_template.yml): HardLight's ACCESSORY/ACCESSORYALT slots are removed
 - [`Resources/Prototypes/_Impstation/Reagents/biological.yml`](../../../Resources/Prototypes/_Impstation/Reagents/biological.yml): ported from HardLight.
-- [`Resources/Prototypes/_Impstation/Species/thaven.yml`](../../../Resources/Prototypes/_Impstation/Species/thaven.yml): was 6, more marking slots
+- [`Resources/Prototypes/_Impstation/Species/thaven.yml`](../../../Resources/Prototypes/_Impstation/Species/thaven.yml)
+  - was 5, more marking slots
+  - was 6, more marking slots
 - [`Resources/Prototypes/_Impstation/Species/Thavens/datasets.yml`](../../../Resources/Prototypes/_Impstation/Species/Thavens/datasets.yml): ported from HardLight
 - [`Resources/Prototypes/_Impstation/Species/Thavens/Moods/horny.yml`](../../../Resources/Prototypes/_Impstation/Species/Thavens/Moods/horny.yml): ported from HardLight
 - [`Resources/Prototypes/_Impstation/Species/Thavens/Moods/hornyemag.yml`](../../../Resources/Prototypes/_Impstation/Species/Thavens/Moods/hornyemag.yml): ported from HardLight
@@ -605,11 +616,13 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_Impstation/Species/Thavens/Moods/yes_and.yml`](../../../Resources/Prototypes/_Impstation/Species/Thavens/Moods/yes_and.yml): ported from HardLight
 - [`Resources/Prototypes/_Impstation/tags.yml`](../../../Resources/Prototypes/_Impstation/tags.yml): ported from HardLight
 - [`Resources/Prototypes/_Moffstation/Entities/Mobs/Customization/Markings/tattoos.yml`](../../../Resources/Prototypes/_Moffstation/Entities/Mobs/Customization/Markings/tattoos.yml): eye markings get their own points (was Head)
-- [`Resources/Prototypes/_Moffstation/Entities/Mobs/Player/resomi.yml`](../../../Resources/Prototypes/_Moffstation/Entities/Mobs/Player/resomi.yml): Resomi share the Avali language
-- [`Resources/Prototypes/_Moffstation/Entities/Mobs/Species/resomi.yml`](../../../Resources/Prototypes/_Moffstation/Entities/Mobs/Species/resomi.yml): Resomi share the Avali language
+- [`Resources/Prototypes/_Moffstation/Entities/Mobs/Species/resomi.yml`](../../../Resources/Prototypes/_Moffstation/Entities/Mobs/Species/resomi.yml)
+  - hands and feet over the limbs as on a human, so markings drawn there (protogen lights) show
+  - moved from above the limbs
 - [`Resources/Prototypes/_Moffstation/Species/resomi.yml`](../../../Resources/Prototypes/_Moffstation/Species/resomi.yml)
   - tails are optional so players can go without one
   - was 6, more marking slots
+  - was 4, more marking slots
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/med_assembler.yml`](../../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/med_assembler.yml): Avali auto-injector (amoxla and tranexamic acid)
 - [`Resources/Prototypes/_Mono/Species/asakim.yml`](../../../Resources/Prototypes/_Mono/Species/asakim.yml)
   - tails are optional so players can go without one
@@ -618,6 +631,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_Mono/Species/protogen.yml`](../../../Resources/Prototypes/_Mono/Species/protogen.yml)
   - was false, so the base species is selectable in the creator
   - tails are optional so players can go without one
+  - was 8, more marking slots
 - [`Resources/Prototypes/_Mono/Traits/physical.yml`](../../../Resources/Prototypes/_Mono/Traits/physical.yml): Canine is a Vulpkanin copy
 - [`Resources/Prototypes/_NF/Body/Organs/avali.yml`](../../../Resources/Prototypes/_NF/Body/Organs/avali.yml): ported from HardLight
 - [`Resources/Prototypes/_NF/Entities/Mobs/Customization/Markings/human_hair.yml`](../../../Resources/Prototypes/_NF/Entities/Mobs/Customization/Markings/human_hair.yml): ported from HardLight
@@ -631,6 +645,8 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/_Obelisk/Species/hydrakin.yml`](../../../Resources/Prototypes/_Obelisk/Species/hydrakin.yml)
   - was 1, more marking slots
   - tails are optional so players can go without one
+  - was 4, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/_RMC14/Actions/types.yml`](../../../Resources/Prototypes/_RMC14/Actions/types.yml): ported from HardLight
 - [`Resources/Prototypes/_RMC14/Datasets/skrell_names.yml`](../../../Resources/Prototypes/_RMC14/Datasets/skrell_names.yml): converted from HardLight localizedDataset - Wolfgate species use plain datasets.
 - [`Resources/Prototypes/_RMC14/Entities/Mobs/Customization/reptilian.yml`](../../../Resources/Prototypes/_RMC14/Entities/Mobs/Customization/reptilian.yml): ported from HardLight
@@ -688,9 +704,6 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - ShadekinSystem turns this on in the dark
 - [`Resources/Prototypes/_StarLight/fonts.yml`](../../../Resources/Prototypes/_StarLight/fonts.yml): ported from HardLight
 - [`Resources/Prototypes/_StarLight/Language/Animals/carptongue.yml`](../../../Resources/Prototypes/_StarLight/Language/Animals/carptongue.yml): icon and obfuscation font fields dropped
-- [`Resources/Prototypes/_StarLight/Language/Galactic/scratch.yml`](../../../Resources/Prototypes/_StarLight/Language/Galactic/scratch.yml)
-  - icon and obfuscation font fields dropped
-  - Scratch is a cipher font, unreadable to listeners who understand it
 - [`Resources/Prototypes/_StarLight/Language/generic.yml`](../../../Resources/Prototypes/_StarLight/Language/generic.yml)
   - icon and obfuscation font fields dropped
   - ported from HardLight
@@ -731,7 +744,13 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - ported from HardLight/Impstation
 - [`Resources/Prototypes/Loadouts/loadout_groups.yml`](../../../Resources/Prototypes/Loadouts/loadout_groups.yml): Avali auto-injector, like the Vox tank
 - [`Resources/Prototypes/Loadouts/Miscellaneous/survival.yml`](../../../Resources/Prototypes/Loadouts/Miscellaneous/survival.yml): ported from HardLight/Starlight
-- [`Resources/Prototypes/Nyanotrasen/Species/felinid.yml`](../../../Resources/Prototypes/Nyanotrasen/Species/felinid.yml): tails are optional so players can go without one
+- [`Resources/Prototypes/Nyanotrasen/Species/felinid.yml`](../../../Resources/Prototypes/Nyanotrasen/Species/felinid.yml)
+  - tails are optional so players can go without one
+  - was 4, more marking slots
+  - was 8, more marking slots
+- [`Resources/Prototypes/Nyanotrasen/Species/oni.yml`](../../../Resources/Prototypes/Nyanotrasen/Species/oni.yml)
+  - was 4, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/Nyanotrasen/Voice/speech_emotes.yml`](../../../Resources/Prototypes/Nyanotrasen/Voice/speech_emotes.yml): was the default scream icon
 - [`Resources/Prototypes/Reagents/botany.yml`](../../../Resources/Prototypes/Reagents/botany.yml)
   - ammonia isn't caustic to Avali (Starlight)
@@ -749,10 +768,14 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/Species/arachnid.yml`](../../../Resources/Prototypes/Species/arachnid.yml)
   - tails are optional so players can go without one
   - was 1, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/Species/diona.yml`](../../../Resources/Prototypes/Species/diona.yml)
   - was 2, more marking slots
   - was 1, more marking slots
-- [`Resources/Prototypes/Species/human.yml`](../../../Resources/Prototypes/Species/human.yml): was 1, more marking slots
+  - was 8, more marking slots
+- [`Resources/Prototypes/Species/human.yml`](../../../Resources/Prototypes/Species/human.yml)
+  - was 1, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/Species/moth.yml`](../../../Resources/Prototypes/Species/moth.yml)
   - tails are optional so players can go without one
   - was 4, more marking slots
@@ -764,11 +787,14 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - was 0, reptilians can wear facial hair
   - tails are optional so players can go without one
   - was 3, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/Species/slime.yml`](../../../Resources/Prototypes/Species/slime.yml)
   - Anycolor skin support for slimes
   - was MobSlimeMarkingFollowSkin; hair colour is the player's pick
   - was MobSlimeMarkingFollowSkin; facial hair colour is the player's pick
   - ported from HardLight, slimes take the head and tail marking slots of other species
+  - was 4, more marking slots
+  - was 8, more marking slots
 - [`Resources/Prototypes/Species/species_weights.yml`](../../../Resources/Prototypes/Species/species_weights.yml)
   - ported from HardLight/Starlight
   - ported from HardLight
@@ -776,6 +802,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Prototypes/Species/vox.yml`](../../../Resources/Prototypes/Species/vox.yml)
   - was 3, more marking slots
   - was 6, more marking slots
+  - was 4, more marking slots
   - tails are optional so players can go without one
 - [`Resources/Prototypes/Voice/speech_emotes.yml`](../../../Resources/Prototypes/Voice/speech_emotes.yml): was the default scream action icon; this is the open-mouthed face
 - [`Resources/ServerInfo/_HL/Guidebook/Mobs/Synth.xml`](../../../Resources/ServerInfo/_HL/Guidebook/Mobs/Synth.xml): ported from HardLight
@@ -795,6 +822,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Textures/_Impstation/Mobs/Customization/thaven/`](../../../Resources/Textures/_Impstation/Mobs/Customization/thaven/): Thaven marking sprites, ported from HardLight in
 - [`Resources/Textures/_Impstation/Mobs/Species/`](../../../Resources/Textures/_Impstation/Mobs/Species/): Impstation species sprites, ported from HardLight in
 - [`Resources/Textures/_Mono/Mobs/Species/Protogen/organs.rsi/`](../../../Resources/Textures/_Mono/Mobs/Species/Protogen/organs.rsi/): Back to Monolith's state list; the tongueforked state left with the protogen subspecies.
+- [`Resources/Textures/_NF/Clothing/Head/Hardsuits/maxim_prototype.rsi/`](../../../Resources/Textures/_NF/Clothing/Head/Hardsuits/maxim_prototype.rsi/): Vulpkanin and Feroxi equipped states added.
 - [`Resources/Textures/_NF/Mobs/Customization/human_hair.rsi/`](../../../Resources/Textures/_NF/Mobs/Customization/human_hair.rsi/): Extra human hair sprites, ported in
 - [`Resources/Textures/_RMC14/Actions/`](../../../Resources/Textures/_RMC14/Actions/): RMC14 action icons, ported from HardLight in
 - [`Resources/Textures/_RMC14/Mobs/`](../../../Resources/Textures/_RMC14/Mobs/): RMC14 mob and marking sprites, ported from HardLight in
@@ -805,7 +833,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
 - [`Resources/Textures/Clothing/Head/Hardsuits/engineering-white.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/engineering-white.rsi/): Avali equipped states added (meta.json re-serialised).
 - [`Resources/Textures/Clothing/Head/Hardsuits/engineering.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/engineering.rsi/): Avali equipped states added (meta.json re-serialised).
 - [`Resources/Textures/Clothing/Head/Hardsuits/luxury.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/luxury.rsi/): Avali equipped states added (meta.json re-serialised).
-- [`Resources/Textures/Clothing/Head/Hardsuits/maxim.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/maxim.rsi/): Avali equipped states added (meta.json re-serialised).
+- [`Resources/Textures/Clothing/Head/Hardsuits/maxim.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/maxim.rsi/): Avali, Vulpkanin and Feroxi equipped states added.
 - [`Resources/Textures/Clothing/Head/Hardsuits/medical.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/medical.rsi/): Avali equipped states added (meta.json re-serialised).
 - [`Resources/Textures/Clothing/Head/Hardsuits/paramedhelm.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/paramedhelm.rsi/): Avali equipped states added (meta.json re-serialised).
 - [`Resources/Textures/Clothing/Head/Hardsuits/rd.rsi/`](../../../Resources/Textures/Clothing/Head/Hardsuits/rd.rsi/): Avali equipped states added (meta.json re-serialised).

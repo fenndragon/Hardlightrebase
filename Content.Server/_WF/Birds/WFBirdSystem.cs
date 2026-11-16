@@ -167,7 +167,8 @@ public sealed class WFBirdSystem : EntitySystem
         var query = EntityQueryEnumerator<WFBirdComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var bird, out var xform))
         {
-            if (bird.Dead)
+            // A bird someone plays, such as a possessing admin, flies as they steer it.
+            if (bird.Dead || HasComp<ActorComponent>(uid))
                 continue;
 
             // A flock leader on planet ground nobody is near stays put; its members follow it.
@@ -301,8 +302,11 @@ public sealed class WFBirdSystem : EntitySystem
                 if (Arrived(bird, xform) || now >= bird.StateEnd)
                 {
                     var circle = _random.NextFloat(bird.CircleTime.X, bird.CircleTime.Y);
-                    if (circle >= 1f && now < bird.StateEnd)
+                    if (circle >= 1f && now < bird.StateEnd && !bird.Circled)
+                    {
+                        bird.Circled = true;
                         StartCircling(bird, bird.Goal, circle, now);
+                    }
                     else
                         TryLand(uid, bird, xform);
                 }
@@ -639,6 +643,7 @@ public sealed class WFBirdSystem : EntitySystem
         bird.State = WFBirdState.Flying;
         bird.Goal = goal;
         bird.Moving = true;
+        bird.Circled = false;
         bird.StateEnd = _timing.CurTime + TimeSpan.FromSeconds(MaxFlightSeconds);
         if (wasAirborne)
             return;
@@ -761,7 +766,7 @@ public sealed class WFBirdSystem : EntitySystem
         var query = EntityQueryEnumerator<WFBirdComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var bird, out var xform))
         {
-            if (!bird.Member || bird.Protected || bird.Dead)
+            if (!bird.Member || bird.Protected || bird.Dead || HasComp<ActorComponent>(uid))
                 continue;
 
             var position = _transform.GetWorldPosition(xform);

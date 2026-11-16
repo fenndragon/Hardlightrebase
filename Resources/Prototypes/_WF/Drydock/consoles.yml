@@ -26,9 +26,14 @@
     - WFRefitGyroscopes
     - WFRefitPower
     - WFRefitLandingThrusters
+    - WFRefitDurasteel
   - type: DeviceLinkSource
     ports:
       - WFDrydockCraneSender
+  # A drydock terminal can work this berth.
+  - type: DeviceLinkSink
+    ports:
+      - WFDrydockBerthReceiver
   - type: ActivatableUI
     key: enum.WFDrydockConsoleUiKey.Key
   - type: UserInterface

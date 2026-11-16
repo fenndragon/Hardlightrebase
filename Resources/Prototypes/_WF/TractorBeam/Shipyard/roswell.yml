@@ -2,12 +2,12 @@
   id: WFRoswell
   parent: BaseVesselIFFDisabled
   name: Judge Roswell
-  description: A compact arrestor and patrol vessel fitted with tractor beam equipment.
+  description: A compact arrestor and patrol vessel fitted with tractor beam equipment and a WRIT disabler harpoon.
   price: 174669
   purchasable: false
   category: Medium
   group: Sr
-  access: Brig
+  access: Caelestinus
   mapchecker_group_override: Security
   shuttlePath: /SharedMaps/_WF/TractorBeam/Shuttles/roswell.yml
   guidebookPage: null

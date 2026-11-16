@@ -16,3 +16,5 @@ ent-WFAsfMarineBanner = ASF Marine Corps banner
     .desc = The standard of the ASF Marine Corps.
 
 guide-entry-wf-asf = Astraeus Solar Federation
+guide-entry-wf-shipyard-asf-revelation = ASF Revelation
+guide-entry-wf-shipyard-asf-surveyor = ASF Surveyor
