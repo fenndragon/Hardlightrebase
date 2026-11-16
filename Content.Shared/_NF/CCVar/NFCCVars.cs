@@ -45,7 +45,7 @@ public sealed class NFCCVars
     /// Whether public transit is enabled.
     /// </summary>
     public static readonly CVarDef<bool> PublicTransit =
-        CVarDef.Create("nf14.publictransit.enabled", true, CVar.SERVERONLY);
+        CVarDef.Create("nf14.publictransit.enabled", false, CVar.SERVERONLY);
 
     /// <summary>
     /// The map to use for the public bus.
@@ -74,7 +74,7 @@ public sealed class NFCCVars
     /// The number of Trade Stations to spawn in every round
     /// </summary>
     public static readonly CVarDef<int> MarketStations =
-        CVarDef.Create("nf14.worldgen.market_stations", 1, CVar.SERVERONLY);
+        CVarDef.Create("nf14.worldgen.market_stations", 0, CVar.SERVERONLY);
 
     /// <summary>
     /// The number of Cargo Depots to spawn in every round
@@ -86,7 +86,7 @@ public sealed class NFCCVars
     /// The number of Optional Points Of Interest to spawn in every round
     /// </summary>
     public static readonly CVarDef<int> OptionalStations =
-        CVarDef.Create("nf14.worldgen.optional_stations", 6, CVar.SERVERONLY);
+        CVarDef.Create("nf14.worldgen.optional_stations", 0, CVar.SERVERONLY);
 
     /// <summary>
     /// The multiplier to add to distance spawning calculations for a smidge of server setting variance
@@ -128,7 +128,7 @@ public sealed class NFCCVars
     /// The maximum number of shuttles able to go on expedition at once.
     /// </summary>
     public static readonly CVarDef<int> SalvageExpeditionMaxActive =
-        CVarDef.Create("nf14.salvage.expedition_max_active", 15, CVar.REPLICATED);
+        CVarDef.Create("nf14.salvage.expedition_max_active", 5, CVar.REPLICATED);
 
     /// <summary>
     /// Cooldown for failed missions.
@@ -140,7 +140,7 @@ public sealed class NFCCVars
     /// Whether salvage expedition rewards is enabled.
     /// </summary>
     public static readonly CVarDef<bool> SalvageExpeditionRewardsEnabled =
-        CVarDef.Create("nf14.salvage.expedition_rewards_enabled", false, CVar.REPLICATED);
+        CVarDef.Create("nf14.salvage.expedition_rewards_enabled", true, CVar.REPLICATED);
 
     /*
      * Smuggling
@@ -246,6 +246,6 @@ public sealed class NFCCVars
     /// If true, every artifact node can only be activated once.
     /// </summary>
     public static readonly CVarDef<bool> XenoarchSingleUseNodes =
-        CVarDef.Create("nf14.xenoarch.single_use_nodes", true, CVar.REPLICATED);
+        CVarDef.Create("nf14.xenoarch.single_use_nodes", false, CVar.REPLICATED);
     // WOLFGATE END
 }
