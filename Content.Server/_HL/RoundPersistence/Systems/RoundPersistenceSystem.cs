@@ -1,3 +1,4 @@
+using System.Linq; // WOLFGATE(RoundPersistence): restore persistence collections through LINQ
 using System.Numerics;
 using System.Threading;
 using Content.Server.Administration.Systems;
@@ -219,7 +220,10 @@ public sealed class RoundPersistenceSystem : EntitySystem
             if (anyCleared)
             {
                 // Batch-refresh and broadcast once since round-boundary cleanup affects many players at once.
-                _admin.RefreshAndBroadcastPlayerList();
+                // WOLFGATE(RoundPersistence) START: refresh each connected admin's player list.
+                foreach (var session in _players.Sessions)
+                    _admin.UpdatePlayerList(session);
+                // WOLFGATE END
             }
 
             return anyCleared;
@@ -418,24 +422,15 @@ public sealed class RoundPersistenceSystem : EntitySystem
         {
             //Log.Info($"Station {stationName} has expedition data with {expeditionData.Missions.Count} missions");
 
-            // Force a console update to ensure it displays the station's expedition data
-            if (TryComp<SalvageExpeditionConsoleComponent>(consoleUid, out var console))
+            // WOLFGATE(RoundPersistence) START: refresh the console using the current UI-state API.
+            if (TryComp(consoleUid, out UserInterfaceComponent? uiComp))
             {
-                //Log.Info($"Forcing console update for {ToPrettyString(consoleUid)}");
-                // Use the salvage system to update this specific console
-                _salvageSystem.UpdateConsole(new Entity<SalvageExpeditionConsoleComponent>(consoleUid, console));
-
-                // Double-check: try to get the data through the salvage system's method
-                var salvageData = _salvageSystem.GetStationExpeditionData(consoleUid);
-                /*                 if (salvageData != null)
-                                {
-                                    Log.Info($"Salvage system found {salvageData.Missions.Count} missions for console after update");
-                                }
-                                else
-                                {
-                                    Log.Error($"Salvage system still can't find expedition data for console {ToPrettyString(consoleUid)} - this is the bug!");
-                                } */
+                _ui.SetUiState(
+                    (consoleUid, uiComp),
+                    SalvageConsoleUiKey.Expedition,
+                    GetExpeditionState((owningStation.Value, expeditionData)));
             }
+            // WOLFGATE END
         }
         /* else
         {
@@ -548,7 +543,7 @@ public sealed class RoundPersistenceSystem : EntitySystem
                 {
                     Index = mission.Index,
                     Seed = mission.Seed,
-                    Difficulty = mission.Difficulty,
+                    Difficulty = mission.Difficulty.ToString(), // WOLFGATE(RoundPersistence): persist the current enum representation
                     MissionType = (int)mission.MissionType
                 };
             }
@@ -560,8 +555,7 @@ public sealed class RoundPersistenceSystem : EntitySystem
                 NextIndex = expeditionData.NextIndex,
                 Cooldown = expeditionData.Cooldown,
                 NextOffer = expeditionData.NextOffer,
-                CanFinish = expeditionData.CanFinish,
-                CooldownTime = expeditionData.CooldownTime
+                CanFinish = expeditionData.CanFinish // WOLFGATE(RoundPersistence): persist only fields present in the current component
             };
         }
 
@@ -713,22 +707,29 @@ public sealed class RoundPersistenceSystem : EntitySystem
         {
             var expeditionComp = EnsureComp<SalvageExpeditionDataComponent>(stationUid);
             expeditionComp.Missions.Clear();
+            // WOLFGATE(RoundPersistence) START: validate persisted difficulty values before restoring missions.
             foreach (var (key, persistedMission) in expeditionData.Missions)
             {
+                if (!Enum.TryParse<DifficultyRating>(persistedMission.Difficulty, out var difficulty))
+                {
+                    Log.Warning($"Skipping persisted salvage mission {persistedMission.Index} for station {stationName}: unknown difficulty '{persistedMission.Difficulty}'.");
+                    continue;
+                }
+
                 var mission = new SalvageMissionParams
                 {
                     Index = persistedMission.Index,
                     Seed = persistedMission.Seed,
-                    Difficulty = persistedMission.Difficulty,
+                    Difficulty = difficulty,
                     MissionType = (SalvageMissionType)persistedMission.MissionType
                 };
                 expeditionComp.Missions[key] = mission;
             }
+            // WOLFGATE END
             expeditionComp.ActiveMission = expeditionData.ActiveMission;
             expeditionComp.NextIndex = expeditionData.NextIndex;
             expeditionComp.Cooldown = expeditionData.Cooldown;
             expeditionComp.CanFinish = expeditionData.CanFinish;
-            expeditionComp.CooldownTime = expeditionData.CooldownTime;
 
             // Important: Recalculate timing relative to current round time
             var currentTime = _timing.CurTime;
@@ -1062,15 +1063,16 @@ public sealed class RoundPersistenceSystem : EntitySystem
     {
         var component = expedition.Comp;
         var missions = component.Missions.Values.ToList();
+        // WOLFGATE(RoundPersistence) START: match the current six-field console state.
         return new SalvageExpeditionConsoleState(
             component.NextOffer,
             component.Claimed,
             component.Cooldown,
-            component.ActiveMission,
-            missions,
             component.CanFinish,
-            component.CooldownTime
+            component.ActiveMission,
+            missions
         );
+        // WOLFGATE END
     }
 
     /// <summary>

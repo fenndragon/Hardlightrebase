@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._HL.Cleanup; // WOLFGATE(Cleanup): rescue grid occupants before recursive deletion
 using Content.Server.Storage.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -16,6 +17,7 @@ public sealed partial class GridDeletionContainerSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ServerCleanupSystem _cleanup = default!; // WOLFGATE(Cleanup): preserve players on terminating grids
 
     // Track grids currently being processed to prevent re-entrancy issues.
     private readonly HashSet<EntityUid> _gridsBeingDeleted = new();
@@ -35,6 +37,7 @@ public sealed partial class GridDeletionContainerSystem : EntitySystem
         if (!_gridsBeingDeleted.Add(uid))
             return;
 
+        _cleanup.RescuePlayersFromTerminatingGrid(uid); // WOLFGATE(Cleanup): rescue occupants before child deletion
         _wfDeleteWatch.Started(uid); // WOLFGATE(Performance): logs grids that take long to delete
 
         try

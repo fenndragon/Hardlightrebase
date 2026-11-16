@@ -149,7 +149,7 @@ public sealed partial class StationSystem : SharedStationSystem
 
         foreach (var (id, gridIds) in dict)
         {
-            StationConfig stationConfig;
+            Content.Shared.Station.StationConfig stationConfig; // WOLFGATE(Station): consume the shared game-map station config
 
             if (ev.GameMap.Stations.ContainsKey(id))
                 stationConfig = ev.GameMap.Stations[id];
@@ -296,6 +296,20 @@ public sealed partial class StationSystem : SharedStationSystem
     /// <param name="name">Optional override for the station name.</param>
     /// <remarks>This is for ease of use, manually spawning the entity works just fine.</remarks>
     /// <returns>The initialized station.</returns>
+    // WOLFGATE(Station) START: adapt shared game-map configs without dropping grid overrides.
+    public EntityUid InitializeNewStation(Content.Shared.Station.StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
+    {
+        var serverConfig = new StationConfig
+        {
+            StationPrototype = stationConfig.StationPrototype.Id,
+            StationComponentOverrides = stationConfig.StationComponentOverrides,
+            gridComponents = stationConfig.gridComponents,
+        };
+
+        return InitializeNewStation(serverConfig, gridIds, name);
+    }
+    // WOLFGATE END
+
     public EntityUid InitializeNewStation(StationConfig stationConfig, IEnumerable<EntityUid>? gridIds, string? name = null)
     {
         // Use overrides for setup.

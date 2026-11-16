@@ -9,6 +9,17 @@
                 <BoxContainer Name="ChannelFiltersVBox" Orientation="Vertical" SeparationOverride="4"/>
             </BoxContainer>
             <BoxContainer Name="HighlightsVBox" MinWidth="120" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
+                <!-- WOLFGATE(ChatTabs) START: show generated name and job highlights read-only -->
+                <BoxContainer Name="AutoFillVBox" Orientation="Vertical" SeparationOverride="2" Visible="False">
+                    <Label Text="{Loc 'hud-chatbox-autofill-highlights'}"/>
+                    <PanelContainer>
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#262736"/>
+                        </PanelContainer.PanelOverride>
+                        <RichTextLabel Name="AutoFillLabel" Margin="5 5"/>
+                    </PanelContainer>
+                </BoxContainer>
+                <!-- WOLFGATE END -->
                 <Label Text="{Loc 'hud-chatbox-highlights'}"/>
                 <PanelContainer>
                     <!-- Begin custom background for TextEdit -->

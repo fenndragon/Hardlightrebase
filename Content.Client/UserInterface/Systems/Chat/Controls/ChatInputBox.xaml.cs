@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets; // WOLFGATE(ChatTabs)
 using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.UserInterface.Controls;
@@ -30,7 +31,7 @@ public class ChatInputBox : PanelContainer
         {
             Name = "ChannelSelector",
             ToggleMode = true,
-            StyleClasses = { ChannelSelectorItemButton.StyleClassChatSelectorOptionButton },
+            StyleClasses = { StyleNano.StyleClassChatChannelSelectorButton }, // WOLFGATE(ChatTabs)
             MinWidth = 75
         };
         Container.AddChild(ChannelSelector);

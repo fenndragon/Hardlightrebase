@@ -153,11 +153,7 @@ public sealed class HLCCVars
         CVarDef.Create("hardlight.radar.cache_ttl_ms", 400, CVar.SERVERONLY,
             desc: "Milliseconds a per-console assembled blip report is reused before re-running the entity lookup. Bounded by hardlight.radar.min_request_ms in practice; raise to amortize lookups across multiple viewers, lower for tighter freshness.");
 
-    /// <summary>
-    ///     Goobstation: Whether or not to allow mech weaponry to be used out of mechs.
-    /// </summary>
-    public static readonly CVarDef<bool> MechGunOutsideMech =
-        CVarDef.Create("mech.gun_outside_mech", false, CVar.SERVERONLY, desc: "If true, allows mech weapons to be used outside of mechs.");
+    // WOLFGATE: avoid duplicate CVar registration; GoobCVars already owns the mech gun setting.
 
     /// <summary>
     /// Starlight: Sends afk players to cryo.

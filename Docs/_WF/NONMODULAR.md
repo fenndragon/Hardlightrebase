@@ -144,6 +144,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - what the medical assembler makes
   - the assembler's microwave recipes became lathe recipes, which left the guidebook page empty
 - [`Content.Server/_NF/PublicTransit/PublicTransitSystem.cs`](../../Content.Server/_NF/PublicTransit/PublicTransitSystem.cs): announce the departure, as FTLToDock now flies and OnShuttleArrival announces the stop
+- [`Content.Server/_NF/RoundNotifications/Systems/RoundNotificationsSystem.cs`](../../Content.Server/_NF/RoundNotifications/Systems/RoundNotificationsSystem.cs): listen to the game ticker's round-start event
 - [`Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs`](../../Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs`](../../Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs): OwO accent removed
 - [`Content.Server/Administration/Systems/BwoinkSystem.cs`](../../Content.Server/Administration/Systems/BwoinkSystem.cs)
@@ -165,6 +166,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the speech style reaches a deaf listener's wrap too
   - a speech style decides the bold too
   - a voice mask's speech style wins, as it did before the language port dropped it here
+- [`Content.Server/CriminalRecords/Systems/CriminalRecordsSystem.cs`](../../Content.Server/CriminalRecords/Systems/CriminalRecordsSystem.cs): resolve the shared console component namespace
 - [`Content.Server/Damage/Systems/DamageOtherOnHitSystem.cs`](../../Content.Server/Damage/Systems/DamageOtherOnHitSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/DeviceLinking/Systems/SignalTimerSystem.cs`](../../Content.Server/DeviceLinking/Systems/SignalTimerSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/DeviceNetwork/Systems/SingletonDeviceNetServerSystem.cs`](../../Content.Server/DeviceNetwork/Systems/SingletonDeviceNetServerSystem.cs)
@@ -258,6 +260,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - see WfSetAudible
   - forget a finished track's audio entity, whose uid would otherwise still be networked
 - [`Content.Shared/_Goobstation/StationRadio/Systems/VinylPlayerSystem.cs`](../../Content.Shared/_Goobstation/StationRadio/Systems/VinylPlayerSystem.cs): forget a finished track's audio entity, whose uid would otherwise still be networked
+- [`Content.Shared/_HL/CCVar/HLCCVars.cs`](../../Content.Shared/_HL/CCVar/HLCCVars.cs): avoid duplicate CVar registration; GoobCVars already owns the mech gun setting.
 - [`Content.Shared/_Mono/Economy/SharedCreditReceiverSystem.cs`](../../Content.Shared/_Mono/Economy/SharedCreditReceiverSystem.cs): _log was never assigned, so every log line in TryCashPayment threw a NullReferenceException
 - [`Content.Shared/_Mono/ShipGuns/ShipGunClassComponent.cs`](../../Content.Shared/_Mono/ShipGuns/ShipGunClassComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Mono/Traits/Physical/BionicLegsComponent.cs`](../../Content.Shared/_Mono/Traits/Physical/BionicLegsComponent.cs): restore the licence header removed by Kill Spdx

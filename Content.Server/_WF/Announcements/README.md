@@ -50,5 +50,7 @@ text for both the server and the preview.
 ## Non-modular edits
 
 - [`Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml`](../../../Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml): roleplay announcement window next to the plain one
+- [`Content.Server/_NF/RoundNotifications/Systems/RoundNotificationsSystem.cs`](../../_NF/RoundNotifications/Systems/RoundNotificationsSystem.cs): allow only the configured role mention
+- [`Content.Server/Discord/WebhookMentions.cs`](../../Discord/WebhookMentions.cs): allow specific configured role mentions
 
 <!-- WOLFGATE-GENERATED END -->

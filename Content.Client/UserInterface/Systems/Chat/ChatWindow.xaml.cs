@@ -29,7 +29,7 @@ public sealed partial class ChatWindow : FancyWindow
     /// </summary>
     public void ConfigureForAdminChat()
     {
-        ChatBox.ChatInput.ChannelSelector.Select(ChatSelectChannel.Admin);
+        Chatbox.ChatInput.ChannelSelector.Select(ChatSelectChannel.Admin); // WOLFGATE(ChatTabs): use the generated chatbox control name
 
         var filter = Chatbox.ChatInput.FilterButton.Popup;
         foreach (var c in Enum.GetValues(typeof(ChatChannel)))

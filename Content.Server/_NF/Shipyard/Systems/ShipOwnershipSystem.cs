@@ -1,5 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Server._NF.Shipyard.Systems;
+using Content.Server._HL.ShuttleDeedTracking.Systems; // WOLFGATE(ShipAccess): initialize owner tracking from the ownership startup hook
+using Content.Server.Shuttles.Components; // WOLFGATE(ShipAccess): identify owned shuttle grids
 using Content.Shared._NF.Shipyard;
 using Content.Shared._NF.Shipyard.Components;
 using Robust.Server.Player;
@@ -58,6 +60,9 @@ public sealed partial class ShipOwnershipSystem : EntitySystem
 
     private void OnShipOwnershipStartup(EntityUid uid, ShipOwnershipComponent component, ComponentStartup args)
     {
+        if (HasComp<ShuttleComponent>(uid))
+            EntityManager.System<ShuttleDeedOwnerTrackingSystem>().StartTracking(uid); // WOLFGATE(ShipAccess): keep one startup subscriber for ship ownership
+
         // If player is already online, mark them as such
         if (_playerManager.TryGetSessionById(component.OwnerUserId, out var player))
         {

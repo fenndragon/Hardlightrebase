@@ -4,6 +4,7 @@ using Content.Server.StationEvents.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Map.Components;
 using Content.Shared.GameTicking;
+using RoundStartedEvent = Content.Shared.GameTicking.RoundStartedEvent; // WOLFGATE(Shipyard): use the event raised by the game ticker
 
 namespace Content.Server._NF.Shipyard.Systems;
 

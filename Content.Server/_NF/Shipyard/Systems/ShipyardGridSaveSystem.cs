@@ -5,6 +5,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.CriminalRecords.Systems;
+using Content.Server._HL.RoundPersistence.SaveBans; // WOLFGATE(Shipyard): strip save-restricted entities from saved ships
 //using Content.Server.PsionicsRecords.Systems;
 using Content.Server.Station.Systems; // VRS: station deletion on ship save (Triad PR #42)
 using Content.Server.StationRecords.Systems;
@@ -87,7 +88,8 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly CriminalRecordsConsoleSystem _criminalRecordsConsoles = default!;
+    [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!; // WOLFGATE(Shipyard): clear transient criminal-record state before saving
+    [Dependency] private readonly SaveBanApi _saveBanApi = default!; // WOLFGATE(Shipyard): strip save-restricted entities from saved ships
     [Dependency] private readonly GeneralStationRecordConsoleSystem _generalStationRecordConsoles = default!;
     //[Dependency] private readonly PsionicsRecordsConsoleSystem _psionicsRecordsConsoles = default!;
     [Dependency] private readonly StationSystem _station = default!; // VRS: station deletion on ship save (Triad PR #42)
@@ -236,13 +238,13 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             return;
         }
 
-        if (deed.ShuttleUid == null || !_entityManager.TryGetEntity(deed.ShuttleUid.Value, out var shuttleUid))
+        if (deed.ShuttleUid is not { } shuttleUid || TerminatingOrDeleted(shuttleUid)) // WOLFGATE(Shipyard): use the deed's EntityUid directly
         {
             //_sawmill.Warning("Shuttle deed does not reference a valid shuttle");
             return;
         }
 
-        if (!_gridQuery.TryComp(shuttleUid.Value, out var gridComponent))
+        if (!_gridQuery.TryComp(shuttleUid, out var gridComponent))
         {
             //_sawmill.Warning("Shuttle entity is not a valid grid");
             return;
@@ -258,7 +260,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
         //_sawmill.Info($"Starting ship save for {deed.ShuttleName ?? "Unknown_Ship"} owned by {playerSession.Name}");
 
         // Run save inline on the main thread to avoid off-thread ECS access.
-        var result = TrySaveGridAsTrackedShip(shuttleUid.Value, targetId, deed.ShuttleName ?? "Unknown_Ship", playerSession);
+        var result = TrySaveGridAsTrackedShip(shuttleUid, targetId, deed.ShuttleName ?? "Unknown_Ship", playerSession); // WOLFGATE(Shipyard): use the deed's EntityUid directly
 
         if (result == TrackedShipSaveResult.Failed)
         {
@@ -325,7 +327,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
 
         while (query.MoveNext(out var entityUid, out var deed))
         {
-            if (deed.ShuttleUid != null && _entityManager.TryGetEntity(deed.ShuttleUid.Value, out var deedShuttleEntity) && deedShuttleEntity == shuttleUid)
+            if (deed.ShuttleUid == shuttleUid) // WOLFGATE(Shipyard): compare the saved EntityUid directly
             {
                 deedsToRemove.Add(entityUid);
             }
@@ -451,9 +453,9 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             // HardLight: Remove components that fail serialization (e.g., player state) from entities on the grid.
             RemoveSerializationBlockingComponentsOnGrid(gridUid);
 
-            // VRS: Remove all entities marked SavingContraband (illegal-to-own or
-            // save-breaking machinery such as Mono datafarm chassis). Ported from Triad.
-            RemoveSavingContrabandEntitiesOnGrid(gridUid);
+            // WOLFGATE(Shipyard) START: remove entities forbidden from ship saves.
+            RemoveSaveRestrictedEntitiesOnGrid(gridUid);
+            // WOLFGATE END
 
             // HardLight: Preserve spray-painted visual prototype by copying runtime appearance data into a serialized component field.
             //StampSprayPaintedPrototypesOnGrid(gridUid);
@@ -526,22 +528,19 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
         }
     }
 
-    /// <summary>
-    /// VRS: Triad-port. Deletes any entity carrying <see cref="SavingContrabandComponent"/>
-    /// from the target grid before serialization. These entities are flagged as
-    /// either illegal-to-own or save-breaking (e.g. faction servers, datafarm cores)
-    /// and are removed instead of written into the blueprint.
-    /// </summary>
-    private void RemoveSavingContrabandEntitiesOnGrid(EntityUid gridUid)
+    // WOLFGATE(Shipyard) START: strip entities that the save-ban rules prohibit from ship saves.
+    private void RemoveSaveRestrictedEntitiesOnGrid(EntityUid gridUid)
     {
         var toRemove = new HashSet<EntityUid>();
 
-        var savingContraband = _entityManager.EntityQueryEnumerator<SavingContrabandComponent, TransformComponent>();
-        while (savingContraband.MoveNext(out var uid, out var _, out var xform))
+        var entities = _entityManager.EntityQueryEnumerator<TransformComponent>();
+        while (entities.MoveNext(out var uid, out var xform))
         {
             if (xform.GridUid != gridUid)
                 continue;
-            toRemove.Add(uid);
+
+            if (_saveBanApi.CheckForRestrictions(uid) is SaveBanApi.SaveBanResult.IsSaveRestricted)
+                toRemove.Add(uid);
         }
 
         foreach (var uid in toRemove)
@@ -549,11 +548,12 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             Del(uid);
         }
     }
+    // WOLFGATE END
 
     private void ClearTransientRecordsConsoleState(EntityUid gridUid)
     {
         _generalStationRecordConsoles.ClearTransientStateOnGrid(gridUid);
-        _criminalRecordsConsoles.ClearTransientStateOnGrid(gridUid);
+        _criminalRecords.ClearTransientStateOnGrid(gridUid); // WOLFGATE(Shipyard): clear records through the owning system
         //_psionicsRecordsConsoles.ClearTransientStateOnGrid(gridUid);
     }
 

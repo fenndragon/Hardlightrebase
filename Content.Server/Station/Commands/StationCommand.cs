@@ -71,11 +71,11 @@ public sealed class StationsCommand : ToolshedCommand
         => input.SelectMany(Grids);
 
     [CommandImplementation("config")]
-    public StationConfig? Config([PipedArgument] EntityUid input)
+    public Content.Shared.Station.StationConfig? Config([PipedArgument] EntityUid input) // WOLFGATE(Station): expose the shared config stored on station data
         => Comp<StationDataComponent>(input).StationConfig;
 
     [CommandImplementation("config")]
-    public IEnumerable<StationConfig?> Config([PipedArgument] IEnumerable<EntityUid> input)
+    public IEnumerable<Content.Shared.Station.StationConfig?> Config([PipedArgument] IEnumerable<EntityUid> input) // WOLFGATE(Station): match the shared config return type
         => input.Select(Config);
 
     [CommandImplementation("addgrid")]

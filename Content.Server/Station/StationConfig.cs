@@ -14,5 +14,8 @@ public sealed partial class StationConfig
 
     [DataField("components", required: true)]
     public ComponentRegistry StationComponentOverrides = default!;
+
+    [DataField]
+    public ComponentRegistry gridComponents = new(); // WOLFGATE(Station): preserve grid components from shared map configs
 }
 

@@ -302,8 +302,7 @@ namespace Content.Client.Administration.Systems
         {
             // Reuse the channel ID as the 'true sender'.
             // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.
-            RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text, playSound: playSound, adminOnly: adminOnly, category: category));
-            // WOLFGATE END
+            RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text, playSound: playSound, adminOnly: adminOnly, category: category)); // WOLFGATE(EventStaff): include the selected ahelp category
             SendInputTextUpdated(channelId, false);
         }
 

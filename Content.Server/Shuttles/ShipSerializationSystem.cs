@@ -1,3 +1,4 @@
+using System.Linq; // WOLFGATE(Shipyard): use LINQ for ship component and tile snapshots
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization.Manager;
@@ -17,6 +18,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Console;
 using Content.Shared.Decals;
 using Content.Server.Decals;
+using Content.Server.Labels; // WOLFGATE(Shipyard): restore serialized entity labels
 using static Content.Shared.Decals.DecalGridComponent;
 using Robust.Shared.Configuration;
 //using Content.Server._DV.Body.Systems; // HardLight edit - feather colors
@@ -60,7 +62,6 @@ namespace Content.Server.Shuttles.Save
     public sealed class ShipSerializationSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        //[Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
         [Dependency] private readonly MapSystem _map = default!;
@@ -79,7 +80,7 @@ namespace Content.Server.Shuttles.Save
         [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
         [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
-        //[Dependency] private readonly LabelSystem _labelSystem = default!;
+        [Dependency] private LabelSystem _labelSystem = default!; // WOLFGATE(Shipyard): restore serialized labels through their system
         [Dependency] private readonly ChameleonClothingSystem _chameleonSystem = default!;
         [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayersSystem = default!;
         [Dependency] private readonly ToggleableClothingSystem _toggleableClothingSystem = default!;
@@ -675,8 +676,6 @@ namespace Content.Server.Shuttles.Save
             // CVar flags
             var verbose = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveVerbose);
             var excludeVending = _configManager.GetCVar(Content.Shared.HL.CCVar.HLCCVars.ExcludeVendingInShipSave);
-            var progressInterval = _configManager.GetCVar(Content.Shared.CCVar.CCVars.ShipyardSaveProgressInterval);
-            if (progressInterval < 0) progressInterval = 0;
 
             var gridTransform = _entityManager.GetComponent<TransformComponent>(gridId);
             var originalGridRotation = gridTransform.LocalRotation; // Preserve rotation; don't zero it out here.
@@ -1182,7 +1181,7 @@ namespace Content.Server.Shuttles.Save
             // Primary grid entities
             // Primary grid tiles
 
-            var newGrid = _mapManager.CreateGridEntity(targetMap);
+            var newGrid = _map.CreateGridEntity(targetMap); // WOLFGATE(Shipyard): create restored grids through MapSystem
             // Ensure the reconstructed grid participates in physics so docking can create an actual joint.
             // Without a PhysicsComponent on the grid, DockingSystem.Dock will set DockedWith but skip joint creation.
             // Ensure a PhysicsComponent exists so DockingSystem can create a weld joint between grids.
@@ -1611,7 +1610,7 @@ namespace Content.Server.Shuttles.Save
             _sawmill.Info($"Created new map {mapId}");
 
             // Create grid entity and get its MapGridComponent without using the obsolete Component.Owner
-            var newGridEntity = _mapManager.CreateGridEntity(mapId);
+            var newGridEntity = _map.CreateGridEntity(mapId).Owner; // WOLFGATE(Shipyard): create restored grids through MapSystem
             var newGrid = _entityManager.GetComponent<MapGridComponent>(newGridEntity);
             // Ensure the new grid has physics so any subsequent docking attaches a weld joint properly.
             _entityManager.EnsureComponent<Robust.Shared.Physics.Components.PhysicsComponent>(newGridEntity);
@@ -2428,7 +2427,8 @@ namespace Content.Server.Shuttles.Save
             _paintSystem.UpdateAppearance(uid, comp);
         } */
 
-        /* private ComponentData? SerializeLabelComponent(LabelComponent comp)
+         // WOLFGATE(Shipyard) START: preserve label text across custom ship serialization.
+         private ComponentData? SerializeLabelComponent(LabelComponent comp)
         {
             if (string.IsNullOrEmpty(comp.CurrentLabel))
                 return null;
@@ -2446,7 +2446,8 @@ namespace Content.Server.Shuttles.Save
             var text = labelObj?.ToString();
             if (!string.IsNullOrEmpty(text))
                 _labelSystem.Label(uid, text);
-        } */
+        }
+        // WOLFGATE END
 
         private ComponentData? SerializePaperComponent(PaperComponent comp)
         {

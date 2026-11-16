@@ -17,6 +17,8 @@ using Content.Server._NF.Bank;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Station.Components; // WOLFGATE(Administration): access station grid data in ship admin handlers
+using Content.Shared.Station.Components; // WOLFGATE(Administration): resolve the shared station data component
 using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Shared._WF.AHelpResolve; // WOLFGATE(AHelpResolve)
@@ -35,6 +37,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Access.Components;
 //using Content.Shared._HL.Rescue.Rescue;
 using Content.Server.Shuttles.Save;
+using Content.Server._NF.Shipyard.Systems; // WOLFGATE(Administration): route deed changes through the shipyard system
 using Content.Server.Access.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -83,6 +86,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly TurfSystem _turf = default!;
         [Dependency] private readonly ShipSaveSystem _shipSave = default!;
+        [Dependency] private ShipyardSystem _shipyard = default!; // WOLFGATE(Administration): use the access-authorized deed API
         //[Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly SharedIdCardSystem _idCard = default!;
@@ -1851,7 +1855,7 @@ namespace Content.Server.Administration.Systems
 
             while (query.MoveNext(out var uid, out var deed, out _))
             {
-                if (!string.Equals(deed.OwnerUserId, ownerKey, StringComparison.Ordinal))
+                if (!HasShipOwner(uid, ownerKey)) // WOLFGATE(Administration): authorize ship actions from ShipOwnershipComponent
                     continue;
 
                 var inFtl = false;
@@ -2443,7 +2447,7 @@ namespace Content.Server.Administration.Systems
             var query = EntityQueryEnumerator<ShuttleDeedComponent, ShuttleComponent>();
             while (query.MoveNext(out var uid, out var deed, out var shuttle))
             {
-                if (!string.Equals(deed.OwnerUserId, ownerKey, StringComparison.Ordinal))
+                if (!HasShipOwner(uid, ownerKey)) // WOLFGATE(Administration): authorize ship actions from ShipOwnershipComponent
                     continue;
                 targetUid = uid;
                 targetDeed = deed;
@@ -2600,7 +2604,7 @@ namespace Content.Server.Administration.Systems
             var query = EntityQueryEnumerator<ShuttleDeedComponent, ShuttleComponent>();
             while (query.MoveNext(out var uid, out var deed, out _))
             {
-                if (!string.Equals(deed.OwnerUserId, ownerKey, StringComparison.Ordinal))
+                if (!HasShipOwner(uid, ownerKey)) // WOLFGATE(Administration): authorize ship actions from ShipOwnershipComponent
                     continue;
 
                 shipUid = uid;
@@ -2785,7 +2789,7 @@ namespace Content.Server.Administration.Systems
             var query = EntityQueryEnumerator<ShuttleDeedComponent, ShuttleComponent>();
             while (query.MoveNext(out var uid, out var deed, out _))
             {
-                if (!string.Equals(deed.OwnerUserId, ownerKey, StringComparison.Ordinal))
+                if (!HasShipOwner(uid, ownerKey)) // WOLFGATE(Administration): authorize ship actions from ShipOwnershipComponent
                     continue;
 
                 shipUid = uid;
@@ -2975,7 +2979,11 @@ namespace Content.Server.Administration.Systems
                     GetNetEntity(shipUid),
                     name,
                     deed.ShuttleOwner,
-                    deed.OwnerUserId));
+                    // WOLFGATE(Administration) START: report the authoritative ship owner ID.
+                    TryComp<ShipOwnershipComponent>(shipUid, out var ownership)
+                        ? ownership.OwnerUserId.ToString()
+                        : string.Empty));
+                    // WOLFGATE END
             }
 
             ships.Sort((a, b) => string.Compare(a.ShipName, b.ShipName, StringComparison.OrdinalIgnoreCase));
@@ -3033,23 +3041,26 @@ namespace Content.Server.Administration.Systems
                 return;
             }
 
-            // Write the deed onto the ID card, mirroring how the shipyard grants deeds.
-            var cardDeed = EnsureComp<ShuttleDeedComponent>(idCard.Owner);
-            cardDeed.ShuttleUid = GetNetEntity(shipUid);
-            cardDeed.ShuttleName = shipDeed.ShuttleName;
-            cardDeed.ShuttleNameSuffix = shipDeed.ShuttleNameSuffix;
-            cardDeed.ShuttleOwner = targetSession.Name;
-            cardDeed.OwnerUserId = targetKey;
-            Dirty(idCard.Owner, cardDeed);
-
-            // Update the ship's own deed to reflect the new owner.
-            shipDeed.ShuttleOwner = targetSession.Name;
-            shipDeed.OwnerUserId = targetKey;
-            Dirty(shipUid, shipDeed);
+            // WOLFGATE(Administration) START: reassign through the shipyard system's authorized deed API.
+            if (!_shipyard.TryAssignDeed(shipUid, idCard.Owner, targetSession, null, shipName))
+            {
+                RaiseNetworkEvent(new AssignShipDeedResponseMessage(targetKey, false, "assign-failed"), session.Channel);
+                return;
+            }
+            // WOLFGATE END
 
             _sawmill.Info($"Admin {session.Name} ({session.UserId}) assigned deed for ship {shipName} ({GetNetEntity(shipUid)}) to player {targetKey} ({targetSession.Name}).");
             RaiseNetworkEvent(new AssignShipDeedResponseMessage(targetKey, true, null, shipName), session.Channel);
         }
+
+        // WOLFGATE(Administration) START: resolve ownership from the ship's authoritative component.
+        private bool HasShipOwner(EntityUid shipUid, string ownerKey)
+        {
+            return TryParseUserId(ownerKey, out var ownerGuid)
+                   && TryComp<ShipOwnershipComponent>(shipUid, out var ownership)
+                   && ownership.OwnerUserId == new NetUserId(ownerGuid);
+        }
+        // WOLFGATE END
 
         private bool TryGetMainStation(out EntityUid station)
         {
@@ -3133,7 +3144,7 @@ namespace Content.Server.Administration.Systems
             if (!TryComp<StationDataComponent>(station, out var stationData))
                 return false;
 
-            var largestGrid = _station.GetLargestGrid(stationData);
+            var largestGrid = _station.GetLargestGrid((station, stationData)); // WOLFGATE(Administration): pass station data with its owning entity
             if (largestGrid is { } gridUid && TryFindGridFallbackPosition(gridUid, out coords))
                 return true;
 

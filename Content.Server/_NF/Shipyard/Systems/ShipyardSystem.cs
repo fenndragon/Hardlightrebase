@@ -203,6 +203,23 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
     }
 
+    // WOLFGATE(Shipyard) START: load ship YAML received from the console UI.
+    private void OnLoadMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleLoadMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        if (!TryPurchaseShuttleFromYamlData(uid, args.YamlData, out _))
+        {
+            _sawmill.Warning($"Shipyard console failed to load a ship at {ToPrettyString(uid)}.");
+            ConsolePopup(player, Loc.GetString("shipyard-console-load-failed"));
+            return;
+        }
+
+        ConsolePopup(player, Loc.GetString("shipyard-console-load-success"));
+    }
+    // WOLFGATE END
+
     private void SetShipyardEnabled(bool value)
     {
         if (_enabled == value)
@@ -257,49 +274,51 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     /// <param name="stationUid">The ID of the station to dock the shuttle to</param>
     /// <param name="shuttlePath">The path to the shuttle file to load. Must be a grid file!</param>
     /// <param name="shuttleEntityUid">The EntityUid of the shuttle that was purchased</param>
+    // WOLFGATE(Shipyard) START: use current entity and station APIs for shuttle purchases.
     public bool TryPurchaseShuttle(EntityUid stationUid, ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
     {
         if (!TryComp<StationDataComponent>(stationUid, out var stationData)
-            || !TryAddShuttle(shuttlePath, out var shuttleGrid)
-            || !TryComp<ShuttleComponent>(shuttleGrid, out var shuttleComponent))
+            || !TryAddShuttle(shuttlePath, out var shuttleGrid))
         {
             shuttleEntityUid = null;
             return false;
         }
 
-        var price = _pricing.AppraiseGrid(shuttleGrid.Value, null);
-        var targetGrid = _station.GetLargestGrid((stationUid, stationData));
         var grid = shuttleGrid.Value;
         if (!TryComp<ShuttleComponent>(grid, out var shuttleComponent))
         {
-            QueueDel(shuttleGrid);
+            QueueDel(grid);
             shuttleEntityUid = null;
             return false;
         }
+
+        var price = _pricing.AppraiseGrid(grid, null);
+        var targetGrid = _station.GetLargestGrid((stationUid, stationData));
         if (targetGrid == null) //how are we even here with no station grid
         {
-            QueueDel(shuttleGrid);
+            QueueDel(grid);
             shuttleEntityUid = null;
             return false;
         }
 
         _sawmill.Info($"Shuttle {shuttlePath} was purchased at {ToPrettyString(stationUid)} for {price:f2}");
-        EnsureComp<Robust.Shared.Physics.Components.PhysicsComponent>(shuttleGrid);
-        EnsureComp<ShuttleComponent>(shuttleGrid);
-        var iff = EnsureComp<IFFComponent>(shuttleGrid);
-        // Add new grid to the same station as the console's grid (for IFF / ownership), if any
-        if (TryComp<StationMemberComponent>(consoleXform.GridUid, out var stationMember))
+        EnsureComp<Robust.Shared.Physics.Components.PhysicsComponent>(grid);
+        EnsureComp<IFFComponent>(grid);
+        // Add the new grid to the station that supplied the target grid.
+        if (TryComp<StationMemberComponent>(targetGrid.Value, out var stationMember))
         {
-            _station.AddGridToStation(stationMember.Station, shuttleGrid);
+            _station.AddGridToStation(stationMember.Station, grid);
         }
+
         var ev = new ShipBoughtEvent();
-        RaiseLocalEvent(shuttleGrid.Value, ev);
+        RaiseLocalEvent(grid, ev);
         //can do TryFTLDock later instead if we need to keep the shipyard map paused
-        _shuttle.TryFTLDock(shuttleGrid.Value, shuttleComponent, targetGrid.Value);
+        _shuttle.TryFTLDock(grid, shuttleComponent, targetGrid.Value);
         QueueShipyardMapCleanupIfEmpty(); // HardLight
-        shuttleEntityUid = shuttleGrid;
+        shuttleEntityUid = grid;
         return true;
     }
+    // WOLFGATE END
 
     public bool TryPurchaseShuttleFromFile(EntityUid consoleUid, ResPath shuttlePath, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
     {
@@ -682,21 +701,12 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         return true;
     }
 
-    // HardLight: route shipyard purchase docking through the capped variant of TryFTLDock.
-    // The full dock-pair search becomes pathological on large stations + large ships and visibly
-    // freezes the server during a purchase. The capped search samples a spatially-spread, priority-
-    // tag-preserving subset of docks per side and falls back to the full search inside the docking
-    // system if no valid config is found, so this can never fail a purchase that would have
-    // succeeded before. Disabled by setting hardlight.shipyard.purchase_dock_cap_enabled = false.
+    // WOLFGATE(Shipyard) START: use the current docking API for loaded ships.
     private bool TryFTLDockForPurchase(EntityUid shuttleUid, ShuttleComponent shuttleComponent, EntityUid targetGrid)
     {
-        if (!_configManager.GetCVar(HLCCVars.ShipyardPurchaseDockCapEnabled))
-            return _shuttle.TryFTLDock(shuttleUid, shuttleComponent, targetGrid);
-
-        var maxShuttleDocks = _configManager.GetCVar(HLCCVars.ShipyardPurchaseDockCapShuttle);
-        var maxGridDocks = _configManager.GetCVar(HLCCVars.ShipyardPurchaseDockCapGrid);
-        return _shuttle.TryFTLDock(shuttleUid, shuttleComponent, targetGrid, maxShuttleDocks, maxGridDocks);
+        return _shuttle.TryFTLDock(shuttleUid, shuttleComponent, targetGrid);
     }
+    // WOLFGATE END
 
     /// <summary>
     /// Removes grouped entities whose prototypes no longer exist so older ship saves still have a chance to load.

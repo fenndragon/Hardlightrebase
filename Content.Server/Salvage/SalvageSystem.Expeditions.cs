@@ -306,6 +306,16 @@ public sealed partial class SalvageSystem
         }
     }
 
+    // WOLFGATE(RoundPersistence) START: expose mission regeneration for persisted expedition restoration.
+    /// <summary>
+    /// Replaces the expedition's mission list with a freshly generated set.
+    /// </summary>
+    public void ForceGenerateMissions(SalvageExpeditionDataComponent component)
+    {
+        GenerateMissions(component);
+    }
+    // WOLFGATE END
+
     private SalvageExpeditionConsoleState GetState(SalvageExpeditionDataComponent component)
     {
         var missions = component.Missions.Values.ToList();

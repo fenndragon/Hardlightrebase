@@ -68,7 +68,6 @@ public sealed class ServerCleanupSystem : EntitySystem
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("hl.cleanup");
-        SubscribeLocalEvent<MapGridComponent, EntityTerminatingEvent>(OnGridTerminating);
 
         _sawmill.Info("HardLight Server Cleanup System initialized.");
     }
@@ -343,11 +342,9 @@ public sealed class ServerCleanupSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
-    /// When a grid is about to be deleted (from orphaned grid cleanup, shipyard save/delete, or any other source), this handler checks for players on/inside the grid
-    /// </summary>
-
-    private void OnGridTerminating(EntityUid gridUid, MapGridComponent grid, ref EntityTerminatingEvent args)
+    // WOLFGATE(Cleanup) START: run player rescue from the single grid-termination subscriber.
+    /// <summary>Rescues active players before a grid's contents are deleted.</summary>
+    public void RescuePlayersFromTerminatingGrid(EntityUid gridUid)
     {
         var rescued = 0;
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -406,6 +403,7 @@ public sealed class ServerCleanupSystem : EntitySystem
             _sawmill.Warning($"Player protection: rescued {rescued} player(s) from grid {ToPrettyString(gridUid)} before deletion.");
         }
     }
+    // WOLFGATE END
 
     /// <summary>
     /// Relocates a player entity to a safe location when their current grid is being deleted.

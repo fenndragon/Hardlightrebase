@@ -12,6 +12,7 @@ public sealed partial class AdminMenuWindow : DefaultWindow
 {
     public event Action? OnDisposed;
 
+    // WOLFGATE(Administration) START: expose controls from the consolidated admin tools tab.
     public PlayerTab PlayerTabControl => AdminToolsControl.PlayerTabControl;
     public ObjectsTab ObjectsTabControl => AdminToolsControl.ObjectsTabControl;
 
@@ -21,23 +22,6 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         SetSize = new Vector2(1040, 680);
         Title = Loc.GetString("admin-menu-title");
         RobustXamlLoader.Load(this);
-        MasterTabContainer.SetTabTitle((int) TabIndex.Admin, Loc.GetString("admin-menu-admin-tab"));
-        //MasterTabContainer.SetTabTitle((int) TabIndex.Adminbus, Loc.GetString("admin-menu-adminbus-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Atmos, Loc.GetString("admin-menu-atmos-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Round, Loc.GetString("admin-menu-round-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Server, Loc.GetString("admin-menu-server-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.PanicBunker, Loc.GetString("admin-menu-panic-bunker-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Players, Loc.GetString("admin-menu-players-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Objects, Loc.GetString("admin-menu-objects-tab"));
-        MasterTabContainer.SetTabTitle((int) TabIndex.Wolfgate, Loc.GetString("admin-menu-wolfgate-tab")); // WOLFGATE(Administration)
-        MasterTabContainer.OnTabChanged += OnTabChanged;
-    }
-
-    private void OnTabChanged(int tabIndex)
-    {
-        var tabEnum = (TabIndex)tabIndex;
-        if (tabEnum == TabIndex.Objects)
-            ObjectsTabControl.RefreshObjectList();
     }
 
     protected override void Dispose(bool disposing)
@@ -46,17 +30,5 @@ public sealed partial class AdminMenuWindow : DefaultWindow
         base.Dispose(disposing);
         OnDisposed = null;
     }
-
-    private enum TabIndex
-    {
-        Admin = 0,
-        Adminbus,
-        Atmos,
-        Round,
-        Server,
-        PanicBunker,
-        Players,
-        Objects,
-        Wolfgate, // WOLFGATE(Administration)
-    }
+    // WOLFGATE END
 }

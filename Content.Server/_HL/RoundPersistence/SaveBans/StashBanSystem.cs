@@ -1,3 +1,4 @@
+using System.Linq; // WOLFGATE(Shipyard): check nested restrictions before allowing stash insertion
 using Content.Server.Popups;
 using Content.Shared._HL.RoundPersistence.SaveBans;
 using Content.Shared._HL.Shipyard;

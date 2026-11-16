@@ -153,14 +153,26 @@ Audio.
 
 ## Non-modular edits
 
-- [`Content.Client/Administration/UI/AdminMenuWindow.xaml`](../../../Content.Client/Administration/UI/AdminMenuWindow.xaml): admin tooling tab (xmlns:wfTabs above)
-- [`Content.Client/Administration/UI/AdminMenuWindow.xaml.cs`](../../../Content.Client/Administration/UI/AdminMenuWindow.xaml.cs)
+- [`Content.Client/Administration/UI/AdminMenuWindow.xaml`](../../../Content.Client/Administration/UI/AdminMenuWindow.xaml): host the consolidated admin tools and expose its controls
+- [`Content.Client/Administration/UI/AdminMenuWindow.xaml.cs`](../../../Content.Client/Administration/UI/AdminMenuWindow.xaml.cs): expose controls from the consolidated admin tools tab.
 - [`Content.Client/Administration/UI/SetOutfit/SetOutfitEui.cs`](../../../Content.Client/Administration/UI/SetOutfit/SetOutfitEui.cs): set outfit uses the Spawn as Outfit picker in set mode
+- [`Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml`](../../../Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml): retain Wolfgate tools in the consolidated admin tabs
+- [`Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml.cs`](../../../Content.Client/Administration/UI/Tabs/AdminTab/AdminTab.xaml.cs)
 - [`Content.Client/Shuttles/BUI/RadarConsoleBoundUserInterface.cs`](../../../Content.Client/Shuttles/BUI/RadarConsoleBoundUserInterface.cs)
   - the scanner window an admin in a ghost gets instead
   - an admin in a ghost gets the resizable, far-zooming scanner
 - [`Content.Server/Administration/Commands/FollowCommand.cs`](../../Administration/Commands/FollowCommand.cs): aghost before orbiting
 - [`Content.Server/Administration/Managers/AdminManager.cs`](../../Administration/Managers/AdminManager.cs): the client refuses a command missing from this list
+- [`Content.Server/Administration/Systems/BwoinkSystem.cs`](../../Administration/Systems/BwoinkSystem.cs)
+  - access station grid data in ship admin handlers
+  - resolve the shared station data component
+  - route deed changes through the shipyard system
+  - use the access-authorized deed API
+  - authorize ship actions from ShipOwnershipComponent
+  - report the authoritative ship owner ID.
+  - reassign through the shipyard system's authorized deed API.
+  - resolve ownership from the ship's authoritative component.
+  - pass station data with its owning entity
 - [`Content.Server/Administration/UI/AdminCameraEui.cs`](../../Administration/UI/AdminCameraEui.cs): aghost before orbiting
 - [`Content.Server/RoundEnd/RoundEndSystem.cs`](../../RoundEnd/RoundEndSystem.cs): no auto-call while delayroundend holds the round
 - [`Content.Server/Shuttles/Systems/EmergencyShuttleSystem.Console.cs`](../../Shuttles/Systems/EmergencyShuttleSystem.Console.cs)

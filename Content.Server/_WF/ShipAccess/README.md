@@ -206,6 +206,13 @@ shut out of a helm that ended up on a broken-off section.
 - [`Content.Client/UserInterface/Controls/MapGridControl.xaml.cs`](../../../Content.Client/UserInterface/Controls/MapGridControl.xaml.cs)
   - virtual, so the door map can centre its drawing in a control of any size
   - virtual, so the door map can fit the hull to its own shorter side
+- [`Content.Server/_HL/ShuttleDeedTracking/Systems/ShuttleDeedOwnerTrackingSystem.cs`](../../_HL/ShuttleDeedTracking/Systems/ShuttleDeedOwnerTrackingSystem.cs)
+  - initialize tracking from the ship ownership startup hook.
+  - use the typed network user id supplied by ship ownership.
+- [`Content.Server/_NF/Shipyard/Systems/ShipOwnershipSystem.cs`](../../_NF/Shipyard/Systems/ShipOwnershipSystem.cs)
+  - initialize owner tracking from the ownership startup hook
+  - identify owned shuttle grids
+  - keep one startup subscriber for ship ownership
 - [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs): the ship link is networked, and this card may already have held a deed
 - [`Content.Server/_NF/ShuttleRecords/ShuttleRecordsSystem.Console.cs`](../../_NF/ShuttleRecords/ShuttleRecordsSystem.Console.cs): the ship link is networked, and this card may already have held a deed
 - [`Content.Server/Administration/Systems/AdminVerbSystem.Tools.cs`](../../Administration/Systems/AdminVerbSystem.Tools.cs): all access is not a key to every locked ship

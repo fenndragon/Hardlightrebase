@@ -18,6 +18,7 @@ using Content.Server._NF.GameRule;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
+using Content.Shared.Station.Components; // WOLFGATE(RoundSetup): use the shared station data component
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -566,12 +567,12 @@ namespace Content.Server.GameTicking
                     if (xform.MapID != DefaultMap)
                         return;
 
-                    HashSet<Entity<ShuttleConsoleComponent>> consoles = new();
-                    _lookup.GetChildEntities(shuttleUid, consoles);
-                    if (consoles.Any(entity => !entity.Comp.CanFTL))
+                    // WOLFGATE(RoundSetup) START: use the current shuttle flight eligibility API.
+                    if (!_shuttleSystem.CanFTL(shuttleUid, out _))
                     {
                         return;
                     }
+                    // WOLFGATE END
 
                     var shuttleRadius = 32f;
                     if (TryComp<MapGridComponent>(shuttleUid, out var grid))

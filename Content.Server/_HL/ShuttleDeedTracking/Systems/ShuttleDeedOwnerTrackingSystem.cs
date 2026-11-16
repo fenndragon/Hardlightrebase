@@ -31,18 +31,14 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("shuttle-deed-tracking");
 
-        SubscribeLocalEvent<ShuttleDeedComponent, ComponentStartup>(OnDeedStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
     }
 
-    private void OnDeedStartup(EntityUid uid, ShuttleDeedComponent component, ComponentStartup args)
+    // WOLFGATE(ShipAccess) START: initialize tracking from the ship ownership startup hook.
+    public void StartTracking(EntityUid uid)
     {
         // Only track shuttles (grids with ShuttleComponent), not ID cards
         if (!HasComp<ShuttleComponent>(uid))
-            return;
-
-        // Only track if we have an owner's UserId
-        if (string.IsNullOrEmpty(component.OwnerUserId))
             return;
 
         // Add the tracking component to this shuttle
@@ -50,6 +46,7 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
         tracking.NextCheck = _timing.CurTime + _checkInterval;
         tracking.InactiveCheckCount = 0;
     }
+    // WOLFGATE END
 
     private void OnRoundCleanup(RoundRestartCleanupEvent ev)
     {
@@ -66,9 +63,9 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
         base.Update(frameTime);
 
         var currentTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<ShuttleDeedOwnerTrackingComponent, ShuttleDeedComponent, ShuttleComponent>();
+        var query = EntityQueryEnumerator<ShuttleDeedOwnerTrackingComponent, ShipOwnershipComponent, ShuttleComponent>();
 
-        while (query.MoveNext(out var uid, out var tracking, out var deed, out _))
+        while (query.MoveNext(out var uid, out var tracking, out var ownership, out _))
         {
             // Skip if it's not time to check yet
             if (currentTime < tracking.NextCheck)
@@ -78,7 +75,7 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
             tracking.NextCheck = currentTime + _checkInterval;
 
             // Check if the deed owner's session is active
-            var isOwnerActive = IsOwnerSessionActive(deed.OwnerUserId);
+            var isOwnerActive = IsOwnerSessionActive(ownership.OwnerUserId);
 
             if (isOwnerActive)
             {
@@ -110,17 +107,9 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
     /// Checks if the owner's session is currently active.
     /// Returns true if the owner is online and has an active session (not disconnected or zombie).
     /// </summary>
-    private bool IsOwnerSessionActive(string? ownerUserId)
+    // WOLFGATE(ShipAccess) START: use the typed network user id supplied by ship ownership.
+    private bool IsOwnerSessionActive(NetUserId userId)
     {
-        if (string.IsNullOrEmpty(ownerUserId))
-            return false;
-
-        // Try to parse the UserId from string (stored as Guid string)
-        if (!Guid.TryParse(ownerUserId, out var guidValue))
-            return false;
-
-        var userId = new NetUserId(guidValue);
-
         // Check if there's an active session for this user
         if (!_playerManager.TryGetSessionById(userId, out var session))
             return false;
@@ -132,4 +121,5 @@ public sealed class ShuttleDeedOwnerTrackingSystem : EntitySystem
         // Session is connected and active
         return true;
     }
+    // WOLFGATE END
 }

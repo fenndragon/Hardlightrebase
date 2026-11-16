@@ -1,11 +1,11 @@
+using System.Linq; // WOLFGATE(Shipyard): evaluate restrictions while saving room grids
 using Content.Server.Popups;
 using Content.Server.Shuttles.Save;
 using Content.Shared._HL.Rooms;
-using Content.Shared.SprayPainter.Components;
-using Content.Shared.SprayPainter.Prototypes;
 using Content.Shared.Interaction;
 using Content.Server.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mind; // WOLFGATE(Shipyard): subscribe to mind removal without colliding with respawn handling
 using Content.Shared.Shuttles.Save;
 using Content.Shared.Timing;
 using Content.Shared.Decals;
@@ -57,7 +57,7 @@ public sealed class RoomGridSpawnerSystem : EntitySystem
 
         SubscribeLocalEvent<RoomGridSpawnerConsoleComponent, InteractHandEvent>(OnConsoleInteract);
         SubscribeLocalEvent<RoomGridSpawnerConsoleComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
-        SubscribeLocalEvent<MindContainerComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<MindComponent, MindGotRemovedEvent>(OnMindGotRemoved); // WOLFGATE(Shipyard): avoid conflicting with the respawn system's MindContainer event subscription
         SubscribeNetworkEvent<SendRoomGridDataMessage>(OnRoomGridData);
     }
 
@@ -236,8 +236,10 @@ public sealed class RoomGridSpawnerSystem : EntitySystem
         _popup.PopupEntity("Room loaded.", consoleEntity, args.SenderSession);
     }
 
-    private void OnMindRemoved(EntityUid uid, MindContainerComponent component, MindRemovedMessage args)
+    // WOLFGATE(Shipyard) START: handle room persistence after the mind leaves its container.
+    private void OnMindGotRemoved(EntityUid mindUid, MindComponent mindComponent, MindGotRemovedEvent args)
     {
+        var uid = args.Container.Owner;
         NetUserId? userId = args.Mind.Comp.UserId;
         if (userId == null && _player.TryGetSessionByEntity(uid, out var playerSession))
             userId = playerSession.UserId;
@@ -252,28 +254,12 @@ public sealed class RoomGridSpawnerSystem : EntitySystem
 
         SaveAndResetRoom(userId.Value, activeSession);
     }
+    // WOLFGATE END
 
     private void SaveAndResetRoom(NetUserId userId, ActiveRoomSession session)
     {
-        TrySaveRoom(userId, session);
+        TrySaveRoom(userId, session); // WOLFGATE(Shipyard): skip the removed SprayPaintedComponent save hook
         ResetRoom(userId, session);
-    }
-
-    private void StampSprayPaintedInBounds(EntityUid gridId, Box2 bounds)
-    {
-        var query = EntityQueryEnumerator<SprayPaintedComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var painted, out var xform))
-        {
-            if (xform.GridUid != gridId)
-                continue;
-            if (!bounds.Contains(xform.LocalPosition))
-                continue;
-            if (_appearance.TryGetData(uid, PaintableVisuals.Prototype, out string styleProto))
-            {
-                painted.PaintedPrototype = styleProto;
-                Dirty(uid, painted);
-            }
-        }
     }
 
     private bool TrySaveRoom(NetUserId userId, ActiveRoomSession session)
@@ -282,7 +268,6 @@ public sealed class RoomGridSpawnerSystem : EntitySystem
             return false;
 
         var excluded = new HashSet<EntityUid> { session.ConsoleUid, session.MarkerUid };
-        StampSprayPaintedInBounds(session.GridUid, session.Bounds);
         EnforceSaveBans(session.GridUid, session.Bounds);
         var shipData = _shipSerialization.SerializeShipArea(session.GridUid, userId, $"Room_{session.CharacterKey}", session.Bounds, excluded, includeVendors: true);
         NormalizeRoomDataToAnchor(shipData, session.AnchorTile, session.AnchorPosition, session.AnchorRotation);

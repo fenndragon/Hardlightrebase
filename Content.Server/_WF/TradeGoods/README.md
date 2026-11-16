@@ -249,7 +249,9 @@ still well over the roughly 260 in materials it costs to print.
   - chutes also take consignments they don't list
   - say the chute doesn't buy it instead of only buzzing
   - pay the live quote, print live prices
-- [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs): stations take their economy role from their POI
+- [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs)
+  - initialize POIs from shared map station configs
+  - stations take their economy role from their POI
 - [`Content.Server/Cargo/Systems/CargoSystem.Shuttle.cs`](../../Cargo/Systems/CargoSystem.Shuttle.cs): materials pay what the station's stock makes them worth
 - [`Content.Server/VendingMachines/VendingMachineSystem.cs`](../../VendingMachines/VendingMachineSystem.cs): trade vendors charge the station's live price
 - [`Resources/Locale/en-US/paper/paper-misc.ftl`](../../../Resources/Locale/en-US/paper/paper-misc.ftl)

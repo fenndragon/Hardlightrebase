@@ -50,6 +50,23 @@ public sealed partial class CriminalRecordsConsoleSystem : SharedCriminalRecords
         });
     }
 
+    // WOLFGATE(Shipyard) START: clear transient console filters while saving a ship.
+    public void ClearTransientStateOnGrid(EntityUid gridUid)
+    {
+        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var console, out var xform))
+        {
+            if (xform.GridUid != gridUid)
+                continue;
+
+            console.ActiveKey = null;
+            console.Filter = null;
+            console.FilterStatus = SecurityStatus.None;
+            Dirty(uid, console);
+        }
+    }
+    // WOLFGATE END
+
     private void UpdateUserInterface<T>(Entity<CriminalRecordsConsoleComponent> ent, ref T args)
     {
         // TODO: this is probably wasteful, maybe better to send a message to modify the exact state?

@@ -31,6 +31,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             Players,
             Objects,
             Statistics,
+            Wolfgate,
         }
 
         private readonly IClientConsoleHost _console;
@@ -63,6 +64,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 SubTabs.SetTabTitle((int) SubTabIndex.Players, Loc.GetString("admin-menu-players-tab"));
                 SubTabs.SetTabTitle((int) SubTabIndex.Objects, Loc.GetString("admin-menu-objects-tab"));
                 SubTabs.SetTabTitle((int) SubTabIndex.Statistics, Loc.GetString("admin-tools-tab-statistics"));
+                SubTabs.SetTabTitle((int) SubTabIndex.Wolfgate, Loc.GetString("admin-menu-wolfgate-tab")); // WOLFGATE(Administration)
                 SubTabs.OnTabChanged += OnSubTabChanged;
                 LoadSavedCommands();
                 RefreshSavedCommandsList();

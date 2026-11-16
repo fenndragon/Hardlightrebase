@@ -25,8 +25,15 @@ Entry point: the `StationJobsSystem.Overflow` partial, called from marked edits 
 
 ## Non-modular edits
 
+- [`Content.Server/Station/Commands/StationCommand.cs`](../../Station/Commands/StationCommand.cs)
+  - expose the shared config stored on station data
+  - match the shared config return type
+- [`Content.Server/Station/StationConfig.cs`](../../Station/StationConfig.cs): preserve grid components from shared map configs
 - [`Content.Server/Station/Systems/StationJobsSystem.cs`](../../Station/Systems/StationJobsSystem.cs): only Vagrant is handed out as overflow
 - [`Content.Server/Station/Systems/StationJobsSystem.Roundstart.cs`](../../Station/Systems/StationJobsSystem.Roundstart.cs): no Vagrant slot anywhere; tell them instead of leaving them silently in the lobby
+- [`Content.Server/Station/Systems/StationSystem.cs`](../../Station/Systems/StationSystem.cs)
+  - consume the shared game-map station config
+  - adapt shared game-map configs without dropping grid overrides.
 - [`Resources/Locale/en-US/preferences/ui/humanoid-profile-editor.ftl`](../../../Resources/Locale/en-US/preferences/ui/humanoid-profile-editor.ftl): overflow is Vagrant only
 - [`Resources/Prototypes/Maps/debug.yml`](../../../Resources/Prototypes/Maps/debug.yml): overflow is Vagrant only, so test players need a slot
 

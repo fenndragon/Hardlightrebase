@@ -1,3 +1,4 @@
+using System.Linq; // WOLFGATE(Shipyard): enumerate nested save-ban restrictions
 using Content.Shared._HL.RoundPersistence.SaveBans;
 using Content.Shared.Examine;
 using Content.Shared.Item;
@@ -69,12 +70,10 @@ public sealed class SaveBanExamineSystem : EntitySystem
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(bodyText);
 
-        _examine.AddHoverExamineVerb(args,
-            component,
-            Loc.GetString("saveban-examine-verb-text"),
-            msg.ToMarkup(),
-            texture
-        );
+        // WOLFGATE(Shipyard) START: use the current detailed examine helper.
+        _examine.AddDetailedExamineVerb(args, component, msg,
+            Loc.GetString("saveban-examine-verb-text"), texture);
+        // WOLFGATE END
     }
     private string RestrictionText(SaveBanApi.SaveBanResult.IsSaveRestricted restriction)
     {

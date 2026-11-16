@@ -11,6 +11,7 @@
     xmlns:player="clr-namespace:Content.Client.Administration.UI.Tabs.PlayerTab"
     xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs"
     xmlns:panic="clr-namespace:Content.Client.Administration.UI.Tabs.PanicBunkerTab"
+    xmlns:wfTabs="clr-namespace:Content.Client._WF.Administration.UI.Tabs"
     Margin="6"
     MinSize="480 300">
     <TabContainer Name="SubTabs" HorizontalExpand="True" VerticalExpand="True">
@@ -370,6 +371,9 @@
                 <ItemList Name="StatisticsAntagsList" MinSize="220 100" />
             </BoxContainer>
         </ScrollContainer>
+
+        <!-- WOLFGATE(Administration): retain Wolfgate tools in the consolidated admin tabs -->
+        <wfTabs:WolfgateTab HorizontalExpand="True" VerticalExpand="True"/>
 
     </TabContainer>
 </Control>

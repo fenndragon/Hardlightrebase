@@ -282,4 +282,12 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.impact.inertia_scaling", 0.5f, CVar.SERVERONLY);
 
     #endregion
+
+    // WOLFGATE(Shipyard) START: configure the shipyard save serializer.
+    public static readonly CVarDef<bool> ShipyardUseLegacySerializer =
+        CVarDef.Create("shipyard.use_legacy_serializer", false, CVar.SERVERONLY);
+
+    public static readonly CVarDef<bool> ShipyardSaveVerbose =
+        CVarDef.Create("shipyard.save_verbose", false, CVar.SERVERONLY);
+    // WOLFGATE END
 }

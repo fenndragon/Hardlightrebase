@@ -3,6 +3,7 @@ using Content.Server.CartridgeLoader;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
+using Content.Shared.CriminalRecords.Components; // WOLFGATE: resolve the shared console component namespace
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
@@ -113,16 +114,8 @@ public sealed partial class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// </summary>
     public void ClearTransientStateOnGrid(EntityUid gridUid)
     {
-        var query = EntityQueryEnumerator<CriminalRecordsConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var console, out var xform))
-        {
-            if (xform.GridUid != gridUid)
-                continue;
-
-            console.ActiveKey = null;
-            console.Filter = null;
-            console.FilterStatus = SecurityStatus.None;
-        }
+        // WOLFGATE(Shipyard): route console state changes through its access-authorized system.
+        EntityManager.System<CriminalRecordsConsoleSystem>().ClearTransientStateOnGrid(gridUid);
     }
     public bool TryAddHistory(StationRecordKey key, string line, string? initiatorName = null)
     {

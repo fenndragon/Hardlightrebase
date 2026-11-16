@@ -81,11 +81,55 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 
 ## Non-modular edits
 
-- [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs): refuse the sale when the bank share can't be taken; an Ironman's frozen balance bought ships for free
+- [`Content.Client/_NF/Shipyard/UI/ShipyardConsoleMenu.xaml`](../../../Content.Client/_NF/Shipyard/UI/ShipyardConsoleMenu.xaml): restore the controls required by the shipyard console
+- [`Content.Client/_NF/Shipyard/UI/ShipyardConsoleMenu.xaml.cs`](../../../Content.Client/_NF/Shipyard/UI/ShipyardConsoleMenu.xaml.cs)
+- [`Content.Client/_NF/Shipyard/UI/VesselRow.xaml`](../../../Content.Client/_NF/Shipyard/UI/VesselRow.xaml): restore the vessel row controls used by the console
+- [`Content.Server/_CD/Engraving/EngraveableSystem.cs`](../../_CD/Engraving/EngraveableSystem.cs): expose engraving restoration to ship serialization.
+- [`Content.Server/_HL/Rooms/RoomGridSpawnerSystem.cs`](../../_HL/Rooms/RoomGridSpawnerSystem.cs)
+  - evaluate restrictions while saving room grids
+  - subscribe to mind removal without colliding with respawn handling
+  - avoid conflicting with the respawn system's MindContainer event subscription
+  - handle room persistence after the mind leaves its container.
+  - skip the removed SprayPaintedComponent save hook
+- [`Content.Server/_HL/RoundPersistence/SaveBans/SaveBanApi.cs`](../../_HL/RoundPersistence/SaveBans/SaveBanApi.cs): evaluate save-ban prototype and restriction sequences
+- [`Content.Server/_HL/RoundPersistence/SaveBans/SaveBanExamineSystem.cs`](../../_HL/RoundPersistence/SaveBans/SaveBanExamineSystem.cs)
+  - enumerate nested save-ban restrictions
+  - use the current detailed examine helper.
+- [`Content.Server/_HL/RoundPersistence/SaveBans/StashBanSystem.cs`](../../_HL/RoundPersistence/SaveBans/StashBanSystem.cs): check nested restrictions before allowing stash insertion
+- [`Content.Server/_NF/Shipyard/Systems/ShipyardGridSaveSystem.cs`](../../_NF/Shipyard/Systems/ShipyardGridSaveSystem.cs)
+  - strip save-restricted entities from saved ships
+  - clear transient criminal-record state before saving
+  - use the deed's EntityUid directly
+  - compare the saved EntityUid directly
+  - remove entities forbidden from ship saves.
+  - strip entities that the save-ban rules prohibit from ship saves.
+  - clear records through the owning system
+- [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Cleanup.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Cleanup.cs): use the event raised by the game ticker
+- [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs)
+  - refuse the sale when the bank share can't be taken; an Ironman's frozen balance bought ships for free
+  - preserve shared station grid overrides
 - [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.cs)
+  - load ship YAML received from the console UI.
+  - use current entity and station APIs for shuttle purchases.
   - last look at the grid, with its deed, before it goes. See _WF/Shipyard.
-  - the hull is parked and taken apart over many ticks; this stalled the server
+  - use the current docking API for loaded ships.
+- [`Content.Server/_NF/ShuttleRecords/ShuttleRecordsSystem.cs`](../../_NF/ShuttleRecords/ShuttleRecordsSystem.cs): remove sold records and prune references to deleted grids.
+- [`Content.Server/CriminalRecords/Systems/CriminalRecordsConsoleSystem.cs`](../../CriminalRecords/Systems/CriminalRecordsConsoleSystem.cs): clear transient console filters while saving a ship.
+- [`Content.Server/CriminalRecords/Systems/CriminalRecordsSystem.cs`](../../CriminalRecords/Systems/CriminalRecordsSystem.cs): route console state changes through its access-authorized system.
+- [`Content.Server/Shuttles/Save/ShipSaveSystem.cs`](../../Shuttles/Save/ShipSaveSystem.cs)
+  - ShuttleDeedComponent stores a local EntityUid, not a network entity.
+  - use the deed's local grid entity directly
+  - validate the deed's local grid entity directly.
+  - pass the local grid entity directly
+- [`Content.Server/Shuttles/ShipSerializationSystem.cs`](../../Shuttles/ShipSerializationSystem.cs)
+  - use LINQ for ship component and tile snapshots
+  - restore serialized entity labels
+  - restore serialized labels through their system
+  - create restored grids through MapSystem
+  - preserve label text across custom ship serialization.
 - [`Content.Server/Spreader/SpreaderGridComponent.cs`](../../Spreader/SpreaderGridComponent.cs): the queue is rebuilt on grid init and cannot be written, so a grid with a live spreader failed to save
+- [`Content.Shared/CCVar/CCVars.Shuttle.cs`](../../../Content.Shared/CCVar/CCVars.Shuttle.cs): configure the shipyard save serializer.
+- [`Content.Shared/Clothing/EntitySystems/ToggleableClothingSystem.cs`](../../../Content.Shared/Clothing/EntitySystems/ToggleableClothingSystem.cs): preserve toggleable clothing links while replacing default ship contents.
 - [`Content.Shared/Damage/Components/DamageableComponent.cs`](../../../Content.Shared/Damage/Components/DamageableComponent.cs): written on save so a resold ship keeps its dents
 - [`Content.Shared/Damage/DamageSpecifier.cs`](../../../Content.Shared/Damage/DamageSpecifier.cs)
   - DamageDict writes the types
@@ -94,6 +138,7 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
   - zero entries do not count
 - [`Content.Shared/Damage/DamageSpecifierDictionarySerializer.cs`](../../../Content.Shared/Damage/DamageSpecifierDictionarySerializer.cs): adds writing support so DamageSpecifier can round-trip through DamageDict
 - [`Content.Shared/VendingMachines/VendingMachineComponent.cs`](../../../Content.Shared/VendingMachines/VendingMachineComponent.cs): a data definition, so a live machine's stock can be written out with its grid
+- [`Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl`](../../../Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl): labels for the shipyard console controls restored in its UI
 - [`Resources/Prototypes/_Mono/Outpost/caelestinus.yml`](../../../Resources/Prototypes/_Mono/Outpost/caelestinus.yml): ships sold anywhere on this station end up on the used ship lot
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/phaethon_dynasty.yml`](../../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/phaethon_dynasty.yml): Foxtrot-II voucher
 - [`Resources/Prototypes/_Mono/Roles/Jobs/Medical/medic.yml`](../../../Resources/Prototypes/_Mono/Roles/Jobs/Medical/medic.yml): free Triage or Stubby

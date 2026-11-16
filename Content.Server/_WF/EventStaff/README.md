@@ -52,7 +52,7 @@ Entry points: `AdminFlags.Event`, `EventChatCommand` (`esay`), `ChatManager.Send
 
 ## Non-modular edits
 
-- [`Content.Client/Administration/Systems/BwoinkSystem.cs`](../../../Content.Client/Administration/Systems/BwoinkSystem.cs): send the ahelp category
+- [`Content.Client/Administration/Systems/BwoinkSystem.cs`](../../../Content.Client/Administration/Systems/BwoinkSystem.cs): include the selected ahelp category
 - [`Content.Client/Chat/Managers/ChatManager.cs`](../../../Content.Client/Chat/Managers/ChatManager.cs): event staff chat
 - [`Content.Client/UserInterface/Systems/Bwoink/AHelpUIController.cs`](../../../Content.Client/UserInterface/Systems/Bwoink/AHelpUIController.cs)
   - event staff get the staff window
@@ -60,7 +60,6 @@ Entry points: `AdminFlags.Event`, `EventChatCommand` (`esay`), `ChatManager.Send
   - ahelp category picker
   - ahelp category picker above the chat
 - [`Content.Client/UserInterface/Systems/Chat/ChatUIController.cs`](../../../Content.Client/UserInterface/Systems/Chat/ChatUIController.cs): event staff see / filter esay
-- [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml.cs)
 - [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorButton.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorButton.cs)
 - [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorPopup.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorPopup.cs): comma for the event channel
 - [`Content.Server/Administration/Systems/BwoinkSystem.cs`](../../Administration/Systems/BwoinkSystem.cs)

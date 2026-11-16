@@ -241,6 +241,9 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Content.Client/UserInterface/Systems/MenuBar/Widgets/GameTopMenuBar.xaml`](../../../Content.Client/UserInterface/Systems/MenuBar/Widgets/GameTopMenuBar.xaml): open crew setup from the gameplay toolbar
 - [`Content.IntegrationTests/Tests/_NF/ShipyardTests.cs`](../../../Content.IntegrationTests/Tests/_NF/ShipyardTests.cs): deliberately discounted test vessels are not production catalog prices
 - [`Content.Server/_Battlefield14/FactionTracking/FactionTrackingSystem.cs`](../../_Battlefield14/FactionTracking/FactionTrackingSystem.cs): count faction crews by their validated setup job without changing saved preferences
+- [`Content.Server/GameTicking/GameTicker.RoundFlow.cs`](../../GameTicking/GameTicker.RoundFlow.cs)
+  - use the shared station data component
+  - use the current shuttle flight eligibility API.
 - [`Content.Server/GameTicking/GameTicker.Spawning.cs`](../../GameTicking/GameTicker.Spawning.cs)
   - ordinary joining excludes private scenario stations
   - explicit Normal choices share the regular job allocation

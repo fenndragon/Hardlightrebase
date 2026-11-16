@@ -35,12 +35,15 @@ namespace Content.Server.Shuttles.Save
 
             var deedUid = new EntityUid((int)msg.DeedUid);
             // Only save the grid referenced by the shuttle deed. Do NOT fall back to the player's current grid / station.
-            if (!_entityManager.TryGetComponent<ShuttleDeedComponent>(deedUid, out var deed) || deed.ShuttleUid == null ||
-                !_entityManager.TryGetEntity(deed.ShuttleUid.Value, out var shuttleNetUid))
+            // WOLFGATE(Shipyard) START: ShuttleDeedComponent stores a local EntityUid, not a network entity.
+            if (!_entityManager.TryGetComponent<ShuttleDeedComponent>(deedUid, out var deed) ||
+                deed.ShuttleUid is not { Valid: true } shuttleUid ||
+                !_entityManager.HasComponent<MapGridComponent>(shuttleUid))
             {
                 Log.Warning($"Player {playerSession.Name} attempted ship save without a valid shuttle deed / shuttle reference on ID {deedUid}");
                 return;
             }
+            // WOLFGATE END
 
             // VRS: validate the requester actually possesses the deed entity (or is admin).
             // The shipyard console flow goes through ShipyardConsoleSaveMessage and is authenticated by the
@@ -54,7 +57,7 @@ namespace Content.Server.Shuttles.Save
                 return;
             }
 
-            var gridToSave = shuttleNetUid.Value;
+            var gridToSave = shuttleUid; // WOLFGATE(Shipyard): use the deed's local grid entity directly
             if (!_entityManager.HasComponent<MapGridComponent>(gridToSave))
             {
                 Log.Warning($"Player {playerSession.Name} deed shuttle {gridToSave} is not a grid");
@@ -93,11 +96,14 @@ namespace Content.Server.Shuttles.Save
                 return;
             }
 
-            if (deedComponent.ShuttleUid == null || !_entityManager.TryGetEntity(deedComponent.ShuttleUid.Value, out var shuttleUid) || !_entityManager.TryGetComponent<MapGridComponent>(shuttleUid.Value, out var grid))
+            // WOLFGATE(Shipyard) START: validate the deed's local grid entity directly.
+            if (deedComponent.ShuttleUid is not { Valid: true } shuttleUid ||
+                !_entityManager.TryGetComponent<MapGridComponent>(shuttleUid, out var grid))
             {
                 Log.Warning($"Player {playerSession.Name} tried to save ship with deed {deedUid} but no valid shuttle UID found.");
                 return;
             }
+            // WOLFGATE END
 
             // Integrate with ShipyardGridSaveSystem for ship saving functionality
             var shipName = deedComponent.ShuttleName ?? "SavedShip_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -108,7 +114,7 @@ namespace Content.Server.Shuttles.Save
             Log.Info($"Player {playerSession.Name} is saving ship {shipName} via ShipyardGridSaveSystem");
 
             // Save the ship using the tracked grid-based system so cleanup only happens after the client writes the file.
-            var result = shipyardGridSaveSystem.TrySaveGridAsTrackedShip(shuttleUid.Value, deedUid, shipName, playerSession);
+            var result = shipyardGridSaveSystem.TrySaveGridAsTrackedShip(shuttleUid, deedUid, shipName, playerSession); // WOLFGATE(Shipyard): pass the local grid entity directly
             if (result == Content.Server._NF.Shipyard.Systems.ShipyardGridSaveSystem.TrackedShipSaveResult.Queued)
             {
                 Log.Info($"Queued tracked ship save for {shipName}");

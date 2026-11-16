@@ -52,6 +52,8 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         SellShipButton.OnPressed += (args) => { OnSellShip?.Invoke(args); };
         UnassignDeedButton.OnPressed += (args) => { OnUnassignDeed?.Invoke(args); };
         RenameButton.OnPressed += OnRenameButtonPressed;
+        SaveShipButton.OnPressed += (args) => { OnSaveShip?.Invoke(args); }; // WOLFGATE(Shipyard)
+        ReloadShipsButton.OnPressed += (args) => { OnReloadShips?.Invoke(args); }; // WOLFGATE(Shipyard)
     }
 
     // WOLFGATE(Traders) START: an NPC dealer only sells ships; the server refuses these two anyway.
@@ -63,9 +65,8 @@ public sealed partial class ShipyardConsoleMenu : FancyWindow
         // A dealer has no slot: the cash readout is what lies on its counter.
         if (CashSlotControls.ChildCount > 0 && CashSlotControls.GetChild(0) is Label cashTitle)
             cashTitle.Text = Loc.GetString("trader-shipyard-counter-cash-label");
-        SaveShipButton.OnPressed += (args) => { OnSaveShip?.Invoke(args); };
-        ReloadShipsButton.OnPressed += (args) => { OnReloadShips?.Invoke(args); };
     }
+    // WOLFGATE END
 
 
     private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)

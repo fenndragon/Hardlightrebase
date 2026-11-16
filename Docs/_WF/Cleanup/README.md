@@ -15,9 +15,14 @@ entity instead of letting cleanup delete it. The fix is a marked edit in
 
 ## Non-modular edits
 
+- [`Content.Server/_HL/Cleanup/ServerCleanupSystem.cs`](../../../Content.Server/_HL/Cleanup/ServerCleanupSystem.cs): run player rescue from the single grid-termination subscriber.
 - [`Content.Server/_Mono/Cleanup/CleanupHelperSystem.cs`](../../../Content.Server/_Mono/Cleanup/CleanupHelperSystem.cs)
   - fail closed, an invalid protection radius must not permit cleanup or reach the spatial query
   - price-scaled cleanup can produce zero or non-finite radii, preserve the entity in that case
 - [`Content.Server/_Mono/Cleanup/SpaceCleanupSystem.cs`](../../../Content.Server/_Mono/Cleanup/SpaceCleanupSystem.cs): floor the lookup radius, since a zero-price entity's zero radius asserted the server down.
+- [`Content.Server/Shuttles/Systems/GridDeletionContainerSystem.cs`](../../../Content.Server/Shuttles/Systems/GridDeletionContainerSystem.cs)
+  - rescue grid occupants before recursive deletion
+  - preserve players on terminating grids
+  - rescue occupants before child deletion
 
 <!-- WOLFGATE-GENERATED END -->

@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Robust.Shared.Utility; // WOLFGATE(ChatTabs)
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
@@ -19,5 +20,27 @@ public sealed partial class ChannelFilterPopup
         {
             checkbox.Pressed = (channels & channel) != 0;
         }
+    }
+
+    /// <summary>
+    /// Displays generated name and job keywords separately from custom highlights.
+    /// </summary>
+    public void UpdateAutoFill(string autoFillKeywords)
+    {
+        AutoFillVBox.Visible = !string.IsNullOrEmpty(autoFillKeywords);
+        if (string.IsNullOrEmpty(autoFillKeywords))
+            return;
+
+        var message = new FormattedMessage();
+        var lines = autoFillKeywords.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        for (var i = 0; i < lines.Length; i++)
+        {
+            if (i > 0)
+                message.PushNewline();
+
+            message.AddText(lines[i]);
+        }
+
+        AutoFillLabel.SetMessage(message);
     }
 }

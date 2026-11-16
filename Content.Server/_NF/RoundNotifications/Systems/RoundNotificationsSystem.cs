@@ -4,7 +4,7 @@ using Content.Server.Maps;
 using Content.Shared.GameTicking;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Content.Server._NF.RoundNotifications.Events;
+using RoundStartedEvent = Content.Shared.GameTicking.RoundStartedEvent; // WOLFGATE: listen to the game ticker's round-start event
 
 namespace Content.Server._NF.RoundNotifications.Systems;
 
@@ -121,7 +121,7 @@ public sealed class RoundNotificationsSystem : EntitySystem
             if (!string.IsNullOrEmpty(_roleId) && ping)
             {
                 var mentions = new WebhookMentions();
-                mentions.Roles.Add(_roleId);
+                mentions.Roles.Add(_roleId); // WOLFGATE(Announcements): allow only the configured role mention
                 payload.AllowedMentions = mentions;
             }
 
