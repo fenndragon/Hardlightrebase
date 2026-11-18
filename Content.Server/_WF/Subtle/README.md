@@ -38,7 +38,6 @@ who counts as adjacent.
 
 - [`Content.Client/Chat/Managers/ChatManager.cs`](../../../Content.Client/Chat/Managers/ChatManager.cs): subtle emote channel
 - [`Content.Client/UserInterface/Systems/Chat/ChatUIController.cs`](../../../Content.Client/UserInterface/Systems/Chat/ChatUIController.cs)
-- [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml.cs)
 - [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorButton.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorButton.cs)
 - [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorPopup.cs`](../../../Content.Client/UserInterface/Systems/Chat/Controls/ChannelSelectorPopup.cs)
 - [`Content.Shared/Chat/ChatChannel.cs`](../../../Content.Shared/Chat/ChatChannel.cs)

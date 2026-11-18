@@ -77,7 +77,7 @@ public sealed class EventStaffTest
         clientBwoink.OnBwoinkTextMessageRecieved += onReceived;
 
         var channel = new NetUserId(Guid.NewGuid());
-        await client.WaitPost(() => clientBwoink.Send(channel, "need a hand?", true, false));
+        await client.WaitPost(() => clientBwoink.Send(channel, "need a hand?", true, false, AHelpCategory.Gameplay));
         await WaitFor(pair, () => received.Any(m => m.UserId == channel), "the event staff ahelp to come back");
 
         var serverBwoink = server.System<ServerBwoinkSystem>();

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -66,14 +66,44 @@ public sealed partial class CCVars
             CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE,
             "A message broadcast to each player that joins the lobby.");
 
+    /// <summary>
+    /// A string containing a list of newline-separated words to be highlighted in the chat.
+    /// </summary>
     public static readonly CVarDef<string> ChatHighlights =
-        CVarDef.Create("chat.words_highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE,
-            "Per-character custom highlight keywords. Format: one entry per line, 'CharacterName||encoded_keywords'. " +
-            "Encoded keywords use \\n for newlines, \\| for pipes, \\\\ for backslashes.");
+        CVarDef.Create("chat.highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat.");
 
+    /// <summary>
+    /// An option to toggle the automatic filling of the highlights with the character's info, if available.
+    /// </summary>
     public static readonly CVarDef<bool> ChatAutoFillHighlights =
         CVarDef.Create("chat.auto_fill_highlights", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles automatically filling the highlights with the character's information.");
 
+    /// <summary>
+    /// The color in which the highlights will be displayed.
+    /// </summary>
     public static readonly CVarDef<string> ChatHighlightsColor =
         CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
+
+    #region Goobstation - Chat Highlight sounds!
+    // Goobstation - Chat Highlight sounds!
+    /// <summary>
+    ///     Whether to play a sound when a highlighted message is received.
+    /// </summary>
+    public static readonly CVarDef<bool> ChatHighlightSound =
+        CVarDef.Create("chat.highlight_sound", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+    /// <summary>
+    ///     Volume of the highlight sound when a highlighted message is received.
+    /// </summary>
+    public static readonly CVarDef<float> ChatHighlightVolume =
+        CVarDef.Create("chat.highlight_volume", 1.0f, CVar.ARCHIVE | CVar.CLIENTONLY);
+    // Goobstation - end
+    #endregion
+
+    /// <summary>
+    /// Comma-separated list of radio channel prototype IDs that the client has chosen to hide.
+    /// Empty means no channels are filtered.
+    /// </summary>
+    public static readonly CVarDef<string> ChatFilteredRadioChannels =
+        CVarDef.Create("chat.filtered_radio_channels", "", CVar.CLIENTONLY | CVar.ARCHIVE, "Comma-separated list of radio channel IDs to hide from the chat.");
 }

@@ -111,6 +111,18 @@ public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
             UpdateUserInterface(ent);
         }
     }
+    public void ClearTransientStateOnGrid(EntityUid gridUid)
+    {
+        var query = EntityQueryEnumerator<GeneralStationRecordConsoleComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var console, out var xform))
+        {
+            if (xform.GridUid != gridUid)
+                continue;
+
+            console.ActiveKey = null;
+            console.Filter = null;
+        }
+    }
     private void OnFiltersChanged(Entity<GeneralStationRecordConsoleComponent> ent, ref SetStationRecordFilter msg)
     {
         if (ent.Comp.Filter == null ||

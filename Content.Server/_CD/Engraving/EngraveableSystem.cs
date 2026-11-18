@@ -24,6 +24,21 @@ public sealed partial class EngraveableSystem : EntitySystem
         SubscribeLocalEvent<EngraveableComponent, GetVerbsEvent<ActivationVerb>>(AddEngraveVerb);
     }
 
+    // WOLFGATE(Shipyard) START: expose engraving restoration to ship serialization.
+    /// <summary>
+    /// Sets the saved engraving text on an engraveable entity.
+    /// </summary>
+    public bool SetEngravedMessage(EntityUid uid, string message)
+    {
+        if (!TryComp<EngraveableComponent>(uid, out var component))
+            return false;
+
+        component.EngravedMessage = message;
+        Dirty(uid, component);
+        return true;
+    }
+    // WOLFGATE END
+
     private void OnExamined(Entity<EngraveableComponent> ent, ref ExaminedEvent args)
     {
         var msg = new FormattedMessage();

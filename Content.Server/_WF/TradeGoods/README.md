@@ -273,6 +273,7 @@ still well over the roughly 260 in materials it costs to print.
   - say the chute doesn't buy it instead of only buzzing
   - pay the live quote, print live prices
 - [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs)
+  - initialize POIs from shared map station configs
   - the depot kinds not spawned yet this round
   - a planet hub is a standard depot, so the space slots owe the other kind
   - every kind of depot spawns once before any repeats, as each sells goods the other doesn't

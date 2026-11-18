@@ -57,6 +57,9 @@ when a filter first reveals it.
 
 ## Non-modular edits
 
+- [`Content.Client/UserInterface/Systems/Chat/ChatWindow.xaml.cs`](../../UserInterface/Systems/Chat/ChatWindow.xaml.cs): use the generated chatbox control name
+- [`Content.Client/UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml`](../../UserInterface/Systems/Chat/Controls/ChannelFilterPopup.xaml): show generated name and job highlights read-only
+- [`Content.Client/UserInterface/Systems/Chat/Controls/ChatInputBox.xaml.cs`](../../UserInterface/Systems/Chat/Controls/ChatInputBox.xaml.cs)
 - [`Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml.cs`](../../UserInterface/Systems/Chat/Widgets/ChatBox.xaml.cs)
   - a line whose markup does not parse is shown as text instead of throwing out of a refill
   - a line whose tags fail to lay out is shown as text instead of throwing out of a refill

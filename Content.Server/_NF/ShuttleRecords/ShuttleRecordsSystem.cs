@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq; // WOLFGATE(RoundPersistence): materialize persisted record snapshots
 using Content.Server._NF.SectorServices;
 using Content.Server._NF.ShuttleRecords.Components;
 using Content.Server.Administration.Logs;
@@ -75,6 +76,62 @@ public sealed partial class ShuttleRecordsSystem : SharedShuttleRecordsSystem
         record = component.ShuttleRecords[uid];
         return true;
     }
+
+    // WOLFGATE(RoundPersistence) START: expose shuttle-record snapshots and restoration to round persistence.
+    public List<ShuttleRecord> GetAllShuttleRecords()
+    {
+        return TryGetShuttleRecordsDataComponent(out var component)
+            ? component.ShuttleRecords.Values.ToList()
+            : new List<ShuttleRecord>();
+    }
+
+    public void RestoreShuttleRecords(IEnumerable<ShuttleRecord> records)
+    {
+        if (!TryGetShuttleRecordsDataComponent(out var component))
+            return;
+
+        foreach (var record in records)
+            component.ShuttleRecords[record.EntityUid] = record;
+
+        RefreshStateForAll();
+    }
+    // WOLFGATE END
+
+    // WOLFGATE(Shipyard) START: remove sold records and prune references to deleted grids.
+    public bool TryRemoveRecord(NetEntity uid)
+    {
+        if (!TryGetShuttleRecordsDataComponent(out var component) || !component.ShuttleRecords.Remove(uid))
+            return false;
+
+        RefreshStateForAll();
+        return true;
+    }
+
+    public int PruneOrphanedRecords()
+    {
+        if (!TryGetShuttleRecordsDataComponent(out var component))
+            return 0;
+
+        var orphaned = new List<NetEntity>();
+        foreach (var netUid in component.ShuttleRecords.Keys)
+        {
+            if (!_entityManager.TryGetEntity(netUid, out var entityUid) ||
+                entityUid is not { } uid ||
+                !_entityManager.EntityExists(uid))
+            {
+                orphaned.Add(netUid);
+            }
+        }
+
+        foreach (var netUid in orphaned)
+            component.ShuttleRecords.Remove(netUid);
+
+        if (orphaned.Count > 0)
+            RefreshStateForAll();
+
+        return orphaned.Count;
+    }
+    // WOLFGATE END
 
     private bool TryGetShuttleRecordsDataComponent([NotNullWhen(true)] out SectorShuttleRecordsComponent? component)
     {

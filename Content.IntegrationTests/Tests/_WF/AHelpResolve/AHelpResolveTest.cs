@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Pair;
 using Content.Server.Administration;
+using Content.Shared._WF.EventStaff;
 using Robust.Shared.GameObjects;
 using ClientBwoinkSystem = Content.Client.Administration.Systems.BwoinkSystem;
 using ServerBwoinkSystem = Content.Server.Administration.Systems.BwoinkSystem;
@@ -64,7 +65,7 @@ public sealed class AHelpResolveTest
         List<ClientBwoinkSystem.BwoinkTextMessage> received, string text)
     {
         var userId = pair.Client.Session!.UserId;
-        await pair.Client.WaitPost(() => bwoink.Send(userId, text, true, false));
+        await pair.Client.WaitPost(() => bwoink.Send(userId, text, true, false, AHelpCategory.Player));
         await WaitFor(pair, () => received.Any(m => m.Text.EndsWith($": {text}")), $"the \"{text}\" ahelp");
         return received.First(m => m.Text.EndsWith($": {text}"));
     }

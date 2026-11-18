@@ -22,6 +22,17 @@ shipyard-console-sale-invalid-ship = Ship is invalid and cannot be sold.
 shipyard-console-sale-unknown-reason = Ship cannot be sold: {reason}
 shipyard-console-deed-label = Registered Ship:
 shipyard-console-appraisal-label = Shuttle Resale Value (Taxed):{" "}
+# WOLFGATE(Shipyard) START: labels for the shipyard console controls restored in its UI
+shipyard-console-cash-slot-label = Cash on hand:
+shipyard-console-sell = Sell
+shipyard-console-rename-placeholder = Ship name
+shipyard-console-rename = Rename
+shipyard-console-save-ship = Save ship
+shipyard-console-reload-ships = Reload ships
+shipyard-console-load-ship = Load ship
+shipyard-console-load-success = Ship loaded successfully.
+shipyard-console-load-failed = Failed to load ship.
+# WOLFGATE END
 shipyard-console-no-voucher-redemptions = All voucher redemptions have been used.
 shipyard-console-invalid-voucher-type = This voucher cannot be used at this console.
 shipyard-console-denied = You cannot purchase this ship at this time.

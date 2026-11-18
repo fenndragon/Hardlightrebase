@@ -534,6 +534,40 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
             _actionsSystem.SetEntityIcon(comp.ActionEntity.Value, toggleable, action);
     }
 
+    // WOLFGATE(Shipyard) START: preserve toggleable clothing links while replacing default ship contents.
+    /// <summary>
+    /// Detaches a clothing piece without removing its parent toggleable component.
+    /// </summary>
+    public void DisconnectAttachedClothing(AttachedClothingComponent attached)
+    {
+        if (TryComp(attached.AttachedUid, out ToggleableClothingComponent? toggleable))
+        {
+            toggleable.ClothingUids.Remove(attached.Owner);
+            Dirty(attached.AttachedUid, toggleable);
+        }
+
+        attached.AttachedUid = EntityUid.Invalid;
+        Dirty(attached.Owner, attached);
+    }
+
+    /// <summary>
+    /// Restores the parent reference on the clothing pieces tracked by a toggleable component.
+    /// </summary>
+    public void RestoreAttachedEntity(EntityUid toggleableUid, ToggleableClothingComponent toggleable)
+    {
+        foreach (var attachedUid in toggleable.ClothingUids.Keys)
+        {
+            if (!TryComp(attachedUid, out AttachedClothingComponent? attached))
+                continue;
+
+            attached.AttachedUid = toggleableUid;
+            Dirty(attachedUid, attached);
+        }
+
+        Dirty(toggleableUid, toggleable);
+    }
+    // WOLFGATE END
+
     // Checks status of all attached clothings toggle status
     public ToggleableClothingAttachedStatus GetAttachedToggleStatus(EntityUid toggleable, ToggleableClothingComponent? component = null)
     {

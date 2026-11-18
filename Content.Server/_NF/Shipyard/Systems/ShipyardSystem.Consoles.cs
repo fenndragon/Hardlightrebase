@@ -321,7 +321,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             {
                 shuttleUid
             };
-            shuttleStation = _station.InitializeNewStation(stationProto.Stations[vessel.ID], gridUids);
+            shuttleStation = _station.InitializeNewStation(stationProto.Stations[vessel.ID], gridUids); // WOLFGATE(Shipyard): preserve shared station grid overrides
             name = Name(shuttleStation.Value);
 
             var vesselInfo = EnsureComp<ExtraShuttleInformationComponent>(shuttleStation.Value);

@@ -465,7 +465,7 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             return existingPanel;
 
         // WOLFGATE(AHelpResolve) START: read the boxes from the control; Window is null while popped out
-        // _activePanelMap[channelId] = existingPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(channelId, text, Window?.Bwoink.PlaySound.Pressed ?? true, Window?.Bwoink.AdminOnly.Pressed ?? false));
+        // _activePanelMap[channelId] = existingPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(channelId, text, Window?.Bwoink.PlaySound.Pressed ?? true, Window?.Bwoink.AdminOnly.Pressed ?? false), channelId);
         _activePanelMap[channelId] = existingPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(channelId, text, Control?.PlaySound.Pressed ?? true, Control?.AdminOnly.Pressed ?? false));
         // WOLFGATE END
         existingPanel.InputTextChanged += text => InputTextChanged?.Invoke(channelId, text);

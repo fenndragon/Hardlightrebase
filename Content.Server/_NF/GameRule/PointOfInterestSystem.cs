@@ -279,7 +279,7 @@ public sealed partial class PointOfInterestSystem : EntitySystem
 
         EntityUid? stationUid = null;
         if (_proto.TryIndex<GameMapPrototype>(proto.ID, out var stationProto))
-            stationUid = _station.InitializeNewStation(stationProto.Stations[proto.ID], gridList, stationName);
+            stationUid = _station.InitializeNewStation(stationProto.Stations[proto.ID], gridList, stationName); // WOLFGATE(TradeGoods): initialize POIs from shared map station configs
 
         var meta = EnsureComp<MetaDataComponent>(loadedGrid.Value);
         _meta.SetEntityName(loadedGrid.Value, stationName, meta);
