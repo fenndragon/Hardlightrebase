@@ -7,13 +7,14 @@
     - id: SnailMigrationLowPop
     - id: CockroachMigration
     - id: MouseMigration
+    #- id: RandomCritterHorde
 
 - type: entityTable
   id: SpicyPestEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
-    children: [] # Frontier
-    # - id: KingRatMigration # Frontier
-    # - id: SnailMigration # Frontier
+    children:
+    - id: KingRatMigration
+    - id: SnailMigration
 
 # events
 
@@ -26,24 +27,18 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    weight: 2 # WOLFGATE: pest events were crowding out the rest of the table (was 6)
-    reoccurrenceDelay: 90 # WOLFGATE: each pest event at most once per 90 minutes
+    weight: 6
     duration: 50
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.05 # Mono
+      prob: 0.02
     - id: MobMouse1
-      prob: 0.05 # Mono
+      prob: 0.02
     - id: MobMouse2
-      prob: 0.05 # Mono
+      prob: 0.02
     - id: MobMouseCancer
-      prob: 0.005 # Mono
-    # WOLFGATE(CorticalBorer) START: no borers on ships, BorerSpawn handles stations
-    # specialEntries: # Mono
-    # - id: MobCorticalBorer # Mono
-    #   prob: 0.001 # Mono
-    # WOLFGATE END
+      prob: 0.001
 # Events always spawn a critter regardless of Probability https://github.com/space-wizards/space-station-14/issues/28480 I added the Rat King to their own event with a player cap.
 
 - type: entity
@@ -80,34 +75,14 @@
     startAnnouncement: station-event-vent-creatures-nf-start-announcement # Frontier: add nf-
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 2 # WOLFGATE: pest events were crowding out the rest of the table (was 6)
-    reoccurrenceDelay: 90 # WOLFGATE: each pest event at most once per 90 minutes
+    weight: 6
     duration: 50
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
-      prob: 0.05 # Mono
+      prob: 0.03
     - id: MobMothroach
-      prob: 0.005 # Mono
-    - id: MobRosyMothroach # Frontier
-      prob: 0.005 # Mono
-    - id: MobMothroachLeopard # Frontier
-      prob: 0.0005 # Mono
-    - id: MobMothroachCecropia # Frontier
-      prob: 0.0005 # Mono
-    - id: MobMothroachLunar # Frontier
-      prob: 0.0005 # Mono
-    - id: MobMothroachMustard # Frontier
-      prob: 0.0005 # Mono
-    specialEntries: # Mono
-    # WOLFGATE(CorticalBorer) START: no borers on ships, BorerSpawn handles stations
-    # - id: MobCorticalBorer # Mono
-    #   prob: 0.001 # Mono
-    # WOLFGATE END
-    - id: MobMoproach
-      prob: 0.0005
-    #- id: MobOwORoach
-    #  prob: 0.00005
+      prob: 0.008
 
 - type: entity
   id: SnailMigrationLowPop
@@ -117,17 +92,16 @@
     startAnnouncement: station-event-vent-creatures-nf-start-announcement # Frontier: add nf-
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 2 # WOLFGATE: pest events were crowding out the rest of the table (was 6)
-    reoccurrenceDelay: 90 # WOLFGATE: each pest event at most once per 90 minutes
+    weight: 6
     duration: 50
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.02
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.002
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.002
 
 - type: entity
   id: SnailMigration
@@ -138,22 +112,45 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    weight: 2 # WOLFGATE: pest events were crowding out the rest of the table (was 6)
-    reoccurrenceDelay: 90 # WOLFGATE: each pest event at most once per 90 minutes
+    weight: 6
     duration: 50
     minimumPlayers: 30
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.02
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.002
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.002
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
-    # WOLFGATE(CorticalBorer) START: no borers on ships, BorerSpawn handles stations
-    # specialEntries: # Mono
-    # - id: MobCorticalBorer # Mono
-    #   prob: 0.001 # Mono
-    # WOLFGATE END
+
+# - type: entity
+  # id: IrradiatedPests
+  # parent: BaseStationEventShortDelay
+  # components:
+  # - type: StationEvent
+    # startAnnouncement: station-event-vent-creatures-start-announcement
+    # startAudio:
+      # path: /Audio/Announcements/attention.ogg
+    # earliestStart: 15
+    # weight: 4
+    # duration: 50
+  # - type: RadCrittersRule
+    # entries:
+    # - id: dreadtalonbase
+      # prob: 0.012
+    # - id: BlueTalon
+      # prob: 0.01
+    # - id: LavaTalon
+      # prob: 0.01
+    # - id: PlasmaTalon
+      # prob: 0.01
+    # - id: TriTalon
+      # prob: 0.01
+    # specialEntries:
+    # - id: SuperTalon
+      # prob: 0.001
+    # - id: GravTalon
+      # prob: 0.001

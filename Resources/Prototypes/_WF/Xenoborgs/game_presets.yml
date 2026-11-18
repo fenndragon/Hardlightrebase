@@ -11,7 +11,7 @@
   - BluespaceDungeonEventScheduler
   - BluespaceSalvageEventScheduler
   - SmugglingEventScheduler
-  - FrontierRoundstartVariation
+  #- FrontierRoundstartVariation
   - MonoXenoborgShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
   - ManualPortstrikeTsfPdv

@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Fenndragon discord: 190763499276861440, edits by LucasTheDrgn discord: 97135517740593152 and dakodragon discord: 56038550335922176, SEC edits made by GRESH!! GL1TZ and Danse (RUIN) discord: 1207115437163151460",
+  "states": [
+    {
+      "name": "zeroborg",
+      "directions": 4
+    },
+	{
+      "name": "zeroborge",
+      "directions": 4
+    },
+	{
+      "name": "zeroborgr",
+      "directions": 4
+    },
+	{
+      "name": "zeroborgl",
+      "directions": 4
+    },
+	{
+      "name": "zeroborgballz",
+      "directions": 4
+    },
+	{
+      "name": "zeroborgmoving",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+	{
+      "name": "zeroborgmovingballz",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

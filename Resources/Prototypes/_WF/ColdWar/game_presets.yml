@@ -12,7 +12,7 @@
   - BluespaceDungeonEventScheduler
   - BluespaceSalvageEventScheduler
   - SmugglingEventScheduler
-  - FrontierRoundstartVariation
+  #- FrontierRoundstartVariation
   - MonoMonolithicEventsScheduler
   - ManualPortstrikeTsfPdv
   - StarSystemKyphrus
